@@ -10,8 +10,8 @@ var URLQueryCreator = {
 			
 			query = SmartQueryCreator.makeSmartQuery(query);
 	
-			var url = 'http://'+server+':8983/solr/'+collection+'/select/?q='
-				+ "snippet:(" + query + ") AND snippet_granularity:Class"
+			var url = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?q='
+				+ "snippet:(" + query + ")"
 				+ '&start=' + start 
 				+ '&facet=true' 
 				+ '&facet.field=author' 

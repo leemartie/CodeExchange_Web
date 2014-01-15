@@ -271,6 +271,10 @@ var Controller = {
 				div = $(SetupManager.pound+SetupManager.tagTabDiv_ID);
 			}else if(category == FilterManager.PROJECT_CATEGORY){
 				div = $(SetupManager.pound+SetupManager.projectTabDiv_ID);
+			}else if(category == FilterManager.GRANULARITY_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.granularityTabDiv_ID);
+			}else if(category == FilterManager.LIB_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.libraryTabDiv_ID);
 			}
 			
 			
@@ -336,6 +340,16 @@ var Controller = {
 								FilterManager.addFilter(filter);
 								//updated filter summary
 								Controller.addFilterToSummary(FilterManager.PROJECT_CATEGORY, name);
+							}else if(category == FilterManager.LIB_CATEGORY){
+								filter = new Filter(FilterManager.LIB_CATEGORY,name);
+								FilterManager.addFilter(filter);
+								//updated filter summary
+								Controller.addFilterToSummary(FilterManager.LIB_CATEGORY, name);
+							}else if(category == FilterManager.GRANULARITY_CATEGORY){
+								filter = new Filter(FilterManager.GRANULARITY_CATEGORY,name);
+								FilterManager.addFilter(filter);
+								//updated filter summary
+								Controller.addFilterToSummary(FilterManager.GRANULARITY_CATEGORY, name);
 							}
 	
 							//send new filtered query
