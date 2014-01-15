@@ -6,6 +6,8 @@ var FilterManager = {
 	AUTHOR_CATEGORY	:	"author",
 	TAG_CATEGORY	:	"snippet_tag",
 	PROJECT_CATEGORY	:	"project",
+	LIB_CATEGORY		:	"snippet_imports",
+	GRANULARITY_CATEGORY	:"snippet_granularity",
 	
 	addFilter	:	function(filter){
 		FilterManager.filters.push(filter);

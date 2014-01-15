@@ -75,6 +75,10 @@ var SetupManager = {
 		//div for tab
 		projectTabDiv_ID		:	"project_tab_div_ID",
 		
+		libraryTabDiv_ID		:	"library_tab_div_ID",
+		
+		granularityTabDiv_ID	:	"granularity_tab_div_ID",
+		
 			
 		//These are the CSS classes
 		Cell_CSS_Class			:	"Cell",
@@ -222,6 +226,29 @@ var SetupManager = {
 			projectDiv.append($('<p>projects here</p>'));
 			projectDiv.attr(SetupManager.ID_attr,SetupManager.projectTabDiv_ID);
 			
+			//tab lib
+			var libTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+			libTab.append($('<a href="#'+SetupManager.libraryTabDiv_ID+'">Libraries</a>'));
+			tabList.append(libTab);
+			
+			//lib div
+			var libDiv = $(SetupManager.divOpen+SetupManager.divClose);
+			filterDiv.append(libDiv);
+			libDiv.append($('<p>libs here</p>'));
+			libDiv.attr(SetupManager.ID_attr,SetupManager.libraryTabDiv_ID);			
+			//make it tabs NOTE: must come after making children!!
+			
+			
+			//granularity lib
+			var granTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+			granTab.append($('<a href="#'+SetupManager.granularityTabDiv_ID+'">Granularities</a>'));
+			tabList.append(granTab);
+			
+			//lib div
+			var granDiv = $(SetupManager.divOpen+SetupManager.divClose);
+			filterDiv.append(granDiv);
+			granDiv.append($('<p>granularities here</p>'));
+			granDiv.attr(SetupManager.ID_attr,SetupManager.granularityTabDiv_ID);			
 			//make it tabs NOTE: must come after making children!!
 			filterDiv.tabs();
 			

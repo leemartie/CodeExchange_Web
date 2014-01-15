@@ -1,4 +1,7 @@
 var URLQueryCreator = {
+		server : 'codeexchange.ics.uci.edu',
+		collection	:	'noTagImportCollection',
+		
 		getQueryURL	:	function(callbackFunctionName){
 		
 	
@@ -7,9 +10,15 @@ var URLQueryCreator = {
 			
 			query = SmartQueryCreator.makeSmartQuery(query);
 	
-			var url = 'http://localhost:8983/solr/noTagImportCollection/select/?q='
+			var url = 'http://'+server+':8983/solr/'+collection+'/select/?q='
 				+ "snippet:(" + query + ") AND snippet_granularity:Class"
-				+ '&start=' + start + '&facet=true' + '&facet.field=author' + '&facet.field=snippet_tag' + '&facet.field=project'
+				+ '&start=' + start 
+				+ '&facet=true' 
+				+ '&facet.field=author' 
+				+ '&facet.field=snippet_tag' 
+				+ '&facet.field=project'
+				+ '&facet.field=snippet_imports'
+				+ '&facet.field=snippet_granularity'
 				+ '&facet.mincount=1';
 			
 			

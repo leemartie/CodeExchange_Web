@@ -345,7 +345,7 @@ function on_data(data) {
 
 	QueryManager.makeNavigation(data.response.numFound, 4);
 	
-	//populate filters
+	//populate filters - get updated only on issuing new query or new fq by some facet
 	var topAuthors = data.facet_counts.facet_fields.author;
 	//var avatars = 	 data.facet_counts.facet_fields.author_avatar;
 	
@@ -357,5 +357,21 @@ function on_data(data) {
 	
 	var projectArray = data.facet_counts.facet_fields.project;
 	Controller.populateFilter(projectArray, FilterManager.PROJECT_CATEGORY);
+	
+	var libArray = data.facet_counts.facet_fields.snippet_imports;
+	Controller.populateFilter(libArray, FilterManager.LIB_CATEGORY);
+	
+	var granArray = data.facet_counts.facet_fields.snippet_granularity;
+	Controller.populateFilter(granArray, FilterManager.GRANULARITY_CATEGORY);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
