@@ -161,7 +161,7 @@ var SetupManager = {
 			queryTD.append(input);
 			//set id
 			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
-			input.attr(SetupManager.placeholder_attr, "enter keywords or code here");
+			input.attr(SetupManager.placeholder_attr, "keywords or code here (shift-enter for newline)");
 			
 	
 			var filterTD = $(SetupManager.tdOpen+SetupManager.tdClose);

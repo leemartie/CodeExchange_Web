@@ -292,7 +292,7 @@ function on_nextData(data) {
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
 					Controller.setCode(SetupManager.resultPreArray_ID[i],
-							item.snippet);
+							item.snippet_address);
 				}
 				
 
@@ -301,6 +301,8 @@ function on_nextData(data) {
 	CodeFormatter.highLight();
 	Controller.setStatus("DONE LOADING CODE");
 }
+
+
 
 /**
  * 
@@ -334,7 +336,7 @@ function on_data(data) {
 							item.project);
 					//TODO will need to replace item.snippet with content from url
 					Controller.setCode(SetupManager.resultPreArray_ID[i],
-							item.snippet);
+							item.snippet_address);
 				}
 
 			});

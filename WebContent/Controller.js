@@ -25,9 +25,22 @@ var Controller = {
 		 * @returns
 		 */
 		setCode	:	function(codeNode,codeText){
-			var result = new CodeResult(codeText);
-			$(SetupManager.pound+codeNode).append(result.getJQueryObject());
+
+		var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeText+"&callback=?&json.wrf=displayCode";
+	 
+		$.getJSON(url).fail(function(data, textStatus, jqXHR) {
+		    alert( data + textStatus + jqXHR);
+		  }).success(function(data, textStatus, jqXHR ) {
+			  $.each(data, function(index, element) {
+				    var code = element;
+				    var result = new CodeResult(code);
+					$(SetupManager.pound+codeNode).append(result.getJQueryObject());
+			  });
+		  });
+	
+			
 		},
+
 		
 		/**
 		 * 
@@ -145,6 +158,10 @@ var Controller = {
 				icon  = $('<span class="ui-icon ui-icon-tag" style="display:inline-block"></span>');
 			}else if(type == FilterManager.PROJECT_CATEGORY){
 				icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
+			}else if (type == FilterManager.LIB_CATEGORY){
+				icon  = $('<span class="ui-icon ui-icon-note" style="display:inline-block"></span>');
+			}else if (type == FilterManager.GRANULARITY_CATEGORY){
+				icon  = $('<span class="ui-icon ui-icon-script" style="display:inline-block"></span>');
 			}
 			
 			oneFilterDiv.append(icon);
@@ -515,3 +532,8 @@ var Controller = {
 		
 		
 };
+
+function displayCode(data){
+	
+	alert("sup");
+}
