@@ -258,10 +258,6 @@ var QueryManager = {
 	 * @returns
 	 */
 	nextResult : function() {
-
-		if (QueryManager.currentQuery.length == 0) {
-			return;
-		}
 		
 		var url = URLQueryCreator.getQueryURL('on_nextData');
 
@@ -291,7 +287,7 @@ function on_nextData(data) {
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
-					Controller.setCode(SetupManager.resultPreArray_ID[i],
+					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 							item.snippet_address);
 				}
 				
@@ -335,7 +331,7 @@ function on_data(data) {
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
 					//TODO will need to replace item.snippet with content from url
-					Controller.setCode(SetupManager.resultPreArray_ID[i],
+					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 							item.snippet_address);
 				}
 

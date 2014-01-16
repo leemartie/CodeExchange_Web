@@ -25,20 +25,25 @@ var Controller = {
 		 * @returns
 		 */
 		setCode	:	function(codeNode,codeText){
-
-		var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeText+"&callback=?&json.wrf=displayCode";
-	 
-		$.getJSON(url).fail(function(data, textStatus, jqXHR) {
-		    alert( data + textStatus + jqXHR);
-		  }).success(function(data, textStatus, jqXHR ) {
-			  $.each(data, function(index, element) {
-				    var code = element;
-				    var result = new CodeResult(code);
-					$(SetupManager.pound+codeNode).append(result.getJQueryObject());
-			  });
-		  });
 	
-			
+			var result = new CodeResult(codeText);
+			$(SetupManager.pound+codeNode).append(result.getJQueryObject());
+
+		},
+		
+		setCodeFromURL: function(codeNode, codeURL){
+			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
+			 
+			$.getJSON(url).fail(function(data, textStatus, jqXHR) {
+			    alert( data + textStatus + jqXHR);
+			  }).success(function(data, textStatus, jqXHR ) {
+				  $.each(data, function(index, element) {
+					    var code = element;
+					    var result = new CodeResult(code);
+					    var jQueryObject = result.getJQueryObject();
+						$(SetupManager.pound+codeNode).append(jQueryObject);
+				  });
+			  });
 		},
 
 		
