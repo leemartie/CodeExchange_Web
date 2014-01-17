@@ -13,7 +13,7 @@ var URLQueryCreator = {
 			var url = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ "snippet:(" + query + ")"
 				+ '&start=' + start 
-				+ '&fl= snippet_address author author_avatar snippet_tag project snippet_imports snippet_granularity'
+				+ '&fl= author_type snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
 				+ '&facet=true' 
 				+ '&facet.field=author' 
 				+ '&facet.field=snippet_tag' 

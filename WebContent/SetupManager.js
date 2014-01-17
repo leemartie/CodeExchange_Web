@@ -257,30 +257,53 @@ var SetupManager = {
 			}
 			
 			//make header
-			var header = $(SetupManager.divOpen+SetupManager.divClose);
+			var header = $(SetupManager.tableOpen+SetupManager.tableClose);
 			//append to entier site
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(header);
 			//set id
 			header.attr(SetupManager.ID_attr,SetupManager.headerDiv_ID);
 			header.addClass("Header");
+			
+			//header row
+			var rowHeader = $(SetupManager.trOpen+SetupManager.trClose);
+			header.append(rowHeader);
+			
+			//row 2
+			var rowHeader2 = $(SetupManager.trOpen+SetupManager.trClose);
+			header.append(rowHeader2);
+			
+			//logo
+			var logo = $(SetupManager.tdOpen+SetupManager.tdClose);
+			rowHeader.append(logo);
+			var logoName = $('<pre>CodeExchange</pre>');
+			logo.append(logoName);
+			logo.addClass("Logo");
+			logo.attr("rowspan", "2");
+			
+			
 	
 			//make status div
-			var status = $(SetupManager.divOpen+SetupManager.divClose);
+			var status = $(SetupManager.tdOpen+SetupManager.tdClose);
 			//append to header
-			$(SetupManager.pound+SetupManager.headerDiv_ID).append(status);
+			rowHeader.append(status);
 			//set id
 			status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
-			status.addClass("Status");
+			status.attr("valign","top");
+			status.attr("padding-bottom", "0px");
+			status.addClass("StatusTD");
+			
 			Controller.setStatus("Let's find some code.");
 			
+
 				
 			//make page navigation
-			var pageNavigation = $(SetupManager.divOpen+SetupManager.divClose);
+			var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
 			// append
-			$(SetupManager.pound+SetupManager.headerDiv_ID).append(pageNavigation);
+			rowHeader2.append(pageNavigation);
 			//set id
 			pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
-			pageNavigation.addClass("Navigation");
+			pageNavigation.attr("valign","top");
+			pageNavigation.addClass("StatusTD");
 			
 			
 			//make table
@@ -498,7 +521,7 @@ var SetupManager = {
 				
 				//make expand button for result options
 				var expandButton	 = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-				var expandButton_id	="expandBtn"+i
+				var expandButton_id	="expandBtn"+i;
 				SetupManager.expandBtnArray_ID[i] = expandButton_id;
 				expandButton.attr(SetupManager.ID_attr, SetupManager.expandBtnArray_ID[i]);
 				expandButton.addClass("Expand");

@@ -83,10 +83,9 @@ var Controller = {
 		 */
 		setStatus	:	function(message){
 			$(SetupManager.pound+SetupManager.statusDiv_ID).empty();
-			var text = $("<pre>"+message+"</pre>");
+			var text = $("<text>"+message+"</text>");
 			text.addClass("Message");
-			$(SetupManager.pound+SetupManager.statusDiv_ID).append(
-					$(text));
+			$(SetupManager.pound+SetupManager.statusDiv_ID).append(text);
 		},
 		
 		/**
@@ -96,10 +95,10 @@ var Controller = {
 			return $(SetupManager.pound+SetupManager.queryInput_ID).val();
 		},
 		
-		setAuthorName	:	function(meta, name){
+		setAuthorName	:	function(meta, name, type){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<span class="ui-icon ui-icon-person" style="display:inline-block"></span>');
-			var authName = $('<text>'+name+'</text>');
+			var authName = $('<text>'+type+' : '+name+'</text>');
 			
 			
 			
@@ -123,6 +122,7 @@ var Controller = {
 			$(SetupManager.pound+meta).append(image);
 			image.addClass("MetaBorder");
 		},
+		
 		
 		/**
 		 * FUNCTION
@@ -412,12 +412,12 @@ var Controller = {
 			
 			$(SetupManager.pound+SetupManager.queryInput_ID).animate({
 				height: 400
-			},0
+			},700
 			);
 			
 			$(SetupManager.pound+SetupManager.filterDiv_ID).animate({
 				height: 400
-			},0
+			},700
 			);
 			
 			Controller.headerExpanded = true;
@@ -435,12 +435,12 @@ var Controller = {
 			
 			$(SetupManager.pound+SetupManager.queryInput_ID).animate({
 				height: 30
-			},0
+			},700
 			);
 			
 			$(SetupManager.pound+SetupManager.filterDiv_ID).animate({
 				height: 30
-			},0
+			},700
 			);
 			
 			Controller.headerExpanded = false;
@@ -476,7 +476,7 @@ var Controller = {
 		            height: $(SetupManager.pound+SetupManager.resultTable_ID).height(),
 		            left:	'0px',
 		            top:	'0px'
-		          }, 0 );
+		          }, 700 );
 
 		},
 		
@@ -505,7 +505,7 @@ var Controller = {
 		            height: previousHeight,
 		            left:	previousX+'px',
 		            top:	previousY+'px'
-		          }, 0 );
+		          }, 700 );
 	          
 
 		},
@@ -537,8 +537,3 @@ var Controller = {
 		
 		
 };
-
-function displayCode(data){
-	
-	alert("sup");
-}

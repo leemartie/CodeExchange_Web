@@ -284,11 +284,13 @@ function on_nextData(data) {
 				if (i < resultLength && i < metaLength) {
 					Controller.setAvatar(SetupManager.metaDivArray_ID[i],
 							item.author_avatar);
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author);
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author, item.author_type);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
-					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-							item.snippet_address);
+					Controller.setCode(SetupManager.resultPreArray_ID[i],
+							item.snippet);
+//					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
+//							item.snippet_address);
 				}
 				
 
@@ -326,13 +328,15 @@ function on_data(data) {
 					Controller.setAvatar(SetupManager.metaDivArray_ID[i],
 							item.author_avatar);
 					
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author);
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author, item.author_type);
 					
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
 					//TODO will need to replace item.snippet with content from url
-					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-							item.snippet_address);
+					Controller.setCode(SetupManager.resultPreArray_ID[i],
+							item.snippet);
+//					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
+//							item.snippet_address);
 				}
 
 			});
