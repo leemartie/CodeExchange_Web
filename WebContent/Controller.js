@@ -14,6 +14,7 @@ var Controller = {
 		previousX : 0,
 		previousY : 0,
 		headerExpanded	:	false,
+		sortFiltersAlpha	:	false,
 		
 
 		/**
@@ -209,81 +210,19 @@ var Controller = {
 		},
 		
 
-//		
-//		/**
-//		 * FUNCTION
-//		 * populate the tag filter
-//		 */
-//		populateTagFilter	: function(tagArray){
-//			
-//			tagArray = Controller.getOnlyFacetValues(tagArray);
-//			
-//			tagArray = tagArray.filter(function(elem, index, self) {
-//			    return index == self.indexOf(elem);
-//			});
-//			
-//			tagArray.sort();
-//
-//			var tagDiv = $(SetupManager.pound+SetupManager.tagTabDiv_ID);
-//			
-//			tagDiv.empty();
-//			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-//			tagDiv.append(table);
-//			
-//			var width = $(SetupManager.pound+SetupManager.filterDiv_ID).width();
-//			tagDiv.width(width);
-//			
-//			for(i = 0; i<tagArray.length; i++){
-//				var tagCell;
-//				
-//				var tableRow;
-//				if(i == 0 || i%5 == 0){
-//					
-//					tableRow = $(SetupManager.trOpen+SetupManager.trClose);
-//					table.append(tableRow);
-//				}
-//				
-//			
-//				    tagCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-//					tableRow.append(tagCell);
-//					
-//					tagCell.append("<text>"+tagArray[i]+"</text>");
-//				
-//					tagCell.addClass("FilterTD");
-//					
-//					(function(cell,name){
-//							
-//							cell.mouseenter(function(){
-//								cell.addClass("FilterTDhover");					
-//							});
-//							
-//							cell.mouseleave(function(){
-//								cell.removeClass("FilterTDhover");					
-//							});
-//							cell.mouseup(function(){
-//								//add to filters
-//								filter = new Filter(FilterManager.TAG_CATEGORY,name);
-//								FilterManager.addFilter(filter);
-//								//updated filter summary
-//								Controller.addFilterToSummary(FilterManager.TAG_CATEGORY, name);
-//								
-//								//send new filtered query
-//								QueryManager.submitQuery();
-//							});
-//							
-//					})(tagCell,tagArray[i]);
-//					
-//					
-//
-//
-//				
-//			}
-//		},
-		
 		/**
 		 * Assumes an even array length where even indicies are name and odd are facet count
 		 */
 		populateFilter	:	function(arrayValues, category){
+			if(!Controller.sortFiltersAlpha){
+				Controller.sortFilterByCount(arrayValues,category);
+			}else{
+				Controller.sortFilterAlpha(arrayValues,category);
+			}
+		},
+		
+		sortFilterAlpha	:	function(arrayValues,category){
+			
 			var div;
 			
 			
@@ -304,13 +243,121 @@ var Controller = {
 			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 			div.append(table);
 			
+			
+			arrayValues = Controller.getOnlyFacetValues(arrayValues);
+			
+			arrayValues = arrayValues.filter(function(elem, index, self) {
+			    return index == self.indexOf(elem);
+			});
+			
+			arrayValues.sort();
+
+			
+			
+			div.empty();
+			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+			div.append(table);
+			
 			var width = $(SetupManager.pound+SetupManager.filterDiv_ID).width();
 			div.width(width);
+			
+			for(i = 0; i<arrayValues.length; i++){
+				var filterCell;
+				
+				var tableRow;
+				if(i == 0 || i%3 == 0){
+					
+					tableRow = $(SetupManager.trOpen+SetupManager.trClose);
+					table.append(tableRow);
+				}
+				
+			
+				    filterCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+					tableRow.append(filterCell);
+					
+					filterCell.append("<text>"+arrayValues[i]+"</text>");
+				
+					filterCell.addClass("FilterTD");
+					
+					(function(cell,name){
+							
+							cell.mouseenter(function(){
+								cell.addClass("FilterTDhover");					
+							});
+							
+							cell.mouseleave(function(){
+								cell.removeClass("FilterTDhover");					
+							});
+							cell.mouseup(function(){
+								//add to filters
+								if(category == FilterManager.AUTHOR_CATEGORY){
+									filter = new Filter(FilterManager.AUTHOR_CATEGORY,name);
+									FilterManager.addFilter(filter);
+									//updated filter summary
+									Controller.addFilterToSummary(FilterManager.AUTHOR_CATEGORY, name);
+								}else if(category == FilterManager.TAG_CATEGORY){
+									filter = new Filter(FilterManager.TAG_CATEGORY,name);
+									FilterManager.addFilter(filter);
+									//updated filter summary
+									Controller.addFilterToSummary(FilterManager.TAG_CATEGORY, name);
+								}else if(category == FilterManager.PROJECT_CATEGORY){
+									filter = new Filter(FilterManager.PROJECT_CATEGORY,name);
+									FilterManager.addFilter(filter);
+									//updated filter summary
+									Controller.addFilterToSummary(FilterManager.PROJECT_CATEGORY, name);
+								}else if(category == FilterManager.LIB_CATEGORY){
+									filter = new Filter(FilterManager.LIB_CATEGORY,name);
+									FilterManager.addFilter(filter);
+									//updated filter summary
+									Controller.addFilterToSummary(FilterManager.LIB_CATEGORY, name);
+								}else if(category == FilterManager.GRANULARITY_CATEGORY){
+									filter = new Filter(FilterManager.GRANULARITY_CATEGORY,name);
+									FilterManager.addFilter(filter);
+									//updated filter summary
+									Controller.addFilterToSummary(FilterManager.GRANULARITY_CATEGORY, name);
+								}
+		
+								//send new filtered query
+								QueryManager.submitQuery();
+							});
+							
+					})(filterCell,arrayValues[i]);	
+			}
+			
+		}
+		,
+		
+		sortFilterByCount	: function(arrayValues, category){
+			var div;
+			
+			
+			if(category == FilterManager.AUTHOR_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.peopleTabDiv_ID);
+			}else if(category == FilterManager.TAG_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.tagTabDiv_ID);
+			}else if(category == FilterManager.PROJECT_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.projectTabDiv_ID);
+			}else if(category == FilterManager.GRANULARITY_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.granularityTabDiv_ID);
+			}else if(category == FilterManager.LIB_CATEGORY){
+				div = $(SetupManager.pound+SetupManager.libraryTabDiv_ID);
+			}
+			
+			
+			div.empty();
+			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+			div.append(table);
+			
+			
+//			var width = $(SetupManager.pound+SetupManager.filterDiv_ID).width();
+//			div.width(width);
 			
 			for(i = 0; i<arrayValues.length; i = i+2){
 				var filterCell;
 				var tableRow;
-				if(i == 0 || i%8 == 0){
+				//set to mod 6 for 3 cells per row because we get a score between
+				//names
+				if(i == 0 || i%6 == 0){
 					
 					tableRow = $(SetupManager.trOpen+SetupManager.trClose);
 					table.append(tableRow);
@@ -326,8 +373,8 @@ var Controller = {
 					 rainbow.setSpectrum('#FFCCCC', '#99E6FF');
 					 var hexColor = rainbow.colourAt(i);
 
-					//var text = $("<text>["+arrayValues[i+1]+"] "+arrayValues[i]+""+"</text>");
-					var text = $("<text>"+arrayValues[i]+""+"</text>");
+					var text = $("<text>["+arrayValues[i+1]+"] "+arrayValues[i]+""+"</text>");
+					//var text = $("<text>"+arrayValues[i]+""+"</text>");
 					//text.css("color","white");
 					filterCell.append(text);
 					
@@ -385,7 +432,11 @@ var Controller = {
 
 				
 			}
-		},
+			
+		}
+		
+		
+		,
 		
 		getOnlyFacetValues	:	function(facetArray){
 			

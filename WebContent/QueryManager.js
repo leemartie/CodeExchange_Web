@@ -8,6 +8,11 @@ var QueryManager = {
 	linkArrayData	:	new Array(),
 	currentQuery	:	"",
 	currentStart	:	0,
+	topAuthors: new Array(),
+	tagArray: new Array(),
+	projectArray: new Array(),
+	libArray: new Array(),
+	granArray: new Array(),
 
 	/**
 	 * 
@@ -263,7 +268,30 @@ var QueryManager = {
 
 		// alert(url);
 		$.getJSON(url);
+	},
+	
+	
+	populateFilters	:	function(){
+		//populate filters - get updated only on issuing new query or new fq by some facet
+				
+		
+		Controller.populateFilter(topAuthors,FilterManager.AUTHOR_CATEGORY);
+		
+		
+		Controller.populateFilter(tagArray,FilterManager.TAG_CATEGORY);
+		
+		
+		Controller.populateFilter(projectArray, FilterManager.PROJECT_CATEGORY);
+		
+		
+		Controller.populateFilter(libArray, FilterManager.LIB_CATEGORY);
+		
+		
+		Controller.populateFilter(granArray, FilterManager.GRANULARITY_CATEGORY);	
+		
+
 	}
+	
 
 };
 
@@ -347,33 +375,14 @@ function on_data(data) {
 
 	QueryManager.makeNavigation(data.response.numFound, 4);
 	
-	//populate filters - get updated only on issuing new query or new fq by some facet
-	var topAuthors = data.facet_counts.facet_fields.author;
-	//var avatars = 	 data.facet_counts.facet_fields.author_avatar;
+	topAuthors = data.facet_counts.facet_fields.author;
+	tagArray = data.facet_counts.facet_fields.snippet_tag;
+	projectArray = data.facet_counts.facet_fields.project;
+	libArray = data.facet_counts.facet_fields.snippet_imports;
+	granArray = data.facet_counts.facet_fields.snippet_granularity;
 	
-	
-	Controller.populateFilter(topAuthors,FilterManager.AUTHOR_CATEGORY);
-	
-	var tagArray = data.facet_counts.facet_fields.snippet_tag;
-	Controller.populateFilter(tagArray,FilterManager.TAG_CATEGORY);
-	
-	var projectArray = data.facet_counts.facet_fields.project;
-	Controller.populateFilter(projectArray, FilterManager.PROJECT_CATEGORY);
-	
-	var libArray = data.facet_counts.facet_fields.snippet_imports;
-	Controller.populateFilter(libArray, FilterManager.LIB_CATEGORY);
-	
-	var granArray = data.facet_counts.facet_fields.snippet_granularity;
-	Controller.populateFilter(granArray, FilterManager.GRANULARITY_CATEGORY);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	QueryManager.populateFilters();
 }
+
+
+

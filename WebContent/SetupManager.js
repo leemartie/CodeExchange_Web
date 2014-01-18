@@ -140,7 +140,6 @@ var SetupManager = {
 			
 // --- create elements
 			
-			
 			var tableHeader = $(SetupManager.tableOpen+SetupManager.tableClose);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableHeader);
 			tableHeader.addClass("HeaderTable");
@@ -150,6 +149,8 @@ var SetupManager = {
 			var rowHeader = $(SetupManager.trOpen+SetupManager.trClose);
 			tableHeader.append(rowHeader);
 			tableHeader.addClass("HeaderTR");
+			
+			
 			
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			rowHeader.append(queryTD);
@@ -193,10 +194,69 @@ var SetupManager = {
 			filterDiv.append(tabList);
 			tabList.attr(SetupManager.ID_attr,SetupManager.tabList_ID);
 			
+			
+			//filterHeaderDive
+			var filterHeader = $("<form></form>");
+			filterDiv.append(filterHeader);
+			filterHeader.addClass("FilterHeader");
+			
+//			var text = $("<text>sort by:</text>");
+//			filterHeader.append(text);
+//			text.addClass("FloatLeft");
+			
+			
+			//sort toggle
+			var radioDiv = $(SetupManager.divOpen+SetupManager.divClose);
+			radioDiv.attr(SetupManager.ID_attr,"radio");
+			
+			filterHeader.append(radioDiv);
+
+			var inputRadio = $(SetupManager.inputOpen+SetupManager.inputClose);
+			radioDiv.append(inputRadio);
+			
+			inputRadio.attr("type","radio");
+			inputRadio.attr("name","radio");
+			inputRadio.attr(SetupManager.ID_attr,"radio1");
+			inputRadio.attr("checked","false");
+			inputRadio.click(function(event) {
+				
+				Controller.sortFiltersAlpha = true;
+				QueryManager.populateFilters();
+				
+			});
+			
+			var radio1Label = $('<label>sort alphabetically</label>');
+			radio1Label.attr("for","radio1");
+			
+			filterHeader.append(radio1Label);
+
+			
+			var inputRadio2 = $(SetupManager.inputOpen+SetupManager.inputClose);
+			radioDiv.append(inputRadio2);
+			inputRadio2.attr("type","radio");
+			inputRadio2.attr("name","radio");
+			inputRadio2.attr(SetupManager.ID_attr,"radio2");
+			inputRadio2.attr("checked","true");
+			inputRadio2.click(function(event) {
+				
+				Controller.sortFiltersAlpha = false;
+				QueryManager.populateFilters();
+			});
+			
+			
+			var radio2Label = $('<label>sort by property count</label>');
+			radio2Label.attr("for","radio2");
+			filterHeader.append(radio2Label);
+			
+			$( "#radio" ).buttonset();
+			
 			//tag tab
 			var tabTags = $(SetupManager.listItemOpen+SetupManager.listItemClose);
 			tabTags.append($('<a href="#'+SetupManager.tagTabDiv_ID+'">Tags</a>'));
 			tabList.append(tabTags);
+			
+			
+			
 			
 			//tag div
 			var tagDiv = $(SetupManager.divOpen+SetupManager.divClose);
@@ -275,10 +335,11 @@ var SetupManager = {
 			//logo
 			var logo = $(SetupManager.tdOpen+SetupManager.tdClose);
 			rowHeader.append(logo);
-			var logoName = $('<pre>CodeExchange</pre>');
+			var logoName = $('<img src="http://codeexchange.ics.uci.edu/logo2.png"/>');
 			logo.append(logoName);
 			logo.addClass("Logo");
 			logo.attr("rowspan", "2");
+			logo.attr("valign","middle");
 			
 			
 	
@@ -411,13 +472,16 @@ var SetupManager = {
 				
 				$('.ResultTable').width((screenWidth)-SetupManager.sideBuffer);
 				$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
-				
+								
 				$(SetupManager.pound+SetupManager.resultTable_ID).width(screenWidth-SetupManager.sideBuffer);
 				$(SetupManager.pound+SetupManager.resultTable_ID).height(screenHeight/2);
 				
-				var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
-				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth/2)-SetupManager.sideBuffer);
-				$(SetupManager.pound+SetupManager.filterDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer);
+				//var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
+				
+				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth/2)-SetupManager.sideBuffer+25);
+				$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
+				
+				//$(SetupManager.ID_attr,SetupManager.tableHeader_ID).width(screenWidth-SetupManager.sideBuffer);
 				
 				status.width(screenWidth  - 30);
 				
@@ -443,10 +507,12 @@ var SetupManager = {
 			$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			
-			var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
-			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth/2)-SetupManager.sideBuffer);
-			$(SetupManager.pound+SetupManager.filterDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer);
+		//	var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
 			
+			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth/2)-SetupManager.sideBuffer+25);
+			$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
+			
+			//$(SetupManager.ID_attr,SetupManager.tableHeader_ID).width(screenWidth-SetupManager.sideBuffer);
 			
 			status.width(screenWidth - 30);
 			
