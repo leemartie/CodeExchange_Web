@@ -21,6 +21,7 @@ var URLQueryCreator = {
 				+ '&facet.field=snippet_imports'
 				+ '&facet.field=snippet_granularity'
 				+ '&facet.mincount=1';
+				//+ '&facet.limit=200';
 			
 			
 			

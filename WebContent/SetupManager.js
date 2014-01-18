@@ -527,11 +527,15 @@ var SetupManager = {
 			var tempRowId;
 			var tempTdId;
 			
+
+			
 			for(var i = 0; i< numOfCells; i++){
 				tempTdId = "td"+i;
 				
+				
 				//new row every even - where assumption is implemented
 				if( (i%2) == 0){
+					
 					tempRowId = "row"+i;
 					//make row
 					var row = $(SetupManager.trOpen+SetupManager.trClose);
@@ -608,6 +612,8 @@ var SetupManager = {
 				
 				
 			}
+			
+
 		}
 		
 

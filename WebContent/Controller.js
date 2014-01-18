@@ -523,7 +523,7 @@ var Controller = {
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 		           
 		  
-		            width:  $(SetupManager.pound+SetupManager.resultTable_ID).width(),
+		            width:  $(SetupManager.pound+SetupManager.resultTable_ID).width()-16,
 		            height: $(SetupManager.pound+SetupManager.resultTable_ID).height(),
 		            left:	'0px',
 		            top:	'0px'
@@ -567,24 +567,26 @@ var Controller = {
 		toggleCells		:	function(cell){
 			var length = SetupManager.cellDivArray_ID.length;
 			
+			var rowIndex = 0;
+			
 			for(var i = 0; i<length; i++){
 		          if(cell != SetupManager.cellDivArray_ID[i]){
 		        	  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).toggle();
 		        	  $(SetupManager.pound+SetupManager.cellDivArray_ID[i]).toggle();
-		        	  
-		        	  //TODO: need to generalize this!!
-		        	  if(i == 2 || i == 3){
-		        		  $("#row0").toggle();
-		          		}else{
-		          			$("#row1").toggle();
-		        	  }
-		        	 // $("#td0").toggle();
-		        	  
 		        	 
-		        	 
+		          }else{
+		        	  rowIndex = i;
+		          }
 			}
+      	  
+      	  //TODO: need to generalize this!!
+      	  if(rowIndex == 2 || rowIndex == 3){
+      		  		$("#row0").toggle();	  
+        		}else{
+        			$("#row2").toggle();	
+        		}
+      	
 		}
-	}
 		
 		
 };
