@@ -335,7 +335,7 @@ var SetupManager = {
 			//logo
 			var logo = $(SetupManager.tdOpen+SetupManager.tdClose);
 			rowHeader.append(logo);
-			var logoName = $('<img src="http://codeexchange.ics.uci.edu/logo2.png"/>');
+			var logoName = $('<a href="index.html"><img src="http://codeexchange.ics.uci.edu/logo2.png"/></a>');
 			logo.append(logoName);
 			logo.addClass("Logo");
 			logo.attr("rowspan", "2");
