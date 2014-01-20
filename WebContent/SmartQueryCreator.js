@@ -11,7 +11,7 @@ var SmartQueryCreator = {
 			
 			
 			query = SmartQueryCreator.escapeSpecialCharacters(query);
-			queryArray = query.split(" ");
+			queryArray = query.split(/\s+/);
 	
 			for(var i = 0; i<queryArray.length; i++){
 				if(i == 0){
