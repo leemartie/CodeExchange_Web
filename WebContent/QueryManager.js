@@ -304,6 +304,14 @@ function on_nextData(data) {
 	var docs = data.response.docs;
 	// lets clear all the displayed results
 	Controller.clearAllCode();
+	
+	//highlight matched keywords
+	var highlight = new Array();	
+	$.each(data.highlighting, function(i, hitem){
+	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/);
+	    highlight[i] = match[1];
+	});
+	
 	// let's populate the table with the results
 	$.each(docs,
 			function(i, item) {
@@ -315,8 +323,21 @@ function on_nextData(data) {
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author, item.author_type);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
-					Controller.setCode(SetupManager.resultPreArray_ID[i],
-							item.snippet);
+					
+					
+					//highlight matched keywords
+				    var word = highlight[item.id];
+				    word = escape(word);
+				    var result = item.snippet.replace(new RegExp(word, 'g'), '</code><em>' + word + '</em><code data-language="java">');
+				    // do something with the result
+		
+				
+				
+				
+				Controller.setCode(SetupManager.resultPreArray_ID[i],
+						result);
+					
+
 //					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 //							item.snippet_address);
 				}
@@ -325,6 +346,10 @@ function on_nextData(data) {
 			});
 	// now highlight the code
 	CodeFormatter.highLight();
+	
+
+	
+	
 	Controller.setStatus("DONE LOADING CODE");
 }
 
@@ -347,6 +372,14 @@ function on_data(data) {
 
 	// lets clear all the displayed results
 	Controller.clearAllCode();
+	
+	//highlight matched keywords
+	var highlight = new Array();	
+	$.each(data.highlighting, function(i, hitem){
+	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/);
+	    highlight[i] = match[1];
+	});
+	
 	// let's populate the table with the results
 	$.each(docs,
 			function(i, item) {
@@ -361,8 +394,18 @@ function on_data(data) {
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
 							item.project);
 					//TODO will need to replace item.snippet with content from url
+					
+
+					    var word = highlight[item.id];
+					    word = escape(word);
+					    var result = item.snippet.replace(new RegExp(word, 'g'), '</code><em>' + word + '</em><code data-language="java">');
+					    // do something with the result
+			
+					
+					
+					
 					Controller.setCode(SetupManager.resultPreArray_ID[i],
-							item.snippet);
+							result);
 //					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 //							item.snippet_address);
 				}
@@ -370,6 +413,9 @@ function on_data(data) {
 			});
 	// now highlight the code
 	CodeFormatter.highLight();
+	
+
+	
 	// update status
 	Controller.setStatus("DONE - " + total);
 
