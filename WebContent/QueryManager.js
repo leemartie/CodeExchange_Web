@@ -308,8 +308,9 @@ function on_nextData(data) {
 	//highlight matched keywords
 	var highlight = new Array();	
 	$.each(data.highlighting, function(i, hitem){
-	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/);
-	    highlight[i] = match[1];
+		
+	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
+	    highlight[i] = match;
 	});
 	
 	// let's populate the table with the results
@@ -326,17 +327,16 @@ function on_nextData(data) {
 					
 					
 					//highlight matched keywords
-				    var word = highlight[item.id];
-				    word = escape(word);
-				    var result = item.snippet.replace(new RegExp(word, 'g'), '</code><em>' + word + '</em><code data-language="java">');
-				    // do something with the result
-		
+					$.each(highlight[item.id], function(j, word){
+						//    word = escape(word);
+							word = word.substring(4,word.length-5);
+						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
+							Controller.setCode(SetupManager.resultPreArray_ID[i],
+									result);
+						});
 				
 				
-				
-				Controller.setCode(SetupManager.resultPreArray_ID[i],
-						result);
-					
+
 
 //					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 //							item.snippet_address);
@@ -376,8 +376,9 @@ function on_data(data) {
 	//highlight matched keywords
 	var highlight = new Array();	
 	$.each(data.highlighting, function(i, hitem){
-	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/);
-	    highlight[i] = match[1];
+		
+	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
+	    highlight[i] = match;
 	});
 	
 	// let's populate the table with the results
@@ -395,17 +396,21 @@ function on_data(data) {
 							item.project);
 					//TODO will need to replace item.snippet with content from url
 					
+						$.each(highlight[item.id], function(j, word){
+						//    word = escape(word);
+							word = word.substring(4,word.length-5);
+						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
+							Controller.setCode(SetupManager.resultPreArray_ID[i],
+									result);
+						});
+					   // var word = highlight[item.id];
 
-					    var word = highlight[item.id];
-					    word = escape(word);
-					    var result = item.snippet.replace(new RegExp(word, 'g'), '</code><em>' + word + '</em><code data-language="java">');
 					    // do something with the result
 			
 					
 					
 					
-					Controller.setCode(SetupManager.resultPreArray_ID[i],
-							result);
+
 //					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 //							item.snippet_address);
 				}

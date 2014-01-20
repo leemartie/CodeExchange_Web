@@ -23,7 +23,6 @@ var URLQueryCreator = {
 				+ '&facet.mincount=1'
 				+ '&hl=true'
 				+ '&hl.fl=snippet'
-				+ "&hl.requireFieldMatch=true"
 				+ '&hl.highlightMultiTerm=true ';
 				//+ '&facet.limit=200';
 			
