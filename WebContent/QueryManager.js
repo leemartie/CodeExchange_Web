@@ -44,6 +44,18 @@ var QueryManager = {
 		
 	},
 	
+	submitAutoComplete	:	function(field, userTyped){
+		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
+				'fl=id snippet_extends&rows=0&q=*:*&facet=true&' +
+				'facet.field=snippet_extends&facet.mincount=1&facet.prefix='+userTyped +
+				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+		
+		results = $.getJSON(queryAutoComplete);
+		
+	},
+	
+	
+	
 	/**
 	 * 
 	 * @returns
@@ -426,14 +438,18 @@ function on_data(data) {
 
 	QueryManager.makeNavigation(data.response.numFound, 4);
 	
-	topAuthors = data.facet_counts.facet_fields.author;
-	tagArray = data.facet_counts.facet_fields.snippet_tag;
-	projectArray = data.facet_counts.facet_fields.project;
-	libArray = data.facet_counts.facet_fields.snippet_imports;
-	granArray = data.facet_counts.facet_fields.snippet_granularity;
-	
-	QueryManager.populateFilters();
+//	topAuthors = data.facet_counts.facet_fields.author;
+//	tagArray = data.facet_counts.facet_fields.snippet_tag;
+//	projectArray = data.facet_counts.facet_fields.project;
+//	libArray = data.facet_counts.facet_fields.snippet_imports;
+//	granArray = data.facet_counts.facet_fields.snippet_granularity;
+//	
+//	QueryManager.populateFilters();
 }
 
+function autoCompleteCallBack(data){
+	var results = data.facet_counts.facet_fields.snippet_extends;
+	$(SetupManager.pound+SetupManager.extendsInputID).autocomplete({ source: results });
 
+}
 

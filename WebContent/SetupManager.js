@@ -81,6 +81,8 @@ var SetupManager = {
 		
 		filterTable_ID			:	"filterTable_ID",
 		
+		extendsInputID			:	"extends_ID",
+		
 			
 		//These are the CSS classes
 		Cell_CSS_Class			:	"Cell",
@@ -243,13 +245,37 @@ var SetupManager = {
 			filterTable.attr(SetupManager.ID_attr,SetupManager.filterTable_ID);
 			filterSideTD.append(filterTable);
 			
+			var classHeader = $("<th>Class properties</th>");
+			filterTable.append(classHeader);
+			
 			//making the extnds filter
 			var extendsRow = $(SetupManager.trOpen+SetupManager.trClose);
 			filterSideTD.append(extendsRow);
 			var extendsTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			extendsRow.append(extendsTD);
 			
-
+			extendsTD.append("<text>extends&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</text>");
+			var extendsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+			extendsTD.append(extendsInput);
+			extendsInput.attr(SetupManager.ID_attr, SetupManager.extendsInputID);
+			$(SetupManager.pound+SetupManager.extendsInputID).autocomplete({ source: [] });
+			
+			//making the implements filter
+			var implementsRow = $(SetupManager.trOpen+SetupManager.trClose);
+			filterSideTD.append(implementsRow);
+			var implementsTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			implementsRow.append(implementsTD);
+			
+			implementsTD.append("<text>implements&nbsp&nbsp&nbsp&nbsp</text>");
+			var implementsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+			implementsTD.append(implementsInput);
+			
+//-- autocomplete extends
+			
+			extendsInput.keypress(function(e){
+				autoCompleteQuery = extendsInput.val();
+				QueryManager.submitAutoComplete('extends',autoCompleteQuery);	
+			});
 				
 // --- set dimensions (good to do later so can to relative to other's dimensions
 			
@@ -367,7 +393,7 @@ var SetupManager = {
 		//	$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 		
 			
-			$('.ResultTR').width(((sscreenBuffer))-SetupManager.sideBuffer);
+			$('.ResultTR').width(((screenBuffer))-SetupManager.sideBuffer);
 			$('.ResultTR').height((screenHeightBuffer));
 		//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
 		

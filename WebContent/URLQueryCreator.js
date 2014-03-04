@@ -1,6 +1,6 @@
 var URLQueryCreator = {
 		server : 'codeexchange.ics.uci.edu',
-		collection	:	'noTagImportCollection',
+		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 		
 		getQueryURL	:	function(callbackFunctionName){
 		
@@ -10,7 +10,7 @@ var URLQueryCreator = {
 			
 			query = SmartQueryCreator.makeSmartQuery(query);
 	
-			var url = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?q='
+			var url = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ "snippet:(" + query + ")"
 				+ '&start=' + start 
 				+ '&fl= id author_type snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
