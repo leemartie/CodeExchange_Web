@@ -524,7 +524,7 @@ var Controller = {
 		           
 		  
 		            width:  $(SetupManager.pound+SetupManager.resultTable_ID).width()-16,
-		            height: $(SetupManager.pound+SetupManager.resultTable_ID).height(),
+		            height: $(SetupManager.pound+SetupManager.resultTable_ID).height()-300,
 		            left:	'0px',
 		            top:	'0px'
 		          }, 700 );
@@ -580,11 +580,11 @@ var Controller = {
 			}
       	  
       	  //TODO: need to generalize this!!
-      	  if(rowIndex == 2 || rowIndex == 3){
-      		  		$("#row0").toggle();	  
-        		}else{
-        			$("#row2").toggle();	
-        		}
+//      	  if(rowIndex == 2 || rowIndex == 3){
+//      		  		$("#row0").toggle();	  
+//        		}else{
+//        			$("#row2").toggle();	
+//        		}
       	
 		}
 		

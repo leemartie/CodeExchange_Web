@@ -140,206 +140,210 @@ var SetupManager = {
 			
 // --- create elements
 			
-			var tableHeader = $(SetupManager.tableOpen+SetupManager.tableClose);
-			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableHeader);
-			tableHeader.addClass("HeaderTable");
-			tableHeader.attr(SetupManager.ID_attr,SetupManager.tableHeader_ID);
+			var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
+			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableForSite);
+			tableForSite.addClass("HeaderTable");
+			tableForSite.attr(SetupManager.ID_attr,SetupManager.tableHeader_ID);
 			
-			
-			var rowHeader = $(SetupManager.trOpen+SetupManager.trClose);
-			tableHeader.append(rowHeader);
-			tableHeader.addClass("HeaderTR");
+			var headerRow = $(SetupManager.trOpen+SetupManager.trClose);
+			tableForSite.append(headerRow);
+			headerRow.addClass("HeaderTR");
 			
 			
 			
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			rowHeader.append(queryTD);
-			queryTD.addClass("HeaderTD");
+			headerRow.append(queryTD);
+			
+			queryTD.attr("bgcolor","darkgray");
+			
+			//queryTD.addClass("HeaderTD");
+			
+			//logo
+			var logo = $(SetupManager.divOpen+SetupManager.divClose);
+			queryTD.append(logo);
+			var logoName = $('<a href="index.html"><img src="http://codeexchange.ics.uci.edu/logo2.png"/></a>');
+			logo.append(logoName);
+			logo.addClass("Logo");
+
 			
 			//make keyword input
 			var input = $(SetupManager.textAreaOpen+SetupManager.textAreaClose);
 			//append to header
-			queryTD.append(input);
+			logo.append(input);
 			//set id
 			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
 			input.attr(SetupManager.placeholder_attr, "keywords or code here (shift-enter for newline)");
 			
+			//side filter
+			var filterSideTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			filterSideTD.attr("rowspan","4");
+			headerRow.append(filterSideTD);
+			
+			filterSideTD.addClass("FilterSideTD");
 	
-			var filterTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			rowHeader.append(filterTD);
-			filterTD.addClass("FilterHeaderTD");
-			
-			
-		
-			//make filter summary
-			var filterSummary = $(SetupManager.divOpen+SetupManager.divClose);
-			//append to header
-			filterTD.append(filterSummary);
-			//set id
-			filterSummary.attr(SetupManager.ID_attr,SetupManager.filterSummaryDiv_ID);
-			filterSummary.addClass("FilterSummary");
-		//	filterSummary.append($('<text>no filters set</text>'));
-			
-			
-			//make filter input
-			var filterDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			//append to header
-			filterTD.append(filterDiv);
-			//set id
-			filterDiv.attr(SetupManager.ID_attr,SetupManager.filterDiv_ID);
-			filterDiv.addClass("Filter");
-		  
-			//list
-			var tabList = $(SetupManager.listOpen+SetupManager.listClose);
-			filterDiv.append(tabList);
-			tabList.attr(SetupManager.ID_attr,SetupManager.tabList_ID);
-			
-			
-			//filterHeaderDive
-			var filterHeader = $("<form></form>");
-			filterDiv.append(filterHeader);
-			filterHeader.addClass("FilterHeader");
-			
-//			var text = $("<text>sort by:</text>");
-//			filterHeader.append(text);
-//			text.addClass("FloatLeft");
-			
-			
-			//sort toggle
-			var radioDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			radioDiv.attr(SetupManager.ID_attr,"radio");
-			
-			filterHeader.append(radioDiv);
-
-			var inputRadio = $(SetupManager.inputOpen+SetupManager.inputClose);
-			radioDiv.append(inputRadio);
-			
-			inputRadio.attr("type","radio");
-			inputRadio.attr("name","radio");
-			inputRadio.attr(SetupManager.ID_attr,"radio1");
-			inputRadio.attr("checked","false");
-			inputRadio.click(function(event) {
-				
-				Controller.sortFiltersAlpha = true;
-				QueryManager.populateFilters();
-				
-			});
-			
-			var radio1Label = $('<label>sort alphabetically</label>');
-			radio1Label.attr("for","radio1");
-			
-			filterHeader.append(radio1Label);
-
-			
-			var inputRadio2 = $(SetupManager.inputOpen+SetupManager.inputClose);
-			radioDiv.append(inputRadio2);
-			inputRadio2.attr("type","radio");
-			inputRadio2.attr("name","radio");
-			inputRadio2.attr(SetupManager.ID_attr,"radio2");
-			inputRadio2.attr("checked","true");
-			inputRadio2.click(function(event) {
-				
-				Controller.sortFiltersAlpha = false;
-				QueryManager.populateFilters();
-			});
-			
-			
-			var radio2Label = $('<label>sort by property count</label>');
-			radio2Label.attr("for","radio2");
-			filterHeader.append(radio2Label);
-			
-			$( "#radio" ).buttonset();
-			
-			//tag tab
-			var tabTags = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-			tabTags.append($('<a href="#'+SetupManager.tagTabDiv_ID+'">Tags</a>'));
-			tabList.append(tabTags);
-			
-			
-			
-			
-			//tag div
-			var tagDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			filterDiv.append(tagDiv);
-			tagDiv.append($('<p>tags here</p>'));
-			tagDiv.attr(SetupManager.ID_attr,SetupManager.tagTabDiv_ID);
-			
-			//tab people
-			var peopleTabs = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-			peopleTabs.append($('<a href="#'+SetupManager.peopleTabDiv_ID+'">People</a>'));
-			tabList.append(peopleTabs);
-			
-			//people div
-			var peopleDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			filterDiv.append(peopleDiv);
-			peopleDiv.append($('<p>people here</p>'));
-			peopleDiv.attr(SetupManager.ID_attr,SetupManager.peopleTabDiv_ID);
-			
-			//tab projects
-			var projectTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-			projectTab.append($('<a href="#'+SetupManager.projectTabDiv_ID+'">Projects</a>'));
-			tabList.append(projectTab);
-			
-			//project div
-			var projectDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			filterDiv.append(projectDiv);
-			projectDiv.append($('<p>projects here</p>'));
-			projectDiv.attr(SetupManager.ID_attr,SetupManager.projectTabDiv_ID);
-			
-			//tab lib
-			var libTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-			libTab.append($('<a href="#'+SetupManager.libraryTabDiv_ID+'">Libraries</a>'));
-			tabList.append(libTab);
-			
-			//lib div
-			var libDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			filterDiv.append(libDiv);
-			libDiv.append($('<p>libs here</p>'));
-			libDiv.attr(SetupManager.ID_attr,SetupManager.libraryTabDiv_ID);			
-			//make it tabs NOTE: must come after making children!!
-			
-			
-			//granularity lib
-			var granTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-			granTab.append($('<a href="#'+SetupManager.granularityTabDiv_ID+'">Granularities</a>'));
-			tabList.append(granTab);
-			
-			//lib div
-			var granDiv = $(SetupManager.divOpen+SetupManager.divClose);
-			filterDiv.append(granDiv);
-			granDiv.append($('<p>granularities here</p>'));
-			granDiv.attr(SetupManager.ID_attr,SetupManager.granularityTabDiv_ID);			
-			//make it tabs NOTE: must come after making children!!
-			filterDiv.tabs();
-			
-			if(!Controller.headerExpanded){
-				filterDiv.toggle();
-			}
+//			var filterTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+//			rowHeader.append(filterTD);
+//			filterTD.addClass("FilterHeaderTD");
+//			
+//			
+//		
+//			//make filter summary
+//			var filterSummary = $(SetupManager.divOpen+SetupManager.divClose);
+//			//append to header
+//			filterTD.append(filterSummary);
+//			//set id
+//			filterSummary.attr(SetupManager.ID_attr,SetupManager.filterSummaryDiv_ID);
+//			filterSummary.addClass("FilterSummary");
+//			
+//			
+//			//make filter input
+//			var filterDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			//append to header
+//			filterTD.append(filterDiv);
+//			//set id
+//			filterDiv.attr(SetupManager.ID_attr,SetupManager.filterDiv_ID);
+//			filterDiv.addClass("Filter");
+//		  
+//			//list
+//			var tabList = $(SetupManager.listOpen+SetupManager.listClose);
+//			filterDiv.append(tabList);
+//			tabList.attr(SetupManager.ID_attr,SetupManager.tabList_ID);
+//			
+//			
+//			//filterHeaderDive
+//			var filterHeader = $("<form></form>");
+//			filterDiv.append(filterHeader);
+//			filterHeader.addClass("FilterHeader");
+//			
+//			
+//			//sort toggle
+//			var radioDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			radioDiv.attr(SetupManager.ID_attr,"radio");
+//			
+//			filterHeader.append(radioDiv);
+//
+//			var inputRadio = $(SetupManager.inputOpen+SetupManager.inputClose);
+//			radioDiv.append(inputRadio);
+//			
+//			inputRadio.attr("type","radio");
+//			inputRadio.attr("name","radio");
+//			inputRadio.attr(SetupManager.ID_attr,"radio1");
+//			inputRadio.attr("checked","false");
+//			inputRadio.click(function(event) {
+//				
+//				Controller.sortFiltersAlpha = true;
+//				QueryManager.populateFilters();
+//				
+//			});
+//			
+//			var radio1Label = $('<label>sort alphabetically</label>');
+//			radio1Label.attr("for","radio1");
+//			
+//			filterHeader.append(radio1Label);
+//
+//			
+//			var inputRadio2 = $(SetupManager.inputOpen+SetupManager.inputClose);
+//			radioDiv.append(inputRadio2);
+//			inputRadio2.attr("type","radio");
+//			inputRadio2.attr("name","radio");
+//			inputRadio2.attr(SetupManager.ID_attr,"radio2");
+//			inputRadio2.attr("checked","true");
+//			inputRadio2.click(function(event) {
+//				
+//				Controller.sortFiltersAlpha = false;
+//				QueryManager.populateFilters();
+//			});
+//			
+//			
+//			var radio2Label = $('<label>sort by property count</label>');
+//			radio2Label.attr("for","radio2");
+//			filterHeader.append(radio2Label);
+//			
+//			$( "#radio" ).buttonset();
+//			
+//			//tag tab
+//			var tabTags = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+//			tabTags.append($('<a href="#'+SetupManager.tagTabDiv_ID+'">Tags</a>'));
+//			tabList.append(tabTags);
+//			
+//			
+//			
+//			
+//			//tag div
+//			var tagDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			filterDiv.append(tagDiv);
+//			tagDiv.append($('<p>tags here</p>'));
+//			tagDiv.attr(SetupManager.ID_attr,SetupManager.tagTabDiv_ID);
+//			
+//			//tab people
+//			var peopleTabs = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+//			peopleTabs.append($('<a href="#'+SetupManager.peopleTabDiv_ID+'">People</a>'));
+//			tabList.append(peopleTabs);
+//			
+//			//people div
+//			var peopleDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			filterDiv.append(peopleDiv);
+//			peopleDiv.append($('<p>people here</p>'));
+//			peopleDiv.attr(SetupManager.ID_attr,SetupManager.peopleTabDiv_ID);
+//			
+//			//tab projects
+//			var projectTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+//			projectTab.append($('<a href="#'+SetupManager.projectTabDiv_ID+'">Projects</a>'));
+//			tabList.append(projectTab);
+//			
+//			//project div
+//			var projectDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			filterDiv.append(projectDiv);
+//			projectDiv.append($('<p>projects here</p>'));
+//			projectDiv.attr(SetupManager.ID_attr,SetupManager.projectTabDiv_ID);
+//			
+//			//tab lib
+//			var libTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+//			libTab.append($('<a href="#'+SetupManager.libraryTabDiv_ID+'">Libraries</a>'));
+//			tabList.append(libTab);
+//			
+//			//lib div
+//			var libDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			filterDiv.append(libDiv);
+//			libDiv.append($('<p>libs here</p>'));
+//			libDiv.attr(SetupManager.ID_attr,SetupManager.libraryTabDiv_ID);			
+//			//make it tabs NOTE: must come after making children!!
+//			
+//			
+//			//granularity lib
+//			var granTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+//			granTab.append($('<a href="#'+SetupManager.granularityTabDiv_ID+'">Granularities</a>'));
+//			tabList.append(granTab);
+//			
+//			//lib div
+//			var granDiv = $(SetupManager.divOpen+SetupManager.divClose);
+//			filterDiv.append(granDiv);
+//			granDiv.append($('<p>granularities here</p>'));
+//			granDiv.attr(SetupManager.ID_attr,SetupManager.granularityTabDiv_ID);			
+//			//make it tabs NOTE: must come after making children!!
+//			filterDiv.tabs();
+//			
+//			if(!Controller.headerExpanded){
+//				filterDiv.toggle();
+//			}
 			
 			//make header
-			var header = $(SetupManager.tableOpen+SetupManager.tableClose);
-			//append to entier site
-			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(header);
-			//set id
-			header.attr(SetupManager.ID_attr,SetupManager.headerDiv_ID);
-			header.addClass("Header");
+//			var header = $(SetupManager.tableOpen+SetupManager.tableClose);
+//			//append to entier site
+//			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(header);
+//			//set id
+//			header.attr(SetupManager.ID_attr,SetupManager.headerDiv_ID);
+//			header.addClass("Header");
 			
 			//header row
 			var rowHeader = $(SetupManager.trOpen+SetupManager.trClose);
-			header.append(rowHeader);
+			tableForSite.append(rowHeader);
 			
 			//row 2
 			var rowHeader2 = $(SetupManager.trOpen+SetupManager.trClose);
-			header.append(rowHeader2);
+			tableForSite.append(rowHeader2);
 			
-			//logo
-			var logo = $(SetupManager.tdOpen+SetupManager.tdClose);
-			rowHeader.append(logo);
-			var logoName = $('<a href="index.html"><img src="http://codeexchange.ics.uci.edu/logo2.png"/></a>');
-			logo.append(logoName);
-			logo.addClass("Logo");
-			logo.attr("rowspan", "2");
-			logo.attr("valign","middle");
+
 			
 			
 	
@@ -351,7 +355,7 @@ var SetupManager = {
 			status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
 			status.attr("valign","top");
 			status.attr("padding-bottom", "0px");
-			status.addClass("StatusTD");
+			//status.addClass("StatusTD");
 			
 			Controller.setStatus("Let's find some code.");
 			
@@ -366,13 +370,21 @@ var SetupManager = {
 			pageNavigation.attr("valign","top");
 			pageNavigation.addClass("StatusTD");
 			
+			//result row
+			var resultRow = $(SetupManager.trOpen+SetupManager.trClose);
+			tableForSite.append(resultRow);
+			
+			//result td
+			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			resultRow.append(resultTD);
+			
 			
 			//make table
 			var tableOfResults = $(SetupManager.tableOpen+SetupManager.tableClose);
 			//set id
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site
-			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableOfResults);
+			resultTD.append(tableOfResults);
 			//set width
 			$(SetupManager.pound+SetupManager.resultTable_ID).width(screenWidth-SetupManager.sideBuffer);
 			//set height
@@ -381,7 +393,7 @@ var SetupManager = {
 			tableOfResults.addClass("ResultTable");
 			
 			//make cells
-			SetupManager.makeTableCells(4);
+			SetupManager.makeTableCells(3);
 				
 // --- set dimensions (good to do later so can to relative to other's dimensions
 			
@@ -431,21 +443,21 @@ var SetupManager = {
 
 	      });
 			
-//listener for expand input
-			$(SetupManager.pound+SetupManager.tableHeader_ID).mouseenter(function(event){
-				if(!Controller.headerExpanded){
-					Controller.expandHeader();
-				}
-			});
-			
-
-//listen to collapse input
-			$(SetupManager.pound+SetupManager.tableHeader_ID).mouseleave(function(event){
-				if(Controller.headerExpanded){
-					Controller.collapseHeader();
-				}
-				
-			});
+////listener for expand input
+//			$(SetupManager.pound+SetupManager.tableHeader_ID).mouseenter(function(event){
+//				if(!Controller.headerExpanded){
+//					Controller.expandHeader();
+//				}
+//			});
+//			
+//
+////listen to collapse input
+//			$(SetupManager.pound+SetupManager.tableHeader_ID).mouseleave(function(event){
+//				if(Controller.headerExpanded){
+//					Controller.collapseHeader();
+//				}
+//				
+//			});
 			
 			
 			// --- add listeners to cell 
@@ -457,31 +469,28 @@ var SetupManager = {
 				screenWidth = jQuery(window).width();
 				screenHeight = jQuery(window).height();
 				
-				$('.Result').width((screenWidth/2)-SetupManager.sideBuffer);
-				$('.Result').height((screenHeight/4));
+				$('.Result').width((screenWidth/3)-SetupManager.sideBuffer);
+				$('.Result').height((screenHeight-300));
 
-				$('.ResultTD').width((screenWidth/2)-SetupManager.sideBuffer);
-				$('.ResultTD').height((screenHeight/4));		
-				$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
+				$('.ResultTD').width((screenWidth/3)-SetupManager.sideBuffer);
+				$('.ResultTD').height((screenHeight-300));		
+				//$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 			
 				
 				$('.ResultTR').width((screenWidth)-SetupManager.sideBuffer);
-				$('.ResultTR').height((screenHeight/4));
-				$('.HeaderTR').width((screenWidth/2)-SetupManager.sideBuffer);
+				$('.ResultTR').height((screenHeight-300));
+				//$('.HeaderTR').width((screenWidth/2)-SetupManager.sideBuffer);
 				
 				
 				$('.ResultTable').width((screenWidth)-SetupManager.sideBuffer);
-				$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
+				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 								
 				$(SetupManager.pound+SetupManager.resultTable_ID).width(screenWidth-SetupManager.sideBuffer);
 				$(SetupManager.pound+SetupManager.resultTable_ID).height(screenHeight/2);
 				
-				//var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
 				
-				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth/2)-SetupManager.sideBuffer+25);
-				$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
+				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth)-(SetupManager.sideBuffer+200));
 				
-				//$(SetupManager.ID_attr,SetupManager.tableHeader_ID).width(screenWidth-SetupManager.sideBuffer);
 				
 				status.width(screenWidth  - 30);
 				
@@ -490,29 +499,28 @@ var SetupManager = {
 			$(window).trigger('resize');
 			
 //set dimensions of all Cells
-			$('.Result').width((screenWidth/2)-SetupManager.sideBuffer);
-			$('.Result').height((screenHeight/4));
+			$('.Result').width((screenWidth/3)-SetupManager.sideBuffer);
+			$('.Result').height((screenHeight-300));
 			
-			$('.ResultTD').width((screenWidth/2)-SetupManager.sideBuffer);
-			$('.ResultTD').height((screenHeight/4));		
-			$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
+			$('.ResultTD').width((screenWidth/3)-SetupManager.sideBuffer);
+			$('.ResultTD').height((screenHeight-300));		
+		//	$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 		
 			
 			$('.ResultTR').width((screenWidth)-SetupManager.sideBuffer);
-			$('.ResultTR').height((screenHeight/4));
-			$('.HeaderTR').width((screenWidth/2)-SetupManager.sideBuffer);
+			$('.ResultTR').height((screenHeight-300));
+			//$('.HeaderTR').width((screenWidth/2)-SetupManager.sideBuffer);
 		
 			
 			$('.ResultTable').width((screenWidth)-SetupManager.sideBuffer);
-			$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
+		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			
 		//	var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
 			
-			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth/2)-SetupManager.sideBuffer+25);
-			$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
+			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth)-(SetupManager.sideBuffer+200));
+			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
-			//$(SetupManager.ID_attr,SetupManager.tableHeader_ID).width(screenWidth-SetupManager.sideBuffer);
 			
 			status.width(screenWidth - 30);
 			
@@ -534,7 +542,7 @@ var SetupManager = {
 				
 				
 				//new row every even - where assumption is implemented
-				if( (i%2) == 0){
+				if( (i%3) == 0){
 					
 					tempRowId = "row"+i;
 					//make row
