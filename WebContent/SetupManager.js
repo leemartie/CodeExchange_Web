@@ -79,6 +79,8 @@ var SetupManager = {
 		
 		granularityTabDiv_ID	:	"granularity_tab_div_ID",
 		
+		filterTable_ID			:	"filterTable_ID",
+		
 			
 		//These are the CSS classes
 		Cell_CSS_Class			:	"Cell",
@@ -149,14 +151,12 @@ var SetupManager = {
 			tableForSite.append(headerRow);
 			headerRow.addClass("HeaderTR");
 			
-			
-			
+			//query box
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			queryTD.attr("valign", "top");
 			headerRow.append(queryTD);
 			
-			queryTD.attr("bgcolor","darkgray");
-			
-			//queryTD.addClass("HeaderTD");
+			//queryTD.attr("bgcolor","darkgray");
 			
 			//logo
 			var logo = $(SetupManager.divOpen+SetupManager.divClose);
@@ -172,185 +172,17 @@ var SetupManager = {
 			logo.append(input);
 			//set id
 			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
-			input.attr(SetupManager.placeholder_attr, "keywords or code here (shift-enter for newline)");
-			
-			//side filter
-			var filterSideTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			filterSideTD.attr("rowspan","4");
-			headerRow.append(filterSideTD);
-			
-			filterSideTD.addClass("FilterSideTD");
-	
-//			var filterTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-//			rowHeader.append(filterTD);
-//			filterTD.addClass("FilterHeaderTD");
-//			
-//			
-//		
-//			//make filter summary
-//			var filterSummary = $(SetupManager.divOpen+SetupManager.divClose);
-//			//append to header
-//			filterTD.append(filterSummary);
-//			//set id
-//			filterSummary.attr(SetupManager.ID_attr,SetupManager.filterSummaryDiv_ID);
-//			filterSummary.addClass("FilterSummary");
-//			
-//			
-//			//make filter input
-//			var filterDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			//append to header
-//			filterTD.append(filterDiv);
-//			//set id
-//			filterDiv.attr(SetupManager.ID_attr,SetupManager.filterDiv_ID);
-//			filterDiv.addClass("Filter");
-//		  
-//			//list
-//			var tabList = $(SetupManager.listOpen+SetupManager.listClose);
-//			filterDiv.append(tabList);
-//			tabList.attr(SetupManager.ID_attr,SetupManager.tabList_ID);
-//			
-//			
-//			//filterHeaderDive
-//			var filterHeader = $("<form></form>");
-//			filterDiv.append(filterHeader);
-//			filterHeader.addClass("FilterHeader");
-//			
-//			
-//			//sort toggle
-//			var radioDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			radioDiv.attr(SetupManager.ID_attr,"radio");
-//			
-//			filterHeader.append(radioDiv);
-//
-//			var inputRadio = $(SetupManager.inputOpen+SetupManager.inputClose);
-//			radioDiv.append(inputRadio);
-//			
-//			inputRadio.attr("type","radio");
-//			inputRadio.attr("name","radio");
-//			inputRadio.attr(SetupManager.ID_attr,"radio1");
-//			inputRadio.attr("checked","false");
-//			inputRadio.click(function(event) {
-//				
-//				Controller.sortFiltersAlpha = true;
-//				QueryManager.populateFilters();
-//				
-//			});
-//			
-//			var radio1Label = $('<label>sort alphabetically</label>');
-//			radio1Label.attr("for","radio1");
-//			
-//			filterHeader.append(radio1Label);
-//
-//			
-//			var inputRadio2 = $(SetupManager.inputOpen+SetupManager.inputClose);
-//			radioDiv.append(inputRadio2);
-//			inputRadio2.attr("type","radio");
-//			inputRadio2.attr("name","radio");
-//			inputRadio2.attr(SetupManager.ID_attr,"radio2");
-//			inputRadio2.attr("checked","true");
-//			inputRadio2.click(function(event) {
-//				
-//				Controller.sortFiltersAlpha = false;
-//				QueryManager.populateFilters();
-//			});
-//			
-//			
-//			var radio2Label = $('<label>sort by property count</label>');
-//			radio2Label.attr("for","radio2");
-//			filterHeader.append(radio2Label);
-//			
-//			$( "#radio" ).buttonset();
-//			
-//			//tag tab
-//			var tabTags = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-//			tabTags.append($('<a href="#'+SetupManager.tagTabDiv_ID+'">Tags</a>'));
-//			tabList.append(tabTags);
-//			
-//			
-//			
-//			
-//			//tag div
-//			var tagDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			filterDiv.append(tagDiv);
-//			tagDiv.append($('<p>tags here</p>'));
-//			tagDiv.attr(SetupManager.ID_attr,SetupManager.tagTabDiv_ID);
-//			
-//			//tab people
-//			var peopleTabs = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-//			peopleTabs.append($('<a href="#'+SetupManager.peopleTabDiv_ID+'">People</a>'));
-//			tabList.append(peopleTabs);
-//			
-//			//people div
-//			var peopleDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			filterDiv.append(peopleDiv);
-//			peopleDiv.append($('<p>people here</p>'));
-//			peopleDiv.attr(SetupManager.ID_attr,SetupManager.peopleTabDiv_ID);
-//			
-//			//tab projects
-//			var projectTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-//			projectTab.append($('<a href="#'+SetupManager.projectTabDiv_ID+'">Projects</a>'));
-//			tabList.append(projectTab);
-//			
-//			//project div
-//			var projectDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			filterDiv.append(projectDiv);
-//			projectDiv.append($('<p>projects here</p>'));
-//			projectDiv.attr(SetupManager.ID_attr,SetupManager.projectTabDiv_ID);
-//			
-//			//tab lib
-//			var libTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-//			libTab.append($('<a href="#'+SetupManager.libraryTabDiv_ID+'">Libraries</a>'));
-//			tabList.append(libTab);
-//			
-//			//lib div
-//			var libDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			filterDiv.append(libDiv);
-//			libDiv.append($('<p>libs here</p>'));
-//			libDiv.attr(SetupManager.ID_attr,SetupManager.libraryTabDiv_ID);			
-//			//make it tabs NOTE: must come after making children!!
-//			
-//			
-//			//granularity lib
-//			var granTab = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-//			granTab.append($('<a href="#'+SetupManager.granularityTabDiv_ID+'">Granularities</a>'));
-//			tabList.append(granTab);
-//			
-//			//lib div
-//			var granDiv = $(SetupManager.divOpen+SetupManager.divClose);
-//			filterDiv.append(granDiv);
-//			granDiv.append($('<p>granularities here</p>'));
-//			granDiv.attr(SetupManager.ID_attr,SetupManager.granularityTabDiv_ID);			
-//			//make it tabs NOTE: must come after making children!!
-//			filterDiv.tabs();
-//			
-//			if(!Controller.headerExpanded){
-//				filterDiv.toggle();
-//			}
-			
-			//make header
-//			var header = $(SetupManager.tableOpen+SetupManager.tableClose);
-//			//append to entier site
-//			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(header);
-//			//set id
-//			header.attr(SetupManager.ID_attr,SetupManager.headerDiv_ID);
-//			header.addClass("Header");
-			
-			//header row
-			var rowHeader = $(SetupManager.trOpen+SetupManager.trClose);
-			tableForSite.append(rowHeader);
-			
-			//row 2
-			var rowHeader2 = $(SetupManager.trOpen+SetupManager.trClose);
-			tableForSite.append(rowHeader2);
-			
-
+			input.attr(SetupManager.placeholder_attr, "keywords in code");
 			
 			
-	
+			//--row for status
+			var rowStatus = $(SetupManager.trOpen+SetupManager.trClose);
+			tableForSite.append(rowStatus);
+			
 			//make status div
 			var status = $(SetupManager.tdOpen+SetupManager.tdClose);
-			//append to header
-			rowHeader.append(status);
+			
+			rowStatus.append(status);
 			//set id
 			status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
 			status.attr("valign","top");
@@ -359,12 +191,14 @@ var SetupManager = {
 			
 			Controller.setStatus("Let's find some code.");
 			
-
-				
+			//--row for navigation
+			var rowNavigation = $(SetupManager.trOpen+SetupManager.trClose);
+			tableForSite.append(rowNavigation);
+			
 			//make page navigation
 			var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
 			// append
-			rowHeader2.append(pageNavigation);
+			rowNavigation.append(pageNavigation);
 			//set id
 			pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
 			pageNavigation.attr("valign","top");
@@ -394,6 +228,28 @@ var SetupManager = {
 			
 			//make cells
 			SetupManager.makeTableCells(3);
+			
+			
+			//side filter
+			var filterSideTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			filterSideTD.attr("rowspan","4");
+			headerRow.append(filterSideTD);
+			filterSideTD.attr("valign", "top");
+			
+			filterSideTD.addClass("FilterSideTD");
+			
+			//filter table
+			var filterTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+			filterTable.attr(SetupManager.ID_attr,SetupManager.filterTable_ID);
+			filterSideTD.append(filterTable);
+			
+			//making the extnds filter
+			var extendsRow = $(SetupManager.trOpen+SetupManager.trClose);
+			filterSideTD.append(extendsRow);
+			var extendsTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			extendsRow.append(extendsTD);
+			
+
 				
 // --- set dimensions (good to do later so can to relative to other's dimensions
 			
@@ -463,66 +319,69 @@ var SetupManager = {
 			// --- add listeners to cell 
 			var screenWidth = jQuery(window).width();
 			var screenHeight = jQuery(window).height();
+			var screenBuffer = screenWidth*(3/4);
+			var screenHeightBuffer = screenHeight*(3/4)-50;
 			
 //resize function called when resize event happens
 			$(window).resize(function() {
 				screenWidth = jQuery(window).width();
 				screenHeight = jQuery(window).height();
+				var screenBuffer = screenWidth*(3/4);
+				var screenHeightBuffer = screenHeight*(3/4)-50;
 				
-				$('.Result').width((screenWidth/3)-SetupManager.sideBuffer);
-				$('.Result').height((screenHeight-300));
+				$('.Result').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+				$('.Result').height((screenHeightBuffer));
 
-				$('.ResultTD').width((screenWidth/3)-SetupManager.sideBuffer);
-				$('.ResultTD').height((screenHeight-300));		
+				$('.ResultTD').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+				$('.ResultTD').height((screenHeightBuffer));		
 				//$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 			
 				
-				$('.ResultTR').width((screenWidth)-SetupManager.sideBuffer);
-				$('.ResultTR').height((screenHeight-300));
-				//$('.HeaderTR').width((screenWidth/2)-SetupManager.sideBuffer);
+				$('.ResultTR').width(((screenBuffer))-SetupManager.sideBuffer);
+				$('.ResultTR').height((screenHeightBuffer));
+			//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
 				
 				
-				$('.ResultTable').width((screenWidth)-SetupManager.sideBuffer);
+				$('.ResultTable').width(((screenBuffer))-SetupManager.sideBuffer);
 				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
-								
-				$(SetupManager.pound+SetupManager.resultTable_ID).width(screenWidth-SetupManager.sideBuffer);
-				$(SetupManager.pound+SetupManager.resultTable_ID).height(screenHeight/2);
+
 				
 				
-				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth)-(SetupManager.sideBuffer+200));
+				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+168));
 				
 				
-				status.width(screenWidth  - 30);
+		
+				
+				$('.FilterSideTD').width(((screenBuffer)/3));
 				
 				
 			});
 			$(window).trigger('resize');
 			
 //set dimensions of all Cells
-			$('.Result').width((screenWidth/3)-SetupManager.sideBuffer);
-			$('.Result').height((screenHeight-300));
+			$('.Result').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+			$('.Result').height((screenHeightBuffer));
 			
-			$('.ResultTD').width((screenWidth/3)-SetupManager.sideBuffer);
-			$('.ResultTD').height((screenHeight-300));		
+			$('.ResultTD').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+			$('.ResultTD').height((screenHeightBuffer));		
 		//	$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 		
 			
-			$('.ResultTR').width((screenWidth)-SetupManager.sideBuffer);
-			$('.ResultTR').height((screenHeight-300));
-			//$('.HeaderTR').width((screenWidth/2)-SetupManager.sideBuffer);
+			$('.ResultTR').width(((sscreenBuffer))-SetupManager.sideBuffer);
+			$('.ResultTR').height((screenHeightBuffer));
+		//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
 		
 			
-			$('.ResultTable').width((screenWidth)-SetupManager.sideBuffer);
+			$('.ResultTable').width(((screenBuffer))-SetupManager.sideBuffer);
 		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			
-		//	var searchButtonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
 			
-			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenWidth)-(SetupManager.sideBuffer+200));
+			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+168));
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
-			
-			status.width(screenWidth - 30);
+			$('.FilterSideTD').width(((screenBuffer)/3));
+		
 			
 		},
 		/**
