@@ -13,6 +13,7 @@ var QueryManager = {
 	projectArray: new Array(),
 	libArray: new Array(),
 	granArray: new Array(),
+	currentAutoCompleteField:	"",
 
 	/**
 	 * 
@@ -49,6 +50,8 @@ var QueryManager = {
 				'fl=id snippet_extends&rows=0&q=*:*&facet=true&' +
 				'facet.field=snippet_extends&facet.mincount=1&facet.prefix='+userTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+		
+		QueryManager.currentAutoCompleteField = field;
 		
 		results = $.getJSON(queryAutoComplete);
 		
@@ -318,12 +321,12 @@ function on_nextData(data) {
 	Controller.clearAllCode();
 	
 	//highlight matched keywords
-	var highlight = new Array();	
-	$.each(data.highlighting, function(i, hitem){
-		
-	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
-	    highlight[i] = match;
-	});
+//	var highlight = new Array();	
+//	$.each(data.highlighting, function(i, hitem){
+//		
+//	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
+//	    highlight[i] = match;
+//	});
 	
 	// let's populate the table with the results
 	$.each(docs,
@@ -333,25 +336,25 @@ function on_nextData(data) {
 				if (i < resultLength && i < metaLength) {
 					Controller.setAvatar(SetupManager.metaDivArray_ID[i],
 							item.author_avatar);
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author, item.author_type);
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author, item.author_type);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
-							item.project);
+							item.snippet_project_name);
 					
 					
 					//highlight matched keywords
-					$.each(highlight[item.id], function(j, word){
-						//    word = escape(word);
-							word = word.substring(4,word.length-5);
-						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
-							Controller.setCode(SetupManager.resultPreArray_ID[i],
-									result);
-						});
+//					$.each(highlight[item.id], function(j, word){
+//						//    word = escape(word);
+//							word = word.substring(4,word.length-5);
+//						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
+//							Controller.setCode(SetupManager.resultPreArray_ID[i],
+//									result);
+//						});
 				
 				
 
 
-//					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-//							item.snippet_address);
+					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
+							item.snippet_address);
 				}
 				
 
@@ -386,12 +389,12 @@ function on_data(data) {
 	Controller.clearAllCode();
 	
 	//highlight matched keywords
-	var highlight = new Array();	
-	$.each(data.highlighting, function(i, hitem){
-		
-	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
-	    highlight[i] = match;
-	});
+//	var highlight = new Array();	
+//	$.each(data.highlighting, function(i, hitem){
+//		
+//	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
+//	    highlight[i] = match;
+//	});
 	
 	// let's populate the table with the results
 	$.each(docs,
@@ -401,30 +404,26 @@ function on_data(data) {
 				if (i < resultLength && i < metaLength) {
 					Controller.setAvatar(SetupManager.metaDivArray_ID[i],
 							item.author_avatar);
-					
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.author, item.author_type);
-					
+				
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author, item.author_type);
+			
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
-							item.project);
+							item.snippet_project_name);
+					
 					//TODO will need to replace item.snippet with content from url
 					
-						$.each(highlight[item.id], function(j, word){
-						//    word = escape(word);
-							word = word.substring(4,word.length-5);
-						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
-							Controller.setCode(SetupManager.resultPreArray_ID[i],
-									result);
-						});
-					   // var word = highlight[item.id];
+//						$.each(highlight[item.id], function(j, word){
+//						//    word = escape(word);
+//							word = word.substring(4,word.length-5);
+//						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
+//							Controller.setCode(SetupManager.resultPreArray_ID[i],
+//									result);
+//						});
 
-					    // do something with the result
-			
-					
-					
 					
 
-//					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-//							item.snippet_address);
+					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
+							item.snippet_address);
 				}
 
 			});
@@ -449,7 +448,7 @@ function on_data(data) {
 
 function autoCompleteCallBack(data){
 	var results = data.facet_counts.facet_fields.snippet_extends;
-	$(SetupManager.pound+SetupManager.extendsInputID).autocomplete({ source: results });
+	$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
 
 }
 

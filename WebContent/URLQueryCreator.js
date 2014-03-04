@@ -11,19 +11,19 @@ var URLQueryCreator = {
 			query = SmartQueryCreator.makeSmartQuery(query);
 	
 			var url = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ "snippet:(" + query + ")"
+				+ "snippet_code:(" + query + ")"
 				+ '&start=' + start 
-				+ '&fl= id author_type snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
+			//	+ '&fl= id snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
 				+ '&facet=true' 
-				+ '&facet.field=author' 
-				+ '&facet.field=snippet_tag' 
-				+ '&facet.field=project'
+				+ '&facet.field=snippet_version_author' 
+				//+ '&facet.field=snippet_tag' 
+				+ '&facet.field=snippet_project_name'
 				+ '&facet.field=snippet_imports'
 				+ '&facet.field=snippet_granularity'
 				+ '&facet.mincount=1'
-				+ '&hl=true'
-				+ '&hl.fl=snippet'
-				+ '&hl.highlightMultiTerm=true ';
+				+ '&hl=true';
+//				+ '&hl.fl=snippet'
+//				+ '&hl.highlightMultiTerm=true ';
 				//+ '&facet.limit=200';
 			
 			

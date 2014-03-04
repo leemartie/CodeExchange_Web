@@ -274,7 +274,7 @@ var SetupManager = {
 			
 			extendsInput.keypress(function(e){
 				autoCompleteQuery = extendsInput.val();
-				QueryManager.submitAutoComplete('extends',autoCompleteQuery);	
+				QueryManager.submitAutoComplete(SetupManager.extendsInputID,autoCompleteQuery);	
 			});
 				
 // --- set dimensions (good to do later so can to relative to other's dimensions
