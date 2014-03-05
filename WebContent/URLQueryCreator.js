@@ -10,8 +10,16 @@ var URLQueryCreator = {
 			
 			query = SmartQueryCreator.makeSmartQuery(query);
 	
+			
+			var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
+			if(extendsFilter == "")
+				extendsFilter = "*";
+			
+			
+			
 			var url = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ "snippet_code:(" + query + ")"
+				+ 'snippet_code:(' + query + ')'
+				+ 'snippet_extends:('+extendsFilter+')'
 				+ '&start=' + start 
 			//	+ '&fl= id snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
 				+ '&facet=true' 
@@ -38,7 +46,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows=4&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows=3&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 
 			return url;

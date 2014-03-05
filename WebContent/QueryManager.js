@@ -46,9 +46,23 @@ var QueryManager = {
 	},
 	
 	submitAutoComplete	:	function(field, userTyped){
+		
+		var property = '';
+		if(field == SetupManager.extendsInputID){
+			property = 'snippet_extends';
+		}else if(field == SetupManager.implementsInputID){
+			property = 'snippet_implements';
+		}else if(field == SetupManager.callInputID){
+			property = 'snippet_invocation_name';
+		}else if(field == SetupManager.callingObjectInputID){
+			property = 'snippet_invocation_calling_object_class';
+		}
+		
+		
+		
 		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
-				'fl=id snippet_extends&rows=0&q=*:*&facet=true&' +
-				'facet.field=snippet_extends&facet.mincount=1&facet.prefix='+userTyped +
+				'fl=id '+property+'&rows=0&q=*:*&facet=true&' +
+				'facet.field='+property+'&facet.mincount=1&facet.prefix='+userTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
 		QueryManager.currentAutoCompleteField = field;
@@ -360,7 +374,7 @@ function on_nextData(data) {
 
 			});
 	// now highlight the code
-	CodeFormatter.highLight();
+//	CodeFormatter.highLight();
 	
 
 	
@@ -428,7 +442,7 @@ function on_data(data) {
 
 			});
 	// now highlight the code
-	CodeFormatter.highLight();
+//	CodeFormatter.highLight();
 	
 
 	
@@ -447,7 +461,20 @@ function on_data(data) {
 }
 
 function autoCompleteCallBack(data){
-	var results = data.facet_counts.facet_fields.snippet_extends;
+	var results;
+	
+	if(QueryManager.currentAutoCompleteField == SetupManager.extendsInputID){
+		results = data.facet_counts.facet_fields.snippet_extends;
+	}else if(QueryManager.currentAutoCompleteField == SetupManager.implementsInputID){
+		results = data.facet_counts.facet_fields.snippet_implements;
+	}else if(QueryManager.currentAutoCompleteField == SetupManager.callInputID){
+		results = data.facet_counts.facet_fields.snippet_invocation_name;
+	}else if(QueryManager.currentAutoCompleteField == SetupManager.callingObjectInputID){
+		results = data.facet_counts.facet_fields.snippet_invocation_calling_object_class;
+	}
+	
+	
+	
 	$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
 
 }
