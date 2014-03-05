@@ -286,7 +286,7 @@ var SetupManager = {
 			var callingObjectTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			callingObjectRow.append(callingObjectTD);
 			
-			callingObjectTD.append("<text>object's Class&nbsp&nbsp&nbsp&nbsp</text>");
+			callingObjectTD.append("<text>object's class&nbsp&nbsp&nbsp&nbsp</text>");
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
@@ -429,14 +429,14 @@ var SetupManager = {
 			var screenWidth = jQuery(window).width();
 			var screenHeight = jQuery(window).height();
 			var screenBuffer = screenWidth*(3/4);
-			var screenHeightBuffer = screenHeight*(3/4)-50;
+			var screenHeightBuffer = screenHeight*(3/4)-75;
 			
 //resize function called when resize event happens
 			$(window).resize(function() {
 				screenWidth = jQuery(window).width();
 				screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth*(3/4);
-				var screenHeightBuffer = screenHeight*(3/4)-50;
+				var screenHeightBuffer = screenHeight*(3/4)-75;
 				
 				$('.Result').width(((screenBuffer)/3)-SetupManager.sideBuffer);
 				$('.Result').height((screenHeightBuffer));
@@ -490,6 +490,8 @@ var SetupManager = {
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/3));
+			
+			
 		
 			
 		},

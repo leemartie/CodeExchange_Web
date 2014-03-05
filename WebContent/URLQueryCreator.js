@@ -64,7 +64,7 @@ var URLQueryCreator = {
 			
 				url = url + '&rows=3&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
-				alert(url);
+				
 
 			return url;
 	
