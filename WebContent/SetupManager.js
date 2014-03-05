@@ -286,7 +286,7 @@ var SetupManager = {
 			var callingObjectTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			callingObjectRow.append(callingObjectTD);
 			
-			callingObjectTD.append("<text>Object's Class&nbsp&nbsp&nbsp&nbsp</text>");
+			callingObjectTD.append("<text>object's Class&nbsp&nbsp&nbsp&nbsp</text>");
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
@@ -303,6 +303,8 @@ var SetupManager = {
 			callTD.append(callInput);
 			callInput.attr(SetupManager.ID_attr, SetupManager.callInputID);
 			$(SetupManager.pound+SetupManager.callInputID).autocomplete({ source: [] });
+			
+			//making parameter type row
 			
 
 			
