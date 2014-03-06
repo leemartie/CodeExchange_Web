@@ -34,17 +34,7 @@ var URLQueryCreator = {
 				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 			}
 			
-			var invocationFilter = '';
-			
-			if(objectsFilter != ""){
-				invocationFilter = invocationFilter+'snippet_invocation_calling_object_class:('+objectsFilter+')';
-			}
-			if(methodCallNameFilter != ""){
-				invocationFilter = invocationFilter+' AND snippet_invocation_name:('+methodCallNameFilter+')';
-			}
-			if(argumentTypeFilter != ""){
-				invocationFilter = invocationFilter+' AND snippet_invocation_argument_types:('+argumentTypeFilter+')';
-			}
+			var invocationFilter = EncoderDecoder.encodeInvocationFilter();
 			
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 
@@ -53,7 +43,7 @@ var URLQueryCreator = {
 			var url = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ 'snippet_code:(' + query + ')'
 				+ queryFilter
-				+ invocationQuery
+				+ invocationFilter
 				+ '&start=' + start 
 			//	+ '&fl= id snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
 				+ '&facet=true' 

@@ -68,7 +68,7 @@ var QueryManager = {
 
 		
 	},
-	
+//TODO need convert the properties here
 	autoCompleteClassProperties: function(field,userTyped){
 		
 		//constrain autocomplete by the values of the other code properties

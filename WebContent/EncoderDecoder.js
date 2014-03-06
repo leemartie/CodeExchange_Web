@@ -11,7 +11,7 @@ var EncoderDecoder = {
 			
 			if(methodCallNameFilter != ""){
 				var methodCallEncoded = "*!"+methodCallNameFilter;
-				invocationFilter = invocationFilter + "snippet_invocation_name:"+methodCallEncoded;
+				invocationFilter = invocationFilter + " AND snippet_invocation_name:"+methodCallEncoded;
 				
 				if(argumentTypeFilter != ""){
 					var typeEncode = "@*#"+argumentTypeFilter;
@@ -29,7 +29,7 @@ var EncoderDecoder = {
 			}
 			else if(argumentTypeFilter != ""){
 				var methodCallEncoded = "*!*";
-				invocationFilter = invocationFilter + "snippet_invocation_name:"+methodCallEncoded;
+				invocationFilter = invocationFilter + " AND snippet_invocation_name:"+methodCallEncoded;
 				
 				
 				var typeEncode = "@*#"+argumentTypeFilter;
@@ -46,7 +46,7 @@ var EncoderDecoder = {
 
 			else if(objectsFilter != ""){
 				var methodCallEncoded = "*!*";
-				invocationFilter = invocationFilter + "snippet_invocation_name:"+methodCallEncoded;
+				invocationFilter = invocationFilter + " AND snippet_invocation_name:"+methodCallEncoded;
 				
 				
 				var typeEncode = "@*#*";
