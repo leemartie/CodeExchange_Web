@@ -86,7 +86,10 @@ var SetupManager = {
 		implementsInputID		:	"implements_ID",
 		
 		callInputID				:	"callInput_ID",
+		
 		callingObjectInputID	:	"callingObjectInput_ID",
+		
+		argTypeInputID			:	"argTypeInput_ID",
 		
 			
 		//These are the CSS classes
@@ -305,6 +308,16 @@ var SetupManager = {
 			$(SetupManager.pound+SetupManager.callInputID).autocomplete({ source: [] });
 			
 			//making parameter type row
+			var methodArgType = $(SetupManager.trOpen+SetupManager.trClose);
+			filterTable.append(methodArgType);
+			var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			methodArgType.append(argTypeTD);
+			
+			argTypeTD.append("<text>argument type&nbsp&nbsp&nbsp&nbsp</text>");
+			var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+			argTypeTD.append(argTypeInput);
+			argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
+			$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source: [] });
 			
 
 			
@@ -315,7 +328,7 @@ var SetupManager = {
 				QueryManager.submitAutoComplete(SetupManager.extendsInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
+					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 					QueryManager.setQuery(query);
 					QueryManager.submitQuery();
 					//make it lose focus so we can detect when user refocus on query it
@@ -327,7 +340,7 @@ var SetupManager = {
 				QueryManager.submitAutoComplete(SetupManager.implementsInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
+					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 					QueryManager.setQuery(query);
 					QueryManager.submitQuery();
 					//make it lose focus so we can detect when user refocus on query it
@@ -339,7 +352,7 @@ var SetupManager = {
 				QueryManager.submitAutoComplete(SetupManager.callInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
+					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 					QueryManager.setQuery(query);
 					QueryManager.submitQuery();
 					//make it lose focus so we can detect when user refocus on query it
@@ -347,17 +360,30 @@ var SetupManager = {
 				}
 			});
 			callingObjectInput.keypress(function(e){
-				autoCompleteQuery = callInput.val();
+				autoCompleteQuery = callingObjectInput.val();
 				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
+					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 					QueryManager.setQuery(query);
 					QueryManager.submitQuery();
 					//make it lose focus so we can detect when user refocus on query it
 					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
 				}
 			});
+			argTypeInput.keypress(function(e){
+				autoCompleteQuery = argTypeInput.val();
+				QueryManager.submitAutoComplete(SetupManager.argTypeInputID,autoCompleteQuery);	
+				
+				if (!e.shiftKey && e.keyCode == '13') {
+					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
+					QueryManager.setQuery(query);
+					QueryManager.submitQuery();
+					//make it lose focus so we can detect when user refocus on query it
+					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
+				}
+			});
+			
 			
 				
 // --- set dimensions (good to do later so can to relative to other's dimensions

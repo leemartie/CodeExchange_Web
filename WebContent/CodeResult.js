@@ -7,9 +7,12 @@
  * @param code
  * @returns {CodeResult}
  */
-function CodeResult(code){
+function CodeResult(code, start, end){
 	//this is just a property
-	this.code = code;
+	this.code = String(code).substring(start,end);
+	this.start = start;
+	this.end = end;
+	
 	
 	this.getCode = function(){
 		return code;

@@ -32,7 +32,7 @@ var Controller = {
 
 		},
 		
-		setCodeFromURL: function(codeNode, codeURL){
+		setCodeFromURL: function(codeNode, codeURL, start, end){
 			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			 
 			$.getJSON(url).fail(function(data, textStatus, jqXHR) {
@@ -40,7 +40,7 @@ var Controller = {
 			  }).success(function(data, textStatus, jqXHR ) {
 				  $.each(data, function(index, element) {
 					    var code = element;
-					    var result = new CodeResult(code);
+					    var result = new CodeResult(code,start,end);
 					    var jQueryObject = result.getJQueryObject();
 						$(SetupManager.pound+codeNode).append(jQueryObject);
 				  });
@@ -504,6 +504,7 @@ var Controller = {
 		 * FUNCTION
 		 */
 		expandCell	:	function(cell){
+			
 			 // $(SetupManager.pound+cell).css({position:'relative'}); 
 	         //turn the other cells off
 	          Controller.toggleCells(cell);
@@ -517,17 +518,19 @@ var Controller = {
 	          previousY = $(SetupManager.pound+result).offset().top;
 	          
 
-			  
-			 
+				var screenWidth = jQuery(window).width();
+				var screenHeight = jQuery(window).height();
+				var screenBuffer = screenWidth*(3/4)-SetupManager.sideBuffer-32;
+				var screenHeightBuffer = screenHeight*(3/4)-75-10;
 			  
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 		           
 		  
-		            width:  $(SetupManager.pound+SetupManager.resultTable_ID).width()-16,
-		            height: $(SetupManager.pound+SetupManager.resultTable_ID).height()-300,
+		            width:  screenBuffer,
+		            height: screenHeightBuffer,
 		            left:	'0px',
 		            top:	'0px'
-		          }, 700 );
+		          }, 0 );
 
 		},
 		
@@ -556,7 +559,7 @@ var Controller = {
 		            height: previousHeight,
 		            left:	previousX+'px',
 		            top:	previousY+'px'
-		          }, 700 );
+		          }, 0 );
 	          
 
 		},
