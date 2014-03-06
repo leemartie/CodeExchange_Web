@@ -37,13 +37,13 @@ var URLQueryCreator = {
 			var invocationFilter = '';
 			
 			if(objectsFilter != ""){
-				invocationFilter = invocationFilter+'invocation_calling_object_class:('+objectsFilter+')';
+				invocationFilter = invocationFilter+'snippet_invocation_calling_object_class:('+objectsFilter+')';
 			}
 			if(methodCallNameFilter != ""){
-				invocationFilter = invocationFilter+' AND invocation_name:('+methodCallNameFilter+')';
+				invocationFilter = invocationFilter+' AND snippet_invocation_name:('+methodCallNameFilter+')';
 			}
 			if(argumentTypeFilter != ""){
-				invocationFilter = invocationFilter+' AND invocation_argument_types:('+argumentTypeFilter+')';
+				invocationFilter = invocationFilter+' AND snippet_invocation_argument_types:('+argumentTypeFilter+')';
 			}
 			
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
