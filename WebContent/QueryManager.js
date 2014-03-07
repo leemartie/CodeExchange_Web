@@ -51,23 +51,30 @@ var QueryManager = {
 		
 	},
 	
-	submitAutoComplete	:	function(field, userTyped){
+	submitAutoComplete	:	function(field){
 		
 		//constrain autocomplete by the values of the other code properties
 		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
 		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
 		
+		var userTyped = "";
+		
 		var property = '';
 		if(field == SetupManager.extendsInputID){
 			property = 'snippet_extends';
+			userTyped = $(SetupManager.pound+SetupManager.extendsInputID).val();
 		}else if(field == SetupManager.implementsInputID){
 			property = 'snippet_implements';
+			userTyped = $(SetupManager.pound+SetupManager.implementsInputID).val();
 		}else if(SetupManager.callInputID){
 			property = 'snippet_method_invocations';
+			userTyped = $(SetupManager.pound+SetupManager.callInputID).val();
 		}else if(SetupManager.callingObjectInputID){
 			property = 'snippet_method_invocations';
+			userTyped = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
 		}else if(SetupManager.argTypeInputID){
 			property = 'snippet_method_invocations';
+			userTyped = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 		}
 		
 
@@ -348,6 +355,8 @@ var QueryManager = {
 
 	}
 	
+	
+	
 
 };
 
@@ -510,6 +519,8 @@ function autoCompleteCallBack(data){
 			
 			temp.push(EncoderDecoder.decodeMethodFilter(results[i]));
 		}
+		
+		temp = Util.getOnlyUniqueElements(temp);
 		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
 	
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.callingObjectInputID){
@@ -524,6 +535,7 @@ function autoCompleteCallBack(data){
 			
 			temp.push(EncoderDecoder.decodeClassFilter(results[i]));
 		}
+		temp = Util.getOnlyUniqueElements(temp);
 		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
 
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.argTypeInputID){
@@ -538,8 +550,12 @@ function autoCompleteCallBack(data){
 			
 			temp.push(EncoderDecoder.decodeArgumentFilter(results[i]));
 		}
+		temp = Util.getOnlyUniqueElements(temp);
+		
 		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
 	}
+	
+	
 	
 	
 	

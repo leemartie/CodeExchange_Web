@@ -324,8 +324,8 @@ var SetupManager = {
 //-- autocomplete extends
 			
 			extendsInput.keypress(function(e){
-				var autoCompleteQuery = extendsInput.val();
-				QueryManager.submitAutoComplete(SetupManager.extendsInputID,autoCompleteQuery);	
+				
+				QueryManager.submitAutoComplete(SetupManager.extendsInputID);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -336,8 +336,8 @@ var SetupManager = {
 				}
 			});
 			implementsInput.keypress(function(e){
-				var autoCompleteQuery = implementsInput.val();
-				QueryManager.submitAutoComplete(SetupManager.implementsInputID,autoCompleteQuery);	
+				
+				QueryManager.submitAutoComplete(SetupManager.implementsInputID);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -348,8 +348,8 @@ var SetupManager = {
 				}
 			});
 			callInput.keypress(function(e){
-				var autoCompleteQuery = callInput.val();
-				QueryManager.submitAutoComplete(SetupManager.callInputID,autoCompleteQuery);	
+			
+				QueryManager.submitAutoComplete(SetupManager.callInputID);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -360,8 +360,8 @@ var SetupManager = {
 				}
 			});
 			callingObjectInput.keypress(function(e){
-				var autoCompleteQuery = callingObjectInput.val();
-				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID,autoCompleteQuery);	
+				
+				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -372,8 +372,8 @@ var SetupManager = {
 				}
 			});
 			argTypeInput.keypress(function(e){
-				var autoCompleteQuery = argTypeInput.val();
-				QueryManager.submitAutoComplete(SetupManager.argTypeInputID,autoCompleteQuery);	
+				
+				QueryManager.submitAutoComplete(SetupManager.argTypeInputID);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
