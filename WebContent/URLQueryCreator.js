@@ -2,7 +2,6 @@ var URLQueryCreator = {
 		server : 'codeexchange.ics.uci.edu',
 		
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
-		invocationCollection :	'GitHubMethodInvocationIndex',
 		authorCollection	 :  'GitHubAuthorIndex',
 		projectCollection	 :  'GitHubProjectIndex',
 		
@@ -23,9 +22,6 @@ var URLQueryCreator = {
 			
 			var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
 			var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
-			var objectsFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-			var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();;
-			var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 			
 			if(extendsFilter != ""){
 				queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
@@ -34,7 +30,7 @@ var URLQueryCreator = {
 				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 			}
 			
-			var invocationFilter = EncoderDecoder.encodeInvocationFilter();
+			var invocationFilter = " AND snippet_method_invocations:"+EncoderDecoder.encodeInvocationFilter();
 			
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 

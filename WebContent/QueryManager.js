@@ -53,24 +53,6 @@ var QueryManager = {
 	
 	submitAutoComplete	:	function(field, userTyped){
 		
-		
-		if(field == SetupManager.extendsInputID){
-			QueryManager.autoCompleteClassProperties(field,userTyped);
-		}else if(field == SetupManager.implementsInputID){
-			QueryManager.autoCompleteClassProperties(field,userTyped);
-		}else if(field == SetupManager.callInputID){
-			QueryManager.autoCompleteMethodInvocation(field,userTyped);
-		}else if(field == SetupManager.callingObjectInputID){
-			QueryManager.autoCompleteMethodInvocation(field,userTyped);
-		}else if(field == SetupManager.argTypeInputID){
-			QueryManager.autoCompleteMethodInvocation(field,userTyped);
-		}
-
-		
-	},
-//TODO need convert the properties here
-	autoCompleteClassProperties: function(field,userTyped){
-		
 		//constrain autocomplete by the values of the other code properties
 		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
 		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
@@ -80,11 +62,18 @@ var QueryManager = {
 			property = 'snippet_extends';
 		}else if(field == SetupManager.implementsInputID){
 			property = 'snippet_implements';
+		}else if(SetupManager.callInputID){
+			property = 'snippet_method_invocations';
+		}else if(SetupManager.callingObjectInputID){
+			property = 'snippet_method_invocations';
+		}else if(SetupManager.argTypeInputID){
+			property = 'snippet_method_invocations';
 		}
 		
 
 		
 		var queryFilter = "snippet_code:"+SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery);
+		
 		if(field != SetupManager.extendsInputID && extendsFilter != ""){
 			queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
 		}
@@ -92,9 +81,10 @@ var QueryManager = {
 			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 		}
 		
+		var invocationFilter = " AND snippet_method_invocations:"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field);
 		
 		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
-				'rows=0&q='+queryFilter+'&facet=true' +
+				'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
 				'&facet.field='+property+'&facet.mincount=1&facet.prefix='+userTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
@@ -103,48 +93,8 @@ var QueryManager = {
 		QueryManager.currentAutoCompleteField = field;
 		
 		results = $.getJSON(queryAutoComplete);
-	},
-	
-	autoCompleteMethodInvocation: function(field,userTyped){
-		
-		
-		var objectsFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-		var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();;
-		var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
-		
-		var property = '';
-		if(field == SetupManager.callInputID){
-			property = 'invocation_name';
-		}else if(field == SetupManager.callingObjectInputID){
-			property = 'invocation_calling_object_class';
-		}else if(field == SetupManager.argTypeInputID){
-			property = 'invocation_argument_types';
-		}
-		
-		
-		var queryFilter = "id:*";
-		
-		if(field != SetupManager.callingObjectInputID && objectsFilter != ""){
-			queryFilter = queryFilter+' AND invocation_calling_object_class:('+objectsFilter+')';
-		}
-		if(field != SetupManager.callInputID && methodCallNameFilter != ""){
-			queryFilter = queryFilter+' AND invocation_name:('+methodCallNameFilter+')';
-		}
-		if(field != SetupManager.argTypeInputID && argumentTypeFilter != ""){
-			queryFilter = queryFilter+' AND invocation_argument_types:('+argumentTypeFilter+')';
-		}
-		
-		
-		
-		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.invocationCollection+'/select/?' +
-				'rows=0&q='+queryFilter+'&facet=true' +
-				'&facet.field='+property+'&facet.mincount=1&facet.prefix='+userTyped +
-				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
-		
-		QueryManager.currentAutoCompleteField = field;
-		
-		results = $.getJSON(queryAutoComplete);
-		
+
+
 		
 	},
 	
@@ -542,19 +492,58 @@ function autoCompleteCallBack(data){
 	
 	if(QueryManager.currentAutoCompleteField == SetupManager.extendsInputID){
 		results = data.facet_counts.facet_fields.snippet_extends;
+		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.implementsInputID){
 		results = data.facet_counts.facet_fields.snippet_implements;
-	}else if(QueryManager.currentAutoCompleteField == SetupManager.callInputID){
-		results = data.facet_counts.facet_fields.invocation_name;
+		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
+	}
+	
+	else if(QueryManager.currentAutoCompleteField == SetupManager.callInputID){
+		results = data.facet_counts.facet_fields.snippet_method_invocations;
+		
+		var temp = new Array();
+		
+		for(var i = 0; i<results.length; i++){
+			//skip the odds because those are frequency counts and not results
+			if(i%2 != 0)
+				continue;
+			
+			temp.push(EncoderDecoder.decodeMethodFilter(results[i]));
+		}
+		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
+	
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.callingObjectInputID){
-		results = data.facet_counts.facet_fields.invocation_calling_object_class;
+		results = data.facet_counts.facet_fields.snippet_method_invocations;
+		
+		var temp = new Array();
+		
+		for(var i = 0; i<results.length; i++){
+			//skip the odds because those are frequency counts and not results
+			if(i%2 != 0)
+				continue;
+			
+			temp.push(EncoderDecoder.decodeClassFilter(results[i]));
+		}
+		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
+
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.argTypeInputID){
-		results = data.facet_counts.facet_fields.invocation_argument_types;
+		results = data.facet_counts.facet_fields.snippet_method_invocations;
+		
+		var temp = new Array();
+		
+		for(var i = 0; i<results.length; i++){
+			//skip the odds because those are frequency counts and not results
+			if(i%2 != 0)
+				continue;
+			
+			temp.push(EncoderDecoder.decodeArgumentFilter(results[i]));
+		}
+		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
 	}
 	
 	
 	
-	$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
+	
 
 }
 

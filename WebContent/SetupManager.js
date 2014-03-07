@@ -324,7 +324,7 @@ var SetupManager = {
 //-- autocomplete extends
 			
 			extendsInput.keypress(function(e){
-				autoCompleteQuery = extendsInput.val();
+				var autoCompleteQuery = extendsInput.val();
 				QueryManager.submitAutoComplete(SetupManager.extendsInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
@@ -336,7 +336,7 @@ var SetupManager = {
 				}
 			});
 			implementsInput.keypress(function(e){
-				autoCompleteQuery = implementsInput.val();
+				var autoCompleteQuery = implementsInput.val();
 				QueryManager.submitAutoComplete(SetupManager.implementsInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
@@ -348,7 +348,7 @@ var SetupManager = {
 				}
 			});
 			callInput.keypress(function(e){
-				autoCompleteQuery = callInput.val();
+				var autoCompleteQuery = callInput.val();
 				QueryManager.submitAutoComplete(SetupManager.callInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
@@ -360,7 +360,7 @@ var SetupManager = {
 				}
 			});
 			callingObjectInput.keypress(function(e){
-				autoCompleteQuery = callingObjectInput.val();
+				var autoCompleteQuery = callingObjectInput.val();
 				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
@@ -372,7 +372,7 @@ var SetupManager = {
 				}
 			});
 			argTypeInput.keypress(function(e){
-				autoCompleteQuery = argTypeInput.val();
+				var autoCompleteQuery = argTypeInput.val();
 				QueryManager.submitAutoComplete(SetupManager.argTypeInputID,autoCompleteQuery);	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
