@@ -11,7 +11,7 @@ var URLQueryCreator = {
 			var query = SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery);
 			var start = QueryManager.currentStart;
 			
-			query = SmartQueryCreator.makeSmartQuery(query);
+			
 	
 			var queryFilter = "";
 			

@@ -133,6 +133,8 @@ var SetupManager = {
 		placeholder_attr	:	"placeholder",
 		columns				:	"cols",
 		rows				:	"rows",
+		numberOfCells		:	2,
+		numberOfCellsPerRow	:	2,
 		
 		//pound for finding by id
 		pound		:	"#",
@@ -237,7 +239,7 @@ var SetupManager = {
 			tableOfResults.addClass("ResultTable");
 			
 			//make cells
-			SetupManager.makeTableCells(3);
+			SetupManager.makeTableCells();
 			
 			
 			//side filter
@@ -280,7 +282,7 @@ var SetupManager = {
 			implementsInput.attr(SetupManager.ID_attr, SetupManager.implementsInputID);
 			$(SetupManager.pound+SetupManager.implementsInputID).autocomplete({ source: [] });
 			
-			var callHeader = $('<tr><table><th align="left">Method call properties</th></table></tr>');
+			var callHeader = $('<tr><table><th align="left">Method call</th></table></tr>');
 			filterTable.append(callHeader);
 			
 			//making calling object class name row
@@ -289,7 +291,7 @@ var SetupManager = {
 			var callingObjectTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			callingObjectRow.append(callingObjectTD);
 			
-			callingObjectTD.append("<text>object's class&nbsp&nbsp&nbsp&nbsp</text>");
+			callingObjectTD.append("<text>class name&nbsp&nbsp&nbsp&nbsp</text>");
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
@@ -313,7 +315,7 @@ var SetupManager = {
 			var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			methodArgType.append(argTypeTD);
 			
-			argTypeTD.append("<text>argument type&nbsp&nbsp&nbsp&nbsp</text>");
+			argTypeTD.append("<text>1st argument type&nbsp&nbsp&nbsp&nbsp</text>");
 			var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			argTypeTD.append(argTypeInput);
 			argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
@@ -464,10 +466,10 @@ var SetupManager = {
 				var screenBuffer = screenWidth*(3/4);
 				var screenHeightBuffer = screenHeight*(3/4)-75;
 				
-				$('.Result').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+				$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
 				$('.Result').height((screenHeightBuffer));
 
-				$('.ResultTD').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+				$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
 				$('.ResultTD').height((screenHeightBuffer));		
 				//$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 			
@@ -487,17 +489,17 @@ var SetupManager = {
 				
 		
 				
-				$('.FilterSideTD').width(((screenBuffer)/3));
+				$('.FilterSideTD').width(((screenBuffer)/SetupManager.numberOfCells));
 				
 				
 			});
 			$(window).trigger('resize');
 			
 //set dimensions of all Cells
-			$('.Result').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+			$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
 			$('.Result').height((screenHeightBuffer));
 			
-			$('.ResultTD').width(((screenBuffer)/3)-SetupManager.sideBuffer);
+			$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
 			$('.ResultTD').height((screenHeightBuffer));		
 		//	$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 		
@@ -515,7 +517,7 @@ var SetupManager = {
 			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+168));
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
-			$('.FilterSideTD').width(((screenBuffer)/3));
+			$('.FilterSideTD').width(((screenBuffer)/SetupManager.numberOfCells));
 			
 			
 		
@@ -527,18 +529,18 @@ var SetupManager = {
 		 * assumes 2 columns max
 		 * @returns
 		 */
-		makeTableCells	:	function(numOfCells){
+		makeTableCells	:	function(){
 			var tempRowId;
 			var tempTdId;
 			
 
 			
-			for(var i = 0; i< numOfCells; i++){
+			for(var i = 0; i< SetupManager.numberOfCells; i++){
 				tempTdId = "td"+i;
 				
 				
 				//new row every even - where assumption is implemented
-				if( (i%3) == 0){
+				if( (i%SetupManager.numberOfCellsPerRow) == 0){
 					
 					tempRowId = "row"+i;
 					//make row
@@ -577,7 +579,7 @@ var SetupManager = {
 				$(SetupManager.pound+SetupManager.cellDivArray_ID[i]).append($(SetupManager.newLine));
 				
 				//make result data for cell
-				var resultData = $(SetupManager.preOpen+SetupManager.preClose);
+				var resultData = $('<pre></pre>');//$(SetupManager.preOpen+SetupManager.preClose);
 				var result_id = "result"+i;
 				SetupManager.resultPreArray_ID[i] = result_id;
 				resultData.attr(SetupManager.ID_attr,SetupManager.resultPreArray_ID[i]);

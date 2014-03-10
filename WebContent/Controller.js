@@ -33,8 +33,11 @@ var Controller = {
 		},
 		
 		setCodeFromURL: function(codeNode, codeURL, start, end){
+		
 			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
-			 
+			//var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
+			//$(SetupManager.pound+codeNode).attr("src",codeURL);
+			
 			$.getJSON(url).fail(function(data, textStatus, jqXHR) {
 			    alert( data + textStatus + jqXHR);
 			  }).success(function(data, textStatus, jqXHR ) {
@@ -43,8 +46,13 @@ var Controller = {
 					    var result = new CodeResult(code,start,end);
 					    var jQueryObject = result.getJQueryObject();
 						$(SetupManager.pound+codeNode).append(jQueryObject);
+						
+						//sh_highlightDocument();
+						Rainbow.color();
 				  });
 			  });
+			
+			
 		},
 
 		

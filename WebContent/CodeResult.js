@@ -9,7 +9,7 @@
  */
 function CodeResult(code, start, end){
 	//this is just a property
-	this.code = String(code).substring(start,end);
+	this.code = String(code);//.substring(start,end);
 	this.start = start;
 	this.end = end;
 	
@@ -18,9 +18,42 @@ function CodeResult(code, start, end){
 		return code;
 	};
 	
+	this.format = function(){
+		var formatedCode ="";
+		
+			var split = code.split("\n");
+			var lineLengthMax = 30;
+			
+			for(var i = 0; i< split.length; i++){
+				var line = String(split[i]);
+				if(line.length > lineLengthMax){
+					var tabs = line.split("\t");
+					var tabCount = tabs.length+1;
+					var firstPart = line.substring(0, lineLengthMax);
+					
+					
+					var tabString = "";
+					for(var j = 0; j<tabCount; j++){
+						tabString = tabString+"\t";
+					}
+					
+					var lastPart = line.substring(lineLengthMax, line.length);
+					
+					 line = firstPart+"\n"+tabString+lastPart;
+				}
+				
+				formatedCode = formatedCode +"\n"+ line;
+			}
+		
+		return formatedCode;
+	}
+	
 	this.getHtml = function(){
-		var html = '<code data-language="java">'+this.code+'</code>';
-		return html;
+		var formatedCode = '<code data-language="java">'+
+			//this.code.substring(0,start)+//'<mark>'+
+			this.code.substring(start,end)+//'</mark>'+
+			/*this.code.substring(end,this.code.length)+*/'</code>';
+		return formatedCode;
 	};
 	
 	this.Highlight = function(){

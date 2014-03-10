@@ -485,7 +485,7 @@ function on_data(data) {
 	// update status
 	Controller.setStatus("DONE - " + total);
 
-	QueryManager.makeNavigation(data.response.numFound, 4);
+	QueryManager.makeNavigation(data.response.numFound, SetupManager.numberOfCells);
 	
 //	topAuthors = data.facet_counts.facet_fields.author;
 //	tagArray = data.facet_counts.facet_fields.snippet_tag;
