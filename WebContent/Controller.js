@@ -528,7 +528,7 @@ var Controller = {
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth*(3/4)-SetupManager.sideBuffer-32;
+				var screenBuffer = screenWidth*(3/4)-SetupManager.sideBuffer-16;
 				var screenHeightBuffer = screenHeight*(3/4)-75-10;
 			  
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
@@ -578,16 +578,17 @@ var Controller = {
 		toggleCells		:	function(cell){
 			var length = SetupManager.cellDivArray_ID.length;
 			
-			var rowIndex = 0;
+		//	var rowIndex = 0;
 			
 			for(var i = 0; i<length; i++){
 		          if(cell != SetupManager.cellDivArray_ID[i]){
 		        	  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).toggle();
 		        	  $(SetupManager.pound+SetupManager.cellDivArray_ID[i]).toggle();
 		        	 
-		          }else{
-		        	  rowIndex = i;
 		          }
+//		        	  else{
+//		        	  rowIndex = i;
+//		          }
 			}
       	  
       	  //TODO: need to generalize this!!

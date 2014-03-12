@@ -37,6 +37,19 @@ var EncoderDecoder = {
 		
 		},
 		
+		encodeClassFacet	:	function(prefix){
+			return "*@*@*@"+prefix+"*@"+"*"+"@"+"*"+"\\!"+"*";
+		},
+		
+		encodeMethodNameFacet	:	function(prefix){
+			return "*@*@*@"+"*"+"@"+prefix+"*@"+"*"+"\\!"+"*";
+		},
+		
+		encodeMethodCallArgFacet : function(prefeix){
+			return "*@*@*@"+"*"+"@"+"*"+"@"+prefix+"*\\!"+"*";
+		},
+		
+		
 
 		//method orderFound<!>methodName<@>typecount/valuecount<#>type/value/callingclass/declaringclass/start/end
 		encodeInvocationFilter		:	function(){
@@ -55,30 +68,31 @@ var EncoderDecoder = {
 			var invocationFilter = "*";
 			
 			if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 			//ones
 			else if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter == "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+"*"+"\\!"+"*";
 			else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+argumentTypeFilter+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 			else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 			//twos
 			else if(objectsClassFilter == "" && methodCallNameFilter == "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+argumentTypeFilter+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 			else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter == "")
-				invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+"*"+"\\!"+"*";
 			else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter == "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+"*"+"!"+"*";
+				invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+"*"+"\\!"+"*";
 			
 			return invocationFilter;
 		},
 
 	//method orderFound<!>methodName<@>typecount/valuecount<#>type/value/callingclass/declaringclass/start/end
-	encodeInvocationFilterLeaveOneOut		:	function(leaveOut){
+	encodeInvocationFilterLeaveOneOut		:	function(leaveOut, prefix){
 			
 			var invocationFilter = "*";
 
+			var prefixWild = prefix+"*";
 			//start @ end @ declaringClassName @ className @ methodName <@argType @ argType...> ! <@argValue @argValue ...>
 			//<> indicates is optional
 			
@@ -90,13 +104,13 @@ var EncoderDecoder = {
 				var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 				
 				if(methodCallNameFilter != "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+prefixWild+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 				else if(methodCallNameFilter != "" && argumentTypeFilter == "")
-					invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+"*"+"*"+"!"+"*";				
+					invocationFilter="*@*@*@"+prefixWild+"@"+methodCallNameFilter+"@"+"*"+"*"+"\\!"+"*";				
 				else if(methodCallNameFilter == "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+argumentTypeFilter+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+prefixWild+"@"+"*"+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 				else
-					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+prefixWild+"@"+"*"+"@"+"*"+"\\!"+"*";
 				
 			}else if(leaveOut == SetupManager.callInputID){
 				var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
@@ -104,26 +118,26 @@ var EncoderDecoder = {
 				
 				
 				if(objectsClassFilter != "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+argumentTypeFilter+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+objectsClassFilter+"@"+prefixWild+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 				else if(objectsClassFilter != "" && argumentTypeFilter == "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+"*"+"!"+"*";				
+					invocationFilter="*@*@*@"+objectsClassFilter+"@"+prefixWild+"@"+"*"+"\\!"+"*";				
 				else if(objectsClassFilter == "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+argumentTypeFilter+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+"*"+"@"+prefixWild+"@"+argumentTypeFilter+"*"+"\\!"+"*";
 				else
-					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+"*"+"@"+prefixWild+"@"+"*"+"\\!"+"*";
 				
 			}else if(leaveOut == SetupManager.argTypeInputID){
 				var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
 				var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();
 				
 				if(objectsClassFilter != "" && methodCallNameFilter != "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+"*"+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+prefixWild+"*"+"\\!"+"*";
 				else if(methodCallNameFilter != "" && objectsClassFilter == "")
-					invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+"*"+"*"+"!"+"*";			
+					invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+prefixWild+"*"+"\\!"+"*";			
 				else if(methodCallNameFilter == "" && objectsClassFilter != "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+"*"+"*"+"!"+"*";				
+					invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+prefixWild+"*"+"\\!"+"*";				
 				else
-					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+"*"+"!"+"*";
+					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+prefixWild+"*"+"\\!"+"*";
 				
 			}
 	

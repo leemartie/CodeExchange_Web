@@ -91,6 +91,8 @@ var SetupManager = {
 		
 		argTypeInputID			:	"argTypeInput_ID",
 		
+		methodDecNameInputID	:	"methodDecNameInput_ID",
+		
 			
 		//These are the CSS classes
 		Cell_CSS_Class			:	"Cell",
@@ -282,6 +284,21 @@ var SetupManager = {
 			implementsInput.attr(SetupManager.ID_attr, SetupManager.implementsInputID);
 			$(SetupManager.pound+SetupManager.implementsInputID).autocomplete({ source: [] });
 			
+			var callHeader = $('<tr><table><th align="left">Method Properties</th></table></tr>');
+			filterTable.append(callHeader);
+			
+			//making method dec name row
+			var methodDecNameRow = $(SetupManager.trOpen+SetupManager.trClose);
+			filterTable.append(methodDecNameRow);
+			var methodDecNameTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			methodDecNameRow.append(methodDecNameTD);
+			
+			methodDecNameTD.append("<text>class name&nbsp&nbsp&nbsp&nbsp</text>");
+			var methodDecNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+			methodDecNameTD.append(methodDecNameInput);
+			methodDecNameInput.attr(SetupManager.ID_attr, SetupManager.methodDecNameInputID);
+			$(SetupManager.pound+SetupManager.methodDecNameInputID).autocomplete({ source: [] });
+			
 			var callHeader = $('<tr><table><th align="left">Method call</th></table></tr>');
 			filterTable.append(callHeader);
 			
@@ -319,15 +336,32 @@ var SetupManager = {
 			var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			argTypeTD.append(argTypeInput);
 			argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
+			argTypeInput.width("85%");
 			$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source: [] });
 			
+			var addArgTypeBtn = $(SetupManager.buttonOpen+"+"+SetupManager.buttonClose);
+			argTypeTD.append(addArgTypeBtn);
+			
+			addArgTypeBtn.click(function(event) {
+				var methodArgType = $(SetupManager.trOpen+SetupManager.trClose);
+				filterTable.append(methodArgType);
+				var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+				methodArgType.append(argTypeTD);
+				
+				argTypeTD.append("<text>1st argument type&nbsp&nbsp&nbsp&nbsp</text>");
+				var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+				argTypeTD.append(argTypeInput);
+				argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
+				argTypeInput.width("85%");
+				$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source: [] });
 
+		      });
 			
 //-- autocomplete extends
 			
 			extendsInput.keypress(function(e){
 				
-				QueryManager.submitAutoComplete(SetupManager.extendsInputID);	
+				QueryManager.submitAutoComplete(SetupManager.extendsInputID, String.fromCharCode(e.which));	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -339,7 +373,7 @@ var SetupManager = {
 			});
 			implementsInput.keypress(function(e){
 				
-				QueryManager.submitAutoComplete(SetupManager.implementsInputID);	
+				QueryManager.submitAutoComplete(SetupManager.implementsInputID, String.fromCharCode(e.which));	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -351,7 +385,7 @@ var SetupManager = {
 			});
 			callInput.keypress(function(e){
 			
-				QueryManager.submitAutoComplete(SetupManager.callInputID);	
+				QueryManager.submitAutoComplete(SetupManager.callInputID, String.fromCharCode(e.which));	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -363,7 +397,7 @@ var SetupManager = {
 			});
 			callingObjectInput.keypress(function(e){
 				
-				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID);	
+				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID, String.fromCharCode(e.which));	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -375,7 +409,7 @@ var SetupManager = {
 			});
 			argTypeInput.keypress(function(e){
 				
-				QueryManager.submitAutoComplete(SetupManager.argTypeInputID);	
+				QueryManager.submitAutoComplete(SetupManager.argTypeInputID, String.fromCharCode(e.which));	
 				
 				if (!e.shiftKey && e.keyCode == '13') {
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();

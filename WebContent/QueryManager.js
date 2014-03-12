@@ -51,33 +51,47 @@ var QueryManager = {
 		
 	},
 	
-	submitAutoComplete	:	function(field){
+	submitAutoComplete	:	function(field, userTyped){
 		
 		//constrain autocomplete by the values of the other code properties
 		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
 		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
 		
-		var userTyped = "";
+		var completeUserTyped = "";
 		
 		var property = '';
 		if(field == SetupManager.extendsInputID){
 			property = 'snippet_extends';
-			userTyped = $(SetupManager.pound+SetupManager.extendsInputID).val();
+			completeUserTyped = $(SetupManager.pound+SetupManager.extendsInputID).val();
+			
 		}else if(field == SetupManager.implementsInputID){
 			property = 'snippet_implements';
-			userTyped = $(SetupManager.pound+SetupManager.implementsInputID).val();
-		}else if(SetupManager.callInputID){
+			completeUserTyped = $(SetupManager.pound+SetupManager.implementsInputID).val();
+			
+		}else if(field == SetupManager.callInputID){
 			property = 'snippet_method_invocations';
-			userTyped = $(SetupManager.pound+SetupManager.callInputID).val();
-		}else if(SetupManager.callingObjectInputID){
+			completeUserTyped = $(SetupManager.pound+SetupManager.callInputID).val();
+			
+			
+			
+		}else if(field == SetupManager.callingObjectInputID){
 			property = 'snippet_method_invocations';
-			userTyped = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-		}else if(SetupManager.argTypeInputID){
+			completeUserTyped = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+			
+			
+			
+		}else if(field == SetupManager.argTypeInputID){
 			property = 'snippet_method_invocations';
-			userTyped = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			completeUserTyped = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			
+			
+			
+			
 		}
 		
-
+		completeUserTyped = completeUserTyped+userTyped;
+		
+		//alert (completeUserTyped);
 		
 		var queryFilter = "snippet_code:"+SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery);
 		
@@ -88,11 +102,13 @@ var QueryManager = {
 			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 		}
 		
-		var invocationFilter = " AND snippet_method_invocations:"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field);
+		var invocationFilter = " AND snippet_method_invocations:"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,completeUserTyped);
 		
-		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
+		
+		
+		var queryAutoComplete = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?' +
 				'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-				'&facet.field='+property+'&facet.mincount=1&facet.prefix='+userTyped +
+				'&facet.field='+property+'&facet.mincount=1'+//&facet.prefix='+completeUserTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
 		

@@ -36,7 +36,7 @@ var URLQueryCreator = {
 
 			
 
-			var url = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?q='
+			var url = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ 'snippet_code:(' + query + ')'
 				+ queryFilter
 				+ invocationFilter
