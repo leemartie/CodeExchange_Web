@@ -49,10 +49,10 @@ var URLQueryCreator = {
 				+ '&facet.field=snippet_imports'
 				+ '&facet.field=snippet_granularity'
 				+ '&facet.mincount=1'
-				+ '&hl=true';
+				+ '&hl=true'
 //				+ '&hl.fl=snippet'
 //				+ '&hl.highlightMultiTerm=true ';
-				//+ '&facet.limit=200';
+				+ '&facet.limit=200';
 			
 			
 			

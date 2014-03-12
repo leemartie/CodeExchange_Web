@@ -109,7 +109,7 @@ var QueryManager = {
 		
 		var queryAutoComplete = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?' +
 				'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-				'&facet.field='+property+'&facet.mincount=1'+//&facet.prefix='+completeUserTyped +
+				'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=200'+//&facet.prefix='+completeUserTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
 		
@@ -534,8 +534,28 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
+			//TODO MUSHT MAKE SURE EVERYPART OF STRING MATCHES THE TYPED IN VALEUES
+			//so decoded results but start with prefix QueryManager.compleUserTyped
+			//AND the other parts decoded must match the typed in values, so the class
+			//must also match the typed in class
+			
+			var className = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+			var argTypeName = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			var pushBoolean = true;
+			
+			if(className != ""){
+				var classDecoded = EncoderDecoder.decodeClassFilter(results[i]);
+				if(className !=  classDecoded)
+					pushBoolean = false;
+			}
+			
+			if(argTypeName != ""){
+				if(argTypeName !=  EncoderDecoder.decodeArgumentFilter(results[i]))
+					pushBoolean = false;
+			}
+			
 			var decodedResult = EncoderDecoder.decodeMethodFilter(results[i]);
-			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0)
+			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0 && pushBoolean)
 				temp.push(decodedResult);
 		}
 		
@@ -552,8 +572,23 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
+			var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
+			var argTypeName = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			var pushBoolean = true;
+			
+			if(methodName != ""){
+				var methodFilterDecoded = EncoderDecoder.decodeMethodFilter(results[i]);
+				if(methodName !=  methodFilterDecoded)
+					pushBoolean = false;
+			}
+			
+			if(argTypeName != ""){
+				if(argTypeName !=  EncoderDecoder.decodeArgumentFilter(results[i]))
+					pushBoolean = false;
+			}
+			
 			var decodedResult = EncoderDecoder.decodeClassFilter(results[i]);
-			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0)
+			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0  && pushBoolean)
 				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
@@ -569,8 +604,23 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
+			var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
+			var className = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+			var argTypeName = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			var pushBoolean = true;
+			
+			if(methodName != ""){
+				if(methodName !=  EncoderDecoder.decodeMethodFilter(results[i]))
+					pushBoolean = false;
+			}
+			
+			if(className != ""){
+				if(className !=  EncoderDecoder.decodeClassFilter(results[i]))
+					pushBoolean = false;
+			}
+			
 			var decodedResult = EncoderDecoder.decodeArgumentFilter(results[i]);
-			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0)
+			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0   && pushBoolean)
 				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
