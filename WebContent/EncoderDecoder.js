@@ -38,15 +38,15 @@ var EncoderDecoder = {
 		},
 		
 		encodeClassFacet	:	function(prefix){
-			return "*@*@*@"+prefix+"*@"+"*"+"@"+"*"+"\\!"+"*";
+			return "*@*@*@"+prefix+"*@"+"*"+"@"+"*"+"!"+"*";
 		},
 		
 		encodeMethodNameFacet	:	function(prefix){
-			return "*@*@*@"+"*"+"@"+prefix+"*@"+"*"+"\\!"+"*";
+			return "*@*@*@"+"*"+"@"+prefix+"*@"+"*"+"!"+"*";
 		},
 		
 		encodeMethodCallArgFacet : function(prefeix){
-			return "*@*@*@"+"*"+"@"+"*"+"@"+prefix+"*\\!"+"*";
+			return "*@*@*@"+"*"+"@"+"*"+"@"+prefix+"*!"+"*";
 		},
 		
 		
@@ -64,26 +64,31 @@ var EncoderDecoder = {
 			//<> indicates is optional
 			
 			//first argument
+			var anythingButAt = "[^@]%2B";
 			
-			var invocationFilter = "*";
+			var invocationFilter = 	invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+
+			""+anythingButAt+""+"@"+""+anythingButAt+""+"@"+".*"+""+"\\!"+""+".*"+"";
+
 			
-			if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"\\!"+"*";
-			//ones
-			else if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter == "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+"*"+"\\!"+"*";
-			else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+argumentTypeFilter+"*"+"\\!"+"*";
-			else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"\\!"+"*";
+			
+			if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter != ""){
+				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+argumentTypeFilter+".*"+""+"!"+".*"+"";
+			
+			}//ones
+			else if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter == ""){
+				invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+".*"+""+"!"+".*"+"";
+			}else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter != ""){
+				invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+argumentTypeFilter+".*"+""+"!"+".*"+"";
+			}else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter != ""){
+				invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+""+"@"+methodCallNameFilter+"@"+argumentTypeFilter+".*"+""+"!"+".*"+"";
 			//twos
-			else if(objectsClassFilter == "" && methodCallNameFilter == "" && argumentTypeFilter != "")
-				invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+argumentTypeFilter+"*"+"\\!"+"*";
-			else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter == "")
-				invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+"*"+"\\!"+"*";
-			else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter == "")
-				invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+"*"+"\\!"+"*";
-			
+			}else if(objectsClassFilter == "" && methodCallNameFilter == "" && argumentTypeFilter != ""){
+				invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+""+"@"+anythingButAt+"@"+argumentTypeFilter+".*"+""+"!"+".*"+"";
+			}else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter == ""){
+				invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+""+"@"+methodCallNameFilter+"@"+".*"+"!"+".*"+"";
+			}else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter == ""){
+				invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+".*"+"!"+".*"+"";
+			}
 			return invocationFilter;
 		},
 
@@ -91,8 +96,9 @@ var EncoderDecoder = {
 	encodeInvocationFilterLeaveOneOut		:	function(leaveOut, prefix){
 			
 			var invocationFilter = "*";
+			var anythingButAt = "[^@]%2B";
 
-			var prefixWild = prefix+"*";
+			var prefixWild = prefix+"[^@]*";
 			//start @ end @ declaringClassName @ className @ methodName <@argType @ argType...> ! <@argValue @argValue ...>
 			//<> indicates is optional
 			
@@ -104,13 +110,13 @@ var EncoderDecoder = {
 				var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 				
 				if(methodCallNameFilter != "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+prefixWild+"@"+methodCallNameFilter+"@"+argumentTypeFilter+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+methodCallNameFilter+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
 				else if(methodCallNameFilter != "" && argumentTypeFilter == "")
-					invocationFilter="*@*@*@"+prefixWild+"@"+methodCallNameFilter+"@"+"*"+"*"+"\\!"+"*";				
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+methodCallNameFilter+"@"+""+anythingButAt+""+""+".*"+""+"!"+""+".*"+"";				
 				else if(methodCallNameFilter == "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+prefixWild+"@"+"*"+"@"+argumentTypeFilter+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+""+anythingButAt+""+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
 				else
-					invocationFilter="*@*@*@"+prefixWild+"@"+"*"+"@"+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+""+anythingButAt+""+"@"+""+".*"+""+"!"+""+".*"+"";
 				
 			}else if(leaveOut == SetupManager.callInputID){
 				var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
@@ -118,26 +124,26 @@ var EncoderDecoder = {
 				
 				
 				if(objectsClassFilter != "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+prefixWild+"@"+argumentTypeFilter+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+prefixWild+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
 				else if(objectsClassFilter != "" && argumentTypeFilter == "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+prefixWild+"@"+"*"+"\\!"+"*";				
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+prefixWild+"@"+""+".*"+""+"!"+""+".*"+"";				
 				else if(objectsClassFilter == "" && argumentTypeFilter != "")
-					invocationFilter="*@*@*@"+"*"+"@"+prefixWild+"@"+argumentTypeFilter+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+prefixWild+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
 				else
-					invocationFilter="*@*@*@"+"*"+"@"+prefixWild+"@"+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+prefixWild+"@"+""+".*"+""+"!"+""+".*"+"";
 				
 			}else if(leaveOut == SetupManager.argTypeInputID){
 				var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
 				var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();
 				
 				if(objectsClassFilter != "" && methodCallNameFilter != "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+prefixWild+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";
 				else if(methodCallNameFilter != "" && objectsClassFilter == "")
-					invocationFilter="*@*@*@"+"*"+"@"+methodCallNameFilter+"@"+prefixWild+"*"+"\\!"+"*";			
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+methodCallNameFilter+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";			
 				else if(methodCallNameFilter == "" && objectsClassFilter != "")
-					invocationFilter="*@*@*@"+objectsClassFilter+"@"+"*"+"@"+prefixWild+"*"+"\\!"+"*";				
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+""+anythingButAt+""+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";				
 				else
-					invocationFilter="*@*@*@"+"*"+"@"+"*"+"@"+prefixWild+"*"+"\\!"+"*";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+""+anythingButAt+""+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";
 				
 			}
 	

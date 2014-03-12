@@ -30,7 +30,7 @@ var URLQueryCreator = {
 				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 			}
 			
-			var invocationFilter = " AND snippet_method_invocations:"+EncoderDecoder.encodeInvocationFilter();
+			var invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilter()+"/";
 			
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 

@@ -102,7 +102,7 @@ var QueryManager = {
 			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 		}
 		
-		var invocationFilter = " AND snippet_method_invocations:"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,completeUserTyped);
+		var invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,completeUserTyped)+"/";
 		
 		
 		
