@@ -14,6 +14,7 @@ var QueryManager = {
 	libArray: new Array(),
 	granArray: new Array(),
 	currentAutoCompleteField:	"",
+	completeUserTyped : "",
 
 	/**
 	 * 
@@ -57,39 +58,39 @@ var QueryManager = {
 		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
 		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
 		
-		var completeUserTyped = "";
+		
 		
 		var property = '';
 		if(field == SetupManager.extendsInputID){
 			property = 'snippet_extends';
-			completeUserTyped = $(SetupManager.pound+SetupManager.extendsInputID).val();
+			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.extendsInputID).val();
 			
 		}else if(field == SetupManager.implementsInputID){
 			property = 'snippet_implements';
-			completeUserTyped = $(SetupManager.pound+SetupManager.implementsInputID).val();
+			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.implementsInputID).val();
 			
 		}else if(field == SetupManager.callInputID){
 			property = 'snippet_method_invocations';
-			completeUserTyped = $(SetupManager.pound+SetupManager.callInputID).val();
+			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.callInputID).val();
 			
 			
 			
 		}else if(field == SetupManager.callingObjectInputID){
 			property = 'snippet_method_invocations';
-			completeUserTyped = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
 			
 			
 			
 		}else if(field == SetupManager.argTypeInputID){
 			property = 'snippet_method_invocations';
-			completeUserTyped = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 			
 			
 			
 			
 		}
 		
-		completeUserTyped = completeUserTyped+userTyped;
+		QueryManager.completeUserTyped = QueryManager.completeUserTyped+userTyped;
 		
 		//alert (completeUserTyped);
 		
@@ -102,7 +103,7 @@ var QueryManager = {
 			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 		}
 		
-		var invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,completeUserTyped)+"/";
+		var invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped)+"/";
 		
 		
 		
@@ -533,7 +534,9 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
-			temp.push(EncoderDecoder.decodeMethodFilter(results[i]));
+			var decodedResult = EncoderDecoder.decodeMethodFilter(results[i]);
+			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0)
+				temp.push(decodedResult);
 		}
 		
 		temp = Util.getOnlyUniqueElements(temp);
@@ -549,7 +552,9 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
-			temp.push(EncoderDecoder.decodeClassFilter(results[i]));
+			var decodedResult = EncoderDecoder.decodeClassFilter(results[i]);
+			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0)
+				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
 		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
@@ -564,7 +569,9 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
-			temp.push(EncoderDecoder.decodeArgumentFilter(results[i]));
+			var decodedResult = EncoderDecoder.decodeArgumentFilter(results[i]);
+			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0)
+				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
 		
