@@ -39,16 +39,30 @@ var Controller = {
 			//$(SetupManager.pound+codeNode).attr("src",codeURL);
 			
 			$.getJSON(url).fail(function(data, textStatus, jqXHR) {
-			    alert( data + textStatus + jqXHR);
+			 //   alert( data + textStatus + jqXHR);
+			    
+			   
+			    $(SetupManager.pound+codeNode).empty();
+				$(SetupManager.pound+codeNode).append("<pre>deleted or moved code</pre>");
+				
+				
 			  }).success(function(data, textStatus, jqXHR ) {
 				  $.each(data, function(index, element) {
 					    var code = element;
 					    var result = new CodeResult(code,start,end);
 					    var jQueryObject = result.getJQueryObject();
+					    $(SetupManager.pound+codeNode).empty();
 						$(SetupManager.pound+codeNode).append(jQueryObject);
 						
 						//sh_highlightDocument();
-						Rainbow.color();
+						$.syntax({
+						    brush: 'java',
+						    linkify: false,
+						    tabWidth: 8,
+						    replace: true,
+						    inlineSelector: "code.syntax"
+						    
+						});
 				  });
 			  });
 			

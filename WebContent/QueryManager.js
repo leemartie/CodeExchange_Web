@@ -15,6 +15,8 @@ var QueryManager = {
 	granArray: new Array(),
 	currentAutoCompleteField:	"",
 	completeUserTyped : "",
+	currentRequest : null,
+	currentResponse : null,
 
 	/**
 	 * 
@@ -52,8 +54,9 @@ var QueryManager = {
 		
 	},
 	
-	submitAutoComplete	:	function(field, userTyped){
-		
+	submitAutoComplete	:	function(field, request, response){
+		QueryManager.currentRequest = request;
+		QueryManager.currentResponse = response;
 		//constrain autocomplete by the values of the other code properties
 		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
 		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
@@ -90,7 +93,7 @@ var QueryManager = {
 			
 		}
 		
-		QueryManager.completeUserTyped = QueryManager.completeUserTyped+userTyped;
+		//QueryManager.completeUserTyped = QueryManager.completeUserTyped+userTyped;
 		
 		//alert (completeUserTyped);
 		
@@ -107,7 +110,7 @@ var QueryManager = {
 		
 		
 		
-		var queryAutoComplete = 'http://'+URLQueryCreator.server+':8983/solr/'+URLQueryCreator.collection+'/select/?' +
+		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
 				'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
 				'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=200'+//&facet.prefix='+completeUserTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
@@ -116,8 +119,7 @@ var QueryManager = {
 		
 		QueryManager.currentAutoCompleteField = field;
 		
-		results = $.getJSON(queryAutoComplete);
-
+		$.getJSON(queryAutoComplete);
 
 		
 	},
@@ -419,9 +421,16 @@ function on_nextData(data) {
 				
 				
 
-
+					var versions = item.snippet_all_versions;
+					var correctVersion = versions[0];
+					var wrongVersion = item.snippet_this_version;
+					
+					var url = String(item.snippet_address);
+					var correctURL = url.replace(wrongVersion,correctVersion);
+					
+					
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-							item.snippet_address, item.snippet_address_lower_bound, item.snippet_address_upper_bound);
+							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound);
 				}
 				
 
@@ -488,9 +497,16 @@ function on_data(data) {
 //						});
 
 					
-
+					var versions = item.snippet_all_versions;
+					var correctVersion = versions[0];
+					var wrongVersion = item.snippet_this_version;
+					
+					var url = String(item.snippet_address);
+					var correctURL = url.replace(wrongVersion,correctVersion);
+					
+					
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-							item.snippet_address, item.snippet_address_lower_bound, item.snippet_address_upper_bound);
+							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound);
 				}
 
 			});
@@ -514,18 +530,37 @@ function on_data(data) {
 }
 
 function autoCompleteCallBack(data){
-	var results;
+	
 	
 	if(QueryManager.currentAutoCompleteField == SetupManager.extendsInputID){
-		results = data.facet_counts.facet_fields.snippet_extends;
-		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
+		var temp =  data.facet_counts.facet_fields.snippet_extends;
+		var mappedResults = $.map( temp, function( item ) {
+            return {
+              "label": item,
+              "value": item
+            };
+          });
+		
+		QueryManager.currentResponse(mappedResults);
+
+		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.implementsInputID){
-		results = data.facet_counts.facet_fields.snippet_implements;
-		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results });
+		var temp = data.facet_counts.facet_fields.snippet_implements;
+
+		var mappedResults = $.map( temp, function( item ) {
+            return {
+              "label": item,
+              "value": item
+            };
+          });
+		
+
+		QueryManager.currentResponse(mappedResults);
+		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
 	}
 	
 	else if(QueryManager.currentAutoCompleteField == SetupManager.callInputID){
-		results = data.facet_counts.facet_fields.snippet_method_invocations;
+		var results = data.facet_counts.facet_fields.snippet_method_invocations;
 		
 		var temp = new Array();
 		
@@ -560,10 +595,19 @@ function autoCompleteCallBack(data){
 		}
 		
 		temp = Util.getOnlyUniqueElements(temp);
-		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
-	
+		var mappedResults = $.map( temp, function( item ) {
+            return {
+              "label": item,
+              "value": item
+            };
+          });
+		
+		
+		QueryManager.currentResponse(mappedResults);
+		//return jsonResults;
+		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp, autoFocus: true, delay: 500 });
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.callingObjectInputID){
-		results = data.facet_counts.facet_fields.snippet_method_invocations;
+		var results = data.facet_counts.facet_fields.snippet_method_invocations;
 		
 		var temp = new Array();
 		
@@ -592,10 +636,19 @@ function autoCompleteCallBack(data){
 				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
-		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
+		var mappedResults = $.map( temp, function( item ) {
+            return {
+              "label": item,
+              "value": item
+            };
+          });
+		
+		QueryManager.currentResponse(mappedResults);	
+		//return jsonResults;
+		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp, autoFocus: true, delay: 500 });	
 
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.argTypeInputID){
-		results = data.facet_counts.facet_fields.snippet_method_invocations;
+		var results = data.facet_counts.facet_fields.snippet_method_invocations;
 		
 		var temp = new Array();
 		
@@ -624,12 +677,20 @@ function autoCompleteCallBack(data){
 				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
+		var mappedResults = $.map( temp, function( item ) {
+              return {
+                "label": item,
+                "value": item
+              };
+            });
 		
-		$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp });
+		QueryManager.currentResponse(mappedResults);		
+		//return jsonResults;
+		
 	}
 	
 	
-	
+	//return temp;
 	
 	
 	

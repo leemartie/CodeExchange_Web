@@ -151,6 +151,8 @@ var SetupManager = {
 		 */
 		setupSite	:	function(){
 
+			
+			
 			screenWidth = jQuery(window).width();
 			screenHeight = jQuery(window).height();
 			
@@ -312,7 +314,11 @@ var SetupManager = {
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
-			$(SetupManager.pound+SetupManager.callingObjectInputID).autocomplete({ source: [] });
+			$(SetupManager.pound+SetupManager.callingObjectInputID).autocomplete({ 
+				source: function( request, response ){
+						SetupManager.autoComplClassName(request, response);
+						}
+					});
 			
 			//making method call name row
 			var methodCallRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -353,9 +359,11 @@ var SetupManager = {
 				argTypeTD.append(argTypeInput);
 				argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
 				argTypeInput.width("85%");
-				$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source: [] });
+				$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source:[] });
 
 		      });
+			
+
 			
 //-- autocomplete extends
 			
@@ -395,18 +403,18 @@ var SetupManager = {
 					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
 				}
 			});
-			callingObjectInput.keypress(function(e){
-				
-				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID, String.fromCharCode(e.which));	
-				
-				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
-					QueryManager.setQuery(query);
-					QueryManager.submitQuery();
-					//make it lose focus so we can detect when user refocus on query it
-					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-				}
-			});
+//			callingObjectInput.keypress(function(e){
+//				
+//				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID, String.fromCharCode(e.which));	
+//				
+//				if (!e.shiftKey && e.keyCode == '13') {
+//					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
+//					QueryManager.setQuery(query);
+//					QueryManager.submitQuery();
+//					//make it lose focus so we can detect when user refocus on query it
+//					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
+//				}
+//			});
 			argTypeInput.keypress(function(e){
 				
 				QueryManager.submitAutoComplete(SetupManager.argTypeInputID, String.fromCharCode(e.which));	
@@ -556,6 +564,13 @@ var SetupManager = {
 			
 		
 			
+		},
+		/**
+		 * 
+		 * 
+		 */
+		autoComplClassName : function(request, response){
+			QueryManager.submitAutoComplete(SetupManager.callingObjectInputID, request, response);	
 		},
 		/**
 		 * FUNCTION
