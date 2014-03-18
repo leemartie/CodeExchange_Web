@@ -97,7 +97,7 @@ var QueryManager = {
 		
 		//alert (completeUserTyped);
 		
-		var queryFilter = "snippet_code:"+SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery);
+		var queryFilter = "snippet_code:("+SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery)+")";
 		
 		if(field != SetupManager.extendsInputID && extendsFilter != ""){
 			queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';

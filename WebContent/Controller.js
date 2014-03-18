@@ -54,6 +54,7 @@ var Controller = {
 					    $(SetupManager.pound+codeNode).empty();
 						$(SetupManager.pound+codeNode).append(jQueryObject);
 						
+
 						//sh_highlightDocument();
 						$.syntax({
 						    brush: 'java',

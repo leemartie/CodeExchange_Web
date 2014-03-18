@@ -53,25 +53,87 @@ function CodeResult(code, start, end){
 		var middleCode = this.code.substring(start,end);
 		var endCode = this.code.substring(end,this.code.length);
 		
-		var formatedCode = '<pre class="syntax java">'+
-							startCode+
-							'</pre>'+
-							'<mark>start here                                <br\></mark>'+
+		var allDiv = $('<div></div>');
+		
+		var topButtonDiv = $('<div></div>');
+		
+		var expandTop = $('<div style="display:none"></div>');
+		
+		var topCode = $('<pre class="syntax java">'+startCode+'</pre>');
+		expandTop.append(topCode);
+		var topButton = $("<div><div>");
+		topButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>see code above</u></text></span>"));
+	
+		var collapse = false;
+		topButton.click(function(event) {	
+			topButton.empty();
+			if(!collapse){
+				topButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>hide code above</u></text></span>"));
+				collapse = true;
+			}
+			else{
+				topButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>see code above</u></text></span>"));
+				collapse = false;
+			}
+
+			expandTop.toggle();
+	      });
+		topButtonDiv.append(topButton);
+		
+		
+		topButtonDiv.append(expandTop);
+		
+		var displayCode=	$('<mark>                                          <br\></mark>'+
 							'<pre class="syntax java">'+
 							middleCode+
 							'</pre>'+
-							'<mark>                                          <br\></mark>'
-							+'<pre class="syntax java">'+
-							endCode+
-							'</pre>';
-		return formatedCode;
+							'<mark>                                          <br\></mark>')	;
+		
+		
+		var bottomButtonDiv = $('<div></div>');
+		var expandBottom = $('<div style="display:none"></div>');		
+		var bottomCode =	$('<pre class="syntax java">'+endCode+'</pre>');
+		expandBottom.append(bottomCode);
+		var bottomButton = $("<div><div>");
+		bottomButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>see code below</u></text></span>"));
+	
+		var collapseBottom = false;
+		bottomButton.click(function(event) {	
+			bottomButton.empty();
+			if(!collapseBottom){
+				bottomButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>hide code below</u></text></span>"));
+				collapseBottom = true;
+			}
+			else{
+				bottomButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>see code below</u></text></span>"));
+				collapseBottom = false;
+			}
+
+			expandBottom.toggle();
+	      });
+		bottomButtonDiv.append(bottomButton);
+		
+		
+		
+		
+		bottomButtonDiv.append(expandBottom);
+		
+
+		
+		allDiv.append(topButtonDiv);
+		allDiv.append(displayCode);
+		allDiv.append(bottomButtonDiv);
+		
+	
+		
+		return allDiv;
 	};
 	
 	
 	//note: this is a function property of the class CodeResult
 	//the distinction is made in the naming patter
 	this.getJQueryObject = function(){
-		return $(this.getHtml());
+		return this.getHtml();
 	};
 	
 }
