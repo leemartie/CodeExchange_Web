@@ -188,7 +188,7 @@ var SetupManager = {
 			logo.append(input);
 			//set id
 			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
-			input.attr(SetupManager.placeholder_attr, "keywords in code");
+			input.attr(SetupManager.placeholder_attr, "keywords (ex: depth first search)");
 			
 			
 			//--row for status

@@ -34,7 +34,7 @@ var SmartQueryCreator = {
 		
 		escapeDots: function(value) {
 			
-            var specials = ['.'];
+            var specials = ['.','<','>'];
             var regexp = new RegExp("(\\" + specials.join("|\\") + ")", "g");
             return value.replace(regexp, "[$1]");
 		}

@@ -417,12 +417,10 @@ function on_nextData(data) {
 				var resultLength = SetupManager.resultPreArray_ID.length;
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
-					Controller.setAvatar(SetupManager.metaDivArray_ID[i],
-							item.author_avatar);
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author, item.author_type);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
-							item.snippet_project_name);
 					
+					getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
+					
+
 					
 					//highlight matched keywords
 //					$.each(highlight[item.id], function(j, word){
@@ -458,6 +456,55 @@ function on_nextData(data) {
 	Controller.setStatus("DONE LOADING CODE");
 }
 
+/**
+ * had to generate dynamic callback names so that I could use jsonp and
+ * to keep scope of the local params
+ * @param name
+ * @param metaDiv
+ * @param count
+ */
+function getMetaData(name, projectName, metaDiv, count){
+	
+
+	callback = 'onAuthorData'+count;
+	
+	
+	var url = URLQueryCreator.getAuthorURL(Utf8.decode(name), callback);
+	
+	
+	(function(div, url){
+	
+	$.getJSON(url, window[callback] = function(results) {
+		
+		
+		(function(div, results){
+			var docs = results.response.docs;
+			$.each(docs,function(i, item) {
+				//Controller.setAvatar(div,item.author_avatar);
+				Controller.setAuthorName(div, name, item.author_type);
+				Controller.setProjectName(div,projectName);
+		  
+			});
+			
+		}(div, results));
+	});
+		
+	}(metaDiv, url));
+	
+		
+ 
+
+
+	
+
+	
+}
+
+//function onAuthorData(data){
+//
+//	  return data;
+//};
+
 
 
 /**
@@ -492,13 +539,10 @@ function on_data(data) {
 				var resultLength = SetupManager.resultPreArray_ID.length;
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
-					Controller.setAvatar(SetupManager.metaDivArray_ID[i],
-							item.author_avatar);
-				
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author, item.author_type);
+					getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
+
 			
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],
-							item.snippet_project_name);
+
 					
 					//TODO will need to replace item.snippet with content from url
 					

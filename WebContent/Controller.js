@@ -122,7 +122,7 @@ var Controller = {
 		setAuthorName	:	function(meta, name, type){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<span class="ui-icon ui-icon-person" style="display:inline-block"></span>');
-			var authName = $('<text>'+type+' : '+name+'</text>');
+			var authName = $('<text>'+name+'</text>');
 			
 			
 			

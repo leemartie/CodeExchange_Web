@@ -4,6 +4,7 @@ var URLQueryCreator = {
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 		authorCollection	 :  'GitHubAuthorIndex',
 		projectCollection	 :  'GitHubProjectIndex',
+		port					: 9000,
 		
 		getQueryURL	:	function(callbackFunctionName){
 		
@@ -36,7 +37,7 @@ var URLQueryCreator = {
 
 			
 
-			var url = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?q='
+			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ 'snippet_code:(' + query + ')'
 				+ queryFilter
 				+ invocationFilter
@@ -72,6 +73,27 @@ var URLQueryCreator = {
 
 			return url;
 	
+		},
+		
+		getAuthorURL	: function(name, callbackFunctionName){
+			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.authorCollection+'/select/?q='
+			+ 'author_name:(' + name + ')';
+		
+		
+		
+		for(var i = 0; i < FilterManager.filters.length;i++){
+			filter = FilterManager.filters[i];
+			
+			var strFilter = 'fq='+filter.category+':'+filter.value;
+			
+			url = url +"&"+strFilter;
+		}
+		
+		
+		
+			url = url + '&rows=1&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+			
+			return url;
 		}
 		
 		
