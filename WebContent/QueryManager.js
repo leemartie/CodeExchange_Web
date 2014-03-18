@@ -93,7 +93,7 @@ var QueryManager = {
 			
 		}
 		
-		//QueryManager.completeUserTyped = QueryManager.completeUserTyped+userTyped;
+		
 		
 		//alert (completeUserTyped);
 		
@@ -106,15 +106,28 @@ var QueryManager = {
 			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 		}
 		
-		var prefix = "/"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped)+"/";
-		var invocationFilter = " AND snippet_method_invocations:"+prefix;
+		var prefix = EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped);
+		var invocationFilter = "";
+		
+		if(prefix == "*")
+			invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilter()+"/";
+		else
+			invocationFilter = " AND snippet_method_invocations:"+"/"+prefix+"/";
 		
 		
-		
-		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
-				'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-				'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+//&facet.prefix='+completeUserTyped +
-				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+		var queryAutoComplete = "";
+		if(property != 'snippet_method_invocations'){
+			queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
+			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
+			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+'&facet.prefix='+QueryManager.completeUserTyped +
+			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+		}else{
+			queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
+			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
+			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+//'&facet.prefix='+completeUserTyped +
+			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+		}
+
 		
 		
 		
@@ -534,7 +547,17 @@ function autoCompleteCallBack(data){
 	
 	
 	if(QueryManager.currentAutoCompleteField == SetupManager.extendsInputID){
-		var temp =  data.facet_counts.facet_fields.snippet_extends;
+		var results =  data.facet_counts.facet_fields.snippet_extends;
+				var temp = new Array();
+		
+		for(var i = 0; i<results.length; i++){
+			//skip the odds because those are frequency counts and not results
+			if(i%2 != 0)
+				continue;
+			
+			temp.push(results[i]);
+		}
+		
 		var mappedResults = $.map( temp, function( item ) {
             return {
               "label": item,
@@ -546,7 +569,16 @@ function autoCompleteCallBack(data){
 
 		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
 	}else if(QueryManager.currentAutoCompleteField == SetupManager.implementsInputID){
-		var temp = data.facet_counts.facet_fields.snippet_implements;
+		var results = data.facet_counts.facet_fields.snippet_implements;
+		var temp = new Array();
+		
+		for(var i = 0; i<results.length; i++){
+			//skip the odds because those are frequency counts and not results
+			if(i%2 != 0)
+				continue;
+			
+			temp.push(results[i]);
+		}
 
 		var mappedResults = $.map( temp, function( item ) {
             return {
@@ -591,7 +623,12 @@ function autoCompleteCallBack(data){
 			}
 			
 			var decodedResult = EncoderDecoder.decodeMethodFilter(results[i]);
-			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0 && pushBoolean)
+			if((String(decodedResult).indexOf(
+					QueryManager.completeUserTyped.toUpperCase()) == 0
+					|| 
+					String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) == 0)
+					&& 
+					pushBoolean)
 				temp.push(decodedResult);
 		}
 		
@@ -633,7 +670,12 @@ function autoCompleteCallBack(data){
 			}
 			
 			var decodedResult = EncoderDecoder.decodeClassFilter(results[i]);
-			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0  && pushBoolean)
+			if((String(decodedResult).indexOf(
+					QueryManager.completeUserTyped.toUpperCase()) == 0
+					|| 
+					String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) == 0)
+					&& 
+					pushBoolean)
 				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
@@ -674,7 +716,12 @@ function autoCompleteCallBack(data){
 			}
 			
 			var decodedResult = EncoderDecoder.decodeArgumentFilter(results[i]);
-			if(String(decodedResult).indexOf(QueryManager.completeUserTyped) == 0   && pushBoolean)
+			if((String(decodedResult).indexOf(
+					QueryManager.completeUserTyped.toUpperCase()) == 0
+					|| 
+					String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) == 0)
+					&& 
+					pushBoolean)
 				temp.push(decodedResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);

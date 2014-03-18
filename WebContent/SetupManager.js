@@ -259,7 +259,7 @@ var SetupManager = {
 			filterTable.attr(SetupManager.ID_attr,SetupManager.filterTable_ID);
 			filterSideTD.append(filterTable);
 			
-			var classHeader = $('<tr><table><th align="left">Class properties</th></table></tr>');
+			var classHeader = $('<tr><table><th align="left">I need code that</th></table></tr>');
 			filterTable.append(classHeader);
 			
 			//making the extnds filter
@@ -272,7 +272,12 @@ var SetupManager = {
 			var extendsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			extendsTD.append(extendsInput);
 			extendsInput.attr(SetupManager.ID_attr, SetupManager.extendsInputID);
-			$(SetupManager.pound+SetupManager.extendsInputID).autocomplete({ source: [] });
+			extendsInput.attr(SetupManager.placeholder_attr, "java.lang.Thread");
+			$(SetupManager.pound+SetupManager.extendsInputID).autocomplete({ 
+				source: function( request, response ){
+					SetupManager.autoCompleteField(request, response,SetupManager.extendsInputID);
+					}
+				});
 			
 			//making the implements filter
 			var implementsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -284,24 +289,33 @@ var SetupManager = {
 			var implementsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			implementsTD.append(implementsInput);
 			implementsInput.attr(SetupManager.ID_attr, SetupManager.implementsInputID);
-			$(SetupManager.pound+SetupManager.implementsInputID).autocomplete({ source: [] });
+			implementsInput.attr(SetupManager.placeholder_attr, "java.util.comparator");
+			$(SetupManager.pound+SetupManager.implementsInputID).autocomplete({ 
+				source: function( request, response ){
+					SetupManager.autoCompleteField(request, response,SetupManager.implementsInputID);
+					}
+				});
 			
-			var callHeader = $('<tr><table><th align="left">Method Properties</th></table></tr>');
-			filterTable.append(callHeader);
+//			var callHeader = $('<tr><table><th align="left">Method Properties</th></table></tr>');
+//			filterTable.append(callHeader);
+//			
+//			//making method dec name row
+//			var methodDecNameRow = $(SetupManager.trOpen+SetupManager.trClose);
+//			filterTable.append(methodDecNameRow);
+//			var methodDecNameTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+//			methodDecNameRow.append(methodDecNameTD);
+//			
+//			methodDecNameTD.append("<text>class name&nbsp&nbsp&nbsp&nbsp</text>");
+//			var methodDecNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+//			methodDecNameTD.append(methodDecNameInput);
+//			methodDecNameInput.attr(SetupManager.ID_attr, SetupManager.methodDecNameInputID);
+//			$(SetupManager.pound+SetupManager.methodDecNameInputID).autocomplete({ 
+//				source: function( request, response ){
+//					SetupManager.autoCompleteField(request, response,SetupManager.methodDecNameInputID);
+//					}
+//				});
 			
-			//making method dec name row
-			var methodDecNameRow = $(SetupManager.trOpen+SetupManager.trClose);
-			filterTable.append(methodDecNameRow);
-			var methodDecNameTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			methodDecNameRow.append(methodDecNameTD);
-			
-			methodDecNameTD.append("<text>class name&nbsp&nbsp&nbsp&nbsp</text>");
-			var methodDecNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-			methodDecNameTD.append(methodDecNameInput);
-			methodDecNameInput.attr(SetupManager.ID_attr, SetupManager.methodDecNameInputID);
-			$(SetupManager.pound+SetupManager.methodDecNameInputID).autocomplete({ source: [] });
-			
-			var callHeader = $('<tr><table><th align="left">Method call</th></table></tr>');
+			var callHeader = $('<tr><table><th align="left">with method call examples</th></table></tr>');
 			filterTable.append(callHeader);
 			
 			//making calling object class name row
@@ -310,13 +324,14 @@ var SetupManager = {
 			var callingObjectTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			callingObjectRow.append(callingObjectTD);
 			
-			callingObjectTD.append("<text>class name&nbsp&nbsp&nbsp&nbsp</text>");
+			callingObjectTD.append("<text>class name &nbsp&nbsp&nbsp&nbsp</text>");
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
+			callingObjectInput.attr(SetupManager.placeholder_attr, "org.apache.log4j.Logger");
 			$(SetupManager.pound+SetupManager.callingObjectInputID).autocomplete({ 
 				source: function( request, response ){
-						SetupManager.autoComplClassName(request, response);
+						SetupManager.autoCompleteField(request, response,SetupManager.callingObjectInputID);
 						}
 					});
 			
@@ -326,11 +341,16 @@ var SetupManager = {
 			var callTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			methodCallRow.append(callTD);
 			
-			callTD.append("<text>method name&nbsp&nbsp&nbsp&nbsp</text>");
+			callTD.append("<text>method name &nbsp&nbsp&nbsp&nbsp</text>");
 			var callInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callTD.append(callInput);
 			callInput.attr(SetupManager.ID_attr, SetupManager.callInputID);
-			$(SetupManager.pound+SetupManager.callInputID).autocomplete({ source: [] });
+			callInput.attr(SetupManager.placeholder_attr, "debug");
+			$(SetupManager.pound+SetupManager.callInputID).autocomplete({ 
+				source: function( request, response ){
+					SetupManager.autoCompleteField(request, response,SetupManager.callInputID);
+					}
+				});
 			
 			//making parameter type row
 			var methodArgType = $(SetupManager.trOpen+SetupManager.trClose);
@@ -338,95 +358,39 @@ var SetupManager = {
 			var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			methodArgType.append(argTypeTD);
 			
-			argTypeTD.append("<text>1st argument type&nbsp&nbsp&nbsp&nbsp</text>");
+			argTypeTD.append("<text>1st argument type &nbsp&nbsp&nbsp&nbsp</text>");
 			var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			argTypeTD.append(argTypeInput);
 			argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
-			argTypeInput.width("85%");
-			$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source: [] });
+			argTypeInput.attr(SetupManager.placeholder_attr, "java.lang.String");
+			//argTypeInput.width("85%");
+			$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ 
+				source: function( request, response ){
+					SetupManager.autoCompleteField(request, response,SetupManager.argTypeInputID);
+					}
+				});
 			
-			var addArgTypeBtn = $(SetupManager.buttonOpen+"+"+SetupManager.buttonClose);
-			argTypeTD.append(addArgTypeBtn);
-			
-			addArgTypeBtn.click(function(event) {
-				var methodArgType = $(SetupManager.trOpen+SetupManager.trClose);
-				filterTable.append(methodArgType);
-				var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-				methodArgType.append(argTypeTD);
-				
-				argTypeTD.append("<text>1st argument type&nbsp&nbsp&nbsp&nbsp</text>");
-				var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-				argTypeTD.append(argTypeInput);
-				argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
-				argTypeInput.width("85%");
-				$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source:[] });
-
-		      });
-			
-
-			
-//-- autocomplete extends
-			
-			extendsInput.keypress(function(e){
-				
-				QueryManager.submitAutoComplete(SetupManager.extendsInputID, String.fromCharCode(e.which));	
-				
-				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
-					QueryManager.setQuery(query);
-					QueryManager.submitQuery();
-					//make it lose focus so we can detect when user refocus on query it
-					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-				}
-			});
-			implementsInput.keypress(function(e){
-				
-				QueryManager.submitAutoComplete(SetupManager.implementsInputID, String.fromCharCode(e.which));	
-				
-				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
-					QueryManager.setQuery(query);
-					QueryManager.submitQuery();
-					//make it lose focus so we can detect when user refocus on query it
-					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-				}
-			});
-			callInput.keypress(function(e){
-			
-				QueryManager.submitAutoComplete(SetupManager.callInputID, String.fromCharCode(e.which));	
-				
-				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
-					QueryManager.setQuery(query);
-					QueryManager.submitQuery();
-					//make it lose focus so we can detect when user refocus on query it
-					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-				}
-			});
-//			callingObjectInput.keypress(function(e){
+//			var addArgTypeBtn = $(SetupManager.buttonOpen+"+"+SetupManager.buttonClose);
+//			argTypeTD.append(addArgTypeBtn);
+//			
+//			addArgTypeBtn.click(function(event) {
+//				var methodArgType = $(SetupManager.trOpen+SetupManager.trClose);
+//				filterTable.append(methodArgType);
+//				var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+//				methodArgType.append(argTypeTD);
 //				
-//				QueryManager.submitAutoComplete(SetupManager.callingObjectInputID, String.fromCharCode(e.which));	
-//				
-//				if (!e.shiftKey && e.keyCode == '13') {
-//					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
-//					QueryManager.setQuery(query);
-//					QueryManager.submitQuery();
-//					//make it lose focus so we can detect when user refocus on query it
-//					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-//				}
-//			});
-			argTypeInput.keypress(function(e){
-				
-				QueryManager.submitAutoComplete(SetupManager.argTypeInputID, String.fromCharCode(e.which));	
-				
-				if (!e.shiftKey && e.keyCode == '13') {
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val();
-					QueryManager.setQuery(query);
-					QueryManager.submitQuery();
-					//make it lose focus so we can detect when user refocus on query it
-					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-				}
-			});
+//				argTypeTD.append("<text>1st argument type&nbsp&nbsp&nbsp&nbsp</text>");
+//				var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+//				argTypeTD.append(argTypeInput);
+//				argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
+//				argTypeInput.width("85%");
+//				$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source:[] });
+//
+//		      });
+			
+
+			
+
 			
 			
 				
@@ -526,7 +490,7 @@ var SetupManager = {
 
 				
 				
-				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+168));
+				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 				
 				
 		
@@ -556,7 +520,7 @@ var SetupManager = {
 
 //set dimensions of input box			
 			
-			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+168));
+			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/SetupManager.numberOfCells));
@@ -566,11 +530,11 @@ var SetupManager = {
 			
 		},
 		/**
-		 * 
+		 * used to call the query manager for auto complete.
 		 * 
 		 */
-		autoComplClassName : function(request, response){
-			QueryManager.submitAutoComplete(SetupManager.callingObjectInputID, request, response);	
+		autoCompleteField : function(request, response, field){
+			QueryManager.submitAutoComplete(field, request, response);	
 		},
 		/**
 		 * FUNCTION
