@@ -61,7 +61,8 @@ var Controller = {
 						    linkify: false,
 						    tabWidth: 8,
 						    replace: true,
-						    inlineSelector: "code.syntax"
+						    inlineSelector: "code.syntax",
+						    layout:'plain'
 						    
 						});
 				  });

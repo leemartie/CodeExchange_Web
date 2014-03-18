@@ -59,7 +59,7 @@ function CodeResult(code, start, end){
 		
 		var expandTop = $('<div style="display:none"></div>');
 		
-		var topCode = $('<pre class="syntax java">'+startCode+'</pre>');
+		var topCode = $('<div class="code"><pre class="syntax java">'+startCode+'</pre></div>');
 		expandTop.append(topCode);
 		var topButton = $("<div><div>");
 		topButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>see code above</u></text></span>"));
@@ -84,15 +84,15 @@ function CodeResult(code, start, end){
 		topButtonDiv.append(expandTop);
 		
 		var displayCode=	$('<mark>                                          <br\></mark>'+
-							'<pre class="syntax java">'+
+							'<div class="code"><pre class="syntax java">'+
 							middleCode+
-							'</pre>'+
+							'</pre></div>'+
 							'<mark>                                          <br\></mark>')	;
 		
 		
 		var bottomButtonDiv = $('<div></div>');
 		var expandBottom = $('<div style="display:none"></div>');		
-		var bottomCode =	$('<pre class="syntax java">'+endCode+'</pre>');
+		var bottomCode =	$('<div class="code"><pre class="syntax java">'+endCode+'</pre></div>');
 		expandBottom.append(bottomCode);
 		var bottomButton = $("<div><div>");
 		bottomButton.append($("<span style='cursor:pointer'><text style='color:blue'><u>see code below</u></text></span>"));
