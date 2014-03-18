@@ -106,13 +106,14 @@ var QueryManager = {
 			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 		}
 		
-		var invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped)+"/";
+		var prefix = "/"+EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped)+"/";
+		var invocationFilter = " AND snippet_method_invocations:"+prefix;
 		
 		
 		
 		var queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
 				'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-				'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=200'+//&facet.prefix='+completeUserTyped +
+				'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+//&facet.prefix='+completeUserTyped +
 				'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
 		
