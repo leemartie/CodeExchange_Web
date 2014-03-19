@@ -7,46 +7,55 @@
  * @param code
  * @returns {CodeResult}
  */
-function CodeResult(code, start, end){
+function CodeResult(code, start, end, invocations){
 	//this is just a property
 	this.code = code;//.substring(start,end);
 	this.start = start;
 	this.end = end;
-	
+	this.invocations = invocations;
 	
 	this.getCode = function(){
 		return code;
 	};
-	
-//	this.format = function(){
-//		var formatedCode ="";
-//		
-//			var split = code.split("\n");
-//			var lineLengthMax = 30;
-//			
-//			for(var i = 0; i< split.length; i++){
-//				var line = String(split[i]);
-//				if(line.length > lineLengthMax){
-//					var tabs = line.split("\t");
-//					var tabCount = tabs.length+1;
-//					var firstPart = line.substring(0, lineLengthMax);
-//					
-//					
-//					var tabString = "";
-//					for(var j = 0; j<tabCount; j++){
-//						tabString = tabString+"\t";
-//					}
-//					
-//					var lastPart = line.substring(lineLengthMax, line.length);
-//					
-//					 line = firstPart+"\n"+tabString+lastPart;
-//				}
-//				
-//				formatedCode = formatedCode +"\n"+ line;
-//			}
-//		
-//		return formatedCode;
-//	}
+
+	this.markInvocations = function(codeToChange,offset){
+		
+		var currentStart = 0;
+		var codeStr = "";
+		
+		for(var i = 0; i < this.invocations.length; i++){
+			
+			var invocation = this.invocations[i];
+			var start = parseInt(EncoderDecoder.decodeStart(invocation));
+			var end = parseInt(EncoderDecoder.decodeEnd(invocation));
+			var className = EncoderDecoder.decodeClassFilter(invocation);
+			var methodName = EncoderDecoder.decodeMethodFilter(invocation);
+			var firstArg = EncoderDecoder.decodeArgumentFilter(invocation);
+			
+			var offsetStart = start-offset;
+			var offsetEnd = end-offset;
+			
+			var markSub = 
+						codeToChange.substring(offsetStart,offsetEnd);
+			
+			
+			var temp = codeToChange.substring(currentStart,offsetStart);
+		
+			codeStr = codeStr + temp+ "\n//CodeExchange: methodCall [class: "+className+
+								"] [method: "+methodName+
+								"] [1st argType: "+firstArg+"]"+
+								"\n"+markSub;
+			currentStart = offsetEnd;
+		}
+		
+		var rest = 
+		codeToChange.substring(currentStart,codeToChange.length);
+		
+		var allCode = codeStr+rest;
+		
+		return allCode;
+		
+	};
 	
 	this.getHtml = function(){
 		var startCode = this.code.substring(0,start);
@@ -83,12 +92,13 @@ function CodeResult(code, start, end){
 		
 		topButtonDiv.append(expandTop);
 		
-		var displayCode=	$('<mark>                                          <br\></mark>'+
-							'<div class="code"><pre class="syntax java">'+
-							middleCode+
+		var displayCode=	
+			
+			$('<mark>                                          <br\></mark>'+
+							'<div class="code"><pre class="syntax java">'+this.markInvocations(middleCode,startCode.length)+
 							'</pre></div>'+
 							'<mark>                                          <br\></mark>')	;
-		
+		//this.markInvocations(middleCode, startCode.length);
 		
 		var bottomButtonDiv = $('<div></div>');
 		var expandBottom = $('<div style="display:none"></div>');		

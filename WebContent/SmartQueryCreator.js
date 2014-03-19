@@ -37,6 +37,14 @@ var SmartQueryCreator = {
             var specials = ['.','<','>'];
             var regexp = new RegExp("(\\" + specials.join("|\\") + ")", "g");
             return value.replace(regexp, "[$1]");
-		}
+		},
+          
+        highlight : function(value, str){
+            var specials = [value];
+            var regexp = new RegExp("(\\" + specials.join("|\\") + ")", "g");
+            return value.replace(regexp, "<mark>$1</mark>");
+        }
+          
+        
 
 };

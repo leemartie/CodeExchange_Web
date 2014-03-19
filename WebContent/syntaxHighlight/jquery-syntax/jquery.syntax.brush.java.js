@@ -15,11 +15,14 @@ Syntax.register('java', function(brush) {
 	
 	var constants = ["this", "true", "false", "null"];
 	
+	var codeExchange = ["method call"];
+	
 	brush.push(constants, {klass: 'constant'});
 	brush.push(types, {klass: 'type'});
 	brush.push(keywords, {klass: 'keyword'});
 	brush.push(operators, {klass: 'operator'});
 	brush.push(access, {klass: 'access'});
+	brush.push(codeExchange, {klass: 'CodeExchange'});
 	
 	// Camel Case Types
 	brush.push(Syntax.lib.camelCaseType);

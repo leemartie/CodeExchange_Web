@@ -17,6 +17,11 @@ var QueryManager = {
 	completeUserTyped : "",
 	currentRequest : null,
 	currentResponse : null,
+	methodNameQuery : "",
+	methodArgQuery : "",
+	methodClassQuery : "",
+    classExtendsQuery : "",
+    classImplementsQuery : "",
 
 	/**
 	 * 
@@ -25,6 +30,12 @@ var QueryManager = {
 	 */
 	setQuery	:	function(query){
 		QueryManager.currentQuery = query;
+		QueryManager.classExtendsQuery = $(SetupManager.pound+SetupManager.extendsInputID).val();
+		QueryManager.classImplementsQuery  = $(SetupManager.pound+SetupManager.implementsInputID).val();
+		
+		QueryManager.methodNameQuery = $(SetupManager.pound+SetupManager.callInputID).val();
+		QueryManager.methodClassQuery = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+		QueryManager.methodArgQuery = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 	},
 	
 	/**
@@ -117,12 +128,12 @@ var QueryManager = {
 		
 		var queryAutoComplete = "";
 		if(property != 'snippet_method_invocations'){
-			queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
+			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
 			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+'&facet.prefix='+QueryManager.completeUserTyped +
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		}else{
-			queryAutoComplete = 'http://'+URLQueryCreator.server+':9000/solr/'+URLQueryCreator.collection+'/select/?' +
+			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
 			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+//'&facet.prefix='+completeUserTyped +
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
@@ -254,7 +265,7 @@ var QueryManager = {
 			
 			(function(i) {
 				var link = $(SetupManager.preOpen + SetupManager.preClose);
-				link.append(i+1); //plus one so does not visually start at 0
+				link.append(" "+(i+1)+" "); //plus one so does not visually start at 0
 				link.addClass("LinkToPage");
 				var id = "link" + i;
 				link.attr(SetupManager.ID_attr, id);
@@ -442,7 +453,7 @@ function on_nextData(data) {
 					
 					
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound);
+							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 				}
 				
 
@@ -564,7 +575,7 @@ function on_data(data) {
 					
 					
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
-							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound);
+							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 				}
 
 			});

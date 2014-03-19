@@ -1,5 +1,17 @@
 var EncoderDecoder = {
 		
+		decodeStart			: function(filter){
+			var filterArray = String(filter).split('@');
+			
+			return filterArray[0];
+		},
+		
+		decodeEnd			: function(filter){
+				var filterArray = String(filter).split('@');
+			
+				return filterArray[1];
+		},
+		
 		decodeClassFilter	:	function(filter){
 	
 			var filterArray = String(filter).split('@');

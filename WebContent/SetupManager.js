@@ -408,6 +408,7 @@ var SetupManager = {
 						$(SetupManager.pound+SetupManager.queryInput_ID).val(),0);
 				});
 			
+
 			
 			//add keypress  for 'enter' listener to body to submit query
 			$('body').keypress(function(e) {

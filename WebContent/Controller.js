@@ -32,7 +32,7 @@ var Controller = {
 
 		},
 		
-		setCodeFromURL: function(codeNode, codeURL, start, end){
+		setCodeFromURL: function(codeNode, codeURL, start, end,invocations){
 		
 			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			//var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
@@ -49,22 +49,24 @@ var Controller = {
 			  }).success(function(data, textStatus, jqXHR ) {
 				  $.each(data, function(index, element) {
 					    var code = element;
-					    var result = new CodeResult(code,start,end);
+					    var result = new CodeResult(code,start,end,invocations);
 					    var jQueryObject = result.getJQueryObject();
 					    $(SetupManager.pound+codeNode).empty();
 						$(SetupManager.pound+codeNode).append(jQueryObject);
 						
 
+
 						//sh_highlightDocument();
 						$.syntax({
-						    brush: 'java',
 						    linkify: false,
 						    tabWidth: 8,
 						    replace: true,
-						    inlineSelector: "code.syntax",
 						    layout:'plain'
 						    
 						});
+
+						
+						
 				  });
 			  });
 			
