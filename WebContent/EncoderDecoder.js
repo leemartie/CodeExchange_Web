@@ -16,7 +16,7 @@ var EncoderDecoder = {
 	
 			var filterArray = String(filter).split('@');
 		
-			return filterArray[3];
+			return filterArray[2];
 			
 
 		},
@@ -50,7 +50,7 @@ var EncoderDecoder = {
 		},
 		
 		encodeClassFacet	:	function(prefix){
-			return "*@*@*@"+prefix+"*@"+"*"+"@"+"*"+"!"+"*";
+			return "*@*@"+prefix+"@*@"+"*"+"@"+"*"+"!"+"*";
 		},
 		
 		encodeMethodNameFacet	:	function(prefix){
@@ -85,13 +85,13 @@ var EncoderDecoder = {
 			
 			
 			if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter != ""){
-				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+argumentTypeFilter+".*"+""+"!"+".*";
+				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+argumentTypeFilter+".*"+""+"!"+".*";
 			
 			}//ones
 			else if(objectsClassFilter != "" && methodCallNameFilter != "" && argumentTypeFilter == ""){
-				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+".*"+"!"+".*";
+				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+".*"+"!"+".*";
 			}else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter != ""){
-				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+argumentTypeFilter+".*"+"!"+".*";
+				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+anythingButAt+"@"+argumentTypeFilter+".*"+"!"+".*";
 			}else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter != ""){
 				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+argumentTypeFilter+".*"+"!"+".*";
 			//twos
@@ -100,7 +100,7 @@ var EncoderDecoder = {
 			}else if(objectsClassFilter == "" && methodCallNameFilter != "" && argumentTypeFilter == ""){
 				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+".*"+"!"+".*";
 			}else if(objectsClassFilter != "" && methodCallNameFilter == "" && argumentTypeFilter == ""){
-				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+".*"+"!"+".*";
+				invocationFilter=anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+anythingButAt+"@"+".*"+"!"+".*";
 			}
 			return invocationFilter;
 		},
@@ -123,13 +123,13 @@ var EncoderDecoder = {
 				var argumentTypeFilter = SmartQueryCreator.escapeDots($(SetupManager.pound+SetupManager.argTypeInputID).val());
 				
 				if(methodCallNameFilter != "" && argumentTypeFilter != "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+methodCallNameFilter+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
+					invocationFilter=anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+argumentTypeFilter+".*"+"!"+".*";
 				else if(methodCallNameFilter != "" && argumentTypeFilter == "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+methodCallNameFilter+"@"+anythingButAt+""+""+".*"+""+"!"+""+".*"+"";				
+					invocationFilter=anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+anythingButAt+".*"+"!"+".*";				
 				else if(methodCallNameFilter == "" && argumentTypeFilter != "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+""+anythingButAt+""+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
+					invocationFilter=anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+anythingButAt+"@"+anythingButAt+"@"+argumentTypeFilter+".*"+"!"+".*";
 				else
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+""+anythingButAt+""+"@"+".*"+""+"!"+""+".*"+"";
+					invocationFilter=anythingButAt+"@"+anythingButAt+"@"+prefixWild+"@"+anythingButAt+"@"+anythingButAt+"@"+".*"+"!"+".*";
 				
 			}else if(leaveOut == SetupManager.callInputID){
 				var objectsClassFilter = SmartQueryCreator.escapeDots($(SetupManager.pound+SetupManager.callingObjectInputID).val());
@@ -137,9 +137,9 @@ var EncoderDecoder = {
 				
 				
 				if(objectsClassFilter != "" && argumentTypeFilter != "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+prefixWild+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+prefixWild+"@"+argumentTypeFilter+""+".*"+""+"!"+""+".*"+"";
 				else if(objectsClassFilter != "" && argumentTypeFilter == "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+prefixWild+"@"+".*"+""+"!"+""+".*"+"";				
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+prefixWild+"@"+".*"+""+"!"+""+".*"+"";				
 				else if(objectsClassFilter == "" && argumentTypeFilter != "")
 					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+prefixWild+"@"+argumentTypeFilter+".*"+""+"!"+""+".*"+"";
 				else
@@ -150,11 +150,11 @@ var EncoderDecoder = {
 				var methodCallNameFilter = SmartQueryCreator.escapeDots($(SetupManager.pound+SetupManager.callInputID).val());
 				
 				if(objectsClassFilter != "" && methodCallNameFilter != "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+methodCallNameFilter+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+methodCallNameFilter+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";
 				else if(methodCallNameFilter != "" && objectsClassFilter == "")
 					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+methodCallNameFilter+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";			
 				else if(methodCallNameFilter == "" && objectsClassFilter != "")
-					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";				
+					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+objectsClassFilter+"@"+anythingButAt+"@"+anythingButAt+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";				
 				else
 					invocationFilter=""+anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+""+anythingButAt+""+"@"+anythingButAt+"@"+prefixWild+""+".*"+""+"!"+""+".*"+"";
 				

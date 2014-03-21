@@ -130,12 +130,12 @@ var QueryManager = {
 		if(property != 'snippet_method_invocations'){
 			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+'&facet.prefix='+QueryManager.completeUserTyped +
+			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+'&facet.prefix='+QueryManager.completeUserTyped +
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		}else{
 			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=1000'+//'&facet.prefix='+completeUserTyped +
+			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+//'&facet.prefix='+completeUserTyped +
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		}
 
@@ -233,9 +233,9 @@ var QueryManager = {
 									QueryManager.moveCount++;
 									
 									$(SetupManager.pound + QueryManager.linkArray[i])
-											.append(
+											.append(" "+
 													(QueryManager.highestPage + QueryManager.moveCount + 1)//plus one so does not visually start at 0
-															+ "");
+															+ " ");
 									
 									QueryManager.linkArrayData[i] = QueryManager.highestPage + QueryManager.moveCount;
 									
@@ -338,9 +338,9 @@ var QueryManager = {
 									$(
 											SetupManager.pound
 													+ QueryManager.linkArray[i])
-											.append(
+											.append(" "+
 													(QueryManager.lowestPage - QueryManager.moveCount + 1)//plus one so does not visually start at 0
-															+ "");
+															+ " ");
 									
 									QueryManager.linkArrayData[i] = QueryManager.lowestPage - QueryManager.moveCount;
 									
@@ -429,7 +429,7 @@ function on_nextData(data) {
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
 					
-					getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
+				//	getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
 					
 
 					
@@ -454,6 +454,8 @@ function on_nextData(data) {
 					
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name);
 				}
 				
 
@@ -550,7 +552,7 @@ function on_data(data) {
 				var resultLength = SetupManager.resultPreArray_ID.length;
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
-					getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
+				//	getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
 
 			
 
@@ -576,6 +578,9 @@ function on_data(data) {
 					
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
+					
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name);
 				}
 
 			});

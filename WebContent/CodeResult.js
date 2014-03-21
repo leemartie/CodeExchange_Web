@@ -41,9 +41,9 @@ function CodeResult(code, start, end, invocations){
 			
 			var temp = codeToChange.substring(currentStart,offsetStart);
 		
-			codeStr = codeStr + temp+ "\n//CodeExchange: methodCall [class: "+className+
+			codeStr = codeStr + temp+ "\n//codeexchange: [class: "+className+
 								"] [method: "+methodName+
-								"] [1st argType: "+firstArg+"]"+
+								"] [1st arg: "+firstArg+"]"+
 								"\n"+markSub;
 			currentStart = offsetEnd;
 		}
@@ -94,10 +94,10 @@ function CodeResult(code, start, end, invocations){
 		
 		var displayCode=	
 			
-			$('<mark>                                          <br\></mark>'+
+			$(
 							'<div class="code"><pre class="syntax java">'+this.markInvocations(middleCode,startCode.length)+
-							'</pre></div>'+
-							'<mark>                                          <br\></mark>')	;
+							'</pre></div>'
+							)	;
 		//this.markInvocations(middleCode, startCode.length);
 		
 		var bottomButtonDiv = $('<div></div>');

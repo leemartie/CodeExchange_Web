@@ -272,7 +272,7 @@ var SetupManager = {
 			var extendsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			extendsTD.append(extendsInput);
 			extendsInput.attr(SetupManager.ID_attr, SetupManager.extendsInputID);
-			extendsInput.attr(SetupManager.placeholder_attr, "java.lang.Thread");
+			extendsInput.attr(SetupManager.placeholder_attr, "ex: java.lang.Thread");
 			$(SetupManager.pound+SetupManager.extendsInputID).autocomplete({ 
 				source: function( request, response ){
 					SetupManager.autoCompleteField(request, response,SetupManager.extendsInputID);
@@ -289,7 +289,7 @@ var SetupManager = {
 			var implementsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			implementsTD.append(implementsInput);
 			implementsInput.attr(SetupManager.ID_attr, SetupManager.implementsInputID);
-			implementsInput.attr(SetupManager.placeholder_attr, "java.util.comparator");
+			implementsInput.attr(SetupManager.placeholder_attr, "ex: java.util.comparator");
 			$(SetupManager.pound+SetupManager.implementsInputID).autocomplete({ 
 				source: function( request, response ){
 					SetupManager.autoCompleteField(request, response,SetupManager.implementsInputID);
@@ -328,7 +328,7 @@ var SetupManager = {
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
-			callingObjectInput.attr(SetupManager.placeholder_attr, "org.apache.log4j.Logger");
+			callingObjectInput.attr(SetupManager.placeholder_attr, "ex: org.apache.log4j.Logger");
 			$(SetupManager.pound+SetupManager.callingObjectInputID).autocomplete({ 
 				source: function( request, response ){
 						SetupManager.autoCompleteField(request, response,SetupManager.callingObjectInputID);
@@ -345,7 +345,7 @@ var SetupManager = {
 			var callInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callTD.append(callInput);
 			callInput.attr(SetupManager.ID_attr, SetupManager.callInputID);
-			callInput.attr(SetupManager.placeholder_attr, "debug");
+			callInput.attr(SetupManager.placeholder_attr, "ex: debug");
 			$(SetupManager.pound+SetupManager.callInputID).autocomplete({ 
 				source: function( request, response ){
 					SetupManager.autoCompleteField(request, response,SetupManager.callInputID);
@@ -362,7 +362,7 @@ var SetupManager = {
 			var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			argTypeTD.append(argTypeInput);
 			argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
-			argTypeInput.attr(SetupManager.placeholder_attr, "java.lang.String");
+			argTypeInput.attr(SetupManager.placeholder_attr, "ex: java.lang.String");
 			//argTypeInput.width("85%");
 			$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ 
 				source: function( request, response ){

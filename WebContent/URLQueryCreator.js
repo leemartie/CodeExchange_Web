@@ -4,7 +4,7 @@ var URLQueryCreator = {
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 		authorCollection	 :  'GitHubAuthorIndex',
 		projectCollection	 :  'GitHubProjectIndex',
-		port					: 9000,
+		port					: 8983,
 		
 		getQueryURL	:	function(callbackFunctionName){
 		
@@ -42,18 +42,18 @@ var URLQueryCreator = {
 				+ queryFilter
 				+ invocationFilter
 				+ '&start=' + start 
-			//	+ '&fl= id snippet author author_avatar snippet_tag project snippet_imports snippet_granularity'
-				+ '&facet=true' 
-				+ '&facet.field=snippet_version_author' 
+				+ '&fl= id snippet_code snippet_version_author snippet_project_name snippet_all_versions snippet_address snippet_address_lower_bound snippet_address_upper_bound snippet_method_invocations';
+//				+ '&facet=true' 
+//				+ '&facet.field=snippet_version_author' 
 				//+ '&facet.field=snippet_tag' 
-				+ '&facet.field=snippet_project_name'
-				+ '&facet.field=snippet_imports'
-				+ '&facet.field=snippet_granularity'
-				+ '&facet.mincount=1'
-				+ '&hl=true'
+//				+ '&facet.field=snippet_project_name'
+//				+ '&facet.field=snippet_imports'
+///				+ '&facet.field=snippet_granularity'
+//				+ '&facet.mincount=1'
+//				+ '&hl=true'
 //				+ '&hl.fl=snippet'
 //				+ '&hl.highlightMultiTerm=true ';
-				+ '&facet.limit=200';
+//				+ '&facet.limit=200';
 			
 			
 			
