@@ -140,6 +140,21 @@ var Controller = {
 			
 		},
 		
+		setCodeChurn: function(meta, codechurn){
+			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
+			//var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
+			var churnText = $('<text>'+codechurn+'</text>');
+			
+			
+			
+			metadiv.addClass("MetaBorder");
+			churnText.addClass("MetaBorder");
+			
+			metadiv.append(churnText);
+			
+			$(SetupManager.pound+meta).append(metadiv);
+		},
+		
 		/**
 		 * FUNCTION
 		 */

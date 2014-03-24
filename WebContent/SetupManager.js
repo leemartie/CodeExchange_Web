@@ -93,6 +93,8 @@ var SetupManager = {
 		
 		methodDecNameInputID	:	"methodDecNameInput_ID",
 		
+		commentsCheckBoxID		:	"commentsCheckBox_ID",
+		
 			
 		//These are the CSS classes
 		Cell_CSS_Class			:	"Cell",
@@ -388,7 +390,130 @@ var SetupManager = {
 //
 //		      });
 			
+			//making comments row
+			var commentsRow = $(SetupManager.trOpen+SetupManager.trClose);
+			filterTable.append(commentsRow);
+			
+			var commentsRowTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			commentsRow.append(commentsRowTD);
+			
+			
+			var commentsCheckBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+			commentsCheckBox.attr(SetupManager.ID_attr, SetupManager.commentsCheckBoxID);
+			commentsCheckBox.attr("type","checkbox");
+			
+			
+			commentsCheckBox.addClass("Check");
+			
+			
+			var formDiv = $("<form></form>");
+			var parentDiv = $(SetupManager.divOpen+SetupManager.divClose);
+			formDiv.append(parentDiv);
+			parentDiv.append(commentsCheckBox);
+			var labelComments = $('<label for="'+SetupManager.commentsCheckBoxID+'">has comments: </label>');
+			labelComments.append(commentsCheckBox);
+			parentDiv.append(labelComments);
+			commentsRowTD.append(parentDiv);
+			
+			commentsCheckBox.change(function() {
+		        if($(this).is(":checked")) {
+		            QueryManager.hasComments = true;
+		           
+		        }else{
+		        	 QueryManager.hasComments = false;
+		        }       
+		    });
+			
+		
 
+			
+			var langShort = ['af','ar','bg','bn','cs','da',	'de','el','en',	'es',
+					'et','fa','fi','fr','gu','he','hi',	'hr','hu','id','it',
+					'ja','kn','ko','lt','lv','mk','ml','mr',
+					'ne',
+					'nl',
+					'no',
+					'pa',
+					'pl',
+					'pt',
+					'ro',
+					'ru',
+					'sk',
+					'sl',
+					'so',
+					'sq',
+					'sv',
+					'sw',
+					'ta',
+					'te',
+					'th',
+					'tl',
+					'tr',
+					'uk',
+					'ur',
+					'vi',
+					'zh-cn',
+					'zh-tw'];
+			var langLong = ['Afrikaans', 'Arabic', 'Bulgarian', 'Bengali', 'Czech',
+					'Danish', 'German', 'Greek', 'English', 'Spanish',
+					'Estonian', 'Persian', 'Finnish', 'French', 'Gujarati',
+					'Hebrew', 'Hindi', 'Croatian', 'Hungarian', 'Indonesian',
+					'Italian', 'Japanese', 'Kannada', 'Korean', 'Lithuanian',
+					'Latvian', 'Macedonian', 'Malayalam', 'Marathi', 'Nepali',
+					'Dutch',
+					'Norwegian',
+					'Punjabi',
+					'Polish',
+					'Portuguese',
+					'Romanian',
+					'Russian',
+					'Slovak',
+					'Slovene',
+					'Somali',
+					'Albanian',
+					'Swedish',
+					'Swahili',
+					'Tamil',
+					'Telugu',
+					'Thai',
+					'Tagalog',
+					'Turkish',
+					'Ukrainian',
+					'Urdu',
+					'Vietnamese',
+					'Simplified Chinese',
+					'Traditional Chinese'];
+			
+			//select language
+			var selectLanguage = $("<select></select>");
+			
+			for(var i = 0; i <langShort.length; i++){
+				var option = $('<option value="'+langShort[i]+'">'+langLong[i]+'</option>');	
+				
+				if(langShort[i] == "en"){
+				option = $('<option selected="selected" value="'+langShort[i]+'">'+langLong[i]+'</option>');	
+				QueryManager.humanLanguageOfComments = "en";
+				}
+				selectLanguage.append(option);
+				
+			}
+
+			
+			
+			var languagesRow = $(SetupManager.trOpen+SetupManager.trClose);
+			filterTable.append(languagesRow);
+			
+			var languageTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			languagesRow.append(languageTD);
+			
+			languageTD.append(selectLanguage);
+
+			
+			selectLanguage.change(function () {
+				$( "select option:selected" ).each(function() {
+				     QueryManager.humanLanguageOfComments = $(this).attr("value");
+				    });
+			  });
 			
 
 			

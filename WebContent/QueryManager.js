@@ -22,6 +22,8 @@ var QueryManager = {
 	methodClassQuery : "",
     classExtendsQuery : "",
     classImplementsQuery : "",
+    hasComments	: 	false,
+    humanLanguageOfComments:	"",
 
 	/**
 	 * 
@@ -456,6 +458,7 @@ function on_nextData(data) {
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name);
+				//	Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
 				}
 				
 
@@ -581,6 +584,7 @@ function on_data(data) {
 					
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name);
+					//Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
 				}
 
 			});

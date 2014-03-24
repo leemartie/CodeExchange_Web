@@ -36,13 +36,27 @@ var URLQueryCreator = {
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 
 			
+			var commentsFilter = ' AND snippet_has_comments:('+'*'+')';
+			var languageFilter = ' AND snippet_human_language:('+'*'+')';
+			
+			if(QueryManager.hasComments){
+				commentsFilter = ' AND snippet_has_comments:('+QueryManager.hasComments+')';
+				languageFilter = ' AND snippet_human_language:('+QueryManager.humanLanguageOfComments+')';
+			}
+			
+			
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ 'snippet_code:(' + query + ')'
 				+ queryFilter
 				+ invocationFilter
+				+ commentsFilter
+				+ languageFilter
 				+ '&start=' + start 
-				+ '&fl= id snippet_code snippet_version_author snippet_project_name snippet_all_versions snippet_address snippet_address_lower_bound snippet_address_upper_bound snippet_method_invocations';
+				+ '&fl= id snippet_code snippet_version_author snippet_project_name '
+				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
+				+ 'snippet_changed_code_churn snippet_address_upper_bound snippet_method_invocations ';
+				+ 'snippet_has_comments snippet_human_language';
 //				+ '&facet=true' 
 //				+ '&facet.field=snippet_version_author' 
 				//+ '&facet.field=snippet_tag' 
