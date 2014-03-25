@@ -55,8 +55,8 @@ var URLQueryCreator = {
 				+ '&start=' + start 
 				+ '&fl= id snippet_code snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
-				+ 'snippet_changed_code_churn snippet_address_upper_bound snippet_method_invocations ';
-				+ 'snippet_has_comments snippet_human_language';
+				+ 'snippet_address_upper_bound snippet_method_invocations project_id';
+				+ '';
 //				+ '&facet=true' 
 //				+ '&facet.field=snippet_version_author' 
 				//+ '&facet.field=snippet_tag' 
@@ -81,7 +81,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows=3&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+SetupManager.numberOfCells+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 

@@ -169,10 +169,10 @@ var Controller = {
 		/**
 		 * FUNCTION
 		 */
-		setProjectName	:	function(meta, name){
+		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
-			var authName = $('<text>'+name+'</text>');
+			var authName = $('<a href="'+projectURL+'">'+name+'</a>');
 			
 			
 			

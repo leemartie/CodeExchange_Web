@@ -42,9 +42,17 @@ var EncoderDecoder = {
 	
 			var filterArray = String(filter).split('@');
 			
-			if(filterArray.length >= 6)
+
+			
+			if(filterArray.length >= 6){
+				var index = filterArray[5].indexOf('!');
+				//trip off the !
+				if(index != -1){
+					return filterArray[5].substring(0,index);
+				}
+				
 				return filterArray[5];
-			else 
+			}else 
 				return "";
 		
 		},

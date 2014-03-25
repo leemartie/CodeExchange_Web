@@ -457,7 +457,7 @@ function on_nextData(data) {
 					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
 				//	Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
 				}
 				
@@ -468,8 +468,9 @@ function on_nextData(data) {
 	
 
 	
-	
 	Controller.setStatus("DONE LOADING CODE");
+	clearInterval(SetupManager.rotateStatusVar);
+
 }
 
 /**
@@ -583,7 +584,7 @@ function on_data(data) {
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
 					//Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
 				}
 
@@ -597,6 +598,8 @@ function on_data(data) {
 	Controller.setStatus("DONE - " + total);
 
 	QueryManager.makeNavigation(data.response.numFound, SetupManager.numberOfCells);
+	
+	clearInterval(SetupManager.rotateStatusVar);
 	
 //	topAuthors = data.facet_counts.facet_fields.author;
 //	tagArray = data.facet_counts.facet_fields.snippet_tag;

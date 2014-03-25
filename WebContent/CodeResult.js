@@ -41,10 +41,11 @@ function CodeResult(code, start, end, invocations){
 			
 			var temp = codeToChange.substring(currentStart,offsetStart);
 		
-			codeStr = codeStr + temp+ "\n//codeexchange: [class: "+className+
-								"] [method: "+methodName+
-								"] [1st arg: "+firstArg+"]"+
-								"\n"+markSub;
+			if(className != "null")
+				codeStr = codeStr + temp+ "\n//call info: "+className+"."+methodName+", 1st arg: "+firstArg+""+"\n"+markSub;
+			else
+				codeStr = codeStr + temp+ "\n//call info: "+methodName+", 1st arg: "+firstArg+""+"\n"+markSub;
+							
 			currentStart = offsetEnd;
 		}
 		

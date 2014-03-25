@@ -95,6 +95,10 @@ var SetupManager = {
 		
 		commentsCheckBoxID		:	"commentsCheckBox_ID",
 		
+		statusIconID			:	"statusIconID",
+		
+		rotateStatusVar			:	null,
+		
 			
 		//These are the CSS classes
 		Cell_CSS_Class			:	"Cell",
@@ -163,16 +167,20 @@ var SetupManager = {
 			var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableForSite);
 			tableForSite.addClass("HeaderTable");
+			tableForSite.addClass("SiteBack");
+			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).addClass("SiteBack");
 			tableForSite.attr(SetupManager.ID_attr,SetupManager.tableHeader_ID);
 			
 			var headerRow = $(SetupManager.trOpen+SetupManager.trClose);
 			tableForSite.append(headerRow);
 			headerRow.addClass("HeaderTR");
+			headerRow.addClass("HeaderBack");
 			
 			//query box
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			queryTD.attr("valign", "top");
 			headerRow.append(queryTD);
+		
 			
 			//queryTD.attr("bgcolor","darkgray");
 			
@@ -194,8 +202,12 @@ var SetupManager = {
 			
 			
 			//--row for status
+			var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
 			var rowStatus = $(SetupManager.trOpen+SetupManager.trClose);
-			tableForSite.append(rowStatus);
+			rowStatus.addClass("HeaderBack");
+			statusTable.append(rowStatus);
+			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(statusTable);
+			
 			
 			//make status div
 			var status = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -211,16 +223,41 @@ var SetupManager = {
 			
 			//--row for navigation
 			var rowNavigation = $(SetupManager.trOpen+SetupManager.trClose);
-			tableForSite.append(rowNavigation);
+			rowNavigation.addClass("HeaderBack");
 			
 			//make page navigation
 			var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
-			// append
-			rowNavigation.append(pageNavigation);
+
 			//set id
 			pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
 			pageNavigation.attr("valign","top");
-			pageNavigation.addClass("StatusTD");
+			pageNavigation.attr("align","center");
+			pageNavigation.attr("width","100%");
+			//pageNavigation.addClass("StatusTD");
+			
+			
+			// append
+			rowNavigation.append(pageNavigation);
+			
+			
+			var rowInTableForSite = $(SetupManager.trOpen+SetupManager.trClose);
+			var rowNavTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+			rowNavTable.append(rowNavigation);
+			rowInTableForSite.append(rowNavTable);
+			rowInTableForSite.addClass("HeaderBack");
+			tableForSite.append(rowInTableForSite);
+			
+			
+			var statusIcon = $('<img src="http://codeexchange.ics.uci.edu/share8_scaled.png"/>');
+			statusIcon.attr(SetupManager.ID_attr,SetupManager.statusIconID);
+			var statusTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+			statusTD.append(statusIcon);
+			
+			statusTD.attr("align","right");
+			
+			rowNavigation.append(statusTD);
+			
+
 			
 			//result row
 			var resultRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -229,6 +266,8 @@ var SetupManager = {
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			resultRow.append(resultTD);
+			resultTD.addClass("ResultsBack");
+			
 			
 			
 			//make table
@@ -251,26 +290,34 @@ var SetupManager = {
 			//side filter
 			var filterSideTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			filterSideTD.attr("rowspan","4");
+			
 			headerRow.append(filterSideTD);
 			filterSideTD.attr("valign", "top");
 			
 			filterSideTD.addClass("FilterSideTD");
 			
+			
 			//filter table
 			var filterTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+			filterTable.addClass("FilterBackground");
+			
 			filterTable.attr(SetupManager.ID_attr,SetupManager.filterTable_ID);
 			filterSideTD.append(filterTable);
 			
 			var classHeader = $('<tr><table><th align="left">I need code that</th></table></tr>');
+			classHeader.addClass("FilterTitle");
 			filterTable.append(classHeader);
 			
-			//making the extnds filter
+			//making the extends filter
 			var extendsRow = $(SetupManager.trOpen+SetupManager.trClose);
 			filterTable.append(extendsRow);
 			var extendsTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			extendsRow.append(extendsTD);
 			
-			extendsTD.append("<text>extends&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</text>");
+			var extendsTitle = $("<text>extends&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</text>");
+			extendsTitle.addClass("FilterTitle");
+			extendsTD.append(extendsTitle);
+			
 			var extendsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			extendsTD.append(extendsInput);
 			extendsInput.attr(SetupManager.ID_attr, SetupManager.extendsInputID);
@@ -287,7 +334,10 @@ var SetupManager = {
 			var implementsTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			implementsRow.append(implementsTD);
 			
-			implementsTD.append("<text>implements&nbsp&nbsp&nbsp&nbsp</text>");
+			var implementsTitle = $("<text>implements&nbsp&nbsp&nbsp&nbsp</text>");
+			implementsTitle.addClass("FilterTitle");
+			
+			implementsTD.append(implementsTitle);
 			var implementsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			implementsTD.append(implementsInput);
 			implementsInput.attr(SetupManager.ID_attr, SetupManager.implementsInputID);
@@ -297,6 +347,8 @@ var SetupManager = {
 					SetupManager.autoCompleteField(request, response,SetupManager.implementsInputID);
 					}
 				});
+			
+			implementsTD.append($("<hr>"));
 			
 //			var callHeader = $('<tr><table><th align="left">Method Properties</th></table></tr>');
 //			filterTable.append(callHeader);
@@ -318,6 +370,7 @@ var SetupManager = {
 //				});
 			
 			var callHeader = $('<tr><table><th align="left">with method call examples</th></table></tr>');
+			callHeader.addClass("FilterTitle");
 			filterTable.append(callHeader);
 			
 			//making calling object class name row
@@ -326,7 +379,11 @@ var SetupManager = {
 			var callingObjectTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			callingObjectRow.append(callingObjectTD);
 			
-			callingObjectTD.append("<text>class name &nbsp&nbsp&nbsp&nbsp</text>");
+			var classNameTitle = $("<text>class name &nbsp&nbsp&nbsp&nbsp</text>");
+			callingObjectTD.append(classNameTitle);
+			classNameTitle.addClass("FilterTitle");
+			
+			
 			var callingObjectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callingObjectTD.append(callingObjectInput);
 			callingObjectInput.attr(SetupManager.ID_attr, SetupManager.callingObjectInputID);
@@ -343,7 +400,10 @@ var SetupManager = {
 			var callTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			methodCallRow.append(callTD);
 			
-			callTD.append("<text>method name &nbsp&nbsp&nbsp&nbsp</text>");
+			var methodNameTitle = $("<text>method name &nbsp&nbsp&nbsp&nbsp</text>");
+			methodNameTitle.addClass("FilterTitle");
+			callTD.append(methodNameTitle);
+			
 			var callInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			callTD.append(callInput);
 			callInput.attr(SetupManager.ID_attr, SetupManager.callInputID);
@@ -360,7 +420,10 @@ var SetupManager = {
 			var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			methodArgType.append(argTypeTD);
 			
-			argTypeTD.append("<text>1st argument type &nbsp&nbsp&nbsp&nbsp</text>");
+			var arg1Title = $("<text>1st argument type &nbsp&nbsp&nbsp&nbsp</text>");
+			arg1Title.addClass("FilterTitle");
+			
+			argTypeTD.append(arg1Title);
 			var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
 			argTypeTD.append(argTypeInput);
 			argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
@@ -371,6 +434,8 @@ var SetupManager = {
 					SetupManager.autoCompleteField(request, response,SetupManager.argTypeInputID);
 					}
 				});
+			
+			argTypeTD.append($("<hr>"));
 			
 //			var addArgTypeBtn = $(SetupManager.buttonOpen+"+"+SetupManager.buttonClose);
 //			argTypeTD.append(addArgTypeBtn);
@@ -391,6 +456,8 @@ var SetupManager = {
 //		      });
 			
 			//making comments row
+			
+			
 			var commentsRow = $(SetupManager.trOpen+SetupManager.trClose);
 			filterTable.append(commentsRow);
 			
@@ -410,7 +477,9 @@ var SetupManager = {
 			var parentDiv = $(SetupManager.divOpen+SetupManager.divClose);
 			formDiv.append(parentDiv);
 			parentDiv.append(commentsCheckBox);
-			var labelComments = $('<label for="'+SetupManager.commentsCheckBoxID+'">has comments: </label>');
+			var labelComments = $('<label for="'+SetupManager.commentsCheckBoxID+'">and has comments: </label>');
+			labelComments.addClass("FilterTitle");
+			
 			labelComments.append(commentsCheckBox);
 			parentDiv.append(labelComments);
 			commentsRowTD.append(parentDiv);
@@ -430,59 +499,20 @@ var SetupManager = {
 			var langShort = ['af','ar','bg','bn','cs','da',	'de','el','en',	'es',
 					'et','fa','fi','fr','gu','he','hi',	'hr','hu','id','it',
 					'ja','kn','ko','lt','lv','mk','ml','mr',
-					'ne',
-					'nl',
-					'no',
-					'pa',
-					'pl',
-					'pt',
-					'ro',
-					'ru',
-					'sk',
-					'sl',
-					'so',
-					'sq',
-					'sv',
-					'sw',
-					'ta',
-					'te',
-					'th',
-					'tl',
-					'tr',
-					'uk',
-					'ur',
-					'vi',
-					'zh-cn',
-					'zh-tw'];
+					'ne','nl','no',	'pa','pl','pt',	'ro','ru','sk',	'sl',
+					'so', 'sq','sv','sw','ta','te',	'th','tl','tr',
+					'uk','ur','vi','zh-cn',	'zh-tw'];
 			var langLong = ['Afrikaans', 'Arabic', 'Bulgarian', 'Bengali', 'Czech',
 					'Danish', 'German', 'Greek', 'English', 'Spanish',
 					'Estonian', 'Persian', 'Finnish', 'French', 'Gujarati',
 					'Hebrew', 'Hindi', 'Croatian', 'Hungarian', 'Indonesian',
 					'Italian', 'Japanese', 'Kannada', 'Korean', 'Lithuanian',
 					'Latvian', 'Macedonian', 'Malayalam', 'Marathi', 'Nepali',
-					'Dutch',
-					'Norwegian',
-					'Punjabi',
-					'Polish',
-					'Portuguese',
-					'Romanian',
-					'Russian',
-					'Slovak',
-					'Slovene',
-					'Somali',
-					'Albanian',
-					'Swedish',
-					'Swahili',
-					'Tamil',
-					'Telugu',
-					'Thai',
-					'Tagalog',
-					'Turkish',
-					'Ukrainian',
-					'Urdu',
-					'Vietnamese',
-					'Simplified Chinese',
-					'Traditional Chinese'];
+					'Dutch', 'Norwegian','Punjabi','Polish','Portuguese',
+					'Romanian',	'Russian',	'Slovak','Slovene',
+					'Somali','Albanian','Swedish','Swahili',
+					'Tamil','Telugu','Thai','Tagalog','Turkish',
+					'Ukrainian','Urdu',	'Vietnamese','Simplified Chinese','Traditional Chinese'];
 			
 			//select language
 			var selectLanguage = $("<select></select>");
@@ -506,9 +536,12 @@ var SetupManager = {
 			var languageTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			languagesRow.append(languageTD);
 			
+			var title = $("<text>in human language: </text>");
+			title.addClass("FilterTitle");
+			languageTD.append(title);
 			languageTD.append(selectLanguage);
 
-			
+			//listener for language select
 			selectLanguage.change(function () {
 				$( "select option:selected" ).each(function() {
 				     QueryManager.humanLanguageOfComments = $(this).attr("value");
@@ -544,6 +577,14 @@ var SetupManager = {
 					QueryManager.submitQuery();
 					//make it lose focus so we can detect when user refocus on query it
 					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
+					
+					
+					var angle = 0;
+					 SetupManager.rotateStatusVar = setInterval(function(){
+					      angle+=3;
+					     $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
+					},50);
+	
 							
 					
 				}
