@@ -96,7 +96,7 @@ function CodeResult(code, start, end, invocations){
 		var displayCode=	
 			
 			$(
-							'<div class="code"><pre class="syntax java">'+this.markInvocations(middleCode,startCode.length)+
+							'<div class="code"><pre class="syntax java">'+middleCode+//+this.markInvocations(middleCode,startCode.length)+
 							'</pre></div>'
 							)	;
 		//this.markInvocations(middleCode, startCode.length);
