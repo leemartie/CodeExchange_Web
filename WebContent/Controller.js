@@ -64,6 +64,15 @@ var Controller = {
 						    layout:'plain'
 						    
 						});
+						
+						 var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
+						 $(SetupManager.pound+codeNode).highlight(methodName);
+						 
+						 var extendsName = $(SetupManager.pound+SetupManager.extendsInputID).val();
+						 $(SetupManager.pound+codeNode).highlight(extendsName);
+						 
+						 var implementsName = $(SetupManager.pound+SetupManager.implementsInputID).val();
+						 $(SetupManager.pound+codeNode).highlight(implementsName);
 
 						
 						
@@ -124,7 +133,7 @@ var Controller = {
 		
 		setAuthorName	:	function(meta, name, type){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<span class="ui-icon ui-icon-person" style="display:inline-block"></span>');
+			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/author.png"></img>');
 			var authName = $('<text>'+name+'</text>');
 			
 			
@@ -171,7 +180,7 @@ var Controller = {
 		 */
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
+			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
 			var authName = $('<a href="'+projectURL+'">'+name+'</a>');
 			
 			

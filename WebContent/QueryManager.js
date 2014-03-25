@@ -67,6 +67,15 @@ var QueryManager = {
 		
 	},
 	
+	submitSpellCheck	:	function(request,response,val){
+		var url = 'http://codeexchange.ics.uci.edu:8983/solr/CodeExchangeIndex/spell?q=(snippet_code:'+val+')'+
+			'&rows=0&spellcheck=true&spellcheck.collate=true&indent=on&wt=json&callback=?&json.wrf=spellCheck';
+		
+		QueryManager.currentResponse = response;
+		
+		$.getJSON(url);
+	},
+	
 	submitAutoComplete	:	function(field, request, response){
 		QueryManager.currentRequest = request;
 		QueryManager.currentResponse = response;
@@ -610,6 +619,26 @@ function on_data(data) {
 //	QueryManager.populateFilters();
 }
 
+function spellCheck(data){
+	var results = data.spellcheck.suggestions[1];
+	if(results != false){
+		var numFound = results.numFound;
+		var suggestions = results.suggestion;
+		var autoSpell = new Array();
+		for(var i = 0; i<numFound; i++){
+			autoSpell.push(suggestions[i].word);
+		}
+		var mappedResults = $.map( autoSpell, function( item ) {
+            return {
+              "label": item,
+              "value": item
+            };
+          });
+		
+		QueryManager.currentResponse(mappedResults);
+	}
+	;
+}
 function autoCompleteCallBack(data){
 	
 	

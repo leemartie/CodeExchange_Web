@@ -199,6 +199,11 @@ var SetupManager = {
 			//set id
 			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
 			input.attr(SetupManager.placeholder_attr, "keywords (ex: depth first search)");
+			input.autocomplete({ 
+				source: function( request, response ){
+					QueryManager.submitSpellCheck(request, response,input.val());
+					}
+				});
 			
 			
 			//--row for status
@@ -600,10 +605,19 @@ var SetupManager = {
 	          
 	        if ( collapsed ) {
 		      //expand the cell
+	        	
 	        	Controller.expandCell(cellSelected);
+	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
+	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
+				append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/collapse.png" width="30"></img>')).width("30");
+	        	
 	          
 	        } else {
-	        	Controller.collapseCell(cellSelected);	          
+	        	Controller.collapseCell(cellSelected);	  
+	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
+
+	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
+				append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
 	        }
 	        collapsed = !collapsed;
 
@@ -784,11 +798,9 @@ var SetupManager = {
 				//add to result options
 				$(SetupManager.pound+resultOptions_id).append(expandButton);
 				//button attributes
-				$(SetupManager.pound+SetupManager.expandBtnArray_ID[i]).button({
-					icons: {
-			        	primary: "ui-icon-arrow-4-diag"
-						}
-				});
+				$(SetupManager.pound+SetupManager.expandBtnArray_ID[i]).text("").
+					append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
+
 				
 
 
