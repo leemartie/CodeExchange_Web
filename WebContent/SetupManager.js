@@ -222,6 +222,8 @@ var SetupManager = {
 			status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
 			status.attr("valign","top");
 			status.attr("padding-bottom", "0px");
+			status.addClass("Status");
+			status.attr("align","left");
 			//status.addClass("StatusTD");
 			
 			Controller.setStatus("Let's find some code.");
@@ -576,7 +578,7 @@ var SetupManager = {
 			//add keypress  for 'enter' listener to body to submit query
 			$('body').keypress(function(e) {
 				if (!e.shiftKey && e.keyCode == '13') {
-					
+					Controller.setStatus("SEARCHING...");
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
 					QueryManager.setQuery(query);
 					QueryManager.submitQuery();

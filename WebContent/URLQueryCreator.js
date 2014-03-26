@@ -62,7 +62,7 @@ var URLQueryCreator = {
 				+ commentsFilter
 				+ languageFilter
 				+ '&start=' + start 
-				+ '&fl= id snippet_version_author snippet_project_name '
+				+ '&fl=id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_method_invocations project_id';
 				

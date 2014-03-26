@@ -15,6 +15,7 @@ var Controller = {
 		previousY : 0,
 		headerExpanded	:	false,
 		sortFiltersAlpha	:	false,
+		currentStatus	:	"",
 		
 
 		/**
@@ -65,14 +66,39 @@ var Controller = {
 						    
 						});
 						
+						
+						//highlight class calling methods
+//						if(invocations != undefined){
+//						for(var i = 0; i<invocations.length; i++){
+//							var invocation = invocations[i];
+//							var start = parseInt(EncoderDecoder.decodeStart(invocation));
+//							var end = parseInt(EncoderDecoder.decodeEnd(invocation));
+//							var className = EncoderDecoder.decodeClassFilter(invocation);
+//							var methodName = EncoderDecoder.decodeMethodFilter(invocation);
+//							var firstArg = EncoderDecoder.decodeArgumentFilter(invocation);
+//							
+//							//if(className == $(SetupManager.pound+SetupManager.callingObjectInputID).val())
+//								$(SetupManager.pound+codeNode).highlight(methodName,{ element: 'em', className: 'important' });
+//						}
+//						}
+						
+						//highlight method name
 						 var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
 						 $(SetupManager.pound+codeNode).highlight(methodName,{ element: 'em', className: 'important' });
 						 
+						 //highlight extends
 						 var extendsName = $(SetupManager.pound+SetupManager.extendsInputID).val();
 						 $(SetupManager.pound+codeNode).highlight(extendsName,{ element: 'em', className: 'important' });
 						 
+						 //highlight implements
 						 var implementsName = $(SetupManager.pound+SetupManager.implementsInputID).val();
 						 $(SetupManager.pound+codeNode).highlight(implementsName,{ element: 'em', className: 'important' });
+						 
+						 //highlight keywords in query
+						 var keywords = QueryManager.currentQuery.split(" ");
+						 for(var i = 0; i<keywords.length; i++){
+							 $(SetupManager.pound+codeNode).highlight(keywords[i],{ element: 'em', className: 'important' });
+						 }
 
 						
 						
@@ -118,6 +144,7 @@ var Controller = {
 		 * FUNCTION
 		 */
 		setStatus	:	function(message){
+			Controller.currentStatus = message;
 			$(SetupManager.pound+SetupManager.statusDiv_ID).empty();
 			var text = $("<text>"+message+"</text>");
 			text.addClass("Message");

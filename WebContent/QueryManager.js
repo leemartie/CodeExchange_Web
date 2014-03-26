@@ -77,6 +77,9 @@ var QueryManager = {
 	},
 	
 	submitAutoComplete	:	function(field, request, response){
+		if(Controller.currentStatus != "SEARCHING...")
+			Controller.setStatus("Searching for autocomplete recommendations...");
+		
 		QueryManager.currentRequest = request;
 		QueryManager.currentResponse = response;
 		//constrain autocomplete by the values of the other code properties
@@ -146,7 +149,7 @@ var QueryManager = {
 		}else{
 			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+//'&facet.prefix='+completeUserTyped +
+			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		}
 
@@ -477,7 +480,7 @@ function on_nextData(data) {
 	
 
 	
-	Controller.setStatus("DONE LOADING CODE");
+	Controller.setStatus("DONE - Getting next page");
 	clearInterval(SetupManager.rotateStatusVar);
 
 }
@@ -640,7 +643,8 @@ function spellCheck(data){
 	;
 }
 function autoCompleteCallBack(data){
-	
+	if(Controller.currentStatus != "SEARCHING...")
+		Controller.setStatus("DONE - searching for autocomplete recommendations");
 	
 	if(QueryManager.currentAutoCompleteField == SetupManager.extendsInputID){
 		var results =  data.facet_counts.facet_fields.snippet_extends;
@@ -708,8 +712,8 @@ function autoCompleteCallBack(data){
 			var pushBoolean = true;
 			
 			if(className != ""){
-				var classDecoded = EncoderDecoder.decodeClassFilter(results[i]);
-				if(className !=  classDecoded)
+				if(className !=  EncoderDecoder.decodeClassFilter(results[i]) &&
+						className != EncoderDecoder.decodeCallingClassFilter(results[i]))
 					pushBoolean = false;
 			}
 			
@@ -718,14 +722,12 @@ function autoCompleteCallBack(data){
 					pushBoolean = false;
 			}
 			
-			var decodedResult = EncoderDecoder.decodeMethodFilter(results[i]);
-			if((String(decodedResult).indexOf(
-					QueryManager.completeUserTyped.toUpperCase()) == 0
-					|| 
-					String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) == 0)
+			var nonLowercaseResult = EncoderDecoder.decodeMethodFilter(results[i]);
+			var decodedResult = String(nonLowercaseResult).toLowerCase();
+			if((String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) != -1
 					&& 
-					pushBoolean)
-				temp.push(decodedResult);
+					pushBoolean))
+				temp.push(nonLowercaseResult);
 		}
 		
 		temp = Util.getOnlyUniqueElements(temp);
@@ -765,14 +767,15 @@ function autoCompleteCallBack(data){
 					pushBoolean = false;
 			}
 			
-			var decodedResult = EncoderDecoder.decodeClassFilter(results[i]);
-			if((String(decodedResult).indexOf(
-					QueryManager.completeUserTyped.toUpperCase()) == 0
-					|| 
-					String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) == 0)
-					&& 
-					pushBoolean)
-				temp.push(decodedResult);
+			var nonLowercaseResult = EncoderDecoder.decodeClassFilter(results[i]);
+			var decodedResult = String(nonLowercaseResult).toLowerCase();
+			if((String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) != -1	&&	pushBoolean))
+				temp.push(nonLowercaseResult);
+			
+			var nonLowercaseResult = EncoderDecoder.decodeCallingClassFilter(results[i]);
+			var decodedResult = String(nonLowercaseResult).toLowerCase();
+			if((String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) != -1	&&	pushBoolean))
+				temp.push(nonLowercaseResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
 		var mappedResults = $.map( temp, function( item ) {
@@ -807,18 +810,15 @@ function autoCompleteCallBack(data){
 			}
 			
 			if(className != ""){
-				if(className !=  EncoderDecoder.decodeClassFilter(results[i]))
+				if(className !=  EncoderDecoder.decodeClassFilter(results[i]) &&
+						className != EncoderDecoder.decodeCallingClassFilter(results[i]))
 					pushBoolean = false;
 			}
 			
-			var decodedResult = EncoderDecoder.decodeArgumentFilter(results[i]);
-			if((String(decodedResult).indexOf(
-					QueryManager.completeUserTyped.toUpperCase()) == 0
-					|| 
-					String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) == 0)
-					&& 
-					pushBoolean)
-				temp.push(decodedResult);
+			var nonLowercaseResult = EncoderDecoder.decodeArgumentFilter(results[i]);
+			var decodedResult = String(nonLowercaseResult).toLowerCase();
+			if((String(decodedResult).indexOf(	QueryManager.completeUserTyped.toLowerCase()) != -1	&&	pushBoolean))
+				temp.push(nonLowercaseResult);
 		}
 		temp = Util.getOnlyUniqueElements(temp);
 		var mappedResults = $.map( temp, function( item ) {
@@ -830,6 +830,8 @@ function autoCompleteCallBack(data){
 		
 		QueryManager.currentResponse(mappedResults);		
 		//return jsonResults;
+		
+		
 		
 	}
 	
