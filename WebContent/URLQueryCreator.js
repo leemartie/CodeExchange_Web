@@ -31,13 +31,22 @@ var URLQueryCreator = {
 				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
 			}
 			
-			var invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilter()+"/";
+			var invocationFilter = '';
+			
+			var invocationEncode = EncoderDecoder.encodeInvocationFilter();
+			
+			var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+			var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();
+			var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+			
+			if(objectsClassFilter != "" || methodCallNameFilter != "" || argumentTypeFilter != "")
+				invocationFilter = " AND snippet_method_invocations:"+"/"+invocationEncode+"/";
 			
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 
 			
-			var commentsFilter = ' AND snippet_has_comments:('+'*'+')';
-			var languageFilter = ' AND snippet_human_language:('+'*'+')';
+			var commentsFilter = '';
+			var languageFilter = '';
 			
 			if(QueryManager.hasComments){
 				commentsFilter = ' AND snippet_has_comments:('+QueryManager.hasComments+')';
@@ -53,7 +62,7 @@ var URLQueryCreator = {
 				+ commentsFilter
 				+ languageFilter
 				+ '&start=' + start 
-				+ '&fl= id snippet_code snippet_version_author snippet_project_name '
+				+ '&fl= id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_method_invocations project_id';
 				

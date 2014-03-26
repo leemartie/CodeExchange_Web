@@ -66,13 +66,13 @@ var Controller = {
 						});
 						
 						 var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
-						 $(SetupManager.pound+codeNode).highlight(methodName);
+						 $(SetupManager.pound+codeNode).highlight(methodName,{ element: 'em', className: 'important' });
 						 
 						 var extendsName = $(SetupManager.pound+SetupManager.extendsInputID).val();
-						 $(SetupManager.pound+codeNode).highlight(extendsName);
+						 $(SetupManager.pound+codeNode).highlight(extendsName,{ element: 'em', className: 'important' });
 						 
 						 var implementsName = $(SetupManager.pound+SetupManager.implementsInputID).val();
-						 $(SetupManager.pound+codeNode).highlight(implementsName);
+						 $(SetupManager.pound+codeNode).highlight(implementsName,{ element: 'em', className: 'important' });
 
 						
 						
