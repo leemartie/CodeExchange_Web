@@ -597,8 +597,8 @@ var Controller = {
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth*(3/4)-SetupManager.sideBuffer-16;
-				var screenHeightBuffer = screenHeight*(3/4)-75-10;
+				var screenBuffer = screenWidth*(3/4)-SetupManager.sideBuffer-27;
+				var screenHeightBuffer = screenHeight*(3/4)-75-11;
 			  
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 		           

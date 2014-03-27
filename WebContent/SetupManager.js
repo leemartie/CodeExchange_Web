@@ -198,6 +198,8 @@ var SetupManager = {
 			logo.append(input);
 			//set id
 			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
+			input.attr("rows","1");
+			input.attr("line-height", "1");
 			input.attr(SetupManager.placeholder_attr, "keywords (ex: depth first search)");
 			input.autocomplete({ 
 				source: function( request, response ){
@@ -310,6 +312,7 @@ var SetupManager = {
 			
 			filterTable.attr(SetupManager.ID_attr,SetupManager.filterTable_ID);
 			filterSideTD.append(filterTable);
+			filterSideTD.addClass("FilterBackground");
 			
 			var classHeader = $('<tr><table><th align="left">I need code that</th></table></tr>');
 			classHeader.addClass("FilterTitle");
@@ -577,7 +580,8 @@ var SetupManager = {
 			
 			//add keypress  for 'enter' listener to body to submit query
 			$('body').keypress(function(e) {
-				if (!e.shiftKey && e.keyCode == '13') {
+				if (e.keyCode == '13') {
+					e.preventDefault();
 					Controller.setStatus("SEARCHING...");
 					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
 					QueryManager.setQuery(query);
