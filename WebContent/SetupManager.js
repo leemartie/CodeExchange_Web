@@ -141,8 +141,8 @@ var SetupManager = {
 		placeholder_attr	:	"placeholder",
 		columns				:	"cols",
 		rows				:	"rows",
-		numberOfCells		:	2,
-		numberOfCellsPerRow	:	2,
+		numberOfCells		:	3,
+		numberOfCellsPerRow	:	3,
 		
 		//pound for finding by id
 		pound		:	"#",
@@ -186,7 +186,7 @@ var SetupManager = {
 			
 			//logo
 			var logo = $(SetupManager.divOpen+SetupManager.divClose);
-			queryTD.append(logo);
+			//queryTD.append(logo);
 			var logoName = $('<a href="index.html"><img src="http://codeexchange.ics.uci.edu/logo2.png"/></a>');
 			logo.append(logoName);
 			logo.addClass("Logo");
@@ -254,7 +254,7 @@ var SetupManager = {
 			rowNavTable.append(rowNavigation);
 			rowInTableForSite.append(rowNavTable);
 			rowInTableForSite.addClass("HeaderBack");
-			tableForSite.append(rowInTableForSite);
+			//TODO getting rid of navigation row on top tableForSite.append(rowInTableForSite);
 			
 			
 			var statusIcon = $('<img src="http://codeexchange.ics.uci.edu/share8_scaled.png"/>');
@@ -301,9 +301,14 @@ var SetupManager = {
 			filterSideTD.attr("rowspan","4");
 			
 			headerRow.append(filterSideTD);
+
+
 			filterSideTD.attr("valign", "top");
-			
+
 			filterSideTD.addClass("FilterSideTD");
+
+
+            filterSideTD.append(BuildQueryBoxView.getView());
 			
 			
 			//filter table
@@ -311,7 +316,7 @@ var SetupManager = {
 			filterTable.addClass("FilterBackground");
 			
 			filterTable.attr(SetupManager.ID_attr,SetupManager.filterTable_ID);
-			filterSideTD.append(filterTable);
+			//TODO commented out this and will replace with BuildQueryBoxView filterSideTD.append(filterTable);
 			filterSideTD.addClass("FilterBackground");
 			
 			var classHeader = $('<tr><table><th align="left">I need code that</th></table></tr>');
@@ -650,7 +655,7 @@ var SetupManager = {
 			var screenWidth = jQuery(window).width();
 			var screenHeight = jQuery(window).height();
 			var screenBuffer = screenWidth*(3/4);
-			var screenHeightBuffer = screenHeight*(3/4)-75;
+			var screenHeightBuffer = screenHeight*(3/4)-100;
 			
 //resize function called when resize event happens
 			$(window).resize(function() {
@@ -659,50 +664,50 @@ var SetupManager = {
 				var screenBuffer = screenWidth*(3/4);
 				var screenHeightBuffer = screenHeight*(3/4)-75;
 				
-				$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
+				$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)+30);
 				$('.Result').height((screenHeightBuffer));
 
-				$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
+				$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
 				$('.ResultTD').height((screenHeightBuffer));		
 				//$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 			
 				
-				$('.ResultTR').width(((screenBuffer))-SetupManager.sideBuffer);
+				$('.ResultTR').width(((screenBuffer)));
 				$('.ResultTR').height((screenHeightBuffer));
 			//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
 				
 				
-				$('.ResultTable').width(((screenBuffer))-SetupManager.sideBuffer);
+				$('.ResultTable').width(((screenBuffer)));
 				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 				
 				
 				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
-				
-				
-		
-				
-				$('.FilterSideTD').width(((screenBuffer)/SetupManager.numberOfCells));
+
+
+                $('.QueryBucket').height(screenHeightBuffer+55);
+
+				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
 				
 				
 			});
 			$(window).trigger('resize');
 			
 //set dimensions of all Cells
-			$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
+			$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)+30);
 			$('.Result').height((screenHeightBuffer));
 			
-			$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells)-SetupManager.sideBuffer);
+			$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
 			$('.ResultTD').height((screenHeightBuffer));		
 		//	$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
 		
 			
-			$('.ResultTR').width(((screenBuffer))-SetupManager.sideBuffer);
+			$('.ResultTR').width(((screenBuffer)));
 			$('.ResultTR').height((screenHeightBuffer));
 		//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
 		
 			
-			$('.ResultTable').width(((screenBuffer))-SetupManager.sideBuffer);
+			$('.ResultTable').width(((screenBuffer)));
 		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			
@@ -710,8 +715,8 @@ var SetupManager = {
 			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
-			$('.FilterSideTD').width(((screenBuffer)/SetupManager.numberOfCells));
-			
+			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
+			$('.QueryBucket').height(screenHeightBuffer+55);
 			
 		
 			
