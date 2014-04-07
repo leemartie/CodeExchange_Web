@@ -32,12 +32,12 @@ var QueryManager = {
 	 */
 	setQuery	:	function(query){
 		QueryManager.currentQuery = query;
-		QueryManager.classExtendsQuery = $(SetupManager.pound+SetupManager.extendsInputID).val();
-		QueryManager.classImplementsQuery  = $(SetupManager.pound+SetupManager.implementsInputID).val();
-		
-		QueryManager.methodNameQuery = $(SetupManager.pound+SetupManager.callInputID).val();
-		QueryManager.methodClassQuery = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-		QueryManager.methodArgQuery = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+//		QueryManager.classExtendsQuery = $(SetupManager.pound+SetupManager.extendsInputID).val();
+//		QueryManager.classImplementsQuery  = $(SetupManager.pound+SetupManager.implementsInputID).val();
+//
+//		QueryManager.methodNameQuery = $(SetupManager.pound+SetupManager.callInputID).val();
+//		QueryManager.methodClassQuery = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+//		QueryManager.methodArgQuery = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 	},
 	
 	/**

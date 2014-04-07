@@ -9,7 +9,7 @@ var URLQueryCreator = {
 		getQueryURL	:	function(callbackFunctionName){
 		
 	
-			var query = SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery);
+			var query = QueryManager.currentQuery;
 			var start = QueryManager.currentStart;
 			
 			
@@ -21,26 +21,26 @@ var URLQueryCreator = {
 			 * _query_:"{!join fromIndex=children from=fatherid to=parentid v='childname:Tom'}"
 			 */
 			
-			var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
-			var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
+//			var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
+//			var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
 			
-			if(extendsFilter != ""){
-				queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
-			}
-			if(implementsFilter != ""){
-				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
-			}
+//			if(extendsFilter != ""){
+//				queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
+//			}
+//			if(implementsFilter != ""){
+//				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
+//			}
 			
 			var invocationFilter = '';
 			
-			var invocationEncode = EncoderDecoder.encodeInvocationFilter();
+//			var invocationEncode = EncoderDecoder.encodeInvocationFilter();
 			
-			var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-			var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();
-			var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+//			var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
+//			var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();
+//			var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
 			
-			if(objectsClassFilter != "" || methodCallNameFilter != "" || argumentTypeFilter != "")
-				invocationFilter = " AND snippet_method_invocations:"+"/"+invocationEncode+"/";
+//			if(objectsClassFilter != "" || methodCallNameFilter != "" || argumentTypeFilter != "")
+//				invocationFilter = " AND snippet_method_invocations:"+"/"+invocationEncode+"/";
 			
 	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 
@@ -48,19 +48,15 @@ var URLQueryCreator = {
 			var commentsFilter = '';
 			var languageFilter = '';
 			
-			if(QueryManager.hasComments){
-				commentsFilter = ' AND snippet_has_comments:('+QueryManager.hasComments+')';
-				languageFilter = ' AND snippet_human_language:('+QueryManager.humanLanguageOfComments+')';
-			}
+//			if(QueryManager.hasComments){
+//				commentsFilter = ' AND snippet_has_comments:('+QueryManager.hasComments+')';
+//				languageFilter = ' AND snippet_human_language:('+QueryManager.humanLanguageOfComments+')';
+//			}
 			
 			
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ 'snippet_code:(' + query + ')'
-				+ queryFilter
-				+ invocationFilter
-				+ commentsFilter
-				+ languageFilter
+				+ query
 				+ '&start=' + start 
 				+ '&fl=id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '

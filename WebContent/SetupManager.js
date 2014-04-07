@@ -193,19 +193,19 @@ var SetupManager = {
 
 			
 			//make keyword input
-			var input = $(SetupManager.textAreaOpen+SetupManager.textAreaClose);
-			//append to header
-			logo.append(input);
-			//set id
-			input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
-			input.attr("rows","1");
-			input.attr("line-height", "1");
-			input.attr(SetupManager.placeholder_attr, "keywords (ex: depth first search)");
-			input.autocomplete({ 
-				source: function( request, response ){
-					QueryManager.submitSpellCheck(request, response,input.val());
-					}
-				});
+//			var input = $(SetupManager.textAreaOpen+SetupManager.textAreaClose);
+//			//append to header
+//			logo.append(input);
+//			//set id
+//			//input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
+//			input.attr("rows","1");
+//			input.attr("line-height", "1");
+//			input.attr(SetupManager.placeholder_attr, "keywords (ex: depth first search)");
+//			input.autocomplete({
+//				source: function( request, response ){
+//					QueryManager.submitSpellCheck(request, response,input.val());
+//					}
+//				});
 			
 			
 			//--row for status
@@ -309,6 +309,8 @@ var SetupManager = {
 
 
             filterSideTD.append(BuildQueryBoxView.getView());
+
+
 			
 			
 			//filter table
@@ -574,37 +576,16 @@ var SetupManager = {
 		//	input.width(screenWidth - buttonWidth - 50);
 			
 // --- add listeners
-			//add mouse click listener to search button
-			$(SetupManager.pound+SetupManager.searchBtn_ID)
-			.click(function(){
-				QueryManager.submitQuery(
-						$(SetupManager.pound+SetupManager.queryInput_ID).val(),0);
-				});
+//			//add mouse click listener to search button
+//			$(SetupManager.pound+SetupManager.searchBtn_ID)
+//			.click(function(){
+//				QueryManager.submitQuery(
+//						$(SetupManager.pound+SetupManager.queryInput_ID).val(),0);
+//				});
 			
 
 			
-			//add keypress  for 'enter' listener to body to submit query
-			$('body').keypress(function(e) {
-				if (e.keyCode == '13') {
-					e.preventDefault();
-					Controller.setStatus("SEARCHING...");
-					var query = $(SetupManager.pound+SetupManager.queryInput_ID).val()
-					QueryManager.setQuery(query);
-					QueryManager.submitQuery();
-					//make it lose focus so we can detect when user refocus on query it
-					$(SetupManager.pound+SetupManager.queryInput_ID).blur();
-					
-					
-					var angle = 0;
-					 SetupManager.rotateStatusVar = setInterval(function(){
-					      angle+=3;
-					     $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-					},50);
-	
-							
-					
-				}
-			});
+
 			
 //listener for expand button
 			var collapsed = true;
@@ -682,10 +663,10 @@ var SetupManager = {
 
 				
 				
-				$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
+				//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 
 
-                $('.QueryBucket').height(screenHeightBuffer+55);
+                $('.QueryBucket').height(screenHeightBuffer);
 
 				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
 				
@@ -712,11 +693,11 @@ var SetupManager = {
 
 //set dimensions of input box			
 			
-			$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
+			//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
-			$('.QueryBucket').height(screenHeightBuffer+55);
+			$('.QueryBucket').height(screenHeightBuffer);
 			
 		
 			
