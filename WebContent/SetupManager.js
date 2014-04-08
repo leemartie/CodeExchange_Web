@@ -179,7 +179,7 @@ var SetupManager = {
 			//query box
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 	    //	queryTD.attr("valign", "top");
-			headerRow.append(queryTD);
+		//	headerRow.append(queryTD);
 		
 			
 			//queryTD.attr("bgcolor","darkgray");
@@ -197,7 +197,6 @@ var SetupManager = {
 			//--row for status
 			var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
 			var rowStatus = $(SetupManager.trOpen+SetupManager.trClose);
-			rowStatus.addClass("HeaderBack");
 			statusTable.append(rowStatus);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(statusTable);
 			
@@ -212,13 +211,14 @@ var SetupManager = {
 			status.attr("padding-bottom", "0px");
 			status.addClass("Status");
 			status.attr("align","left");
+            status.width("50%");
 			//status.addClass("StatusTD");
 			
 			Controller.setStatus("Let's find some code.");
 			
-			//--row for navigation
-			var rowNavigation = $(SetupManager.trOpen+SetupManager.trClose);
-			rowNavigation.addClass("HeaderBack");
+//			//--row for navigation
+//			var rowNavigation = $(SetupManager.trOpen+SetupManager.trClose);
+//			rowNavigation.addClass("HeaderBack");
 			
 			//make page navigation
 			var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -228,29 +228,29 @@ var SetupManager = {
 			pageNavigation.attr("valign","top");
 			pageNavigation.attr("align","center");
 			pageNavigation.attr("width","100%");
-			//pageNavigation.addClass("StatusTD");
+			pageNavigation.addClass("PageNavigation");
 			
 			
 			// append
-			rowNavigation.append(pageNavigation);
-			
-			
-			var rowInTableForSite = $(SetupManager.trOpen+SetupManager.trClose);
-			var rowNavTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-			rowNavTable.append(rowNavigation);
-			rowInTableForSite.append(rowNavTable);
-			rowInTableForSite.addClass("HeaderBack");
-			//TODO getting rid of navigation row on top tableForSite.append(rowInTableForSite);
-			
-			
-			var statusIcon = $('<img src="http://codeexchange.ics.uci.edu/share8_scaled.png"/>');
-			statusIcon.attr(SetupManager.ID_attr,SetupManager.statusIconID);
-			var statusTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			statusTD.append(statusIcon);
-
-			statusTD.attr("align","right");
-			
-			rowNavigation.append(statusTD);
+            rowStatus.append(pageNavigation);
+//
+//
+//			var rowInTableForSite = $(SetupManager.trOpen+SetupManager.trClose);
+//			var rowNavTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+//			rowNavTable.append(rowNavigation);
+//			rowInTableForSite.append(rowNavTable);
+//			rowInTableForSite.addClass("HeaderBack");
+//			//TODO getting rid of navigation row on top tableForSite.append(rowInTableForSite);
+//
+//
+//			var statusIcon = $('<img src="http://codeexchange.ics.uci.edu/share8_scaled.png"/>');
+//			statusIcon.attr(SetupManager.ID_attr,SetupManager.statusIconID);
+//			var statusTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+//			statusTD.append(statusIcon);
+//
+//			statusTD.attr("align","right");
+//
+//			rowNavigation.append(statusTD);
 
 
 			
