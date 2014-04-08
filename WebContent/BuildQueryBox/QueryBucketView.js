@@ -22,10 +22,6 @@ var QueryBucketView = {
 
         QueryBucketView.queryBucket.addClass("QueryBucket");
 
-//        var pre = $(SetupManager.preOpen+SetupManager.preClose);
-//        pre.addClass("QueryBucketOverflow");
-//        pre.append(QueryBucketView.queryBucket);
-
         return QueryBucketView.queryBucket;
 
     },
@@ -48,7 +44,7 @@ var QueryBucketView = {
             var type  = QueryBucketModel.stackOfQueries[i].type;
             var value = QueryBucketModel.stackOfQueries[i].value;
 
-            var queryView = new QueryView(type,value);
+            var queryView = new QueryView(type,value, i);
 
             queryBucketCell.append(queryView.getView());
             queryBucketCell.addClass("QueryView");

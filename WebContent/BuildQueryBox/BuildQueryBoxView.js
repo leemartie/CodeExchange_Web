@@ -32,7 +32,7 @@ var BuildQueryBoxView = {
 
             queryBox.width("98%");
             queryBox.attr(SetupManager.placeholder_attr, "add a query");
-            var queryLabel = $("<text>query</text>");
+            var queryLabel = $("<text>add a query</text>");
             queryLabel.addClass("QueryTypeTitle");
             queryCell.attr("align", "center");
             queryCell.append(queryLabel);
@@ -64,8 +64,9 @@ var BuildQueryBoxView = {
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(titleCell);
-            var label = $("<text>Your Query</text>");
+            var label = $("<text>Your Current Query</text>");
             label.addClass("BuildQueryTitle");
+            titleCell.append($("<hr>"));
             titleCell.append(label);
             titleCell.attr("align", "center");
             view.append(titleRow);

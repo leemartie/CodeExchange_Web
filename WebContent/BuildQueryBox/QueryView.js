@@ -2,10 +2,11 @@
  * Created by lee on 4/7/14.
  */
 
-function QueryView(type, value){
+function QueryView(type, value, index){
 
     this.type = type;
     this.value = value;
+    this.index = index;
 
    this.getView = function() {
 
@@ -16,7 +17,26 @@ function QueryView(type, value){
        div.append(label);
 
        var button = $(SetupManager.buttonOpen+"-"+SetupManager.buttonClose);
-        button.addClass("QueryViewButton");
+       button.addClass("QueryViewButton");
+
+       button.click(function(event) {
+
+            QueryBucketModel.removeQuery(index);
+            QueryBucketView.update();
+
+           Controller.setStatus("SEARCHING...");
+           var query = QueryBucketModel.constructQuery();
+           QueryManager.setQuery(query);
+           QueryManager.submitQuery();
+//                    //make it lose focus so we can detect when user refocus on query it
+//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
+           var angle = 0;
+           SetupManager.rotateStatusVar = setInterval(function(){
+               angle+=3;
+               $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
+           },50);
+
+       });
 
        button.width("25");
        button.height("20");

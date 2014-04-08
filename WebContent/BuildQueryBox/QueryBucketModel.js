@@ -29,16 +29,21 @@ var QueryBucketModel = {
             arrayOfValues = new Array();
 
         arrayOfValues.push(query.value);
+        query.valueIndex = arrayOfValues.length-1;
 
         QueryBucketModel.listOfQueries[query.type] = arrayOfValues;
 
     },
 
-    removeQuery :   function(/*QueryModel*/query){
-//        var index = QueryBucketModel.stackOfQueries.indexOf(query);
-//        if (index > -1) {
-//            QueryBucketModel.stackOfQueries.splice(index, 1);
-//        }
+    removeQuery :   function(index){
+            var query = QueryBucketModel.stackOfQueries[index];
+            var key = query.type;
+            var value = query.value;
+            var valueIndex = query.valueIndex;
+
+            QueryBucketModel.stackOfQueries.splice(index,1);
+            QueryBucketModel.listOfQueries[key].splice(valueIndex,1);
+
     },
 
     /**
@@ -60,7 +65,10 @@ var QueryBucketModel = {
             //query for field
             for(var j = 0; j<valueList.length; j++){
                 if(j == 0) {
-                    field = field + SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                    if(valueList[j] == "")
+                        field = field + "*";
+                    else
+                        field = field + SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
                 }else{
                     field = field + " AND "+valueList[j];
                 }
@@ -77,6 +85,7 @@ var QueryBucketModel = {
             }
 
         }
+
         return query;
 
     }

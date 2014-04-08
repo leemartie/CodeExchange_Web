@@ -5,4 +5,5 @@
 function QueryModel(type, value) {
     this.type    =  type;
     this.value   =  value;
+    this.valueIndex = 0;
 }
