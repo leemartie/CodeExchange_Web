@@ -25,8 +25,8 @@ var QueryTrailView = {
 
 
 
-        for(var i = 0; i <QueryTrailModel.history.length; i++) {
-            var stack = QueryTrailModel.history[i];
+        for(var i = 0; i <QueryTrailModel.queryTrail.length; i++) {
+            var stack = QueryTrailModel.queryTrail[i];
             var queryBucketCell = $(SetupManager.tdOpen + SetupManager.tdClose);
             var tempTable = $(SetupManager.tableOpen+SetupManager.tableClose);
             queryBucketCell.append(tempTable);

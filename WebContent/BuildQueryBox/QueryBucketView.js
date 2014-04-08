@@ -22,6 +22,8 @@ var QueryBucketView = {
 
         QueryBucketView.queryBucket.addClass("QueryBucket");
 
+
+
         return QueryBucketView.queryBucket;
 
     },
@@ -39,6 +41,7 @@ var QueryBucketView = {
 
         for(var i = QueryBucketModel.stackOfQueries.length-1; i >= 0; i--){
             var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
+
             var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
             var displayType  = QueryBucketModel.stackOfQueries[i].displayType;
@@ -48,10 +51,15 @@ var QueryBucketView = {
 
             queryBucketCell.append(queryView.getView());
             queryBucketCell.addClass("QueryView");
+
             queryBucketRow.append(queryBucketCell);
             QueryBucketView.queryBucket.append(queryBucketRow);
         }
+
+
     }
+
+
 
 
 }

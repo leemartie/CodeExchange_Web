@@ -48,22 +48,15 @@ var QueryManager = {
 	 */
 	submitQuery : function() {
 		Controller.setStatus("SEARCHING...");
-		// alert("[submitQuery]");
 
 		QueryManager.currentStart = 0;
-		
-		//first we have to get all the code id's that have the method 
-		//invocations ? well... if blank keywords
-		
-		//if keywords not blank, then get those first then
-		//pair down
 
-        QueryTrailModel.history.push(QueryBucketModel.stackOfQueries.slice(0));
-        QueryTrailView.update();
+
+
+
 
 		var url = URLQueryCreator.getQueryURL('on_data');
 
-		// alert(url);
 		$.getJSON(url);
 		
 		

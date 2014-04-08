@@ -11,9 +11,7 @@ var QueryBucketModel = {
     snippetField         :   "snippet_code",
     extendsField         :   "snippet_extends",
     implementsField      :   "snippet_implements",
-
-
-    listOfKeys:new Array(),
+    listOfKeys           :   new Array(),
 
     addQuery    :   function(/*QueryModel*/query){
         QueryBucketModel.stackOfQueries.push(query);
@@ -44,6 +42,20 @@ var QueryBucketModel = {
             QueryBucketModel.stackOfQueries.splice(index,1);
             QueryBucketModel.listOfQueries[key].splice(valueIndex,1);
 
+    },
+
+    repopulateQuery :   function(stackOfQueries){
+
+      for(var i = 0; i < QueryBucketModel.listOfKeys.length; i++){
+          QueryBucketModel.listOfQueries[QueryBucketModel.listOfKeys[i]].length = 0;
+      }
+      QueryBucketModel.listOfQueries.length = 0;
+      QueryBucketModel.listOfKeys.length = 0;
+      QueryBucketModel.stackOfQueries.length = 0;
+
+        for(var i = 0; i<stackOfQueries.length; i++){
+            QueryBucketModel.addQuery((stackOfQueries[i]));
+        }
     },
 
     /**

@@ -24,6 +24,8 @@ function QueryView(type, value, index){
             QueryBucketModel.removeQuery(index);
             QueryBucketView.update();
 
+           QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
+
            Controller.setStatus("SEARCHING...");
            var query = QueryBucketModel.constructQuery();
            QueryManager.setQuery(query);

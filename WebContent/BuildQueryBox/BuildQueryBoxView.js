@@ -46,7 +46,8 @@ var BuildQueryBoxView = {
                 '<option value="'+QueryBucketModel.implementsField+'">implements class</option>'+
                 '</select>');
 
-            combo.width("100%");
+            combo.width("98%");
+
 
             combo.change(function(event){
                 BuildQueryBoxModel.currentQueryType = combo.val();
@@ -113,6 +114,7 @@ var BuildQueryBoxView = {
                     QueryBucketModel.addQuery(query);
                     QueryBucketView.update();
 
+                    QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
 
 
                     Controller.setStatus("SEARCHING...");

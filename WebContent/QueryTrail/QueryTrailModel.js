@@ -5,11 +5,51 @@
 var QueryTrailModel = {
 
     /*each index holds the contents of the stack*/
-    history : new Array(),
+    queryTrail : new Array(),
+    nextIndex: 0,
 
     pushQuery   : function(queryStack){
-        history.push(queryStack);
 
+        //remove head if back tracked and resubmited new query
+        if(QueryTrailModel.nextIndex < QueryTrailModel.queryTrail.length-1){
+            QueryTrailModel.queryTrail.length = QueryTrailModel.nextIndex+1;
+        }
+
+        QueryTrailModel.queryTrail.push(queryStack);
+        QueryTrailModel.nextIndex = QueryTrailModel.queryTrail.length-1;
+
+
+    },
+
+    goBackOne :  function(){
+
+
+        if( QueryTrailModel.nextIndex > 0) {
+            QueryTrailModel.nextIndex = QueryTrailModel.nextIndex - 1;
+
+            QueryBucketModel.repopulateQuery(QueryTrailModel.queryTrail[QueryTrailModel.nextIndex]);
+            QueryBucketView.update();
+
+            Controller.setStatus("SEARCHING...");
+            var query = QueryBucketModel.constructQuery();
+            QueryManager.setQuery(query);
+            QueryManager.submitQuery();
+        }
+
+    },
+    goForwardOne :  function(){
+        if(QueryTrailModel.nextIndex < QueryTrailModel.queryTrail.length-1) {
+            QueryTrailModel.nextIndex = QueryTrailModel.nextIndex + 1;
+
+            QueryBucketModel.repopulateQuery(QueryTrailModel.queryTrail[QueryTrailModel.nextIndex]);
+            QueryBucketView.update();
+
+
+            Controller.setStatus("SEARCHING...");
+            var query = QueryBucketModel.constructQuery();
+            QueryManager.setQuery(query);
+            QueryManager.submitQuery();
+        }
     }
 
 

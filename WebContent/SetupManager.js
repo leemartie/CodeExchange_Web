@@ -204,7 +204,7 @@ var SetupManager = {
 			
 			//make status div
 			var status = $(SetupManager.tdOpen+SetupManager.tdClose);
-			
+
 			rowStatus.append(status);
 			//set id
 			status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
@@ -247,11 +247,11 @@ var SetupManager = {
 			statusIcon.attr(SetupManager.ID_attr,SetupManager.statusIconID);
 			var statusTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			statusTD.append(statusIcon);
-			
+
 			statusTD.attr("align","right");
 			
 			rowNavigation.append(statusTD);
-			
+
 
 			
 			//result row
@@ -297,6 +297,7 @@ var SetupManager = {
             filterSideTD.append(BuildQueryBoxView.getView());
 
 
+            filterSideTD.append(QueryTrailNavView.getView());
 			
 			
 			//filter table
@@ -517,27 +518,6 @@ var SetupManager = {
 			  });
 			
 
-			
-			
-				
-// --- set dimensions (good to do later so can to relative to other's dimensions
-			
-			//set input width
-			var buttonWidth = $(SetupManager.pound+SetupManager.searchBtn_ID).width();
-		//	input.width(screenWidth - buttonWidth - 50);
-			
-// --- add listeners
-//			//add mouse click listener to search button
-//			$(SetupManager.pound+SetupManager.searchBtn_ID)
-//			.click(function(){
-//				QueryManager.submitQuery(
-//						$(SetupManager.pound+SetupManager.queryInput_ID).val(),0);
-//				});
-			
-
-			
-
-			
 //listener for expand button
 			var collapsed = true;
 			$(".Expand").click(function(event) {
@@ -601,7 +581,7 @@ var SetupManager = {
 				//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 
 
-                $('.QueryBucket').height(screenHeightBuffer-25);
+                $('.QueryBucket').height(screenHeightBuffer-75);
 
 				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
 				
@@ -632,7 +612,7 @@ var SetupManager = {
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
-			$('.QueryBucket').height(screenHeightBuffer-25);
+			$('.QueryBucket').height(screenHeightBuffer-75);
 			
 		
 			
@@ -718,6 +698,7 @@ var SetupManager = {
 				
 				//make expand button for result options
 				var expandButton	 = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+                expandButton.button();
 				var expandButton_id	="expandBtn"+i;
 				SetupManager.expandBtnArray_ID[i] = expandButton_id;
 				expandButton.attr(SetupManager.ID_attr, SetupManager.expandBtnArray_ID[i]);
