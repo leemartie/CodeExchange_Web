@@ -41,10 +41,10 @@ var QueryBucketView = {
             var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
             var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
-            var type  = QueryBucketModel.stackOfQueries[i].type;
+            var displayType  = QueryBucketModel.stackOfQueries[i].displayType;
             var value = QueryBucketModel.stackOfQueries[i].value;
 
-            var queryView = new QueryView(type,value, i);
+            var queryView = new QueryView(displayType,value, i);
 
             queryBucketCell.append(queryView.getView());
             queryBucketCell.addClass("QueryView");

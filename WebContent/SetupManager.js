@@ -192,21 +192,7 @@ var SetupManager = {
 			logo.addClass("Logo");
 
 			
-			//make keyword input
-//			var input = $(SetupManager.textAreaOpen+SetupManager.textAreaClose);
-//			//append to header
-//			logo.append(input);
-//			//set id
-//			//input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
-//			input.attr("rows","1");
-//			input.attr("line-height", "1");
-//			input.attr(SetupManager.placeholder_attr, "keywords (ex: depth first search)");
-//			input.autocomplete({
-//				source: function( request, response ){
-//					QueryManager.submitSpellCheck(request, response,input.val());
-//					}
-//				});
-			
+
 			
 			//--row for status
 			var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -367,25 +353,7 @@ var SetupManager = {
 			
 			implementsTD.append($("<hr>"));
 			
-//			var callHeader = $('<tr><table><th align="left">Method Properties</th></table></tr>');
-//			filterTable.append(callHeader);
-//			
-//			//making method dec name row
-//			var methodDecNameRow = $(SetupManager.trOpen+SetupManager.trClose);
-//			filterTable.append(methodDecNameRow);
-//			var methodDecNameTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-//			methodDecNameRow.append(methodDecNameTD);
-//			
-//			methodDecNameTD.append("<text>class name&nbsp&nbsp&nbsp&nbsp</text>");
-//			var methodDecNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-//			methodDecNameTD.append(methodDecNameInput);
-//			methodDecNameInput.attr(SetupManager.ID_attr, SetupManager.methodDecNameInputID);
-//			$(SetupManager.pound+SetupManager.methodDecNameInputID).autocomplete({ 
-//				source: function( request, response ){
-//					SetupManager.autoCompleteField(request, response,SetupManager.methodDecNameInputID);
-//					}
-//				});
-			
+
 			var callHeader = $('<tr><table><th align="left">with method call examples</th></table></tr>');
 			callHeader.addClass("FilterTitle");
 			filterTable.append(callHeader);
@@ -454,24 +422,7 @@ var SetupManager = {
 			
 			argTypeTD.append($("<hr>"));
 			
-//			var addArgTypeBtn = $(SetupManager.buttonOpen+"+"+SetupManager.buttonClose);
-//			argTypeTD.append(addArgTypeBtn);
-//			
-//			addArgTypeBtn.click(function(event) {
-//				var methodArgType = $(SetupManager.trOpen+SetupManager.trClose);
-//				filterTable.append(methodArgType);
-//				var argTypeTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-//				methodArgType.append(argTypeTD);
-//				
-//				argTypeTD.append("<text>1st argument type&nbsp&nbsp&nbsp&nbsp</text>");
-//				var argTypeInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-//				argTypeTD.append(argTypeInput);
-//				argTypeInput.attr(SetupManager.ID_attr, SetupManager.argTypeInputID);
-//				argTypeInput.width("85%");
-//				$(SetupManager.pound+SetupManager.argTypeInputID).autocomplete({ source:[] });
-//
-//		      });
-			
+
 			//making comments row
 			
 			
@@ -615,23 +566,7 @@ var SetupManager = {
 
 	      });
 			
-////listener for expand input
-//			$(SetupManager.pound+SetupManager.tableHeader_ID).mouseenter(function(event){
-//				if(!Controller.headerExpanded){
-//					Controller.expandHeader();
-//				}
-//			});
-//			
-//
-////listen to collapse input
-//			$(SetupManager.pound+SetupManager.tableHeader_ID).mouseleave(function(event){
-//				if(Controller.headerExpanded){
-//					Controller.collapseHeader();
-//				}
-//				
-//			});
-			
-			
+
 			// --- add listeners to cell 
 			var screenWidth = jQuery(window).width();
 			var screenHeight = jQuery(window).height();

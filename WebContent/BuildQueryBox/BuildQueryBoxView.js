@@ -41,12 +41,36 @@ var BuildQueryBoxView = {
 
             //combo box for query type
             var combo = $('<select name="queryType">'+
-                '<option value="'+QueryBucketModel.snippetField+'">keywords</option>'+
+                '<option value="'+QueryBucketModel.snippetField+'" selected>keywords</option>'+
                 '<option value="'+QueryBucketModel.extendsField+'">extends class</option>'+
                 '<option value="'+QueryBucketModel.implementsField+'">implements class</option>'+
                 '</select>');
 
             combo.width("100%");
+
+            combo.change(function(event){
+                BuildQueryBoxModel.currentQueryType = combo.val();
+
+                if(BuildQueryBoxModel.currentQueryType== QueryBucketModel.snippetField){
+                    queryBox.autocomplete({
+                        source: function( request, response ){
+                            QueryManager.submitSpellCheck(request, response,queryBox.val());
+                        }
+                    });
+                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.extendsField){
+                    queryBox.autocomplete({
+                        source: function( request, response ){
+                            QueryManager.submitAutoComplete(QueryBucketModel.extendsField, request, response);
+                        }
+                    });
+                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.implementsField){
+                    queryBox.autocomplete({
+                        source: function( request, response ){
+                            QueryManager.submitAutoComplete(QueryBucketModel.implementsField, request, response);
+                        }
+                    });
+                }
+            });
 
 
             //row for query type
@@ -85,6 +109,7 @@ var BuildQueryBoxView = {
                     e.preventDefault();
 
                     var query = new QueryModel(combo.val(), queryBox.val());
+                    query.displayType = combo.find(":selected").text();
                     QueryBucketModel.addQuery(query);
                     QueryBucketView.update();
 

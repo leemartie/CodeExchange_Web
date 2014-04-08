@@ -88,56 +88,33 @@ var QueryManager = {
 		
 		
 		
-		var property = '';
-		if(field == SetupManager.extendsInputID){
-			property = 'snippet_extends';
-			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.extendsInputID).val();
-			
-		}else if(field == SetupManager.implementsInputID){
-			property = 'snippet_implements';
-			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.implementsInputID).val();
-			
-		}else if(field == SetupManager.callInputID){
-			property = 'snippet_method_invocations';
-			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.callInputID).val();
-			
-			
-			
-		}else if(field == SetupManager.callingObjectInputID){
-			property = 'snippet_method_invocations';
-			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-			
-			
-			
-		}else if(field == SetupManager.argTypeInputID){
-			property = 'snippet_method_invocations';
-			QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.argTypeInputID).val();
-			
-			
-			
-			
-		}
+		var property = field;
+
+
+        QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
+
+
+        //alert (completeUserTyped);
 		
+		var queryFilter = QueryBucketModel.constructQuery();
+
+        if(queryFilter == "")
+            queryFilter = "*";
 		
+//		if(field != SetupManager.extendsInputID && extendsFilter != ""){
+//			queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
+//		}
+//		if(field != SetupManager.implementsInputID && implementsFilter != ""){
+//			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
+//		}
 		
-		//alert (completeUserTyped);
-		
-		var queryFilter = "snippet_code:("+SmartQueryCreator.makeSmartQuery(QueryManager.currentQuery)+")";
-		
-		if(field != SetupManager.extendsInputID && extendsFilter != ""){
-			queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
-		}
-		if(field != SetupManager.implementsInputID && implementsFilter != ""){
-			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
-		}
-		
-		var prefix = EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped);
+//		var prefix = EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped);
 		var invocationFilter = "";
-		
-		if(prefix == "*")
-			invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilter()+"/";
-		else
-			invocationFilter = " AND snippet_method_invocations:"+"/"+prefix+"/";
+//
+//		if(prefix == "*")
+//			invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilter()+"/";
+//		else
+//			invocationFilter = " AND snippet_method_invocations:"+"/"+prefix+"/";
 		
 		
 		var queryAutoComplete = "";
@@ -146,12 +123,13 @@ var QueryManager = {
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
 			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+'&facet.prefix='+QueryManager.completeUserTyped +
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
-		}else{
-			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
-			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+
-			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		}
+//        else{
+//			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
+//			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
+//			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+
+//			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+//		}
 
 		
 		
@@ -646,7 +624,7 @@ function autoCompleteCallBack(data){
 	if(Controller.currentStatus != "SEARCHING...")
 		Controller.setStatus("DONE - searching for autocomplete recommendations");
 	
-	if(QueryManager.currentAutoCompleteField == SetupManager.extendsInputID){
+	if(QueryManager.currentAutoCompleteField == QueryBucketModel.extendsField){
 		var results =  data.facet_counts.facet_fields.snippet_extends;
 				var temp = new Array();
 		
@@ -668,7 +646,7 @@ function autoCompleteCallBack(data){
 		QueryManager.currentResponse(mappedResults);
 
 		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
-	}else if(QueryManager.currentAutoCompleteField == SetupManager.implementsInputID){
+	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.implementsField){
 		var results = data.facet_counts.facet_fields.snippet_implements;
 		var temp = new Array();
 		

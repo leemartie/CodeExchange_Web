@@ -78,7 +78,7 @@ var QueryBucketModel = {
                 field = field+")";
             }
 
-            if(query != ""){
+            if(query != "" && field != ""){
                 query = query+" AND "+field;
             }else{
                 query = query+field;
