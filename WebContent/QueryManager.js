@@ -57,7 +57,10 @@ var QueryManager = {
 		
 		//if keywords not blank, then get those first then
 		//pair down
-		
+
+        QueryTrailModel.history.push(QueryBucketModel.stackOfQueries.slice(0));
+        QueryTrailView.update();
+
 		var url = URLQueryCreator.getQueryURL('on_data');
 
 		// alert(url);

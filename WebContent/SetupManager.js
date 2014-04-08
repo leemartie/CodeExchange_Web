@@ -178,7 +178,7 @@ var SetupManager = {
 			
 			//query box
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			queryTD.attr("valign", "top");
+	    //	queryTD.attr("valign", "top");
 			headerRow.append(queryTD);
 		
 			
