@@ -178,11 +178,7 @@ var SetupManager = {
 			
 			//query box
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-	    //	queryTD.attr("valign", "top");
-		//	headerRow.append(queryTD);
-		
-			
-			//queryTD.attr("bgcolor","darkgray");
+
 			
 			//logo
 			var logo = $(SetupManager.divOpen+SetupManager.divClose);
@@ -217,8 +213,6 @@ var SetupManager = {
 			Controller.setStatus("Let's find some code.");
 			
 //			//--row for navigation
-//			var rowNavigation = $(SetupManager.trOpen+SetupManager.trClose);
-//			rowNavigation.addClass("HeaderBack");
 			
 			//make page navigation
 			var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -292,7 +286,6 @@ var SetupManager = {
 			filterSideTD.attr("valign", "top");
 
 			filterSideTD.addClass("FilterSideTD");
-
 
             filterSideTD.append(BuildQueryBoxView.getView());
 

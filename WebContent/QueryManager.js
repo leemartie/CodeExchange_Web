@@ -79,12 +79,12 @@ var QueryManager = {
 		QueryManager.currentRequest = request;
 		QueryManager.currentResponse = response;
 		//constrain autocomplete by the values of the other code properties
-		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
-		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
+//		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
+//		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
 		
 		
 		
-		var property = field;
+		//var property = field;
 
 
         QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
@@ -114,10 +114,10 @@ var QueryManager = {
 		
 		
 		var queryAutoComplete = "";
-		if(property != 'snippet_method_invocations'){
+		if(field != 'snippet_method_invocations'){
 			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+'&facet.prefix='+QueryManager.completeUserTyped +
+			'&facet.field='+field+'&facet.mincount=1'+'&facet.limit=500'+'&facet.prefix='+QueryManager.completeUserTyped +
 			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		}
 //        else{
@@ -664,7 +664,51 @@ function autoCompleteCallBack(data){
 
 		QueryManager.currentResponse(mappedResults);
 		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
-	}
+	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.authorFiled){
+        var results = data.facet_counts.facet_fields.snippet_version_author;
+        var temp = new Array();
+
+        for(var i = 0; i<results.length; i++){
+            //skip the odds because those are frequency counts and not results
+            if(i%2 != 0)
+                continue;
+
+            temp.push(results[i]);
+        }
+
+        var mappedResults = $.map( temp, function( item ) {
+            return {
+                "label": item,
+                "value": item
+            };
+        });
+
+
+        QueryManager.currentResponse(mappedResults);
+        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.projectField){
+        var results = data.facet_counts.facet_fields.snippet_project_name;
+        var temp = new Array();
+
+        for(var i = 0; i<results.length; i++){
+            //skip the odds because those are frequency counts and not results
+            if(i%2 != 0)
+                continue;
+
+            temp.push(results[i]);
+        }
+
+        var mappedResults = $.map( temp, function( item ) {
+            return {
+                "label": item,
+                "value": item
+            };
+        });
+
+
+        QueryManager.currentResponse(mappedResults);
+        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
+    }
 	
 	else if(QueryManager.currentAutoCompleteField == SetupManager.callInputID){
 		var results = data.facet_counts.facet_fields.snippet_method_invocations;

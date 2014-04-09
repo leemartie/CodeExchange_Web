@@ -11,6 +11,12 @@ var QueryBucketModel = {
     snippetField         :   "snippet_code",
     extendsField         :   "snippet_extends",
     implementsField      :   "snippet_implements",
+    authorFiled          :   "snippet_version_author",
+    projectField         :   "snippet_project_name",
+    returnTypeField      :   "snippet_return_type",
+    recursiveField       :   "snippet_is_recursive",
+    varargsField         :   "snippet_is_var_args",
+    lastUpdatedField     :   "snippet_last_updated",
     listOfKeys           :   new Array(),
 
     addQuery    :   function(/*QueryModel*/query){
