@@ -116,11 +116,17 @@ var QueryBucketModel = {
                         if(valueList[j] == "") {
                             field = field + "*";
                         }else {
-                            field = field + SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                            if(key != QueryBucketModel.lastUpdatedField)
+                                field = field + SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                            else
+                                field = field + valueList[j];
                         }
 
                     }else{
-                        field = field + " AND "+SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                        if(key != QueryBucketModel.lastUpdatedField)
+                            field = field + " AND "+SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                        else
+                            field = field + " AND "+valueList[j];
                     }
                 }
 

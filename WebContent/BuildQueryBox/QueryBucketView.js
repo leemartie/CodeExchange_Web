@@ -50,7 +50,9 @@ var QueryBucketView = {
             var type = QueryBucketModel.stackOfQueries[i].type;
             var valueIndex = QueryBucketModel.stackOfQueries[i].valueIndex;
             var active = QueryBucketModel.stackOfQueries[i].active;
-            var queryView = new QueryView(displayType,type,value, valueIndex, i,active);
+            var displayValue = QueryBucketModel.stackOfQueries[i].displayValue;
+
+            var queryView = new QueryView(displayType,type,value, valueIndex, i,active, displayValue);
 
             queryBucketCell.append(queryView.getView());
 

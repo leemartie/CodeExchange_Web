@@ -90,8 +90,8 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
                 '<option  value="'+QueryBucketModel.projectField+'">project</option>'+
                 '<option  value="'+QueryBucketModel.lastUpdatedField+'">year</option>'+
-                '<option  value="'+QueryBucketModel.lastUpdatedField+'">month</option>'+
-                '<option  value="'+QueryBucketModel.lastUpdatedField+'">day</option>'+
+//                '<option  value="'+QueryBucketModel.lastUpdatedField+'">month</option>'+
+//                '<option  value="'+QueryBucketModel.lastUpdatedField+'">day</option>'+
                 '</select>');
 
             combo.width("98%");
@@ -226,18 +226,18 @@ var BuildQueryBoxView = {
                     e.preventDefault();
 
                     var query = null;
+                    query = new QueryModel(combo.val(), queryBox.val());
+                    query.displayType = combo.find(":selected").text();
+                    query.displayValue = queryBox.val();
 
-
-                    if(combo.find(":selected").text() != QueryBucketModel.lastUpdatedField) {
-                        query = new QueryModel(combo.val(), queryBox.val());
-                        query.displayType = combo.find(":selected").text();
-                    }else{
-                        query.displayType = combo.find(":selected").text();
-                        var displayType = query.displayType;
-                        if(displayType == "year"){
-                            query = new QueryModel(combo.val(), queryBox.val()+"*");
-                        }
+                    if(query.displayType == "year") {
+                            var yearQuery = "["+queryBox.val()+"-01-01T00:00:00Z TO "+queryBox.val()+"-12-31T00:00:00Z]";
+                            query = new QueryModel(combo.val(), yearQuery);
+                            query.displayValue = queryBox.val();
+                            query.displayType = combo.find(":selected").text();
                     }
+
+
 
                     QueryBucketModel.addQuery(query);
                     QueryBucketView.update();

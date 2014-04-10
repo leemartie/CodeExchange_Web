@@ -2,7 +2,7 @@
  * Created by lee on 4/7/14.
  */
 
-function QueryView(displayType, type, value, index, stackIndex, active){
+function QueryView(displayType, type, value, index, stackIndex, active, displayValue){
 
     this.displayType = displayType;
     this.type = type;
@@ -10,12 +10,13 @@ function QueryView(displayType, type, value, index, stackIndex, active){
     this.index = index;
     this.active = active;
     this.stackIndex = stackIndex;
+    this.displayValue = displayValue;
 
    this.getView = function() {
 
        var div = $(SetupManager.divOpen+SetupManager.divClose);
 
-       var label = $('<text>['+displayType+'] <font color="yellow">'+value+'</font></text>');
+       var label = $('<text>['+displayType+'] <font color="yellow">'+displayValue+'</font></text>');
 
        div.append(label);
 

@@ -8,5 +8,6 @@ function QueryModel(type, value) {
     this.valueIndex = 0;
     this.stackIndex = 0;
     this.displayType = "";
+    this.displayValue = "";
     this.active = true;
 }
