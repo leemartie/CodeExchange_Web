@@ -6,6 +6,7 @@ var QueryBucketModel = {
     /*represents the current bucket of queries*/
     /*double array where index is assoative to field*/
     listOfQueries        :   new Array(),
+    listOfActiveQueries  :   new Array(),
     //this is just current stack of all queries in the order they are given
     stackOfQueries       :   new Array()/*QueryModel*/,
     snippetField         :   "snippet_code",
@@ -21,6 +22,7 @@ var QueryBucketModel = {
 
     addQuery    :   function(/*QueryModel*/query){
         QueryBucketModel.stackOfQueries.push(query);
+        query.stackIndex = QueryBucketModel.stackOfQueries.length-1;
 
         var arrayOfValues = QueryBucketModel.listOfQueries[query.type];
 
@@ -32,11 +34,25 @@ var QueryBucketModel = {
         if(arrayOfValues == null)
             arrayOfValues = new Array();
 
+        var activeValues = QueryBucketModel.listOfActiveQueries[query.type];
+        if(activeValues == null)
+            activeValues = new Array();
+
         arrayOfValues.push(query.value);
+        activeValues.push(true);
         query.valueIndex = arrayOfValues.length-1;
 
         QueryBucketModel.listOfQueries[query.type] = arrayOfValues;
+        QueryBucketModel.listOfActiveQueries[query.type] = activeValues;
+    },
 
+    activateQuery: function(type, index, stackIndex){
+        QueryBucketModel.listOfActiveQueries[type][index] = true;
+        QueryBucketModel.stackOfQueries[stackIndex].active = true;
+    },
+    deactivateQuery: function(type, index, stackIndex){
+        QueryBucketModel.listOfActiveQueries[type][index] = false;
+        QueryBucketModel.stackOfQueries[stackIndex].active = false;
     },
 
     removeQuery :   function(index){
@@ -48,6 +64,17 @@ var QueryBucketModel = {
             QueryBucketModel.stackOfQueries.splice(index,1);
             QueryBucketModel.listOfQueries[key].splice(valueIndex,1);
 
+    },
+
+    removeAll   :   function() {
+        for (var i = 0; i < QueryBucketModel.listOfKeys.length; i++) {
+            var key = QueryBucketModel.listOfKeys[i];
+            QueryBucketModel.listOfQueries[key].length = 0;
+            QueryBucketModel.listOfActiveQueries[key].length = 0;
+        }
+
+        QueryBucketModel.listOfKeys.length = 0;
+        QueryBucketModel.stackOfQueries.length = 0;
     },
 
     repopulateQuery :   function(stackOfQueries){
@@ -77,22 +104,31 @@ var QueryBucketModel = {
             var field = "";
             var valueList = QueryBucketModel.listOfQueries[key];
 
-            if(valueList.length > 0){
-                field = key+":(";
-            }
+
             //query for field
             for(var j = 0; j<valueList.length; j++){
-                if(j == 0) {
-                    if(valueList[j] == "")
-                        field = field + "*";
-                    else
-                        field = field + SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
-                }else{
-                    field = field + " AND "+valueList[j];
+
+                //checking if active
+                if(QueryBucketModel.listOfActiveQueries[key][j] == true){
+                    if(field == "") {
+                        field = key+":(";
+
+                        if(valueList[j] == "") {
+                            field = field + "*";
+                        }else {
+                            field = field + SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                        }
+
+                    }else{
+                        field = field + " AND "+SmartQueryCreator.escapeSpecialCharacters(valueList[j]);
+                    }
                 }
 
+
             }
-            if(valueList.length > 0){
+
+            //close it up if added something
+            if(field != ""){
                 field = field+")";
             }
 

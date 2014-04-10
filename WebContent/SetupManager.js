@@ -291,6 +291,7 @@ var SetupManager = {
 
 
             filterSideTD.append(QueryTrailNavView.getView());
+
 			
 			
 			//filter table

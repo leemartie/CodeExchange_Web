@@ -2,27 +2,48 @@
  * Created by lee on 4/7/14.
  */
 
-function QueryView(type, value, index){
+function QueryView(displayType, type, value, index, stackIndex, active){
 
+    this.displayType = displayType;
     this.type = type;
     this.value = value;
     this.index = index;
+    this.active = active;
+    this.stackIndex = stackIndex;
 
    this.getView = function() {
 
        var div = $(SetupManager.divOpen+SetupManager.divClose);
 
-       var label = $('<text>['+type+'] <font color="yellow">'+value+'</font></text>');
+       var label = $('<text>['+displayType+'] <font color="yellow">'+value+'</font></text>');
 
        div.append(label);
 
-       var button = $(SetupManager.buttonOpen+"-"+SetupManager.buttonClose);
+       var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
        button.addClass("QueryViewButton");
+       if(this.active == true){
+           button.attr("value","-");
+           button.append($("<text>-</text>"));
+       }else{
+           button.attr("value","+");
+           button.append($("<text>+</text>"));
+       }
 
-       button.click(function(event) {
+       (function(type, active, index, stackIndex){ button.click(function(event) {
+           button.empty();
 
-            QueryBucketModel.removeQuery(index);
-            QueryBucketView.update();
+           if(active == true){
+               active = false;
+               QueryBucketModel.deactivateQuery(type, index,  stackIndex);
+
+           }else{
+               active = true;
+               QueryBucketModel.activateQuery(type, index, stackIndex);
+
+           }
+
+
+           QueryBucketView.update();
 
            QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
 
@@ -30,15 +51,13 @@ function QueryView(type, value, index){
            var query = QueryBucketModel.constructQuery();
            QueryManager.setQuery(query);
            QueryManager.submitQuery();
-//                    //make it lose focus so we can detect when user refocus on query it
-//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-           var angle = 0;
-           SetupManager.rotateStatusVar = setInterval(function(){
-               angle+=3;
-               $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-           },50);
+//           var angle = 0;
+//           SetupManager.rotateStatusVar = setInterval(function(){
+//               angle+=3;
+//               $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
+//           },50);
 
-       });
+       })})(this.type,this.active,this.index, this.stackIndex);
 
        button.width("25");
        button.height("20");

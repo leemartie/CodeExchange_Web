@@ -32,6 +32,7 @@ var QueryBucketView = {
 
         QueryBucketView.queryBucket.empty();
 
+
         var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
         var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         queryBucketCell.attr("height","100%");
@@ -46,13 +47,23 @@ var QueryBucketView = {
 
             var displayType  = QueryBucketModel.stackOfQueries[i].displayType;
             var value = QueryBucketModel.stackOfQueries[i].value;
-
-            var queryView = new QueryView(displayType,value, i);
+            var type = QueryBucketModel.stackOfQueries[i].type;
+            var valueIndex = QueryBucketModel.stackOfQueries[i].valueIndex;
+            var active = QueryBucketModel.stackOfQueries[i].active;
+            var queryView = new QueryView(displayType,type,value, valueIndex, i,active);
 
             queryBucketCell.append(queryView.getView());
-            queryBucketCell.addClass("QueryView");
 
             queryBucketRow.append(queryBucketCell);
+
+
+
+            if(!active){
+                queryBucketRow.addClass("QueryViewDeactive");
+            }else{
+                queryBucketRow.addClass("QueryView");
+            }
+
             QueryBucketView.queryBucket.append(queryBucketRow);
         }
 

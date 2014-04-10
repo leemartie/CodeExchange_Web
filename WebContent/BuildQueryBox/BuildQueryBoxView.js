@@ -33,7 +33,7 @@ var BuildQueryBoxView = {
 
 
             queryBox.width("98%");
-            queryBox.attr(SetupManager.placeholder_attr, "add a query");
+            queryBox.attr(SetupManager.placeholder_attr, "type query for selected type");
 
 
 
@@ -42,7 +42,7 @@ var BuildQueryBoxView = {
 
 
 
-            var queryLabel = $("<text>add a query</text><br/>");
+            var queryLabel = $("<text>add a query part</text><br/>");
             queryLabel.addClass("QueryTypeTitle");
             queryCell.attr("align", "center");
             queryCell.append(queryLabel);
@@ -187,6 +187,9 @@ var BuildQueryBoxView = {
                     $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
                 },50);
 
+
+                truebox.prop('checked', false);
+
             });
 
             falsebox.click(function(){
@@ -212,6 +215,8 @@ var BuildQueryBoxView = {
                     $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
                 },50);
 
+                falsebox.prop('checked', false);
+
             });
 
 
@@ -220,8 +225,20 @@ var BuildQueryBoxView = {
                 if (e.keyCode == '13') {
                     e.preventDefault();
 
-                    var query = new QueryModel(combo.val(), queryBox.val());
-                    query.displayType = combo.find(":selected").text();
+                    var query = null;
+
+
+                    if(combo.find(":selected").text() != QueryBucketModel.lastUpdatedField) {
+                        query = new QueryModel(combo.val(), queryBox.val());
+                        query.displayType = combo.find(":selected").text();
+                    }else{
+                        query.displayType = combo.find(":selected").text();
+                        var displayType = query.displayType;
+                        if(displayType == "year"){
+                            query = new QueryModel(combo.val(), queryBox.val()+"*");
+                        }
+                    }
+
                     QueryBucketModel.addQuery(query);
                     QueryBucketView.update();
 
@@ -240,7 +257,7 @@ var BuildQueryBoxView = {
                         $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
                     },50);
 
-
+                    queryBox.val("");
 
                 }
             });

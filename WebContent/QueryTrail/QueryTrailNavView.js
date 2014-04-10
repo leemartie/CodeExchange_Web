@@ -6,53 +6,33 @@ var QueryTrailNavView = {
 
     getView  :   function(){
 
+        var navTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         var navigationRow = $(SetupManager.trOpen+SetupManager.trClose);
-        var leftCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-
-        var rightCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-
-        navigationRow.append(leftCell);
-
-
-        var leftButton = $(SetupManager.buttonOpen+"previous query"+SetupManager.buttonClose);
-        leftButton.button();
-        leftButton.width("100%");
-
-        leftButton.click(function(event) {
-            QueryTrailModel.goBackOne();
-
-
-        });
-
-
-
-
-
-
-
-
-        leftCell.append(leftButton);
-        var rightButton = $(SetupManager.buttonOpen+"next query"+SetupManager.buttonClose);
-        rightButton.button();
-        rightButton.width("100%");
-       rightButton.click(function(event) {
-
-            QueryTrailModel.goForwardOne();
-
-       });
-
+        navTable.append(navigationRow);
 
 
 
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        centerCell.width("100%");
+        var createNewQueryButton = $(SetupManager.buttonOpen+"create new query"+SetupManager.buttonClose);
+        createNewQueryButton.button();
+
+        createNewQueryButton.width("100%");
+
+        createNewQueryButton.click(function(event) {
+
+            QueryBucketModel.removeAll();
+            QueryBucketView.update();
+            Controller.clearAllCode();
+            Controller.setStatus("Let's find some code");
+            $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
+
+       });
+
+        centerCell.append(createNewQueryButton);
         navigationRow.append(centerCell);
 
 
-        rightCell.append(rightButton);
-        navigationRow.append(rightCell);
-
-        return navigationRow;
+        return navTable;
     }
 
 }
