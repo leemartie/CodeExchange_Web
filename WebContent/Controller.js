@@ -158,7 +158,7 @@ var Controller = {
 			return $(SetupManager.pound+SetupManager.queryInput_ID).val();
 		},
 		
-		setAuthorName	:	function(meta, name, type){
+		setAuthorName	:	function(meta, name){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/author.png"></img>');
 			var authName = $('<text>'+name+'</text>');

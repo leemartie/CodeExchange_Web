@@ -575,7 +575,7 @@ var SetupManager = {
 				//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 
 
-                $('.QueryBucket').height(screenHeightBuffer-75);
+                $('.QueryBucket').height(screenHeightBuffer-400);
 
 				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
 				
@@ -606,7 +606,7 @@ var SetupManager = {
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
-			$('.QueryBucket').height(screenHeightBuffer-75);
+			$('.QueryBucket').height(screenHeightBuffer-400);
 			
 		
 			

@@ -2,8 +2,8 @@ var URLQueryCreator = {
 		server : 'codeexchange.ics.uci.edu',
 		
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
-		authorCollection	 :  'GitHubAuthorIndex',
-		projectCollection	 :  'GitHubProjectIndex',
+	//	authorCollection	 :  'GitHubAuthorIndex',
+	//	projectCollection	 :  'GitHubProjectIndex',
 		port					: 8983,
 		
 		getQueryURL	:	function(callbackFunctionName){
@@ -57,22 +57,19 @@ var URLQueryCreator = {
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ query
-				+ '&start=' + start 
+				+ '&start=' + start
 				+ '&fl=id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
-				+ 'snippet_address_upper_bound snippet_method_invocations project_id';
-				
-//				+ '&facet=true' 
-//				+ '&facet.field=snippet_version_author' 
-				//+ '&facet.field=snippet_tag' 
-//				+ '&facet.field=snippet_project_name'
-//				+ '&facet.field=snippet_imports'
-///				+ '&facet.field=snippet_granularity'
-//				+ '&facet.mincount=1'
-//				+ '&hl=true'
-//				+ '&hl.fl=snippet'
-//				+ '&hl.highlightMultiTerm=true ';
-//				+ '&facet.limit=200';
+				+ 'snippet_address_upper_bound snippet_method_invocations project_id '
+                + 'snippet_containing_class_id'
+				+ '&facet=true'
+                + '&facet.field=snippet_version_author'
+                + '&facet.field=snippet_project_name'
+                + '&facet.field=snippet_extends'
+                + '&facet.field=snippet_implements'
+                + '&facet.mincount=0'
+				+ '&facet.limit=4';
+
 			
 			
 			

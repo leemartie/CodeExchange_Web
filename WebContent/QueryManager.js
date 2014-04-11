@@ -32,12 +32,7 @@ var QueryManager = {
 	 */
 	setQuery	:	function(query){
 		QueryManager.currentQuery = query;
-//		QueryManager.classExtendsQuery = $(SetupManager.pound+SetupManager.extendsInputID).val();
-//		QueryManager.classImplementsQuery  = $(SetupManager.pound+SetupManager.implementsInputID).val();
-//
-//		QueryManager.methodNameQuery = $(SetupManager.pound+SetupManager.callInputID).val();
-//		QueryManager.methodClassQuery = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-//		QueryManager.methodArgQuery = $(SetupManager.pound+SetupManager.argTypeInputID).val();
+
 	},
 	
 	/**
@@ -366,31 +361,89 @@ var QueryManager = {
 	},
 	
 	
-	populateFilters	:	function(){
-		//populate filters - get updated only on issuing new query or new fq by some facet
-				
-		
-		Controller.populateFilter(topAuthors,FilterManager.AUTHOR_CATEGORY);
-		
-		
-		Controller.populateFilter(tagArray,FilterManager.TAG_CATEGORY);
-		
-		
-		Controller.populateFilter(projectArray, FilterManager.PROJECT_CATEGORY);
-		
-		
-		Controller.populateFilter(libArray, FilterManager.LIB_CATEGORY);
-		
-		
-		Controller.populateFilter(granArray, FilterManager.GRANULARITY_CATEGORY);	
-		
 
-	}
 	
-	
-	
+
 
 };
+
+function facetCompleteCallBack(data){
+
+
+
+    QueryRecommenderModel.clearRecommendedQueries();
+
+    var topAuthorRecommend = data.facet_counts.facet_fields.snippet_version_author;
+
+    for(i = 0; i<topAuthorRecommend.length; i = i+2){
+        if(i >= 6)
+            continue;
+
+        var authorName = topAuthorRecommend[i];
+
+
+        if(authorName == "")
+            continue;
+
+        var query1 = new QueryModel(QueryBucketModel.authorFiled, authorName);
+        query1.displayType = "author name";
+        query1.displayValue = authorName;
+        query1.score = topAuthorRecommend[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query1);
+    }
+
+    var topProject = data.facet_counts.facet_fields.snippet_project_name;
+
+    for(i = 0; i<topProject.length; i = i+2) {
+        if(i >= 6)
+            continue;
+
+        var projectName = topProject[i];
+
+        if(projectName == "")
+            continue;
+
+        var query4 = new QueryModel(QueryBucketModel.projectField, projectName);
+        query4.displayType = "project name";
+        query4.displayValue = projectName;
+        query4.score = topProject[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query4);
+    }
+
+    var extendsRecommend = data.facet_counts.facet_fields.snippet_extends;
+    for(i = 0; i<extendsRecommend.length; i = i+2) {
+
+
+        var extendsName = extendsRecommend[i];
+
+        if(extendsName == "")
+            continue;
+
+        var query2 = new QueryModel(QueryBucketModel.extendsField, extendsName);
+        query2.displayType = "extends class";
+        query2.displayValue = extendsName;
+        query2.score = extendsRecommend[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query2);
+    }
+
+    var implementsRecommend = data.facet_counts.facet_fields.snippet_implements;
+    for(i = 0; i<implementsRecommend.length; i = i+2) {
+        if(i >= 6)
+            continue;
+        var implementsName = implementsRecommend[i];
+
+        if(implementsName == "")
+            continue;
+
+        var query3 = new QueryModel(QueryBucketModel.implementsField, implementsName);
+        query3.displayType = "implements class";
+        query3.displayValue = implementsName;
+        query3.score = implementsRecommend[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query3);
+    }
+    QueryRecommenderView.update();
+};
+
 
 /**
  * Used to get next result
@@ -402,35 +455,13 @@ function on_nextData(data) {
 	// lets clear all the displayed results
 	Controller.clearAllCode();
 	
-	//highlight matched keywords
-//	var highlight = new Array();	
-//	$.each(data.highlighting, function(i, hitem){
-//		
-//	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
-//	    highlight[i] = match;
-//	});
-	
+
 	// let's populate the table with the results
 	$.each(docs,
 			function(i, item) {
 				var resultLength = SetupManager.resultPreArray_ID.length;
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
-					
-				//	getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
-					
-
-					
-					//highlight matched keywords
-//					$.each(highlight[item.id], function(j, word){
-//						//    word = escape(word);
-//							word = word.substring(4,word.length-5);
-//						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
-//							Controller.setCode(SetupManager.resultPreArray_ID[i],
-//									result);
-//						});
-				
-				
 
 					var versions = item.snippet_all_versions;
 					var correctVersion = versions[0];
@@ -450,8 +481,7 @@ function on_nextData(data) {
 
 			});
 	// now highlight the code
-	//CodeFormatter.highLight();
-	
+
 
 	
 	Controller.setStatus("DONE - Getting next page");
@@ -503,13 +533,6 @@ function getMetaData(name, projectName, metaDiv, count){
 	
 }
 
-//function onAuthorData(data){
-//
-//	  return data;
-//};
-
-
-
 /**
  * 
  * @param data
@@ -528,14 +551,6 @@ function on_data(data) {
 	// lets clear all the displayed results
 	Controller.clearAllCode();
 	
-	//highlight matched keywords
-//	var highlight = new Array();	
-//	$.each(data.highlighting, function(i, hitem){
-//		
-//	    var match = hitem.snippet[0].match(/<em>(.*?)<\/em>/g);
-//	    highlight[i] = match;
-//	});
-	
 	// let's populate the table with the results
 	$.each(docs,
 			function(i, item) {
@@ -543,19 +558,6 @@ function on_data(data) {
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
 				//	getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
-
-			
-
-					
-					//TODO will need to replace item.snippet with content from url
-					
-//						$.each(highlight[item.id], function(j, word){
-//						//    word = escape(word);
-//							word = word.substring(4,word.length-5);
-//						    var result = item.snippet.replace(new RegExp(word, 'gi'), '</code><em>' + word + '</em><code data-language="java">');
-//							Controller.setCode(SetupManager.resultPreArray_ID[i],
-//									result);
-//						});
 
 					
 					var versions = item.snippet_all_versions;
@@ -572,13 +574,11 @@ function on_data(data) {
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
 					//Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
+
+
 				}
 
 			});
-	// now highlight the code
-//	CodeFormatter.highLight();
-	
-
 	
 	// update status
 	Controller.setStatus("DONE - " + total);
@@ -586,8 +586,11 @@ function on_data(data) {
 	QueryManager.makeNavigation(data.response.numFound, SetupManager.numberOfCells);
 	
 	clearInterval(SetupManager.rotateStatusVar);
-	
-//	topAuthors = data.facet_counts.facet_fields.author;
+
+
+
+
+    facetCompleteCallBack(data);
 //	tagArray = data.facet_counts.facet_fields.snippet_tag;
 //	projectArray = data.facet_counts.facet_fields.project;
 //	libArray = data.facet_counts.facet_fields.snippet_imports;
@@ -595,6 +598,8 @@ function on_data(data) {
 //	
 //	QueryManager.populateFilters();
 }
+
+
 
 function spellCheck(data){
 	var results = data.spellcheck.suggestions[1];
@@ -688,6 +693,28 @@ function autoCompleteCallBack(data){
         //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.projectField){
         var results = data.facet_counts.facet_fields.snippet_project_name;
+        var temp = new Array();
+
+        for(var i = 0; i<results.length; i++){
+            //skip the odds because those are frequency counts and not results
+            if(i%2 != 0)
+                continue;
+
+            temp.push(results[i]);
+        }
+
+        var mappedResults = $.map( temp, function( item ) {
+            return {
+                "label": item,
+                "value": item
+            };
+        });
+
+
+        QueryManager.currentResponse(mappedResults);
+        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.returnTypeField){
+        var results = data.facet_counts.facet_fields.snippet_return_type;
         var temp = new Array();
 
         for(var i = 0; i<results.length; i++){

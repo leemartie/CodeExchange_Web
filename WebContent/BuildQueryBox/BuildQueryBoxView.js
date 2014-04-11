@@ -145,6 +145,24 @@ var BuildQueryBoxView = {
             queryTypeCell.attr("align", "center");
             view.append(queryTypeRow);
 
+            //title for query recommendations
+            var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
+            var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            titleRow.append(titleCell);
+            var label = $("<text>Query Recommendations</text>");
+            label.addClass("QueryTypeTitle");
+            titleCell.append($("<hr>"));
+            titleCell.append(label);
+            titleCell.attr("align", "center");
+            view.append(titleRow);
+
+            //query Recommendations
+            var recommendRow =$(SetupManager.trOpen+SetupManager.trClose);
+            var recommendCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            recommendRow.append(recommendCell);
+            recommendCell.append(QueryRecommenderView.getView());
+            view.append(recommendRow);
+
             //title for bucket
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -169,24 +187,7 @@ var BuildQueryBoxView = {
 
                 var query = new QueryModel(combo.val(), $(this).val());
                 query.displayType = combo.find(":selected").text();
-                QueryBucketModel.addQuery(query);
-                QueryBucketView.update();
-
-                QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
-
-
-                Controller.setStatus("SEARCHING...");
-                var query = QueryBucketModel.constructQuery();
-                QueryManager.setQuery(query);
-                QueryManager.submitQuery();
-//                    //make it lose focus so we can detect when user refocus on query it
-//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-                var angle = 0;
-                SetupManager.rotateStatusVar = setInterval(function(){
-                    angle+=3;
-                    $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-                },50);
-
+                BuildQueryBoxView.addAndSubmit(query);
 
                 truebox.prop('checked', false);
 
@@ -197,23 +198,10 @@ var BuildQueryBoxView = {
 
                 var query = new QueryModel(combo.val(), $(this).val());
                 query.displayType = combo.find(":selected").text();
-                QueryBucketModel.addQuery(query);
-                QueryBucketView.update();
-
-                QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
 
 
-                Controller.setStatus("SEARCHING...");
-                var query = QueryBucketModel.constructQuery();
-                QueryManager.setQuery(query);
-                QueryManager.submitQuery();
-//                    //make it lose focus so we can detect when user refocus on query it
-//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-                var angle = 0;
-                SetupManager.rotateStatusVar = setInterval(function(){
-                    angle+=3;
-                    $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-                },50);
+
+                BuildQueryBoxView.addAndSubmit(query);
 
                 falsebox.prop('checked', false);
 
@@ -239,23 +227,7 @@ var BuildQueryBoxView = {
 
 
 
-                    QueryBucketModel.addQuery(query);
-                    QueryBucketView.update();
-
-                    QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
-
-
-                    Controller.setStatus("SEARCHING...");
-                    var query = QueryBucketModel.constructQuery();
-                    QueryManager.setQuery(query);
-                    QueryManager.submitQuery();
-//                    //make it lose focus so we can detect when user refocus on query it
-//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-                    var angle = 0;
-                    SetupManager.rotateStatusVar = setInterval(function(){
-                        angle+=3;
-                        $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-                    },50);
+                       BuildQueryBoxView.addAndSubmit(query);
 
                     queryBox.val("");
 
@@ -266,6 +238,26 @@ var BuildQueryBoxView = {
 
 			return view
 			
-		}
+		},
+
+        addAndSubmit: function(query){
+            QueryBucketModel.addQuery(query);
+            QueryBucketView.update();
+
+            QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
+
+
+            Controller.setStatus("SEARCHING...");
+            var query = QueryBucketModel.constructQuery();
+            QueryManager.setQuery(query);
+            QueryManager.submitQuery();
+//                    //make it lose focus so we can detect when user refocus on query it
+//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
+            var angle = 0;
+            SetupManager.rotateStatusVar = setInterval(function(){
+                angle+=3;
+                $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
+            },50);
+        }
 		
 }

@@ -10,4 +10,5 @@ function QueryModel(type, value) {
     this.displayType = "";
     this.displayValue = "";
     this.active = true;
+    this.score = 0;
 }
