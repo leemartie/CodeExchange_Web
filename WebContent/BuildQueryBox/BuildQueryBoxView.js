@@ -82,7 +82,8 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.snippetField+'" selected>keywords</option>'+
                 '<option  style="background-color: black; color:white" disabled>Technical query</option>'+
                 '<option  value="'+QueryBucketModel.extendsField+'">extends class</option>'+
-                '<option  value="'+QueryBucketModel.implementsField+'">implements class</option>'+
+                '<option  value="'+QueryBucketModel.implementsField+'">implements interface</option>'+
+                '<option  value="'+QueryBucketModel.snippetImportsFiled+'">imports library</option>'+
                 '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
                 '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
                 '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
@@ -249,7 +250,11 @@ var BuildQueryBoxView = {
 
             Controller.setStatus("SEARCHING...");
             var query = QueryBucketModel.constructQuery();
+            //var fqQuery = QueryBucketModel.constructFQQuery();
+
             QueryManager.setQuery(query);
+           // QueryManager.setFQQuery(fqQuery);
+
             QueryManager.submitQuery();
 //                    //make it lose focus so we can detect when user refocus on query it
 //                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();

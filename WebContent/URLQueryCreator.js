@@ -4,12 +4,13 @@ var URLQueryCreator = {
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 	//	authorCollection	 :  'GitHubAuthorIndex',
 	//	projectCollection	 :  'GitHubProjectIndex',
-		port					: 8983,
+		port					: 9000,
 		
 		getQueryURL	:	function(callbackFunctionName){
 		
 	
 			var query = QueryManager.currentQuery;
+            var fqQuery = QueryManager.currentFQquery;
 			var start = QueryManager.currentStart;
 			
 			
@@ -57,12 +58,16 @@ var URLQueryCreator = {
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ query
+//                + '&fq='
+//                + fqQuery
 				+ '&start=' + start
 				+ '&fl=id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_method_invocations project_id '
                 + 'snippet_containing_class_id snippet_code'
 				+ '&facet=true'
+                + '&facet.field=id'
+                + '&facet.field=snippet_imports'
                 + '&facet.field=project_id'
                 + '&facet.field=snippet_version_author'
                 + '&facet.field=snippet_project_name'

@@ -50,7 +50,9 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
            Controller.setStatus("SEARCHING...");
            var query = QueryBucketModel.constructQuery();
-           QueryManager.setQuery(query);
+           QueryManager.setQuery(query);;
+          // var fqQuery = QueryBucketModel.constructFQQuery()
+           //QueryManager.setQuery(fqQuery);
            QueryManager.submitQuery();
 //           var angle = 0;
 //           SetupManager.rotateStatusVar = setInterval(function(){

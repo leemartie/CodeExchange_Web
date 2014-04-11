@@ -24,6 +24,7 @@ var QueryManager = {
     classImplementsQuery : "",
     hasComments	: 	false,
     humanLanguageOfComments:	"",
+    currentFQquery :    "",
 
 	/**
 	 * 
@@ -34,6 +35,10 @@ var QueryManager = {
 		QueryManager.currentQuery = query;
 
 	},
+
+    setFQQuery  :   function(fqQuery){
+        QueryManager.currentFQquery = fqQuery;
+    },
 	
 	/**
 	 * 
@@ -367,48 +372,71 @@ var QueryManager = {
 
 };
 
+/**
+ *
+ * @param data
+ */
 function facetCompleteCallBack(data){
 
 
 
     QueryRecommenderModel.clearRecommendedQueries();
 
-    var topAuthorRecommend = data.facet_counts.facet_fields.project_id;
+    var projects = data.facet_counts.facet_fields.project_id;
 
-    for(i = 0; i<topAuthorRecommend.length; i = i+2){
+    for(i = 0; i<projects.length; i = i+2){
         if(i >= 6)
             continue;
 
-        var authorName = topAuthorRecommend[i];
+        var projectName = projects[i];
 
 
-        if(authorName == "")
+        if(projectName == "")
             continue;
 
-        var query1 = new QueryModel("project_id", authorName);
+        var query1 = new QueryModel("project_id", projectName);
         query1.displayType = "project";
-        query1.displayValue = authorName.substring(authorName.lastIndexOf("/")+1,authorName.length);
-        query1.score = topAuthorRecommend[i+1];
+        query1.displayValue = projectName.substring(projectName.lastIndexOf("/")+1,projectName.length);
+        query1.score = projects[i+1];
         QueryRecommenderModel.addRecommendedQuery(query1);
     }
 
-//    var topProject = data.facet_counts.facet_fields.snippet_project_name;
+//    var authors = data.facet_counts.facet_fields.snippet_version_author;
 //
-//    for(i = 0; i<topProject.length; i = i+2) {
+//    for(i = 0; i<projects.length; i = i+2){
 //        if(i >= 6)
 //            continue;
 //
-//        var projectName = topProject[i];
+//        var authorName = authors[i];
 //
-//        if(projectName == "")
+//
+//        if(authorName == "")
 //            continue;
 //
-//        var query4 = new QueryModel(QueryBucketModel.projectField, projectName);
-//        query4.displayType = "project name";
-//        query4.displayValue = projectName;
-//        query4.score = topProject[i+1];
-//        QueryRecommenderModel.addRecommendedQuery(query4);
+//        var query1 = new QueryModel(QueryBucketModel.authorFiled, authorName);
+//        query1.displayType = "author";
+//        query1.displayValue = authorName;
+//        query1.score = authors[i+1];
+//        QueryRecommenderModel.addRecommendedQuery(query1);
 //    }
+
+    var snippet_imports = data.facet_counts.facet_fields.snippet_imports;
+
+    for(i = 0; i<snippet_imports.length; i = i+2) {
+        if(i >= 6)
+            continue;
+
+        var importName = snippet_imports[i];
+
+        if(importName == "")
+            continue;
+
+        var query4 = new QueryModel(QueryBucketModel.snippetImportsFiled, importName);
+        query4.displayType = "imports library";
+        query4.displayValue = importName;
+        query4.score = snippet_imports[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query4);
+    }
 
     var extendsRecommend = data.facet_counts.facet_fields.snippet_extends;
     for(i = 0; i<extendsRecommend.length; i = i+2) {
@@ -436,7 +464,7 @@ function facetCompleteCallBack(data){
             continue;
 
         var query3 = new QueryModel(QueryBucketModel.implementsField, implementsName);
-        query3.displayType = "implements class";
+        query3.displayType = "implements interface";
         query3.displayValue = implementsName;
         query3.score = implementsRecommend[i+1];
         QueryRecommenderModel.addRecommendedQuery(query3);
@@ -715,6 +743,28 @@ function autoCompleteCallBack(data){
         //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.returnTypeField){
         var results = data.facet_counts.facet_fields.snippet_return_type;
+        var temp = new Array();
+
+        for(var i = 0; i<results.length; i++){
+            //skip the odds because those are frequency counts and not results
+            if(i%2 != 0)
+                continue;
+
+            temp.push(results[i]);
+        }
+
+        var mappedResults = $.map( temp, function( item ) {
+            return {
+                "label": item,
+                "value": item
+            };
+        });
+
+
+        QueryManager.currentResponse(mappedResults);
+        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetImportsFiled){
+        var results = data.facet_counts.facet_fields.snippet_imports;
         var temp = new Array();
 
         for(var i = 0; i<results.length; i++){
