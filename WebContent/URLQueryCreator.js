@@ -61,13 +61,14 @@ var URLQueryCreator = {
 				+ '&fl=id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_method_invocations project_id '
-                + 'snippet_containing_class_id'
+                + 'snippet_containing_class_id snippet_code'
 				+ '&facet=true'
+                + '&facet.field=project_id'
                 + '&facet.field=snippet_version_author'
                 + '&facet.field=snippet_project_name'
                 + '&facet.field=snippet_extends'
                 + '&facet.field=snippet_implements'
-                + '&facet.mincount=0'
+                + '&facet.mincount=1'
 				+ '&facet.limit=4';
 
 			

@@ -373,7 +373,7 @@ function facetCompleteCallBack(data){
 
     QueryRecommenderModel.clearRecommendedQueries();
 
-    var topAuthorRecommend = data.facet_counts.facet_fields.snippet_version_author;
+    var topAuthorRecommend = data.facet_counts.facet_fields.project_id;
 
     for(i = 0; i<topAuthorRecommend.length; i = i+2){
         if(i >= 6)
@@ -385,30 +385,30 @@ function facetCompleteCallBack(data){
         if(authorName == "")
             continue;
 
-        var query1 = new QueryModel(QueryBucketModel.authorFiled, authorName);
-        query1.displayType = "author name";
-        query1.displayValue = authorName;
+        var query1 = new QueryModel("project_id", authorName);
+        query1.displayType = "project";
+        query1.displayValue = authorName.substring(authorName.lastIndexOf("/")+1,authorName.length);
         query1.score = topAuthorRecommend[i+1];
         QueryRecommenderModel.addRecommendedQuery(query1);
     }
 
-    var topProject = data.facet_counts.facet_fields.snippet_project_name;
-
-    for(i = 0; i<topProject.length; i = i+2) {
-        if(i >= 6)
-            continue;
-
-        var projectName = topProject[i];
-
-        if(projectName == "")
-            continue;
-
-        var query4 = new QueryModel(QueryBucketModel.projectField, projectName);
-        query4.displayType = "project name";
-        query4.displayValue = projectName;
-        query4.score = topProject[i+1];
-        QueryRecommenderModel.addRecommendedQuery(query4);
-    }
+//    var topProject = data.facet_counts.facet_fields.snippet_project_name;
+//
+//    for(i = 0; i<topProject.length; i = i+2) {
+//        if(i >= 6)
+//            continue;
+//
+//        var projectName = topProject[i];
+//
+//        if(projectName == "")
+//            continue;
+//
+//        var query4 = new QueryModel(QueryBucketModel.projectField, projectName);
+//        query4.displayType = "project name";
+//        query4.displayValue = projectName;
+//        query4.score = topProject[i+1];
+//        QueryRecommenderModel.addRecommendedQuery(query4);
+//    }
 
     var extendsRecommend = data.facet_counts.facet_fields.snippet_extends;
     for(i = 0; i<extendsRecommend.length; i = i+2) {
