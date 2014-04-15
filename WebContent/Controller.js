@@ -276,9 +276,12 @@ var Controller = {
 		 */
 		clearAllCode	:	function(){
 			var length = SetupManager.resultPreArray_ID.length;
-			
+            QueryRecommenderModel.clearRecommendedQueries();
+            QueryRecommenderView.update();
+
 			for(var i = 0; i<length; i++){
-				
+                var editor = ace.edit('result'+i).setValue("");
+
 		        //  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).empty();
 		          $(SetupManager.pound+SetupManager.metaDivArray_ID[i]).empty();
 			}
