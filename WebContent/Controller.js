@@ -16,7 +16,8 @@ var Controller = {
 		headerExpanded	:	false,
 		sortFiltersAlpha	:	false,
 		currentStatus	:	"",
-		
+        annotationsArrayByEditor: new Array(),
+        annotationsArrayKeyByEditor: new Array(),
 
 		/**
 		 * Sets the code text of an html element
@@ -81,21 +82,113 @@ var Controller = {
                           }
 
                       }
-                      editor.session.setAnnotations([{
-                          row: row-1,
-                          column: 0,
-                          text: "start here",
-                          type: "info"
-                      }]);
 
+//annotations
+                      editor.session.clearAnnotations();
                       editor.session.clearBreakpoints();
-                      editor.session.setBreakpoint(row-1);
 
-                      editor.gotoLine(row-1,Infinity, true);
+                      var annotationArray = new Array();
+                      var annotationKey = new Array();
 
-                      editor.getSession().foldAll(classRow+2,newLines.length);
+                      for(var i = 0; i < newLines.length; i++){
+                          var indexOfClass = newLines[i].indexOf("import");
+
+                          annotationKey[i] = {
+                              row: i,
+                              annotationArrayindex: -1
+                          };
+
+                          if( indexOfClass != -1){
+                              var type = QueryBucketModel.snippetImportsFiled;
+                              var startIndex = 7;
+
+                              if(newLines[i].indexOf("static") != -1) {
+                                  startIndex = 13;
+                              }
+
+                              var indexOfSemiColon = newLines[i].indexOf(";");
+                              var indexOfStar = newLines[i].indexOf("*");
+
+
+                              if(indexOfStar != -1)
+                                  indexOfSemiColon = indexOfStar-1;
+
+                                  var value = newLines[i].substring(startIndex, indexOfSemiColon);
+
+
+
+                                  annotationArray.push({
+                                      row: i,
+                                      column: 0,
+                                      text: "add query part: "+"["+"imports"+"]"+" "+value,
+                                      type: "info",
+                                      queryType: type,
+                                      queryValue: value
+
+                                  });
+
+                              annotationKey[i] = {
+                                  row: i,
+                                  annotationArrayindex: annotationArray.length-1
+                              };
+
+                          }
+
+
+                      }
+
+                      editor.session.setAnnotations(annotationArray);
+
+//                      if(Controller.annotationsArrayByEditor[editor] != null)
+//                        Controller.annotationsArrayByEditor[editor].length = 0;
+//
+//                      if(Controller.annotationsArrayKeyByEditor[editor] != null)
+//                        Controller.annotationsArrayKeyByEditor[editor].length = 0;
+
+                      Controller.annotationsArrayByEditor[editorNumber] = annotationArray.slice(0);
+                      Controller.annotationsArrayKeyByEditor[editorNumber] = annotationKey.slice(0);
+
+                      editor.on("guttermousedown", function(e){
+                          var target = e.domEvent.target;
+//                          if (target.className.indexOf("ace_gutter-cell") == -1)
+//                              return;
+//                          if (!editor.isFocused())
+//                              return;
+//                          if (e.clientX > 25 + target.getBoundingClientRect().left)
+//                              return;
+
+                          var row = e.getDocumentPosition().row;
+                              editor.session.clearBreakpoints();
+                              editor.session.setBreakpoint(row);
+
+                          var annotation = Controller.annotationsArrayByEditor[editorNumber]
+                              [Controller.annotationsArrayKeyByEditor[editorNumber][row].annotationArrayindex];
+
+                          if(annotation != null) {
+                              var type = annotation.queryType;
+                              var value = annotation.queryValue;
+
+                              var query = new QueryModel(type, value);
+                              query.displayType = "imports";
+                              query.displayValue = value;
+
+                              BuildQueryBoxView.addAndSubmit(query);
+                          }
+                          e.stop();
+                      });
+
+                      annotationArray.length = 0;
+                      annotationKey.length = 0;
+
+
+
+                    //  editor.gotoLine(row-2);
+
+                      editor.getSession().foldAll(classRow,row-1);
+                      editor.getSession().foldAll(row+2,newLines.length);
+
 //                      var aceRange = ace.require('ace/range').Range;
-//                      var adjRangeAce = new aceRange(row, 0, row+1, Infinity);
+//                      var adjRangeAce = new aceRange(row, 0, row+1, 0);
 //                      editor.session.addMarker(adjRangeAce,"highlightBackground","background",false);
 
                       var word = "";
