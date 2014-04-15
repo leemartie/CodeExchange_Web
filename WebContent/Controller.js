@@ -33,7 +33,7 @@ var Controller = {
 
 		},
 		
-		setCodeFromURL: function(codeNode, codeURL, start, end,invocations){
+		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations){
 		
 			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			//var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
@@ -43,66 +43,125 @@ var Controller = {
 			 //   alert( data + textStatus + jqXHR);
 			    
 			   
-			    $(SetupManager.pound+codeNode).empty();
-				$(SetupManager.pound+codeNode).append("<pre>deleted or moved code</pre>");
-				
+			 //   $(SetupManager.pound+codeNode).empty();
+			//	$(SetupManager.pound+codeNode).append("<pre>deleted or moved code</pre>");
+                var editor = ace.edit(codeNode);
+                editor.getSession().setValue("deleted or moved code");
+
 				
 			  }).success(function(data, textStatus, jqXHR ) {
 				  $.each(data, function(index, element) {
 					    var code = element;
-					    var result = new CodeResult(code,start,end,invocations);
-					    var jQueryObject = result.getJQueryObject();
-					    $(SetupManager.pound+codeNode).empty();
-						$(SetupManager.pound+codeNode).append(jQueryObject);
-						
+
+                      var editor = ace.edit(codeNode);
+                      editor.getSession().setValue(code);
+
+                      editor.setHighlightActiveLine(true);
 
 
-						//sh_highlightDocument();
-						$.syntax({
-						    linkify: false,
-						    tabWidth: 8,
-						    replace: true,
-						    layout:'plain'
-						    
-						});
-						
-						
-						//highlight class calling methods
-//						if(invocations != undefined){
-//						for(var i = 0; i<invocations.length; i++){
-//							var invocation = invocations[i];
-//							var start = parseInt(EncoderDecoder.decodeStart(invocation));
-//							var end = parseInt(EncoderDecoder.decodeEnd(invocation));
-//							var className = EncoderDecoder.decodeClassFilter(invocation);
-//							var methodName = EncoderDecoder.decodeMethodFilter(invocation);
-//							var firstArg = EncoderDecoder.decodeArgumentFilter(invocation);
-//							
-//							//if(className == $(SetupManager.pound+SetupManager.callingObjectInputID).val())
-//								$(SetupManager.pound+codeNode).highlight(methodName,{ element: 'em', className: 'important' });
-//						}
-//						}
-						
-						//highlight method name
-						 var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
-						 $(SetupManager.pound+codeNode).highlight(methodName,{ element: 'em', className: 'important' });
-						 
-						 //highlight extends
-						 var extendsName = $(SetupManager.pound+SetupManager.extendsInputID).val();
-						 $(SetupManager.pound+codeNode).highlight(extendsName,{ element: 'em', className: 'important' });
-						 
-						 //highlight implements
-						 var implementsName = $(SetupManager.pound+SetupManager.implementsInputID).val();
-						 $(SetupManager.pound+codeNode).highlight(implementsName,{ element: 'em', className: 'important' });
-						 
-						 //highlight keywords in query
-						 var keywords = QueryManager.currentQuery.split(" ");
-						 for(var i = 0; i<keywords.length; i++){
-							 $(SetupManager.pound+codeNode).highlight(keywords[i],{ element: 'em', className: 'important' });
-						 }
+//
+                      var newLines = String(code).split("\n");
+                      var count = 0;
+                      var row = 0;
+                      var classRow = 0;
 
-						
-						
-				  });
+                      for(var i = 0; i < newLines.length; i++){
+                           var indexOfClass = newLines[i].indexOf(" class ");
+                          if( indexOfClass != -1 && classRow == 0){
+                              classRow = i;
+                          }
+
+                      }
+
+                      for(var i = 0; i < newLines.length; i++){
+                          count = count + newLines[i].length;
+                          if(count >= start) {
+                              row = i;
+                              i = newLines.length;
+                          }
+
+                      }
+                      editor.session.setAnnotations([{
+                          row: row-1,
+                          column: 0,
+                          text: "start here",
+                          type: "info"
+                      }]);
+
+                      editor.session.clearBreakpoints();
+                      editor.session.setBreakpoint(row-1);
+
+                      editor.gotoLine(row-1,Infinity, true);
+
+                      editor.getSession().foldAll(classRow+2,newLines.length);
+//                      var aceRange = ace.require('ace/range').Range;
+//                      var adjRangeAce = new aceRange(row, 0, row+1, Infinity);
+//                      editor.session.addMarker(adjRangeAce,"highlightBackground","background",false);
+
+                      var word = "";
+                      for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
+                          var query = QueryBucketModel.stackOfQueries[i];
+
+
+                         var  words = query.value.split(" ");
+                          for( var j  = 0; j < words.length; j++){
+                              var part = words[j];
+
+                              if(word == "")
+                                  word = part;
+                              else
+                                  word = word+'|'+part;
+                          }
+
+
+
+                      }
+
+                      var regEx = new RegExp( word, "gi" );
+
+                      editor.findAll(regEx,{
+                          //caseSensitive: false,
+                          //wholeWord: true,
+                          regExp: true
+                      });
+
+                      editor.on("blur", function(){
+                          var word = "";
+                          for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
+                              var query = QueryBucketModel.stackOfQueries[i];
+
+
+                              var  words = query.value.split(" ");
+                              for( var j  = 0; j < words.length; j++){
+                                  var part = words[j];
+
+                                  if(word == "")
+                                      word = part;
+                                  else
+                                      word = word+'|'+part;
+                              }
+
+
+
+                          }
+
+                          var regEx = new RegExp( word, "gi" );
+
+                          editor.findAll(regEx,{
+                              //caseSensitive: false,
+                              //wholeWord: true,
+                              regExp: true
+                          });
+
+
+                      });
+
+
+
+
+
+
+                  });
 			  });
 			
 			
@@ -127,7 +186,7 @@ var Controller = {
 			
 			for(var i = 0; i<length; i++){
 				
-		          $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).empty();
+		        //  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).empty();
 		          $(SetupManager.pound+SetupManager.metaDivArray_ID[i]).empty();
 			}
 		},
@@ -175,11 +234,44 @@ var Controller = {
 	
 			
 		},
+
+       setCodeComplexity : function(meta, complexity){
+           var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
+           //var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
+           var level = "low";
+
+         if(complexity >=5)
+            level = "medium";
+
+         if(complexity >= 11)
+           level = "high";
+
+           var complexText = $('<text>complexity: '+level +'</text>');
+
+
+
+           metadiv.addClass("MetaBorder");
+           complexText.addClass("MetaBorder");
+
+           metadiv.append(complexText);
+
+           $(SetupManager.pound+meta).append(metadiv);
+       },
 		
 		setCodeChurn: function(meta, codechurn){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			//var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
-			var churnText = $('<text>'+codechurn+'</text>');
+
+            var level = "low";
+
+            if(codechurn >=.4)
+                level = "medium";
+
+            if(codechurn >= .8)
+                level = "high";
+
+
+            var churnText = $('<text>chance of bugs: '+level+'</text>');
 			
 			
 			
@@ -208,13 +300,20 @@ var Controller = {
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
-			var authName = $('<a href="'+projectURL+'">'+name+'</a>');
-			
+			var authName = $('<div><u>'+name+'</u></div>');
+
+			authName.click(function(event){
+                var query = new QueryModel(QueryBucketModel.projectField,name);
+                query.displayType = "project";
+                query.displayValue = name;
+                BuildQueryBoxView.addAndSubmit(query);
+
+            });
 			
 			
 			metadiv.addClass("MetaBorder");
 			authName.addClass("MetaBorder");
-			
+            authName.addClass("MetaQuery");
 			metadiv.append(icon);
 			metadiv.append(authName);
 			
@@ -591,8 +690,8 @@ var Controller = {
 			  
 			  previousHeight = $(SetupManager.pound+result).height();
 	          previousWidth = $(SetupManager.pound+result).width();
-	          previousX = $(SetupManager.pound+result).offset().left;
-	          previousY = $(SetupManager.pound+result).offset().top;
+	          previousX = $(SetupManager.pound+result).left;
+	          previousY = $(SetupManager.pound+result).top;
 	          
 
 				var screenWidth = jQuery(window).width();
@@ -608,6 +707,9 @@ var Controller = {
 		            left:	'0px',
 		            top:	'0px'
 		          }, 0 );
+
+            var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
+            editor.resize();
 
 		},
 		
@@ -637,6 +739,9 @@ var Controller = {
 		            left:	previousX+'px',
 		            top:	previousY+'px'
 		          }, 0 );
+
+            var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
+            editor.resize();
 	          
 
 		},

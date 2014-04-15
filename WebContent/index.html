@@ -13,6 +13,7 @@
 <title>CodeExchange</title>
 
 
+
 </head>
 
 <body bgcolor="#000000">
@@ -20,7 +21,6 @@
 <script type="text/javascript" src="jquery-migrate-1.2.1.js"></script>
 <script type="text/javascript" src="jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 
-<script type="text/javascript" src="jqueryHighlight/jquery.snippet.js"></script>
 
 <script type="text/javascript" src="Client.js"></script>
 <script type="text/javascript" src="CodeResult.js"></script>
@@ -46,13 +46,7 @@
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderModel.js"></script>
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderView.js"></script>
 <script type="text/javascript" src="jQueryRotate.js"></script>
-<script type="text/javascript" src="jquery.highlight.js"></script>
-
-
-<script src="syntaxHighlight/jquery-syntax/jquery.syntax.min.js" type="text/javascript"></script>
-
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
-
+<script type="text/javascript" src="ace-builds/src-noconflict/ace.js"></script>
 
 
 <script>
@@ -68,6 +62,16 @@
 	position:'absolute';
 
 	}
+
+    .ace_gutter-cell.ace_breakpoint{
+        border-radius: 20px 0px 0px 20px;
+        box-shadow: 0px 0px 1px 1px red inset;
+    }
+
+    .highlightBackground{
+        background-color: #ffff00;
+    }
+
     .Cell
     {
       
@@ -82,8 +86,8 @@
     }
     .Result
     {
-    	
-        overflow:scroll;
+
+
       
     }
     
@@ -94,6 +98,7 @@
         padding-right: 5px;
         padding-top: 5px;
         height: 30px;
+
          
         
     }
@@ -102,6 +107,7 @@
     	padding-right: 5px;
     	padding-bottom: 0px;
     	bottom:0;
+
     	  
     }
     .ResultOptions{
@@ -174,6 +180,12 @@
      padding-right: 5px;
    	 vertical-align:bottom;
    	 valign:"bottom";
+     float: right;
+    }
+
+    .MetaQuery{
+        cursor:pointer;
+
     }
     
     
@@ -505,6 +517,10 @@
     color: white;
 }
 
+.QueryRecommenderView{
+
+}
+
 
 
 </style>
@@ -513,22 +529,10 @@
 
 
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </div>
+
+
 
 </body>
 </html>

@@ -84,6 +84,7 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.extendsField+'">extends class</option>'+
                 '<option  value="'+QueryBucketModel.implementsField+'">implements interface</option>'+
                 '<option  value="'+QueryBucketModel.snippetImportsFiled+'">imports library</option>'+
+//                '<option  value="'+QueryBucketModel.methodNameField+'">method name</option>'+
                 '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
                 '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
                 '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
@@ -95,7 +96,7 @@ var BuildQueryBoxView = {
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">day</option>'+
                 '</select>');
 
-            combo.width("98%");
+            combo.width("97%");
 
 
             combo.change(function(event){
@@ -150,7 +151,7 @@ var BuildQueryBoxView = {
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(titleCell);
-            var label = $("<text>Query Recommendations</text>");
+            var label = $("<text>Query Part Recommendations</text>");
             label.addClass("QueryTypeTitle");
             titleCell.append($("<hr>"));
             titleCell.append(label);
@@ -188,6 +189,7 @@ var BuildQueryBoxView = {
 
                 var query = new QueryModel(combo.val(), $(this).val());
                 query.displayType = combo.find(":selected").text();
+                query.displayValue = true;
                 BuildQueryBoxView.addAndSubmit(query);
 
                 truebox.prop('checked', false);
@@ -199,7 +201,7 @@ var BuildQueryBoxView = {
 
                 var query = new QueryModel(combo.val(), $(this).val());
                 query.displayType = combo.find(":selected").text();
-
+                query.displayValue = false;
 
 
                 BuildQueryBoxView.addAndSubmit(query);
@@ -225,6 +227,12 @@ var BuildQueryBoxView = {
                             query.displayValue = queryBox.val();
                             query.displayType = combo.find(":selected").text();
                     }
+                    if(query.type == QueryBucketModel.methodNameField){
+                        var encodedMethodName = "/"+EncoderDecoder.encodeMethodNameFacet(queryBox.val())+"/";
+                        query = new QueryModel(combo.val(), encodedMethodName);
+                        query.displayValue = queryBox.val();
+                        query.displayType = combo.find(":selected").text();
+                    }
 
 
 
@@ -242,27 +250,31 @@ var BuildQueryBoxView = {
 		},
 
         addAndSubmit: function(query){
-            QueryBucketModel.addQuery(query);
-            QueryBucketView.update();
 
-            QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
+            if(QueryBucketModel.inStack(query) == false){
+                QueryBucketModel.addQuery(query);
+                QueryBucketView.update();
+
+                QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
 
 
-            Controller.setStatus("SEARCHING...");
-            var query = QueryBucketModel.constructQuery();
-            //var fqQuery = QueryBucketModel.constructFQQuery();
+                Controller.setStatus("SEARCHING...");
+                var query = QueryBucketModel.constructQuery();
+                //var fqQuery = QueryBucketModel.constructFQQuery();
 
-            QueryManager.setQuery(query);
-           // QueryManager.setFQQuery(fqQuery);
+                QueryManager.setQuery(query);
+                // QueryManager.setFQQuery(fqQuery);
 
-            QueryManager.submitQuery();
+                QueryManager.submitQuery();
 //                    //make it lose focus so we can detect when user refocus on query it
 //                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-            var angle = 0;
-            SetupManager.rotateStatusVar = setInterval(function(){
-                angle+=3;
-                $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-            },50);
+                var angle = 0;
+                SetupManager.rotateStatusVar = setInterval(function(){
+                    angle+=3;
+                    $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
+                },50);
+            }
+
         }
 		
 }

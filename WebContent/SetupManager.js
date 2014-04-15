@@ -23,6 +23,9 @@ var SetupManager = {
 		
 		//pre
 		resultPreArray_ID	:	new Array(),
+
+        //editor
+        resultEditors       : new Array(),
 		
 		//p
 		resultTotalP_ID	:	"resultTotal",
@@ -157,7 +160,7 @@ var SetupManager = {
 		 */
 		setupSite	:	function(){
 
-			
+
 			
 			screenWidth = jQuery(window).width();
 			screenHeight = jQuery(window).height();
@@ -575,7 +578,7 @@ var SetupManager = {
 				//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 
 
-                $('.QueryBucket').height(screenHeightBuffer-400);
+                $('.QueryBucket').height(screenHeightBuffer-450);
 
 				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
 				
@@ -606,11 +609,39 @@ var SetupManager = {
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
-			$('.QueryBucket').height(screenHeightBuffer-400);
-			
-		
-			
-		},
+            var height = $('QueryRecommenderView').height;
+			$('.QueryBucket').height(screenHeightBuffer-450);
+
+
+            var editor = ace.edit('result0');
+            editor.setTheme("ace/theme/xcode");
+            editor.getSession().setMode("ace/mode/java");
+            editor.getSession().setUseWrapMode(true);
+            editor.setReadOnly(false);
+
+            var editor2 = ace.edit('result1');
+            editor2.setTheme("ace/theme/xcode");
+            editor2.getSession().setMode("ace/mode/java");
+            editor2.getSession().setUseWrapMode(true);
+            editor2.setReadOnly(false);
+
+
+            var editor3 = ace.edit('result2');
+            editor3.setTheme("ace/theme/xcode");
+            editor3.getSession().setMode("ace/mode/java");
+            editor3.getSession().setUseWrapMode(true);
+            editor3.setReadOnly(false);
+
+
+            SetupManager.resultEditors.push(editor);
+            SetupManager.resultEditors.push(editor2);
+            SetupManager.resultEditors.push(editor3);
+
+
+
+
+
+        },
 		/**
 		 * used to call the query manager for auto complete.
 		 * 
@@ -673,12 +704,17 @@ var SetupManager = {
 				
 				$(SetupManager.pound+SetupManager.cellDivArray_ID[i]).append($(SetupManager.newLine));
 				
-				//make result data for cell
-				var resultData = $('<pre></pre>');//$(SetupManager.preOpen+SetupManager.preClose);
+
+
+				var resultData = $(SetupManager.divOpen+SetupManager.divClose);
+
 				var result_id = "result"+i;
 				SetupManager.resultPreArray_ID[i] = result_id;
 				resultData.attr(SetupManager.ID_attr,SetupManager.resultPreArray_ID[i]);
 				resultData.addClass("Result");
+
+
+
 				//add to cell
 				$(SetupManager.pound+SetupManager.cellDivArray_ID[i]).append(resultData);
 				

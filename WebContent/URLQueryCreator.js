@@ -4,7 +4,7 @@ var URLQueryCreator = {
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 	//	authorCollection	 :  'GitHubAuthorIndex',
 	//	projectCollection	 :  'GitHubProjectIndex',
-		port					: 9000,
+		port					: 8983,
 		
 		getQueryURL	:	function(callbackFunctionName){
 		
@@ -64,9 +64,9 @@ var URLQueryCreator = {
 				+ '&fl=id snippet_version_author snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_method_invocations project_id '
-                + 'snippet_containing_class_id snippet_code'
+                + 'snippet_containing_class_id snippet_code snippet_granularity '
+                + 'snippet_path_complexity_class_sum snippet_path_complexity_method snippet_changed_code_churn'
 				+ '&facet=true'
-                + '&facet.field=id'
                 + '&facet.field=snippet_imports'
                 + '&facet.field=project_id'
                 + '&facet.field=snippet_version_author'

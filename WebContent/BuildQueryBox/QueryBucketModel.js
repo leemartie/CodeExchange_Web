@@ -19,6 +19,7 @@ var QueryBucketModel = {
     varargsField         :   "snippet_is_var_args",
     lastUpdatedField     :   "snippet_last_updated",
     snippetImportsFiled  :   "snippet_imports",
+    methodNameField      :   "snippet_method_invocations",
     listOfKeys           :   new Array(),
 
     addQuery    :   function(/*QueryModel*/query){
@@ -65,6 +66,18 @@ var QueryBucketModel = {
             QueryBucketModel.stackOfQueries.splice(index,1);
             QueryBucketModel.listOfQueries[key].splice(valueIndex,1);
 
+    },
+
+    inStack : function(query){
+
+        for(var i = 0; i<QueryBucketModel.stackOfQueries.length; i++){
+            var stackQuery = QueryBucketModel.stackOfQueries[i];
+            if(query.type == stackQuery.type && query.value == stackQuery.value){
+                return true;
+            }
+        }
+
+        return false;
     },
 
     removeAll   :   function() {

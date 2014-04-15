@@ -482,7 +482,7 @@ function on_nextData(data) {
 	var docs = data.response.docs;
 	// lets clear all the displayed results
 	Controller.clearAllCode();
-	
+
 
 	// let's populate the table with the results
 	$.each(docs,
@@ -497,13 +497,17 @@ function on_nextData(data) {
 					
 					var url = String(item.snippet_address);
 					var correctURL = url.replace(wrongVersion,correctVersion);
-					
-					
-					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
+
+
+					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
-				//	Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
+
+//                    if(item.snippet_granularity == "Class")
+//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
+//                    else
+//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 				}
 				
 
@@ -594,14 +598,24 @@ function on_data(data) {
 					
 					var url = String(item.snippet_address);
 					var correctURL = url.replace(wrongVersion,correctVersion);
+
+
+
+
+
 					
-					
-					Controller.setCodeFromURL(SetupManager.resultPreArray_ID[i],
+					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
 					//Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
+
+                    //Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
+//                    if(item.snippet_granularity == "Class")
+//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
+//                    else
+//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 
 
 				}

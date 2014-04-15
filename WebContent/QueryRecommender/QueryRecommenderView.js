@@ -10,7 +10,8 @@ var QueryRecommenderView = {
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
 
-
+        QueryRecommenderView.view.addClass("QueryRecommenderView");
+        QueryRecommenderView.view.height("200px");
 
         return QueryRecommenderView.view;
 
@@ -41,6 +42,7 @@ var QueryRecommenderView = {
             button.height("15px");
             (function(query){button.click(function(){
                 BuildQueryBoxView.addAndSubmit(query)
+
 
             })})(QueryRecommenderModel.recommendedQueries[i]);
 

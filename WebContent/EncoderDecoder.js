@@ -71,7 +71,11 @@ var EncoderDecoder = {
 		},
 		
 		encodeMethodNameFacet	:	function(prefix){
-			return "*@*@*@"+"*"+"@"+prefix+"*@"+"*"+"!"+"*";
+            var anythingButAt = "[^@]%2B";
+
+            var invocationFilter = 	anythingButAt+"@"+anythingButAt+"@"+anythingButAt+"@"+
+                anythingButAt+"@"+prefix+"@"+anythingButAt+".*"+""+"!"+".*";
+			return invocationFilter;
 		},
 		
 		encodeMethodCallArgFacet : function(prefeix){

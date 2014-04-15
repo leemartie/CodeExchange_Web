@@ -131,10 +131,11 @@ function CodeResult(code, start, end, invocations){
 		
 
 		
-		allDiv.append(topButtonDiv);
-		allDiv.append(displayCode);
-		allDiv.append(bottomButtonDiv);
-		
+		//allDiv.append(topButtonDiv);
+		//allDiv.append(displayCode);
+		//allDiv.append(bottomButtonDiv);
+
+
 	
 		
 		return allDiv;
