@@ -4,6 +4,8 @@
 var QueryGridView = {
 
      grid : $(SetupManager.tableOpen+SetupManager.tableClose),
+     added : false,
+
 
     setup : function(){
         QueryGridView.grid.empty();
@@ -20,6 +22,18 @@ var QueryGridView = {
                   cell.width('25%');
                    cell.height('25%');
                 row.append(cell);
+
+                cell.click(function(event){
+                    if(QueryGridView.added != true) {
+                        var id = this.id;
+                        var number = id.substring(id.length - 1);
+                        for (var i = 0; i < QueryGridModel.history[number].length; i++) {
+                            BuildQueryBoxView.addAndSubmit(QueryGridModel.history[number][i]);
+                        }
+                    }else{
+                        QueryGridView.added = false;
+                    }
+                });
 
             cell.addClass("GridCell");
                 index++;
@@ -76,7 +90,8 @@ var QueryGridView = {
                 button.height("15px");
 
                 (function(query){button.click(function(){
-                    BuildQueryBoxView.addAndSubmit(query)
+                    BuildQueryBoxView.addAndSubmit(query);
+                    QueryGridView.added = true;
                 })}(query));
 
                 row.append(buttonCell);
@@ -100,6 +115,11 @@ var QueryGridView = {
 
         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
         table.height("100%");
+
+
+
+
+
         table.append($("<tr><th>query number: "+lastCell+"</tr></th>"));
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
@@ -136,11 +156,13 @@ var QueryGridView = {
             button.height("15px");
             (function(query){button.click(function(){
                 BuildQueryBoxView.addAndSubmit(query)
+                QueryGridView.added = true;
             })}(query));
 
             row.append(buttonCell);
 
             cell.addClass("GridRow");
+
 
             table.append(row);
 
@@ -148,7 +170,12 @@ var QueryGridView = {
 
         }
 
+        table.addClass("GridCellHighLight");
+
         $(SetupManager.pound+"GridCell"+(lastCell)).append(table);
+
+
+
 
     }
 

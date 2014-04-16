@@ -33,24 +33,32 @@ var QueryTrailNavView = {
         centerCell.append(createNewQueryButton);
         navigationRow.append(centerCell);
 
-       // var gridRow = $(SetupManager.trOpen+SetupManager.trClose);
-       // navTable.append(gridRow);
+        var gridRow = $(SetupManager.trOpen+SetupManager.trClose);
+        navTable.append(gridRow);
         var gridCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
         gridCell.attr("align","center");
-        var gridButton = $(SetupManager.buttonOpen+"query grid"+SetupManager.buttonClose);
+        var gridButton = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+        gridButton.append("<text>query grid on</text>");
         gridButton.button();
 
         gridButton.width("98%");
 
         gridButton.click(function(event) {
-
             Controller.showGrid();
+
+            gridButton.empty();
+            if(Controller.gridOn){
+                gridButton.append("<text>query grid off</text>");
+            }else{
+                gridButton.append("<text>query grid on</text>");
+            }
+
         });
 
         gridCell.append(gridButton);
-        navigationRow.append(gridCell);
-        //gridRow.append(gridCell);
+       // navigationRow.append(gridCell);
+        gridRow.append(gridCell);
 
         return navTable;
     }
