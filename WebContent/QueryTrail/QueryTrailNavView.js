@@ -18,6 +18,7 @@ var QueryTrailNavView = {
         createNewQueryButton.button();
 
         createNewQueryButton.width("98%");
+        createNewQueryButton.attr("disabled", false);
 
         createNewQueryButton.click(function(event) {
 
@@ -32,6 +33,29 @@ var QueryTrailNavView = {
         centerCell.append(createNewQueryButton);
         navigationRow.append(centerCell);
 
+       // var gridRow = $(SetupManager.trOpen+SetupManager.trClose);
+       // navTable.append(gridRow);
+        var gridCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
+        gridCell.attr("align","center");
+        var gridButton = $(SetupManager.buttonOpen+"query grid"+SetupManager.buttonClose);
+        gridButton.button();
+
+        gridButton.width("98%");
+
+        gridButton.click(function(event) {
+
+            if(!Controller.gridOn)
+                createNewQueryButton.attr("disabled", true);
+            else
+                createNewQueryButton.attr("disabled", false);
+
+            Controller.showGrid();
+        });
+
+        gridCell.append(gridButton);
+        navigationRow.append(gridCell);
+        //gridRow.append(gridCell);
 
         return navTable;
     }

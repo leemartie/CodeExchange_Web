@@ -81,6 +81,9 @@ var QueryBucketModel = {
     },
 
     removeAll   :   function() {
+        //add to history first
+        QueryGridModel.history.push(QueryBucketModel.stackOfQueries.slice(0));
+
         for (var i = 0; i < QueryBucketModel.listOfKeys.length; i++) {
             var key = QueryBucketModel.listOfKeys[i];
             QueryBucketModel.listOfQueries[key].length = 0;

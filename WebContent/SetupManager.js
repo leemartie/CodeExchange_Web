@@ -99,6 +99,8 @@ var SetupManager = {
 		commentsCheckBoxID		:	"commentsCheckBox_ID",
 		
 		statusIconID			:	"statusIconID",
+
+        resultsTD_ID            :   "resultsTD_ID",
 		
 		rotateStatusVar			:	null,
 		
@@ -230,27 +232,7 @@ var SetupManager = {
 			
 			// append
             rowStatus.append(pageNavigation);
-//
-//
-//			var rowInTableForSite = $(SetupManager.trOpen+SetupManager.trClose);
-//			var rowNavTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-//			rowNavTable.append(rowNavigation);
-//			rowInTableForSite.append(rowNavTable);
-//			rowInTableForSite.addClass("HeaderBack");
-//			//TODO getting rid of navigation row on top tableForSite.append(rowInTableForSite);
-//
-//
-//			var statusIcon = $('<img src="http://codeexchange.ics.uci.edu/share8_scaled.png"/>');
-//			statusIcon.attr(SetupManager.ID_attr,SetupManager.statusIconID);
-//			var statusTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-//			statusTD.append(statusIcon);
-//
-//			statusTD.attr("align","right");
-//
-//			rowNavigation.append(statusTD);
 
-
-			
 			//result row
 			var resultRow = $(SetupManager.trOpen+SetupManager.trClose);
 			tableForSite.append(resultRow);
@@ -259,6 +241,7 @@ var SetupManager = {
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			resultRow.append(resultTD);
 			resultTD.addClass("ResultsBack");
+            resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID)
 			
 			
 			
@@ -268,6 +251,10 @@ var SetupManager = {
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site
 			resultTD.append(tableOfResults);
+
+            QueryGridView.setup();
+            $(SetupManager.pound+SetupManager.resultsTD_ID).append(QueryGridView.grid);
+            QueryGridView.grid.hide();
 			//set width
 			$(SetupManager.pound+SetupManager.resultTable_ID).width(screenWidth-SetupManager.sideBuffer);
 			//set height
@@ -571,6 +558,8 @@ var SetupManager = {
 				
 				
 				$('.ResultTable').width(((screenBuffer)));
+                $('.Grid').height((screenHeightBuffer/5));
+                $('.Grid').width((screenWidth/5));
 				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 				
@@ -601,6 +590,8 @@ var SetupManager = {
 		
 			
 			$('.ResultTable').width(((screenBuffer)));
+            $('.Grid').height((screenHeightBuffer/5));
+            $('.Grid').width((screenWidth/5));
 		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			

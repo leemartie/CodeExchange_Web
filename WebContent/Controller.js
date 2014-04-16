@@ -18,6 +18,7 @@ var Controller = {
 		currentStatus	:	"",
         annotationsArrayByEditor: new Array(),
         annotationsArrayKeyByEditor: new Array(),
+        gridOn : false,
 
 		/**
 		 * Sets the code text of an html element
@@ -139,23 +140,11 @@ var Controller = {
 
                       editor.session.setAnnotations(annotationArray);
 
-//                      if(Controller.annotationsArrayByEditor[editor] != null)
-//                        Controller.annotationsArrayByEditor[editor].length = 0;
-//
-//                      if(Controller.annotationsArrayKeyByEditor[editor] != null)
-//                        Controller.annotationsArrayKeyByEditor[editor].length = 0;
-
                       Controller.annotationsArrayByEditor[editorNumber] = annotationArray.slice(0);
                       Controller.annotationsArrayKeyByEditor[editorNumber] = annotationKey.slice(0);
 
                       editor.on("guttermousedown", function(e){
                           var target = e.domEvent.target;
-//                          if (target.className.indexOf("ace_gutter-cell") == -1)
-//                              return;
-//                          if (!editor.isFocused())
-//                              return;
-//                          if (e.clientX > 25 + target.getBoundingClientRect().left)
-//                              return;
 
                           var row = e.getDocumentPosition().row;
                               editor.session.clearBreakpoints();
@@ -868,7 +857,17 @@ var Controller = {
 //        			$("#row2").toggle();	
 //        		}
       	
-		}
+		},
+
+    showGrid    : function(){
+        $(SetupManager.pound+SetupManager.resultTable_ID).toggle();
+        QueryGridView.grid.toggle();
+        Controller.gridOn = !Controller.gridOn;
+
+        if(Controller.gridOn)
+            QueryGridView.update();
+
+    }
 		
 		
 };

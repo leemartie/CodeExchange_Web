@@ -7,7 +7,7 @@
    
 	<link href="jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
 
-	
+    <link rel="stylesheet" href="jquery-ui-1.10.3.custom/development-bundle/demos/demos.css" type="text/css">
 
 
 <title>CodeExchange</title>
@@ -43,6 +43,8 @@
 <script type="text/javascript" src="QueryTrail/QueryTrailModel.js"></script>
 <script type="text/javascript" src="QueryTrail/QueryTrailView.js"></script>
 <script type="text/javascript" src="QueryTrail/QueryTrailNavView.js"></script>
+<script type="text/javascript" src="QueryTrail/QueryGridModel.js"></script>
+<script type="text/javascript" src="QueryTrail/QueryGridView.js"></script>
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderModel.js"></script>
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderView.js"></script>
 <script type="text/javascript" src="jQueryRotate.js"></script>
@@ -50,6 +52,7 @@
 
 
 <script>
+
 	 $(document).ready(on_ready);
 
 
@@ -57,11 +60,26 @@
 </script>
 
 <style type="text/css">
+
+
 	.Absolute{
 
 	position:'absolute';
 
 	}
+
+    .Grid{
+        background-color: white;
+        color: black;
+        width: 100%;
+        border: 1px solid;
+    }
+
+    .GridRow{
+        background-color: #000000;
+        color: white;
+
+    }
 
     .ace_gutter-cell.ace_breakpoint{
         border-radius: 20px 0px 0px 20px;
