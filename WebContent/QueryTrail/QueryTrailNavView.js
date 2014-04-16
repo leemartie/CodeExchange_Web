@@ -45,11 +45,6 @@ var QueryTrailNavView = {
 
         gridButton.click(function(event) {
 
-            if(!Controller.gridOn)
-                createNewQueryButton.attr("disabled", true);
-            else
-                createNewQueryButton.attr("disabled", false);
-
             Controller.showGrid();
         });
 

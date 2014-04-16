@@ -11,16 +11,30 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
     this.active = active;
     this.stackIndex = stackIndex;
     this.displayValue = displayValue;
+    this.row = $(SetupManager.trOpen+SetupManager.trClose);
+    this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
    this.getView = function() {
 
-       var div = $(SetupManager.divOpen+SetupManager.divClose);
+       var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 
+
+       this.row.append(this.cell);
+       table.append(this.row);
        var label = $('<text>['+displayType+'] <font color="yellow">'+displayValue+'</font></text>');
 
-       div.append(label);
+       this.cell.append(label);
+       this.cell.width("100%");
+       this.row.height("100%");
+
+       this.row.addClass("QueryViewRow");
+
+       var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+       this.row.append(buttonCell);
 
        var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+       buttonCell.append(button);
+
        button.addClass("QueryViewButton");
        if(this.active == true){
            button.attr("value","-");
@@ -29,6 +43,9 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
            button.attr("value","+");
            button.append($("<text>+</text>"));
        }
+
+       button.width("25px");
+       button.height("15px");
 
        (function(type, active, index, stackIndex){ button.click(function(event) {
            button.empty();
@@ -62,11 +79,19 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        })})(this.type,this.active,this.index, this.stackIndex);
 
-       button.width("25");
-       button.height("20");
-       div.append(button);
 
-       return div;
+       this.row.append(buttonCell);
+
+       this.cell.addClass("QueryView");
+       return table;
    };
+
+    this.setDeactive = function(){
+        this.cell.addClass("QueryViewDeactive");
+    };
+
+    this.setActive = function(){
+        this.cell.addClass("QueryView");
+    }
 
 }

@@ -58,12 +58,15 @@ var QueryBucketView = {
 
             queryBucketRow.append(queryBucketCell);
 
+            queryBucketRow.addClass("QueryViewRow");
+            queryBucketCell.addClass("QueryViewRow");
+
 
 
             if(!active){
-                queryBucketRow.addClass("QueryViewDeactive");
+                queryView.setDeactive()
             }else{
-                queryBucketRow.addClass("QueryView");
+                queryView.setActive();
             }
 
             QueryBucketView.queryBucket.append(queryBucketRow);

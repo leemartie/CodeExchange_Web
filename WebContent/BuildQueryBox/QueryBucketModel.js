@@ -46,6 +46,9 @@ var QueryBucketModel = {
 
         QueryBucketModel.listOfQueries[query.type] = arrayOfValues;
         QueryBucketModel.listOfActiveQueries[query.type] = activeValues;
+
+        if(Controller.gridOn)
+            QueryGridView.update();
     },
 
     activateQuery: function(type, index, stackIndex){
