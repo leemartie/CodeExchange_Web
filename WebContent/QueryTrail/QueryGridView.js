@@ -5,6 +5,7 @@ var QueryGridView = {
 
      grid : $(SetupManager.tableOpen+SetupManager.tableClose),
      added : false,
+     size: 25,
 
 
     setup : function(){
@@ -49,7 +50,7 @@ var QueryGridView = {
         var lastCell = 0;
         for(var i = 0; i<QueryGridModel.history.length; i++){
             var stack = QueryGridModel.history[i];
-            var cellID = i%16;
+            var cellID = i%QueryGridView.size;
             lastCell = cellID+1;
 
             if(lastCell == 17)

@@ -11,4 +11,5 @@ function QueryModel(type, value) {
     this.displayValue = "";
     this.active = true;
     this.score = 0;
+    this.rangeQuery = false;
 }

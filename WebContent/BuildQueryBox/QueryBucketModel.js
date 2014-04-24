@@ -20,6 +20,7 @@ var QueryBucketModel = {
     lastUpdatedField     :   "snippet_last_updated",
     snippetImportsFiled  :   "snippet_imports",
     methodNameField      :   "snippet_method_invocations",
+    sizeField            :   "snippet_size",
     listOfKeys           :   new Array(),
 
     addQuery    :   function(/*QueryModel*/query){
@@ -85,6 +86,11 @@ var QueryBucketModel = {
 
     removeAll   :   function() {
         //add to history first
+        for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
+            var query = QueryBucketModel.stackOfQueries[i];
+            query.active = true;
+
+        }
         QueryGridModel.history.push(QueryBucketModel.stackOfQueries.slice(0));
 
         for (var i = 0; i < QueryBucketModel.listOfKeys.length; i++) {
@@ -190,19 +196,20 @@ var QueryBucketModel = {
                 //checking if active
                 if(QueryBucketModel.listOfActiveQueries[key][j] == true){
                     if(field == "") {
-                        field = key+":(";
+                            field = key+":(";
+
 
                         if(valueList[j] == "") {
                             field = field + "*";
                         }else {
-                            if(key != QueryBucketModel.lastUpdatedField)
+                            if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField)
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
                             else
                                 field = field + valueList[j];
                         }
 
                     }else{
-                        if(key != QueryBucketModel.lastUpdatedField)
+                        if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField)
                             field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
                         else
                             field = field + " AND "+valueList[j];
@@ -222,6 +229,8 @@ var QueryBucketModel = {
             }else{
                 query = query+field;
             }
+
+
 
         }
 

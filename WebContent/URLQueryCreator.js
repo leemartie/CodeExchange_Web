@@ -54,10 +54,11 @@ var URLQueryCreator = {
 //				languageFilter = ' AND snippet_human_language:('+QueryManager.humanLanguageOfComments+')';
 //			}
 			
-			
+			if (query != "")
+                query = query+" AND snippet_granularity:(Class)";
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ query
+				+ query+
 //                + '&fq='
 //                + fqQuery
 				+ '&start=' + start
@@ -65,7 +66,8 @@ var URLQueryCreator = {
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_method_invocations project_id '
                 + 'snippet_containing_class_id snippet_code snippet_granularity '
-                + 'snippet_path_complexity_class_sum snippet_path_complexity_method snippet_changed_code_churn'
+                + 'snippet_path_complexity_class_sum snippet_path_complexity_method snippet_changed_code_churn '
+                + 'snippet_size                                                     '
 				+ '&facet=true'
                 + '&facet.field=snippet_imports'
                 + '&facet.field=project_id'
@@ -116,7 +118,18 @@ var URLQueryCreator = {
 			url = url + '&rows=1&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 			
 			return url;
-		}
+		},
+
+    getClassURL	: function(name, callbackFunctionName){
+        var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
+            + 'id:(' + name + ')';
+
+
+
+        url = url + '&rows=1&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+
+        return url;
+    }
 		
 		
 };

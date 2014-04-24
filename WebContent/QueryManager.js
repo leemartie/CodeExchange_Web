@@ -503,6 +503,7 @@ function on_nextData(data) {
 							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
+                    Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
 
 //                    if(item.snippet_granularity == "Class")
 //                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
@@ -519,6 +520,8 @@ function on_nextData(data) {
 	Controller.setStatus("DONE - Getting next page");
 	clearInterval(SetupManager.rotateStatusVar);
 
+    facetCompleteCallBack(data);
+
 }
 
 /**
@@ -528,13 +531,14 @@ function on_nextData(data) {
  * @param metaDiv
  * @param count
  */
-function getMetaData(name, projectName, metaDiv, count){
+function getMetaData(name, classID, metaDiv, count){
 	
 
-	callback = 'onAuthorData'+count;
+	callback = 'classInfoCallBack'+count;
 	
 	
-	var url = URLQueryCreator.getAuthorURL(Utf8.decode(name), callback);
+	var url = URLQueryCreator.getClassURL('"'+name+'"', callback);
+
 	
 	
 	(function(div, url){
@@ -609,7 +613,8 @@ function on_data(data) {
 					
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
-					//Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
+	//				Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
+                    Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
 
                     //Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 //                    if(item.snippet_granularity == "Class")
@@ -811,7 +816,7 @@ function autoCompleteCallBack(data){
 			if(i%2 != 0)
 				continue;
 			
-			//TODO MUSHT MAKE SURE EVERYPART OF STRING MATCHES THE TYPED IN VALEUES
+			//TODO MUST MAKE SURE EVERYPART OF STRING MATCHES THE TYPED IN VALEUES
 			//so decoded results but start with prefix QueryManager.compleUserTyped
 			//AND the other parts decoded must match the typed in values, so the class
 			//must also match the typed in class

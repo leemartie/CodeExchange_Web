@@ -173,8 +173,8 @@ var Controller = {
 
                     //  editor.gotoLine(row-2);
 
-                      editor.getSession().foldAll(classRow,row-1);
-                      editor.getSession().foldAll(row+2,newLines.length);
+                      editor.getSession().foldAll(classRow+2,newLines.length);
+                 //     editor.getSession().foldAll(row+2,newLines.length);
 
 //                      var aceRange = ace.require('ace/range').Range;
 //                      var adjRangeAce = new aceRange(row, 0, row+1, 0);
@@ -184,8 +184,10 @@ var Controller = {
                       for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
                           var query = QueryBucketModel.stackOfQueries[i];
 
+                            if(query.type == QueryBucketModel.sizeField)
+                                continue;
 
-                         var  words = query.value.split(" ");
+                         var  words = query.value.split('" "|| [.]');
                           for( var j  = 0; j < words.length; j++){
                               var part = words[j];
 
@@ -213,7 +215,10 @@ var Controller = {
                               var query = QueryBucketModel.stackOfQueries[i];
 
 
-                              var  words = query.value.split(" ");
+                              if(query.type == QueryBucketModel.sizeField)
+                                  continue;
+
+                              var  words = query.value.split('" "|| [.]');
                               for( var j  = 0; j < words.length; j++){
                                   var part = words[j];
 
@@ -301,6 +306,54 @@ var Controller = {
 		getQueryInBox	:	function(){
 			return $(SetupManager.pound+SetupManager.queryInput_ID).val();
 		},
+
+        setSizeReformulation: function(meta, size){
+            var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
+          //  var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/author.png"></img>');
+            var codeSize = $('<text><u>shorter code than this[+]</u></text>');
+            codeSize.click(function(event){
+                var query = new QueryModel(QueryBucketModel.sizeField,"[* TO "+(size-1)+"]");
+                query.displayType = "size";
+                query.displayValue = String("less than "+(size));
+                query.rangeQuery = true;
+                BuildQueryBoxView.addAndSubmit(query);
+
+            });
+
+
+            metadiv.addClass("MetaBorder");
+            codeSize.addClass("MetaBorder");
+            codeSize.addClass("MetaQuery");
+
+
+
+            var metadiv2 = $(SetupManager.divOpen+SetupManager.divClose);
+            var codeSize2 = $('<text><u>longer code than this [+]</u></text>');
+            codeSize2.click(function(event){
+                var query = new QueryModel(QueryBucketModel.sizeField,"["+(size+1)+" TO *]");
+                query.displayType = "size";
+                query.displayValue = String("more than "+(size));
+                query.rangeQuery = true;
+                BuildQueryBoxView.addAndSubmit(query);
+
+            });
+
+
+            metadiv2.addClass("MetaBorder");
+            codeSize2.addClass("MetaBorder");
+            codeSize2.addClass("MetaQuery");
+
+
+
+
+
+          //  metadiv.append(icon);
+            metadiv.append(codeSize);
+            metadiv.append(codeSize2);
+
+
+            $(SetupManager.pound+meta).append(metadiv);
+        },
 		
 		setAuthorName	:	function(meta, name){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
@@ -385,7 +438,7 @@ var Controller = {
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
-			var authName = $('<div><u>'+name+'</u></div>');
+			var authName = $('<div><u>'+name+'[+]</u></div>');
 
 			authName.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);
