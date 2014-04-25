@@ -21,7 +21,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        this.row.append(this.cell);
        table.append(this.row);
-       var label = $('<text>['+displayType+'] <font color="yellow">'+displayValue+'</font></text>');
+       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">'+displayValue+'</font></text>');
 
        this.cell.append(label);
        this.cell.width("100%");

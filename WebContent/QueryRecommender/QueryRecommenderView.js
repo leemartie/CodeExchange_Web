@@ -32,7 +32,7 @@ var QueryRecommenderView = {
             var displayValue = QueryRecommenderModel.recommendedQueries[i].displayValue;
             var score = QueryRecommenderModel.recommendedQueries[i].score;
 
-            var label = $('<text>['+displayType+'] <font color="yellow">'+displayValue+'</font></text>');
+            var label = $('<text><font color="#8b0000">['+displayType+'] </font><font color="black">'+displayValue+'</font></text>');
 
             var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
             button.addClass("QueryViewButtonRecommend");

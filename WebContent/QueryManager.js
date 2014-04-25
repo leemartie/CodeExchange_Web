@@ -504,6 +504,8 @@ function on_nextData(data) {
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
+                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
+
 
 //                    if(item.snippet_granularity == "Class")
 //                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
@@ -615,6 +617,7 @@ function on_data(data) {
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
 	//				Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
+                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
 
                     //Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 //                    if(item.snippet_granularity == "Class")

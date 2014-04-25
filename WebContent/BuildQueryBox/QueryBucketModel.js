@@ -21,6 +21,7 @@ var QueryBucketModel = {
     snippetImportsFiled  :   "snippet_imports",
     methodNameField      :   "snippet_method_invocations",
     sizeField            :   "snippet_size",
+    complexityField       :  "snippet_path_complexity_class_sum",
     listOfKeys           :   new Array(),
 
     addQuery    :   function(/*QueryModel*/query){
@@ -202,14 +203,16 @@ var QueryBucketModel = {
                         if(valueList[j] == "") {
                             field = field + "*";
                         }else {
-                            if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField)
+                            if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
+                                && key != QueryBucketModel.complexityField)
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
                             else
                                 field = field + valueList[j];
                         }
 
                     }else{
-                        if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField)
+                        if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
+                            && key != QueryBucketModel.complexityField)
                             field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
                         else
                             field = field + " AND "+valueList[j];
