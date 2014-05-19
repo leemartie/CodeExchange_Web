@@ -48,6 +48,7 @@ var BuildQueryBoxView = {
             queryCell.append(queryLabel);
             queryCell.append(queryBox);
 
+            //this is for queries of true false values
             var truebox = $(SetupManager.inputOpen+SetupManager.inputClose);
             var trueboxLabel = $("<text >true</text>");
             truebox.attr("type","radio");
@@ -74,6 +75,44 @@ var BuildQueryBoxView = {
             falseboxLabel.hide();
 
 
+            //this is for method invocations
+
+            var ClassNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            ClassNameBox.width("98%");
+            var ClassNameLabel = $("<text>Class Name</text><br>");
+            ClassNameBox.attr(SetupManager.ID_attr,QueryBucketModel.snippetMethodCallCallingClass);
+
+            var MethodNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            MethodNameBox.width("98%");
+            var MethodNameLabel = $("<br><text>Method Name</text><br>");
+            MethodNameBox.attr(SetupManager.ID_attr,QueryBucketModel.snippetMethodCallName);
+
+            var ParameterNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            ParameterNameBox.width("98%");
+            var ParameterNameLabel = $("<br><text>Parameter Type</text><br>");
+            ParameterNameBox.attr(SetupManager.ID_attr,QueryBucketModel.snippetMethodCallParameters);
+
+
+            queryCell.append(ClassNameLabel);
+            queryCell.append(ClassNameBox);
+
+            queryCell.append(MethodNameLabel);
+            queryCell.append(MethodNameBox);
+
+            queryCell.append(ParameterNameLabel);
+            queryCell.append(ParameterNameBox);
+
+            ClassNameBox.hide();
+            ClassNameLabel.hide();
+
+            MethodNameBox.hide();
+            MethodNameLabel.hide();
+
+            ParameterNameBox.hide();
+            ParameterNameLabel.hide();
+
+
+
             view.append(queryRow);
 
             //combo box for query type
@@ -84,14 +123,16 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.extendsField+'">extends class</option>'+
                 '<option  value="'+QueryBucketModel.implementsField+'">implements interface</option>'+
                 '<option  value="'+QueryBucketModel.snippetImportsFiled+'">imports library</option>'+
+                '<option  value="'+QueryBucketModel.snippetMethodCall+'">method call</option>'+
+                '<option  value="'+QueryBucketModel.snippetMethodDeclaration+'">method declaration</option>'+
 //                '<option  value="'+QueryBucketModel.methodNameField+'">method name</option>'+
-                '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
-                '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
+//                '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
+//                '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
                 '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
                 '<option  style="background-color: black; color:white" disabled>Social query</option>'+
                 '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
                 '<option  value="'+QueryBucketModel.projectField+'">project</option>'+
-                '<option  value="'+QueryBucketModel.lastUpdatedField+'">year</option>'+
+//                '<option  value="'+QueryBucketModel.lastUpdatedField+'">year</option>'+
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">month</option>'+
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">day</option>'+
                 '</select>');
@@ -111,12 +152,49 @@ var BuildQueryBoxView = {
                     falseboxLabel.show();
 
 
-                }else{
+                    ClassNameBox.hide();
+                    ClassNameLabel.hide();
+
+                    MethodNameBox.hide();
+                    MethodNameLabel.hide();
+
+                    ParameterNameBox.hide();
+                    ParameterNameLabel.hide();
+
+
+                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall){
+
+                    ClassNameBox.show();
+                    ClassNameLabel.show();
+
+                    MethodNameBox.show();
+                    MethodNameLabel.show();
+
+                    ParameterNameBox.show();
+                    ParameterNameLabel.show();
+
+                    queryBox.hide();
+                    truebox.hide();
+                    falsebox.hide();
+                    trueboxLabel.hide();
+                    falseboxLabel.hide();
+                }
+                else{
                     queryBox.show();
                     truebox.hide();
                     falsebox.hide();
                     trueboxLabel.hide();
                     falseboxLabel.hide();
+
+
+                    ClassNameBox.hide();
+                    ClassNameLabel.hide();
+
+                    MethodNameBox.hide();
+                    MethodNameLabel.hide();
+
+                    ParameterNameBox.hide();
+                    ParameterNameLabel.hide();
 
 
                 }
@@ -221,25 +299,85 @@ var BuildQueryBoxView = {
                     query.displayType = combo.find(":selected").text();
                     query.displayValue = queryBox.val();
 
-                    if(query.displayType == "year") {
-                            var yearQuery = "["+queryBox.val()+"-01-01T00:00:00Z TO "+queryBox.val()+"-12-31T00:00:00Z]";
-                            query = new QueryModel(combo.val(), yearQuery);
-                            query.displayValue = queryBox.val();
-                            query.displayType = combo.find(":selected").text();
-                    }
-                    if(query.type == QueryBucketModel.methodNameField){
-                        var encodedMethodName = "/"+EncoderDecoder.encodeMethodNameFacet(queryBox.val())+"/";
-                        query = new QueryModel(combo.val(), encodedMethodName);
-                        query.displayValue = queryBox.val();
-                        query.displayType = combo.find(":selected").text();
-                    }
-
-
-
-                       BuildQueryBoxView.addAndSubmit(query);
+//                    if(query.displayType == "year") {
+//                            var yearQuery = "["+queryBox.val()+"-01-01T00:00:00Z TO "+queryBox.val()+"-12-31T00:00:00Z]";
+//                            query = new QueryModel(combo.val(), yearQuery);
+//                            query.displayValue = queryBox.val();
+//                            query.displayType = combo.find(":selected").text();
+//                    }
+                      BuildQueryBoxView.addAndSubmit(query);
 
                     queryBox.val("");
 
+                }
+            });
+
+            //for method call queries
+            var methodCallQueryFunction = function(){
+                var query = null;
+                var methodCallValue = '';
+                if(ClassNameBox.val() != "") {
+                    methodCallValue = methodCallValue + '%2B'
+                        + QueryBucketModel.snippetMethodCallCallingClass + ':"' + ClassNameBox.val() + '"';
+                }
+                if(MethodNameBox.val() != "") {
+                    methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
+                        + ':"' +MethodNameBox.val()+ + '"';
+                }
+                if(ParameterNameBox.val() != "") {
+                    methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallParameters
+                        + ':"' +  ParameterNameBox.val() + '"';
+                }
+                query = new QueryModel(combo.val(), methodCallValue);
+                query.displayType = combo.find(":selected").text();
+                query.displayValue = ClassNameBox.val()+"."+MethodNameBox.val()+"("+ParameterNameBox.val()+")";
+                BuildQueryBoxView.addAndSubmit(query);
+                ClassNameBox.val("");
+                MethodNameBox.val("");
+                ParameterNameBox.val("");
+            };
+
+
+
+
+            //auto complete for method calls
+            ClassNameBox.autocomplete({
+                source: function( request, response ){
+                    QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
+                }
+            });
+
+            MethodNameBox.autocomplete({
+                source: function( request, response ){
+                    QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallName, request, response);
+                }
+            });
+
+            ParameterNameBox.autocomplete({
+                source: function( request, response ){
+                    QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
+                }
+            });
+
+            //listening for enter
+            ClassNameBox.keypress(function(e){
+                if (e.keyCode == '13') {
+                    e.preventDefault();
+                    methodCallQueryFunction();
+                }
+            });
+
+            MethodNameBox.keypress(function(e){
+                if (e.keyCode == '13') {
+                    e.preventDefault();
+                    methodCallQueryFunction();
+                }
+            });
+
+            ParameterNameBox.keypress(function(e){
+                if (e.keyCode == '13') {
+                    e.preventDefault();
+                    methodCallQueryFunction();
                 }
             });
 
@@ -259,20 +397,19 @@ var BuildQueryBoxView = {
 
 
                 Controller.setStatus("SEARCHING...");
+
                 var query = QueryBucketModel.constructQuery();
-                //var fqQuery = QueryBucketModel.constructFQQuery();
 
                 QueryManager.setQuery(query);
-                // QueryManager.setFQQuery(fqQuery);
 
                 QueryManager.submitQuery();
 //                    //make it lose focus so we can detect when user refocus on query it
 //                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-                var angle = 0;
-                SetupManager.rotateStatusVar = setInterval(function(){
-                    angle+=3;
-                    $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-                },50);
+//                var angle = 0;
+//                SetupManager.rotateStatusVar = setInterval(function(){
+//                    angle+=3;
+//                    $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
+//                },50);
             }
 
         }

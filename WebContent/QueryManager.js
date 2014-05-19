@@ -78,57 +78,26 @@ var QueryManager = {
 		
 		QueryManager.currentRequest = request;
 		QueryManager.currentResponse = response;
-		//constrain autocomplete by the values of the other code properties
-//		var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
-//		var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
-		
-		
-		
-		//var property = field;
 
 
-        QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
+        if(field == QueryBucketModel.snippetMethodCallCallingClass)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallCallingClass).val();
+        else
+            QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 
 
-        //alert (completeUserTyped);
-		
+
 		var queryFilter = QueryBucketModel.constructQuery();
 
         if(queryFilter == "")
             queryFilter = "*";
-		
-//		if(field != SetupManager.extendsInputID && extendsFilter != ""){
-//			queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
-//		}
-//		if(field != SetupManager.implementsInputID && implementsFilter != ""){
-//			queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
-//		}
-		
-//		var prefix = EncoderDecoder.encodeInvocationFilterLeaveOneOut(field,QueryManager.completeUserTyped);
-		var invocationFilter = "";
-//
-//		if(prefix == "*")
-//			invocationFilter = " AND snippet_method_invocations:"+"/"+EncoderDecoder.encodeInvocationFilter()+"/";
-//		else
-//			invocationFilter = " AND snippet_method_invocations:"+"/"+prefix+"/";
-		
-		
-		var queryAutoComplete = "";
-		if(field != 'snippet_method_invocations'){
-			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
-			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-			'&facet.field='+field+'&facet.mincount=1'+'&facet.limit=500'+'&facet.prefix='+QueryManager.completeUserTyped +
-			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
-		}
-//        else{
-//			queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
-//			'rows=0&q='+queryFilter+invocationFilter+'&facet=true' +
-//			'&facet.field='+property+'&facet.mincount=1'+'&facet.limit=500'+
-//			'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
-//		}
 
-		
-		
+		var queryAutoComplete = "";
+
+		queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
+		'rows=0&q='+queryFilter+'&facet=true' +
+		'&facet.field='+field+'&facet.mincount=1'+'&facet.limit=50'+'&facet.prefix='+QueryManager.completeUserTyped +
+		'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
 		QueryManager.currentAutoCompleteField = field;
 		
@@ -382,7 +351,7 @@ function facetCompleteCallBack(data){
 
     QueryRecommenderModel.clearRecommendedQueries();
 
-    var projects = data.facet_counts.facet_fields.project_id;
+    var projects = data.facet_counts.facet_fields.snippet_project_id;
 
     for(i = 0; i<projects.length; i = i+2){
         if(i >= 6)
@@ -394,7 +363,7 @@ function facetCompleteCallBack(data){
         if(projectName == "")
             continue;
 
-        var query1 = new QueryModel("project_id", projectName);
+        var query1 = new QueryModel("snippet_project_id", projectName);
         query1.displayType = "project";
         query1.displayValue = projectName.substring(projectName.lastIndexOf("/")+1,projectName.length);
         query1.score = projects[i+1];
@@ -491,18 +460,18 @@ function on_nextData(data) {
 				var metaLength = SetupManager.metaDivArray_ID.length;
 				if (i < resultLength && i < metaLength) {
 
-					var versions = item.snippet_all_versions;
-					var correctVersion = versions[0];
-					var wrongVersion = item.snippet_this_version;
+				//	var versions = item.snippet_all_versions;
+				//	var correctVersion = versions[0];
+				//	var wrongVersion = item.snippet_this_version;
 					
 					var url = String(item.snippet_address);
-					var correctURL = url.replace(wrongVersion,correctVersion);
+					//var correctURL = url.replace(wrongVersion,correctVersion);
 
 
 					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
-							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
+							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
 
@@ -598,12 +567,12 @@ function on_data(data) {
 				//	getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
 
 					
-					var versions = item.snippet_all_versions;
-					var correctVersion = versions[0];
-					var wrongVersion = item.snippet_this_version;
+				//	var versions = item.snippet_all_versions;
+				//	var correctVersion = versions[0];
+				//	var wrongVersion = item.snippet_this_version;
 					
 					var url = String(item.snippet_address);
-					var correctURL = url.replace(wrongVersion,correctVersion);
+				//	var correctURL = url.replace(wrongVersion,correctVersion);
 
 
 
@@ -611,10 +580,10 @@ function on_data(data) {
 
 					
 					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
-							correctURL, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
+							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					
-					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_version_author);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.project_id);
+					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
 	//				Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
@@ -806,154 +775,31 @@ function autoCompleteCallBack(data){
 
 
         QueryManager.currentResponse(mappedResults);
-        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
-    }
-	
-	else if(QueryManager.currentAutoCompleteField == SetupManager.callInputID){
-		var results = data.facet_counts.facet_fields.snippet_method_invocations;
-		
-		var temp = new Array();
-		
-		for(var i = 0; i<results.length; i++){
-			//skip the odds because those are frequency counts and not results
-			if(i%2 != 0)
-				continue;
-			
-			//TODO MUST MAKE SURE EVERYPART OF STRING MATCHES THE TYPED IN VALEUES
-			//so decoded results but start with prefix QueryManager.compleUserTyped
-			//AND the other parts decoded must match the typed in values, so the class
-			//must also match the typed in class
-			
-			var className = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-			var argTypeName = $(SetupManager.pound+SetupManager.argTypeInputID).val();
-			var pushBoolean = true;
-			
-			if(className != ""){
-				if(className !=  EncoderDecoder.decodeClassFilter(results[i]) &&
-						className != EncoderDecoder.decodeCallingClassFilter(results[i]))
-					pushBoolean = false;
-			}
-			
-			if(argTypeName != ""){
-				if(argTypeName !=  EncoderDecoder.decodeArgumentFilter(results[i]))
-					pushBoolean = false;
-			}
-			
-			var nonLowercaseResult = EncoderDecoder.decodeMethodFilter(results[i]);
-			var decodedResult = String(nonLowercaseResult).toLowerCase();
-			if((String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) != -1
-					&& 
-					pushBoolean))
-				temp.push(nonLowercaseResult);
-		}
-		
-		temp = Util.getOnlyUniqueElements(temp);
-		var mappedResults = $.map( temp, function( item ) {
-            return {
-              "label": item,
-              "value": item
-            };
-          });
-		
-		
-		QueryManager.currentResponse(mappedResults);
-		//return jsonResults;
-		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp, autoFocus: true, delay: 500 });
-	}else if(QueryManager.currentAutoCompleteField == SetupManager.callingObjectInputID){
-		var results = data.facet_counts.facet_fields.snippet_method_invocations;
-		
-		var temp = new Array();
-		
-		for(var i = 0; i<results.length; i++){
-			//skip the odds because those are frequency counts and not results
-			if(i%2 != 0)
-				continue;
-			
-			var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
-			var argTypeName = $(SetupManager.pound+SetupManager.argTypeInputID).val();
-			var pushBoolean = true;
-			
-			if(methodName != ""){
-				var methodFilterDecoded = EncoderDecoder.decodeMethodFilter(results[i]);
-				if(methodName !=  methodFilterDecoded)
-					pushBoolean = false;
-			}
-			
-			if(argTypeName != ""){
-				if(argTypeName !=  EncoderDecoder.decodeArgumentFilter(results[i]))
-					pushBoolean = false;
-			}
-			
-			var nonLowercaseResult = EncoderDecoder.decodeClassFilter(results[i]);
-			var decodedResult = String(nonLowercaseResult).toLowerCase();
-			if((String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) != -1	&&	pushBoolean))
-				temp.push(nonLowercaseResult);
-			
-			var nonLowercaseResult = EncoderDecoder.decodeCallingClassFilter(results[i]);
-			var decodedResult = String(nonLowercaseResult).toLowerCase();
-			if((String(decodedResult).indexOf(QueryManager.completeUserTyped.toLowerCase()) != -1	&&	pushBoolean))
-				temp.push(nonLowercaseResult);
-		}
-		temp = Util.getOnlyUniqueElements(temp);
-		var mappedResults = $.map( temp, function( item ) {
-            return {
-              "label": item,
-              "value": item
-            };
-          });
-		
-		QueryManager.currentResponse(mappedResults);	
-		//return jsonResults;
-		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: temp, autoFocus: true, delay: 500 });	
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClass){
+        var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class;
+        var temp = new Array();
 
-	}else if(QueryManager.currentAutoCompleteField == SetupManager.argTypeInputID){
-		var results = data.facet_counts.facet_fields.snippet_method_invocations;
-		
-		var temp = new Array();
-		
-		for(var i = 0; i<results.length; i++){
-			//skip the odds because those are frequency counts and not results
-			if(i%2 != 0)
-				continue;
-			
-			var methodName = $(SetupManager.pound+SetupManager.callInputID).val();
-			var className = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-			var argTypeName = $(SetupManager.pound+SetupManager.argTypeInputID).val();
-			var pushBoolean = true;
-			
-			if(methodName != ""){
-				if(methodName !=  EncoderDecoder.decodeMethodFilter(results[i]))
-					pushBoolean = false;
-			}
-			
-			if(className != ""){
-				if(className !=  EncoderDecoder.decodeClassFilter(results[i]) &&
-						className != EncoderDecoder.decodeCallingClassFilter(results[i]))
-					pushBoolean = false;
-			}
-			
-			var nonLowercaseResult = EncoderDecoder.decodeArgumentFilter(results[i]);
-			var decodedResult = String(nonLowercaseResult).toLowerCase();
-			if((String(decodedResult).indexOf(	QueryManager.completeUserTyped.toLowerCase()) != -1	&&	pushBoolean))
-				temp.push(nonLowercaseResult);
-		}
-		temp = Util.getOnlyUniqueElements(temp);
-		var mappedResults = $.map( temp, function( item ) {
-              return {
+        for(var i = 0; i<results.length; i++){
+            //skip the odds because those are frequency counts and not results
+            if(i%2 != 0)
+                continue;
+
+            temp.push(results[i]);
+        }
+
+        var mappedResults = $.map( temp, function( item ) {
+            return {
                 "label": item,
                 "value": item
-              };
-            });
-		
-		QueryManager.currentResponse(mappedResults);		
-		//return jsonResults;
-		
-		
-		
-	}
+            };
+        });
+
+
+        QueryManager.currentResponse(mappedResults);
+    }
 	
 	
-	//return temp;
+
 	
 	
 	

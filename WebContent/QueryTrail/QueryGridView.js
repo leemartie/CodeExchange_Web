@@ -77,7 +77,7 @@ var QueryGridView = {
                 row.append(cell);
 
                 var query = stack[j];
-                var label = $('<text>['+query.displayType+'] <font color="yellow">'+query.displayValue+'</font></text>');
+                var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
 
                 cell.append(label);
 
@@ -144,7 +144,7 @@ var QueryGridView = {
             row.append(cell);
 
             cell.attr("valign","bottom");
-            var label = $('<text>['+query.displayType+'] <font color="yellow">'+query.displayValue+'</font></text>');
+            var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
             cell.append(label);
 
             var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);

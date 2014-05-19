@@ -54,24 +54,22 @@ var URLQueryCreator = {
 //				languageFilter = ' AND snippet_human_language:('+QueryManager.humanLanguageOfComments+')';
 //			}
 			
-			if (query != "")
-                query = query+" AND snippet_granularity:(Class)";
+			//if (query != "")
+            //    query = query+" AND snippet_granularity:(Class)";
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ query+
-//                + '&fq='
-//                + fqQuery
+				+ query
 				+ '&start=' + start
-				+ '&fl=id snippet_version_author snippet_project_name '
+				+ '&fl=id snippet_author_name snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
-				+ 'snippet_address_upper_bound snippet_method_invocations project_id '
+				+ 'snippet_address_upper_bound snippet_method_invocations snippet_project_id '
                 + 'snippet_containing_class_id snippet_code snippet_granularity '
-                + 'snippet_path_complexity_class_sum snippet_path_complexity_method snippet_changed_code_churn '
-                + 'snippet_size                                                     '
+                + 'snippet_path_complexity_class_sum snippet_changed_code_churn '
+                + 'snippet_size'
 				+ '&facet=true'
                 + '&facet.field=snippet_imports'
-                + '&facet.field=project_id'
-                + '&facet.field=snippet_version_author'
+                + '&facet.field=snippet_project_id'
+                + '&facet.field=snippet_author_name'
                 + '&facet.field=snippet_project_name'
                 + '&facet.field=snippet_extends'
                 + '&facet.field=snippet_implements'

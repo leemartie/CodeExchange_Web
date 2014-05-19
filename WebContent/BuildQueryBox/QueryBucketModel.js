@@ -12,16 +12,22 @@ var QueryBucketModel = {
     snippetField         :   "snippet_code",
     extendsField         :   "snippet_extends",
     implementsField      :   "snippet_implements",
-    authorFiled          :   "snippet_version_author",
+    authorFiled          :   "snippet_author_name",
     projectField         :   "snippet_project_name",
     returnTypeField      :   "snippet_return_type",
-    recursiveField       :   "snippet_is_recursive",
-    varargsField         :   "snippet_is_var_args",
-    lastUpdatedField     :   "snippet_last_updated",
-    snippetImportsFiled  :   "snippet_imports",
-    methodNameField      :   "snippet_method_invocations",
-    sizeField            :   "snippet_size",
-    complexityField       :  "snippet_path_complexity_class_sum",
+    recursiveField       :   "snippet_method_dec_is_recursive",
+    varargsField         :   "snippet_method_dec_is_var_args",
+    lastUpdatedField                : "snippet_last_updated",
+    snippetImportsFiled             : "snippet_imports",
+    methodNameField                 : "snippet_method_invocations",
+    sizeField                       : "snippet_size",
+    complexityField                 : "snippet_path_complexity_class_sum",
+    snippetMethodCall               : "is_method_invocation_Child",
+    snippetMethodDeclaration        : "snippet_method_dec_name",
+    snippetMethodCallCallingClass   : "snippet_method_invocation_calling_class",
+    snippetMethodCallName           : "snippet_method_invocation_name",
+    snippetMethodCallParameters     : "snippet_method_invocation_arg_types",
+
     listOfKeys           :   new Array(),
 
     addQuery    :   function(/*QueryModel*/query){
@@ -118,67 +124,7 @@ var QueryBucketModel = {
         }
     },
 
-    /**
-     * This will construct a Lucene query based on the contents of the QueryBucket
-     * @returns {string}
-     */
-    constructFQQuery: function(){
-        var query = "";
 
-        for(var i = 0; i<QueryBucketModel.listOfKeys.length; i++){
-            var key = QueryBucketModel.listOfKeys[i];
-
-            if(key == QueryBucketModel.snippetField)
-                continue;
-
-            var field = "";
-            var valueList = QueryBucketModel.listOfQueries[key];
-
-
-            //query for field
-            for(var j = 0; j<valueList.length; j++){
-
-                //checking if active
-                if(QueryBucketModel.listOfActiveQueries[key][j] == true){
-                    if(field == "") {
-                        field = key+":(";
-
-                        if(valueList[j] == "") {
-                            field = field + "*";
-                        }else {
-                            if(key != QueryBucketModel.lastUpdatedField)
-                                field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
-                            else
-                                field = field + valueList[j];
-                        }
-
-                    }else{
-                        if(key != QueryBucketModel.lastUpdatedField)
-                            field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
-                        else
-                            field = field + " AND "+valueList[j];
-                    }
-                }
-
-
-            }
-
-            //close it up if added something
-            if(field != ""){
-                field = field+")";
-            }
-
-            if(query != "" && field != ""){
-                query = query+" AND "+field;
-            }else{
-                query = query+field;
-            }
-
-        }
-
-        return query;
-
-    },
 
     constructQuery : function(){
         var query = "";
@@ -196,7 +142,13 @@ var QueryBucketModel = {
 
                 //checking if active
                 if(QueryBucketModel.listOfActiveQueries[key][j] == true){
+
+
                     if(field == "") {
+
+                        if(key == QueryBucketModel.snippetMethodCall)
+                            field = '(_query_:{!parent which=parent:true}';
+                        else
                             field = key+":(";
 
 
@@ -204,7 +156,7 @@ var QueryBucketModel = {
                             field = field + "*";
                         }else {
                             if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
-                                && key != QueryBucketModel.complexityField)
+                                && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall)
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
                             else
                                 field = field + valueList[j];
@@ -212,7 +164,7 @@ var QueryBucketModel = {
 
                     }else{
                         if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
-                            && key != QueryBucketModel.complexityField)
+                            && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall)
                             field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
                         else
                             field = field + " AND "+valueList[j];
@@ -221,6 +173,8 @@ var QueryBucketModel = {
 
 
             }
+
+
 
             //close it up if added something
             if(field != ""){
