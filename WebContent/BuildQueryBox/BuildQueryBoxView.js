@@ -128,7 +128,7 @@ var BuildQueryBoxView = {
 //                '<option  value="'+QueryBucketModel.methodNameField+'">method name</option>'+
 //                '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
 //                '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
-                '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
+//                '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
                 '<option  style="background-color: black; color:white" disabled>Social query</option>'+
                 '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
                 '<option  value="'+QueryBucketModel.projectField+'">project</option>'+
@@ -322,7 +322,7 @@ var BuildQueryBoxView = {
                 }
                 if(MethodNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
-                        + ':"' +MethodNameBox.val()+ + '"';
+                        + ':"' +MethodNameBox.val()+ '"';
                 }
                 if(ParameterNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallParameters
@@ -366,6 +366,7 @@ var BuildQueryBoxView = {
                     methodCallQueryFunction();
                 }
             });
+
 
             MethodNameBox.keypress(function(e){
                 if (e.keyCode == '13') {

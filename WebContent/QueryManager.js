@@ -82,6 +82,10 @@ var QueryManager = {
 
         if(field == QueryBucketModel.snippetMethodCallCallingClass)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallCallingClass).val();
+        else if(field == QueryBucketModel.snippetMethodCallName)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallName).val();
+        else if(field == QueryBucketModel.snippetMethodCallParameters)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallParameters).val();
         else
             QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 
@@ -646,139 +650,28 @@ function autoCompleteCallBack(data){
 	
 	if(QueryManager.currentAutoCompleteField == QueryBucketModel.extendsField){
 		var results =  data.facet_counts.facet_fields.snippet_extends;
-				var temp = new Array();
-		
-		for(var i = 0; i<results.length; i++){
-			//skip the odds because those are frequency counts and not results
-			if(i%2 != 0)
-				continue;
-			
-			temp.push(results[i]);
-		}
-		
-		var mappedResults = $.map( temp, function( item ) {
-            return {
-              "label": item,
-              "value": item
-            };
-          });
-		
-		QueryManager.currentResponse(mappedResults);
-
-		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
 	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.implementsField){
 		var results = data.facet_counts.facet_fields.snippet_implements;
-		var temp = new Array();
-		
-		for(var i = 0; i<results.length; i++){
-			//skip the odds because those are frequency counts and not results
-			if(i%2 != 0)
-				continue;
-			
-			temp.push(results[i]);
-		}
-
-		var mappedResults = $.map( temp, function( item ) {
-            return {
-              "label": item,
-              "value": item
-            };
-          });
-		
-
-		QueryManager.currentResponse(mappedResults);
-		//$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
 	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.authorFiled){
         var results = data.facet_counts.facet_fields.snippet_version_author;
-        var temp = new Array();
-
-        for(var i = 0; i<results.length; i++){
-            //skip the odds because those are frequency counts and not results
-            if(i%2 != 0)
-                continue;
-
-            temp.push(results[i]);
-        }
-
-        var mappedResults = $.map( temp, function( item ) {
-            return {
-                "label": item,
-                "value": item
-            };
-        });
-
-
-        QueryManager.currentResponse(mappedResults);
-        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.projectField){
         var results = data.facet_counts.facet_fields.snippet_project_name;
-        var temp = new Array();
-
-        for(var i = 0; i<results.length; i++){
-            //skip the odds because those are frequency counts and not results
-            if(i%2 != 0)
-                continue;
-
-            temp.push(results[i]);
-        }
-
-        var mappedResults = $.map( temp, function( item ) {
-            return {
-                "label": item,
-                "value": item
-            };
-        });
-
-
-        QueryManager.currentResponse(mappedResults);
-        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.returnTypeField){
         var results = data.facet_counts.facet_fields.snippet_return_type;
-        var temp = new Array();
-
-        for(var i = 0; i<results.length; i++){
-            //skip the odds because those are frequency counts and not results
-            if(i%2 != 0)
-                continue;
-
-            temp.push(results[i]);
-        }
-
-        var mappedResults = $.map( temp, function( item ) {
-            return {
-                "label": item,
-                "value": item
-            };
-        });
-
-
-        QueryManager.currentResponse(mappedResults);
-        //$(SetupManager.pound+QueryManager.currentAutoCompleteField).autocomplete({ source: results, autoFocus: true, delay: 500 });
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetImportsFiled){
         var results = data.facet_counts.facet_fields.snippet_imports;
-        var temp = new Array();
-
-        for(var i = 0; i<results.length; i++){
-            //skip the odds because those are frequency counts and not results
-            if(i%2 != 0)
-                continue;
-
-            temp.push(results[i]);
-        }
-
-        var mappedResults = $.map( temp, function( item ) {
-            return {
-                "label": item,
-                "value": item
-            };
-        });
-
-
-        QueryManager.currentResponse(mappedResults);
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClass){
         var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class;
-        var temp = new Array();
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallName){
+        var results = data.facet_counts.facet_fields.snippet_method_invocation_name;
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallParameters){
+        var results = data.facet_counts.facet_fields.snippet_method_invocation_arg_types;
 
+    }
+
+    //recommend auto complete
+    if(results.length > 0){
+        var temp = new Array();
         for(var i = 0; i<results.length; i++){
             //skip the odds because those are frequency counts and not results
             if(i%2 != 0)
@@ -786,23 +679,14 @@ function autoCompleteCallBack(data){
 
             temp.push(results[i]);
         }
-
         var mappedResults = $.map( temp, function( item ) {
             return {
                 "label": item,
                 "value": item
             };
         });
-
-
         QueryManager.currentResponse(mappedResults);
     }
-	
-	
-
-	
-	
-	
 
 }
 

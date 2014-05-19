@@ -7,62 +7,16 @@ var URLQueryCreator = {
 		port					: 8983,
 		
 		getQueryURL	:	function(callbackFunctionName){
-		
-	
-			var query = QueryManager.currentQuery;
-            var fqQuery = QueryManager.currentFQquery;
-			var start = QueryManager.currentStart;
-			
-			
-	
-			var queryFilter = "";
-			
-			/**
-			 * http://localhost:8983/solr/parents/select?q=alive:yes AND 
-			 * _query_:"{!join fromIndex=children from=fatherid to=parentid v='childname:Tom'}"
-			 */
-			
-//			var extendsFilter = $(SetupManager.pound+SetupManager.extendsInputID).val();
-//			var implementsFilter = $(SetupManager.pound+SetupManager.implementsInputID).val();
-			
-//			if(extendsFilter != ""){
-//				queryFilter = queryFilter+' AND snippet_extends:('+extendsFilter+')';
-//			}
-//			if(implementsFilter != ""){
-//				queryFilter = queryFilter+' AND snippet_implements:('+implementsFilter+')';
-//			}
-			
-			var invocationFilter = '';
-			
-//			var invocationEncode = EncoderDecoder.encodeInvocationFilter();
-			
-//			var objectsClassFilter = $(SetupManager.pound+SetupManager.callingObjectInputID).val();
-//			var methodCallNameFilter = $(SetupManager.pound+SetupManager.callInputID).val();
-//			var argumentTypeFilter = $(SetupManager.pound+SetupManager.argTypeInputID).val();
-			
-//			if(objectsClassFilter != "" || methodCallNameFilter != "" || argumentTypeFilter != "")
-//				invocationFilter = " AND snippet_method_invocations:"+"/"+invocationEncode+"/";
-			
-	//		var invocationQuery = ' AND _query_:"{!join fromIndex='+URLQueryCreator.invocationCollection+' from=id to=invocation_snippet_id v="'+invocationFilter+'"}"';
 
-			
-			var commentsFilter = '';
-			var languageFilter = '';
-			
-//			if(QueryManager.hasComments){
-//				commentsFilter = ' AND snippet_has_comments:('+QueryManager.hasComments+')';
-//				languageFilter = ' AND snippet_human_language:('+QueryManager.humanLanguageOfComments+')';
-//			}
-			
-			//if (query != "")
-            //    query = query+" AND snippet_granularity:(Class)";
+			var query = QueryManager.currentQuery;
+			var start = QueryManager.currentStart;
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ query
 				+ '&start=' + start
 				+ '&fl=id snippet_author_name snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
-				+ 'snippet_address_upper_bound snippet_method_invocations snippet_project_id '
+				+ 'snippet_address_upper_bound snippet_project_id '
                 + 'snippet_containing_class_id snippet_code snippet_granularity '
                 + 'snippet_path_complexity_class_sum snippet_changed_code_churn '
                 + 'snippet_size'
@@ -75,10 +29,10 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_implements'
                 + '&facet.mincount=1'
 				+ '&facet.limit=4';
+//                + '&expand=true'
+//                + '&expand.field=expand_id'
+//                + '&expand.q=*:*';  // could also query by those that met the children query
 
-			
-			
-			
 			for(var i = 0; i < FilterManager.filters.length;i++){
 				filter = FilterManager.filters[i];
 				
@@ -121,8 +75,6 @@ var URLQueryCreator = {
     getClassURL	: function(name, callbackFunctionName){
         var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
             + 'id:(' + name + ')';
-
-
 
         url = url + '&rows=1&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 

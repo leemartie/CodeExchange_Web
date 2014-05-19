@@ -5,7 +5,7 @@
 
 /**
  * Controls all gets and sets of the HTML
- * 
+ *
  * REMEMBER THAT LITERALS are STATIC CLASSES
  */
 var Controller = {
@@ -23,34 +23,34 @@ var Controller = {
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
-		 * 
+		 *
 		 * @param codeNode
 		 * @param codeText
 		 * @returns
 		 */
 		setCode	:	function(codeNode,codeText){
-	
+
 			var result = new CodeResult(codeText);
 			$(SetupManager.pound+codeNode).append(result.getJQueryObject());
 
 		},
-		
+
 		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations){
-		
+
 			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			//var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			//$(SetupManager.pound+codeNode).attr("src",codeURL);
-			
+
 			$.getJSON(url).fail(function(data, textStatus, jqXHR) {
 			 //   alert( data + textStatus + jqXHR);
-			    
-			   
+
+
 			 //   $(SetupManager.pound+codeNode).empty();
 			//	$(SetupManager.pound+codeNode).append("<pre>deleted or moved code</pre>");
                 var editor = ace.edit(codeNode);
                 editor.getSession().setValue("deleted or moved code");
 
-				
+
 			  }).success(function(data, textStatus, jqXHR ) {
 				  $.each(data, function(index, element) {
 					    var code = element;
@@ -60,8 +60,6 @@ var Controller = {
 
                       editor.setHighlightActiveLine(true);
 
-
-//
                       var newLines = String(code).split("\n");
                       var count = 0;
                       var row = 0;
@@ -173,7 +171,7 @@ var Controller = {
 
                     //  editor.gotoLine(row-2);
 
-                      editor.getSession().foldAll(classRow+2,newLines.length);
+                  //    editor.getSession().foldAll(classRow+2,newLines.length);
                  //     editor.getSession().foldAll(row+2,newLines.length);
 
 //                      var aceRange = ace.require('ace/range').Range;
@@ -252,22 +250,22 @@ var Controller = {
 
                   });
 			  });
-			
-			
+
+
 		},
 
-		
+
 		/**
-		 * 
+		 *
 		 * @param id
 		 * @returns
 		 */
 		getExpandBtnToCell	:	function(id){
 			return SetupManager.cellDivArray_ID[id];
 		},
-		
+
 		/**
-		 * 
+		 *
 		 * @returns
 		 */
 		clearAllCode	:	function(){
@@ -282,7 +280,7 @@ var Controller = {
 		          $(SetupManager.pound+SetupManager.metaDivArray_ID[i]).empty();
 			}
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
@@ -290,7 +288,7 @@ var Controller = {
 			$(SetupManager.pound+SetupManager.resultTotalP_ID).empty();
 			$(SetupManager.pound+SetupManager.resultTotalP_ID).prepend(" " + total + " ");
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
@@ -301,7 +299,7 @@ var Controller = {
 			text.addClass("Message");
 			$(SetupManager.pound+SetupManager.statusDiv_ID).append(text);
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
@@ -437,7 +435,7 @@ var Controller = {
         //    $(SetupManager.pound+meta).append(metadiv);
           //  $(SetupManager.pound+meta).append(metadiv2);
         },
-		
+
 		setAuthorName	:	function(meta, name){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/author.png"></img>');
@@ -451,18 +449,18 @@ var Controller = {
                 BuildQueryBoxView.addAndSubmit(query);
 
             });
-			
-			
-			
+
+
+
 			metadiv.addClass("MetaBorder");
 			authName.addClass("MetaBorder");
-			
+
 			metadiv.append(icon);
 			metadiv.append(authName);
-			
+
 			$(SetupManager.pound+meta).append(metadiv);
-	
-			
+
+
 		},
 
        setCodeComplexity : function(meta, complexity){
@@ -487,7 +485,7 @@ var Controller = {
 
            $(SetupManager.pound+meta).append(metadiv);
        },
-		
+
 		setCodeChurn: function(meta, codechurn){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			//var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
@@ -502,17 +500,17 @@ var Controller = {
 
 
             var churnText = $('<text>chance of bugs: '+level+'</text>');
-			
-			
-			
+
+
+
 			metadiv.addClass("MetaBorder");
 			churnText.addClass("MetaBorder");
-			
+
 			metadiv.append(churnText);
-			
+
 			$(SetupManager.pound+meta).append(metadiv);
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
@@ -522,8 +520,8 @@ var Controller = {
 			$(SetupManager.pound+meta).append(image);
 			image.addClass("MetaBorder");
 		},
-		
-		
+
+
 		/**
 		 * FUNCTION
 		 */
@@ -539,34 +537,34 @@ var Controller = {
                 BuildQueryBoxView.addAndSubmit(query);
 
             });
-			
-			
+
+
 			metadiv.addClass("MetaBorder");
             projectName.addClass("MetaBorder");
             projectName.addClass("MetaQuery");
 			metadiv.append(icon);
 			metadiv.append(projectName);
-			
+
 			$(SetupManager.pound+meta).append(metadiv);
 		},
-		
-		
+
+
 		addFilterToSummary	:	function(type, name){
-			
-			
-			
-			
+
+
+
+
 			var oneFilterDiv = $(SetupManager.divOpen+SetupManager.divClose);
 			$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).append(oneFilterDiv);
-			
+
 			oneFilterDiv.addClass("FilterSelected");
-			
+
 			var icon;
 			if(type == FilterManager.AUTHOR_CATEGORY){
-				
+
 				icon  = $('<span class="ui-icon ui-icon-person" style="display:inline-block"></span>');
 			}else if(type == FilterManager.TAG_CATEGORY){
-				
+
 				icon  = $('<span class="ui-icon ui-icon-tag" style="display:inline-block"></span>');
 			}else if(type == FilterManager.PROJECT_CATEGORY){
 				icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
@@ -575,46 +573,46 @@ var Controller = {
 			}else if (type == FilterManager.GRANULARITY_CATEGORY){
 				icon  = $('<span class="ui-icon ui-icon-script" style="display:inline-block"></span>');
 			}
-			
+
 			oneFilterDiv.append(icon);
 			oneFilterDiv.append("<text>"+name+"</text>");
-			
-			
+
+
 //			var closeButton = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-//			
+//
 //			closeButton.button({
 //				icons: {
 //		        	primary: "ui-icon-circle-close"
 //					}
 //			});
-//			
+//
 //			closeButton.height(30);
 //			closeButton.width(30);
 //			closeButton.addClass("CloseFilter");
-			
-			
+
+
 			oneFilterDiv
 			.click(function(){
-				
+
 				filter = new Filter(type,name);
 				FilterManager.removeFilter(filter);
-				
+
 				oneFilterDiv.remove();
 				//send new filtered query
 				QueryManager.submitQuery();
-				
-				
-				
+
+
+
 			});
-			
+
 	//		oneFilterDiv.append(closeButton);
-			
-			
-			
-			
-		
+
+
+
+
+
 		},
-		
+
 
 		/**
 		 * Assumes an even array length where even indicies are name and odd are facet count
@@ -626,12 +624,12 @@ var Controller = {
 				Controller.sortFilterAlpha(arrayValues,category);
 			}
 		},
-		
+
 		sortFilterAlpha	:	function(arrayValues,category){
-			
+
 			var div;
-			
-			
+
+
 			if(category == FilterManager.AUTHOR_CATEGORY){
 				div = $(SetupManager.pound+SetupManager.peopleTabDiv_ID);
 			}else if(category == FilterManager.TAG_CATEGORY){
@@ -643,56 +641,56 @@ var Controller = {
 			}else if(category == FilterManager.LIB_CATEGORY){
 				div = $(SetupManager.pound+SetupManager.libraryTabDiv_ID);
 			}
-			
-			
+
+
 			div.empty();
 			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 			div.append(table);
-			
-			
+
+
 			arrayValues = Controller.getOnlyFacetValues(arrayValues);
-			
+
 			arrayValues = arrayValues.filter(function(elem, index, self) {
 			    return index == self.indexOf(elem);
 			});
-			
+
 			arrayValues.sort();
 
-			
-			
+
+
 			div.empty();
 			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 			div.append(table);
-			
+
 			var width = $(SetupManager.pound+SetupManager.filterDiv_ID).width();
 			div.width(width);
-			
+
 			for(i = 0; i<arrayValues.length; i++){
 				var filterCell;
-				
+
 				var tableRow;
 				if(i == 0 || i%3 == 0){
-					
+
 					tableRow = $(SetupManager.trOpen+SetupManager.trClose);
 					table.append(tableRow);
 				}
-				
-			
+
+
 				    filterCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 					tableRow.append(filterCell);
-					
+
 					filterCell.append("<text>"+arrayValues[i]+"</text>");
-				
+
 					filterCell.addClass("FilterTD");
-					
+
 					(function(cell,name){
-							
+
 							cell.mouseenter(function(){
-								cell.addClass("FilterTDhover");					
+								cell.addClass("FilterTDhover");
 							});
-							
+
 							cell.mouseleave(function(){
-								cell.removeClass("FilterTDhover");					
+								cell.removeClass("FilterTDhover");
 							});
 							cell.mouseup(function(){
 								//add to filters
@@ -722,21 +720,21 @@ var Controller = {
 									//updated filter summary
 									Controller.addFilterToSummary(FilterManager.GRANULARITY_CATEGORY, name);
 								}
-		
+
 								//send new filtered query
 								QueryManager.submitQuery();
 							});
-							
-					})(filterCell,arrayValues[i]);	
+
+					})(filterCell,arrayValues[i]);
 			}
-			
+
 		}
 		,
-		
+
 		sortFilterByCount	: function(arrayValues, category){
 			var div;
-			
-			
+
+
 			if(category == FilterManager.AUTHOR_CATEGORY){
 				div = $(SetupManager.pound+SetupManager.peopleTabDiv_ID);
 			}else if(category == FilterManager.TAG_CATEGORY){
@@ -748,33 +746,33 @@ var Controller = {
 			}else if(category == FilterManager.LIB_CATEGORY){
 				div = $(SetupManager.pound+SetupManager.libraryTabDiv_ID);
 			}
-			
-			
+
+
 			div.empty();
 			var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 			div.append(table);
-			
-			
+
+
 //			var width = $(SetupManager.pound+SetupManager.filterDiv_ID).width();
 //			div.width(width);
-			
+
 			for(i = 0; i<arrayValues.length; i = i+2){
 				var filterCell;
 				var tableRow;
 				//set to mod 6 for 3 cells per row because we get a score between
 				//names
 				if(i == 0 || i%6 == 0){
-					
+
 					tableRow = $(SetupManager.trOpen+SetupManager.trClose);
 					table.append(tableRow);
 				}
-				
+
 				if( i == 0 || i%2 == 0){
 				    filterCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 					tableRow.append(filterCell);
-				
-					
-					 var rainbow = new RainbowVis(); 
+
+
+					 var rainbow = new RainbowVis();
 					 rainbow.setNumberRange(1, arrayValues.length);
 					 rainbow.setSpectrum('#FFCCCC', '#99E6FF');
 					 var hexColor = rainbow.colourAt(i);
@@ -783,21 +781,21 @@ var Controller = {
 					//var text = $("<text>"+arrayValues[i]+""+"</text>");
 					//text.css("color","white");
 					filterCell.append(text);
-					
+
 					filterCell.css("background-color","#"+hexColor);
-					
+
 					filterCell.addClass("FilterTD");
-					
+
 					(function(cell,name){
-						
+
 						cell.mouseenter(function(){
-							cell.addClass("FilterTDhover");					
+							cell.addClass("FilterTDhover");
 						});
-						
+
 						cell.mouseleave(function(){
-							cell.removeClass("FilterTDhover");					
+							cell.removeClass("FilterTDhover");
 						});
-						
+
 						cell.mouseup(function(){
 							//add to filters
 							if(category == FilterManager.AUTHOR_CATEGORY){
@@ -826,39 +824,39 @@ var Controller = {
 								//updated filter summary
 								Controller.addFilterToSummary(FilterManager.GRANULARITY_CATEGORY, name);
 							}
-	
+
 							//send new filtered query
 							QueryManager.submitQuery();
 						});
-						
-				})(filterCell,arrayValues[i]);
-					
-				}
-				
 
-				
+				})(filterCell,arrayValues[i]);
+
+				}
+
+
+
 			}
-			
+
 		}
-		
-		
+
+
 		,
-		
+
 		getOnlyFacetValues	:	function(facetArray){
-			
+
 			var facetValues = new Array();
-			
+
 			for(i = 0; i<facetArray.length;i++){
 				if(i == 0 || i%2 == 0){
 					facetValues.push(facetArray[i]);
 				}
 			}
-			
+
 			return facetValues;
 		},
-		
 
-		
+
+
 		/**
 		 * FUNCTION
 		 * expand the input/filter header
@@ -866,21 +864,21 @@ var Controller = {
 		expandHeader	: function(){
 			//let's see the filter tabs
 			$(SetupManager.pound+SetupManager.filterDiv_ID).toggle();
-			
+
 			$(SetupManager.pound+SetupManager.queryInput_ID).animate({
 				height: 400
 			},700
 			);
-			
+
 			$(SetupManager.pound+SetupManager.filterDiv_ID).animate({
 				height: 400
 			},700
 			);
-			
+
 			Controller.headerExpanded = true;
-			
+
 		},
-		
+
 		/**
 		 * FUNCTION
 		 * collapse the input/filter header
@@ -889,49 +887,49 @@ var Controller = {
 		collapseHeader	:function(){
 			//let's hide the filter tabs
 			$(SetupManager.pound+SetupManager.filterDiv_ID).toggle();
-			
+
 			$(SetupManager.pound+SetupManager.queryInput_ID).animate({
 				height: 30
 			},700
 			);
-			
+
 			$(SetupManager.pound+SetupManager.filterDiv_ID).animate({
 				height: 30
 			},700
 			);
-			
+
 			Controller.headerExpanded = false;
 
-			
-			
+
+
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
 		expandCell	:	function(cell){
-			
-			 // $(SetupManager.pound+cell).css({position:'relative'}); 
+
+			 // $(SetupManager.pound+cell).css({position:'relative'});
 	         //turn the other cells off
 	          Controller.toggleCells(cell);
 			  var id = cell;
 			  var number = id.charAt(id.length-1);
 			  var result = SetupManager.resultPreArray_ID[number];
-			  
+
 			  previousHeight = $(SetupManager.pound+result).height();
 	          previousWidth = $(SetupManager.pound+result).width();
 	          previousX = $(SetupManager.pound+result).left;
 	          previousY = $(SetupManager.pound+result).top;
-	          
+
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth-$('.FilterSideTD').width()-46;
 				var screenHeightBuffer = previousHeight;
-			  
+
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
-		           
-		  
+
+
 		            width:  screenBuffer,
 		            height: screenHeightBuffer,
 		            left:	'0px',
@@ -942,28 +940,28 @@ var Controller = {
             editor.resize();
 
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
 		collapseCell	:	function(cell){
 			//$(SetupManager.pound+cell).css({position:'absolute'});
-        	
+
 			var currentX = $(SetupManager.pound+cell).position().left;
 			var currentY = $(SetupManager.pound+cell).position().top;
-			
+
 	         //turn the other cells on
 	         Controller.toggleCells(cell);
-	         
-	          
+
+
 			  var id = cell;
 			  var number = id.charAt(id.length-1);
 			  var result = SetupManager.resultPreArray_ID[number];
-			 
-			  
+
+
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
-		          
-		  
+
+
 		            width: previousWidth,
 		            height: previousHeight,
 		            left:	previousX+'px',
@@ -972,36 +970,36 @@ var Controller = {
 
             var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
             editor.resize();
-	          
+
 
 		},
-		
+
 		/**
 		 * FUNCTION
 		 */
 		toggleCells		:	function(cell){
 			var length = SetupManager.cellDivArray_ID.length;
-			
+
 		//	var rowIndex = 0;
-			
+
 			for(var i = 0; i<length; i++){
 		          if(cell != SetupManager.cellDivArray_ID[i]){
 		        	  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).toggle();
 		        	  $(SetupManager.pound+SetupManager.cellDivArray_ID[i]).toggle();
-		        	 
+
 		          }
 //		        	  else{
 //		        	  rowIndex = i;
 //		          }
 			}
-      	  
+
       	  //TODO: need to generalize this!!
 //      	  if(rowIndex == 2 || rowIndex == 3){
-//      		  		$("#row0").toggle();	  
+//      		  		$("#row0").toggle();
 //        		}else{
-//        			$("#row2").toggle();	
+//        			$("#row2").toggle();
 //        		}
-      	
+
 		},
 
     showGrid    : function(){
@@ -1013,6 +1011,6 @@ var Controller = {
             QueryGridView.update();
 
     }
-		
-		
+
+
 };
