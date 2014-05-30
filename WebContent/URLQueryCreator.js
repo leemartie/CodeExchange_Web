@@ -1,5 +1,5 @@
 var URLQueryCreator = {
-		server : 'codeexchange.ics.uci.edu',
+		server : 'level1router.ics.uci.edu',
 		
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 	//	authorCollection	 :  'GitHubAuthorIndex',
@@ -28,10 +28,10 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_extends'
                 + '&facet.field=snippet_implements'
                 + '&facet.mincount=1'
-				+ '&facet.limit=4';
-//                + '&expand=true'
-//                + '&expand.field=expand_id'
-//                + '&expand.q=*:*';  // could also query by those that met the children query
+				+ '&facet.limit=4'
+                + '&expand=true'
+                + '&expand.field=expand_id'
+                + '&expand.q=*:*';  // could also query by those that met the children query
 
 			for(var i = 0; i < FilterManager.filters.length;i++){
 				filter = FilterManager.filters[i];

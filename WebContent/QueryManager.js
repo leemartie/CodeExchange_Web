@@ -98,9 +98,13 @@ var QueryManager = {
 
 		var queryAutoComplete = "";
 
+        var fieldShort = field+"_short";
+
 		queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
 		'rows=0&q='+queryFilter+'&facet=true' +
-		'&facet.field='+field+'&facet.mincount=1'+'&facet.limit=50'+'&facet.prefix='+QueryManager.completeUserTyped +
+		'&facet.field='+field+
+      //  '&facet.field='+fieldShort+
+        '&facet.mincount=1'+'&facet.limit=20'+'&facet.prefix='+QueryManager.completeUserTyped +
 		'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
 		
 		QueryManager.currentAutoCompleteField = field;
@@ -580,11 +584,11 @@ function on_data(data) {
 
 
 
+                    var expandedChildren = data.expanded;
 
-
-					
 					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
-							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
+							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
+                            expandedChildren, item.id);
 					
 					Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
@@ -599,7 +603,13 @@ function on_data(data) {
 //                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 
 
-				}
+
+
+
+
+
+
+                }
 
 			});
 	
@@ -621,6 +631,7 @@ function on_data(data) {
 //	
 //	QueryManager.populateFilters();
 }
+
 
 
 
@@ -661,13 +672,22 @@ function autoCompleteCallBack(data){
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetImportsFiled){
         var results = data.facet_counts.facet_fields.snippet_imports;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClass){
+
         var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class;
-    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallName){
+
+
+
+    }
+    else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallName){
         var results = data.facet_counts.facet_fields.snippet_method_invocation_name;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallParameters){
         var results = data.facet_counts.facet_fields.snippet_method_invocation_arg_types;
 
     }
+
+//    else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClassShort) {
+//        var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class_short;
+//    }
 
     //recommend auto complete
     if(results.length > 0){

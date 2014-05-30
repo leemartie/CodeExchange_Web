@@ -198,7 +198,7 @@ var BuildQueryBoxView = {
 
 
                 }
-                if(BuildQueryBoxModel.currentQueryType== QueryBucketModel.snippetField){
+                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
                     queryBox.autocomplete({
                         source: function( request, response ){
                             QueryManager.submitSpellCheck(request, response,queryBox.val());

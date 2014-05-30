@@ -19,6 +19,7 @@ var Controller = {
         annotationsArrayByEditor: new Array(),
         annotationsArrayKeyByEditor: new Array(),
         gridOn : false,
+        markers : new Array(),
 
 		/**
 		 * Sets the code text of an html element
@@ -35,9 +36,9 @@ var Controller = {
 
 		},
 
-		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations){
+		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID){
 
-			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
+			var url = "http://level1router.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			//var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 			//$(SetupManager.pound+codeNode).attr("src",codeURL);
 
@@ -85,6 +86,7 @@ var Controller = {
 //annotations
                       editor.session.clearAnnotations();
                       editor.session.clearBreakpoints();
+
 
                       var annotationArray = new Array();
                       var annotationKey = new Array();
@@ -208,6 +210,94 @@ var Controller = {
                           regExp: true
                       });
 
+
+///EXPAND CHILDREN
+//                      //highlighting children
+//                      var lines = editor.getSession().getValue().split("\n")
+//                      var charSum = new Array();
+//                      var totalSum = 0;
+//
+//                      for(var sumIndex = 0; sumIndex < lines.length; sumIndex++){
+//                          totalSum = totalSum + lines[sumIndex].length;
+//                          charSum.push(totalSum);
+//                      }
+
+                          var cumLength = [];
+                          var cnt = editor.session.getLength();
+                          var cuml = 0, nlLength = editor.session.getDocument().getNewLineCharacter().length;
+                          cumLength.push(cuml);
+                          var text = editor.session.getLines(0, cnt);
+                          for(var i=0; i< cnt; i++){
+                              cuml += text[i].length + nlLength;
+                              cumLength.push(cuml);
+                          }
+
+
+
+
+                          var currentMarkers = Controller.markers[editorNumber];
+                          if(currentMarkers != null){
+                              for(var k = 0; k < currentMarkers.length; k++){
+                                  editor.session.removeMarker(currentMarkers[k]);
+                              }
+                              currentMarkers.length = 0;
+                          }
+
+
+
+
+
+                      var localMarkers = new Array();
+
+                      for (var property in expanded) {
+                          if(property.toLowerCase().localeCompare(codeID.toLowerCase()) != 0)
+                            continue;
+                          if (expanded.hasOwnProperty(property)) {
+                              var childrenDocs = expanded[property].docs;
+
+                              for(var id_index = 0; id_index < childrenDocs.length; id_index++){
+                                  var split = childrenDocs[id_index].id.split('&');
+                                  var startSplit  = split[2].split('=');
+                                  var endSplit    = split[3].split('=');
+
+                                  var start = startSplit[1];
+
+                                  var rowNumber = Controller.getRow(cumLength, parseInt(start), 0, cumLength.length);
+                                  var columnNumber = parseInt(start) - cumLength[rowNumber];
+
+                                  var end = endSplit[1];
+
+                                  var endColumnNumber = parseInt(end) - cumLength[rowNumber];
+
+                                  var aceRange = ace.require('ace/range').Range;
+
+                                  var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
+                                      rowNumber, endColumnNumber), "child","background");
+
+                                  localMarkers.push(markerID);
+
+                              }
+                          }
+                      }
+
+
+
+                      Controller.markers[editorNumber] = localMarkers;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//blur
                       editor.on("blur", function(){
                           var word = "";
                           for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
@@ -248,11 +338,39 @@ var Controller = {
 
 
 
+
+
+
                   });
 			  });
 
 
 		},
+    /**
+     * Finds the row the character position is on in a binary search way
+     * @param newLineArray
+     * @param startPosition
+     * @returns {*}
+     */
+    getRow: function(newLineArray, startPosition, lengthStart, lengthEnd){
+
+        var middle = Math.floor((lengthStart+lengthEnd)/2);
+
+
+        if(lengthStart + 1 === lengthEnd)
+            return lengthStart;
+
+     if(newLineArray[middle] < startPosition){
+           return Controller.getRow(newLineArray, startPosition, middle, lengthEnd);
+     }else if(newLineArray[middle] > startPosition){
+            return Controller.getRow(newLineArray, startPosition, lengthStart,middle);
+     }else{
+        return middle;
+     }
+
+    },
+
+
 
 
 		/**
@@ -309,7 +427,7 @@ var Controller = {
 
         setComplexityReformulation: function(meta,complexity){
             var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-              var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/decreseComplexity.png"></img>');
+              var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/decreseComplexity.png"></img>');
             var codeComplexity = $('<text><u>less complex[+]</u></text>');
             codeComplexity.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"[* TO "+(complexity-1)+"]");
@@ -328,7 +446,7 @@ var Controller = {
 
 
             var metadiv2 = $(SetupManager.divOpen+SetupManager.divClose);
-            var icon2  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/increaseComplexity.png"></img>');
+            var icon2  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/increaseComplexity.png"></img>');
             var codeComplexity2 = $('<text><u>more complex[+]</u></text>');
             codeComplexity2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"["+(complexity+1)+" TO *]");
@@ -373,7 +491,7 @@ var Controller = {
 
         setSizeReformulation: function(meta, size){
             var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-            var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/decreseLength.png"></img>');
+            var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/decreseLength.png"></img>');
             var codeSize = $('<text><u>shorter[+]</u></text>');
             codeSize.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"[* TO "+(size-1)+"]");
@@ -392,7 +510,7 @@ var Controller = {
 
 
             var metadiv2 = $(SetupManager.divOpen+SetupManager.divClose);
-            var icon2  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/increaseLength.png"></img>');
+            var icon2  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/increaseLength.png"></img>');
             var codeSize2 = $('<text><u>longer[+]</u></text>');
             codeSize2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"["+(size+1)+" TO *]");
@@ -438,7 +556,7 @@ var Controller = {
 
 		setAuthorName	:	function(meta, name){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/author.png"></img>');
+			var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/author.png"></img>');
 			var authName = $('<div><u>'+name+'[+]</u></div>');
 
 
@@ -527,7 +645,7 @@ var Controller = {
 		 */
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
+			var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/project.png"></img>');
 			var projectName = $('<div><u>'+name+'[+]</u></div>');
 
             projectName.click(function(event){

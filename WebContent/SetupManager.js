@@ -188,7 +188,7 @@ var SetupManager = {
 			//logo
 			var logo = $(SetupManager.divOpen+SetupManager.divClose);
 			//queryTD.append(logo);
-			var logoName = $('<a href="index.html"><img src="http://codeexchange.ics.uci.edu/logo2.png"/></a>');
+			var logoName = $('<a href="index.html"><img src="http://level1router.ics.uci.edu/logo2.png"/></a>');
 			logo.append(logoName);
 			logo.addClass("Logo");
 
@@ -516,7 +516,7 @@ var SetupManager = {
 	        	Controller.expandCell(cellSelected);
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
-				append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/collapse.png" width="30"></img>')).width("30");
+				append($('<img align="middle" height="30" src="http://level1router.ics.uci.edu/collapse.png" width="30"></img>')).width("30");
 	        	
 	          
 	        } else {
@@ -524,7 +524,7 @@ var SetupManager = {
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
 
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
-				append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
+				append($('<img align="middle" height="30" src="http://level1router.ics.uci.edu/expand.png" width="30"></img>')).width("30");
 	        }
 	        collapsed = !collapsed;
 
@@ -730,7 +730,7 @@ var SetupManager = {
 				$(SetupManager.pound+resultOptions_id).append(expandButton);
 				//button attributes
 				$(SetupManager.pound+SetupManager.expandBtnArray_ID[i]).text("").
-					append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
+					append($('<img align="middle" height="30" src="http://level1router.ics.uci.edu/expand.png" width="30"></img>')).width("30");
 
 				
 
