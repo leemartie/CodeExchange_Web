@@ -6,7 +6,8 @@ var QueryManager = {
 	moveCount : 0,
 	linkArray : new Array(),
 	linkArrayData	:	new Array(),
-	currentQuery	:	"",
+	currentQuery	:	"*:*",
+    currentChildQuery : "*:*",
 	currentStart	:	0,
 	topAuthors: new Array(),
 	tagArray: new Array(),
@@ -35,6 +36,11 @@ var QueryManager = {
 		QueryManager.currentQuery = query;
 
 	},
+
+    setChildQuery	:	function(query){
+        QueryManager.currentChildQuery = query;
+
+    },
 
     setFQQuery  :   function(fqQuery){
         QueryManager.currentFQquery = fqQuery;
@@ -100,13 +106,21 @@ var QueryManager = {
 
         var fieldShort = field+"_short";
 
-		queryAutoComplete = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?' +
-		'rows=0&q='+queryFilter+'&facet=true' +
-		'&facet.field='+field+
-      //  '&facet.field='+fieldShort+
-        '&facet.mincount=1'+'&facet.limit=20'+'&facet.prefix='+QueryManager.completeUserTyped +
-		'&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
-		
+        if( field != QueryBucketModel.snippetMethodCallCallingClass &&
+            field != QueryBucketModel.snippetMethodCallName         &&
+            field != QueryBucketModel.snippetMethodCallParameters     ) {
+            queryAutoComplete = 'http://' + URLQueryCreator.server + ':' + URLQueryCreator.port + '/solr/' + URLQueryCreator.collection + '/select/?' +
+                'rows=0&q=' + queryFilter + '&facet=true' +
+                '&facet.field=' + field +
+                '&facet.mincount=1' + '&facet.limit=20' + '&facet.prefix=' + QueryManager.completeUserTyped +
+                '&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+        }else{
+            queryAutoComplete = 'http://' + URLQueryCreator.server + ':' + URLQueryCreator.port + '/solr/' + URLQueryCreator.collection + '/select/?' +
+                'rows=0&q=' + '*:*' + '&facet=true' +
+                '&facet.field=' + field +
+                '&facet.mincount=1' + '&facet.limit=20' + '&facet.prefix=' + QueryManager.completeUserTyped +
+                '&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
+        }
 		QueryManager.currentAutoCompleteField = field;
 		
 		$.getJSON(queryAutoComplete);
@@ -359,24 +373,47 @@ function facetCompleteCallBack(data){
 
     QueryRecommenderModel.clearRecommendedQueries();
 
-    var projects = data.facet_counts.facet_fields.snippet_project_id;
+    var snippet_variable_names_delimited = data.facet_counts.facet_fields.snippet_variable_names_delimited;
 
-    for(i = 0; i<projects.length; i = i+2){
-        if(i >= 6)
+
+    for(i = 0; i<snippet_variable_names_delimited.length; i = i+2) {
+        if(i >= 12)
             continue;
 
-        var projectName = projects[i];
+        var variableName = snippet_variable_names_delimited[i];
 
-
-        if(projectName == "")
+        if(variableName == "")
             continue;
 
-        var query1 = new QueryModel("snippet_project_id", projectName);
-        query1.displayType = "project";
-        query1.displayValue = projectName.substring(projectName.lastIndexOf("/")+1,projectName.length);
-        query1.score = projects[i+1];
-        QueryRecommenderModel.addRecommendedQuery(query1);
+        var query4 = new QueryModel(QueryBucketModel.snippetField, variableName);
+        query4.displayType = "keywords";
+        query4.displayValue = variableName;
+        query4.score = snippet_variable_names_delimited[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query4);
     }
+
+
+
+
+
+//    var projects = data.facet_counts.facet_fields.snippet_project_id;
+
+//    for(i = 0; i<projects.length; i = i+2){
+//        if(i >= 6)
+//            continue;
+//
+//        var projectName = projects[i];
+//
+//
+//        if(projectName == "")
+//            continue;
+//
+//        var query1 = new QueryModel("snippet_project_id", projectName);
+//        query1.displayType = "project";
+//        query1.displayValue = projectName.substring(projectName.lastIndexOf("/")+1,projectName.length);
+//        query1.score = projects[i+1];
+//        QueryRecommenderModel.addRecommendedQuery(query1);
+//    }
 
 //    var authors = data.facet_counts.facet_fields.snippet_version_author;
 //
@@ -417,7 +454,8 @@ function facetCompleteCallBack(data){
 
     var extendsRecommend = data.facet_counts.facet_fields.snippet_extends;
     for(i = 0; i<extendsRecommend.length; i = i+2) {
-
+        if(i >= 6)
+            continue;
 
         var extendsName = extendsRecommend[i];
 

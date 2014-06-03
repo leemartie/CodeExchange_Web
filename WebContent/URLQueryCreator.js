@@ -9,6 +9,7 @@ var URLQueryCreator = {
 		getQueryURL	:	function(callbackFunctionName){
 
 			var query = QueryManager.currentQuery;
+            var childQuery = QueryManager.currentChildQuery;
 			var start = QueryManager.currentStart;
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
@@ -19,7 +20,7 @@ var URLQueryCreator = {
 				+ 'snippet_address_upper_bound snippet_project_id '
                 + 'snippet_containing_class_id snippet_code snippet_granularity '
                 + 'snippet_path_complexity_class_sum snippet_changed_code_churn '
-                + 'snippet_size'
+                + 'snippet_size snippet_variable_names_delimited snippet_class_name_delimited snippet_class_name'
 				+ '&facet=true'
                 + '&facet.field=snippet_imports'
                 + '&facet.field=snippet_project_id'
@@ -27,11 +28,15 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_project_name'
                 + '&facet.field=snippet_extends'
                 + '&facet.field=snippet_implements'
+                + '&facet.field=snippet_variable_names_delimited'
+                + '&facet.field=snippet_variable_names_delimited'
+                + '&facet.field=snippet_class_name_delimited'
                 + '&facet.mincount=1'
-				+ '&facet.limit=4'
+				+ '&facet.limit=10'
                 + '&expand=true'
+                + '&expand.rows=5000'
                 + '&expand.field=expand_id'
-                + '&expand.q=*:*';  // could also query by those that met the children query
+                + '&expand.q='+childQuery;  // could also query by those that met the children query
 
 			for(var i = 0; i < FilterManager.filters.length;i++){
 				filter = FilterManager.filters[i];

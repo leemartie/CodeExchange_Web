@@ -68,6 +68,10 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
            Controller.setStatus("SEARCHING...");
            var query = QueryBucketModel.constructQuery();
            QueryManager.setQuery(query);
+
+           var childQuery = QueryBucketModel.constructChildQuery();
+           QueryManager.setChildQuery(childQuery);
+
           // var fqQuery = QueryBucketModel.constructFQQuery()
            //QueryManager.setQuery(fqQuery);
            QueryManager.submitQuery();

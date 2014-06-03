@@ -325,8 +325,22 @@ var BuildQueryBoxView = {
                         + ':"' +MethodNameBox.val()+ '"';
                 }
                 if(ParameterNameBox.val() != "") {
-                    methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallParameters
-                        + ':"' +  ParameterNameBox.val() + '"';
+
+                    var params = String(ParameterNameBox.val()).split(/[ ,]+/);
+
+                    var paramQuery = "";
+                    for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+                        if(paramQuery == ""){
+                            paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParameters
+                                + ':'+'"'+params[paramIndex]+'"';
+                        }else{
+                            paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParameters
+                                + ':'+'"'+params[paramIndex]+'"';
+                        }
+
+                    }
+
+                    methodCallValue = methodCallValue + paramQuery+'';
                 }
                 query = new QueryModel(combo.val(), methodCallValue);
                 query.displayType = combo.find(":selected").text();
@@ -400,8 +414,10 @@ var BuildQueryBoxView = {
                 Controller.setStatus("SEARCHING...");
 
                 var query = QueryBucketModel.constructQuery();
+                var childQuery = QueryBucketModel.constructChildQuery();
 
                 QueryManager.setQuery(query);
+                QueryManager.setChildQuery(childQuery);
 
                 QueryManager.submitQuery();
 //                    //make it lose focus so we can detect when user refocus on query it

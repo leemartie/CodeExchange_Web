@@ -33,6 +33,10 @@ var QueryTrailModel = {
             Controller.setStatus("SEARCHING...");
             var query = QueryBucketModel.constructQuery();
             QueryManager.setQuery(query);
+
+            var childQuery = QueryBucketModel.constructChildQuery();
+            QueryManager.setChildQuery(childQuery);
+
             QueryManager.submitQuery();
         }
 
@@ -48,6 +52,10 @@ var QueryTrailModel = {
             Controller.setStatus("SEARCHING...");
             var query = QueryBucketModel.constructQuery();
             QueryManager.setQuery(query);
+
+            var childQuery = QueryBucketModel.constructChildQuery();
+            QueryManager.setChildQuery(childQuery);
+
             QueryManager.submitQuery();
         }
     }

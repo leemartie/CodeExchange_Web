@@ -92,7 +92,7 @@ var Controller = {
                       var annotationKey = new Array();
 
                       for(var i = 0; i < newLines.length; i++){
-                          var indexOfClass = newLines[i].indexOf("import");
+                          var indexOfClass = newLines[i].indexOf("import ");
 
                           annotationKey[i] = {
                               row: i,
@@ -138,7 +138,7 @@ var Controller = {
 
                       }
 
-                      editor.session.setAnnotations(annotationArray);
+
 
                       Controller.annotationsArrayByEditor[editorNumber] = annotationArray.slice(0);
                       Controller.annotationsArrayKeyByEditor[editorNumber] = annotationKey.slice(0);
@@ -166,8 +166,7 @@ var Controller = {
                           e.stop();
                       });
 
-                      annotationArray.length = 0;
-                      annotationKey.length = 0;
+
 
 
 
@@ -276,12 +275,29 @@ var Controller = {
 
                                   localMarkers.push(markerID);
 
+                                  annotationArray.push({
+                                      row: rowNumber,
+                                      column: columnNumber,
+                                      text: "new query for: "+"["+"method declaration"+"]"+" "+"",
+                                      type: "info",
+                                      queryType: type,
+                                      queryValue: value
+
+                                  });
+
+                                  annotationKey[i] = {
+                                      row: rowNumber,
+                                      annotationArrayindex: annotationArray.length-1
+                                  };
+
                               }
                           }
                       }
 
 
-
+                      editor.session.setAnnotations(annotationArray);
+                      annotationArray.length = 0;
+                      annotationKey.length = 0;
                       Controller.markers[editorNumber] = localMarkers;
 
 

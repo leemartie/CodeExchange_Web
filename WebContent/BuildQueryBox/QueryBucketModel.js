@@ -125,6 +125,36 @@ var QueryBucketModel = {
         }
     },
 
+    /**
+     *
+     * @returns {string}
+     */
+    constructChildQuery:function(){
+        var childQuery = "";
+
+        //get method invocation queries
+        var valueList = QueryBucketModel.listOfQueries[QueryBucketModel.snippetMethodCall];
+
+        if(valueList != null) {
+            for (var j = 0; j < valueList.length; j++) {
+                if (QueryBucketModel.listOfActiveQueries[QueryBucketModel.snippetMethodCall][j] == true) {
+                    if (childQuery == "")
+                        childQuery = "(" + valueList[j] + ")";
+                    else
+                        childQuery = childQuery + " OR " + "(" + valueList[j] + ")";
+                }
+
+
+            }
+        }else{
+            return "*:*"
+        }
+
+        //get method declaration queries
+
+        return childQuery;
+
+    },
 
 
     constructQuery : function(){
@@ -148,7 +178,7 @@ var QueryBucketModel = {
                     if(field == "") {
 
                         if(key == QueryBucketModel.snippetMethodCall)
-                            field = '(_query_:{!parent which=parent:true}';
+                            field = '((_query_:{!parent which=parent:true}';
                         else
                             field = key+":(";
 
@@ -159,6 +189,9 @@ var QueryBucketModel = {
                             if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
                                 && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall)
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
+                            else if (key == QueryBucketModel.snippetMethodCall){
+                                field = field + valueList[j]+')';
+                            }
                             else
                                 field = field + valueList[j];
                         }
@@ -167,6 +200,9 @@ var QueryBucketModel = {
                         if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
                             && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall)
                             field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
+                        else if (key == QueryBucketModel.snippetMethodCall){
+                            field = field + 'AND (_query_:{!parent which=parent:true}'+valueList[j]+')';
+                        }
                         else
                             field = field + " AND "+valueList[j];
                     }
