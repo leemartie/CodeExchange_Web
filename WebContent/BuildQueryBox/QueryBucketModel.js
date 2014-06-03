@@ -23,11 +23,20 @@ var QueryBucketModel = {
     sizeField                       : "snippet_size",
     complexityField                 : "snippet_path_complexity_class_sum",
     snippetMethodCall               : "is_method_invocation_Child",
-    snippetMethodDeclaration        : "snippet_method_dec_name",
+    snippetMethodDec                : "is_method_dec_child",
+
+    snippetMethodDeclarationName       : "snippet_method_dec_name",
+    snippetMethodDeclarationClass      : "snippet_method_dec_declaring_class",
+    snippetMethodDeclarationParameters : "snippet_method_dec_parameter_types",
+
     snippetMethodCallCallingClass   : "snippet_method_invocation_calling_class",
     snippetMethodCallCallingClassShort : "snippet_method_invocation_calling_class_short",
     snippetMethodCallName           : "snippet_method_invocation_name",
     snippetMethodCallParameters     : "snippet_method_invocation_arg_types",
+
+    ClassBox: "ClassBox",
+    MethodBox: "MethodBox",
+    ParamBox: "ParamBox",
 
     listOfKeys           :   new Array(),
 
@@ -134,6 +143,7 @@ var QueryBucketModel = {
 
         //get method invocation queries
         var valueList = QueryBucketModel.listOfQueries[QueryBucketModel.snippetMethodCall];
+        var valueListDec = QueryBucketModel.listOfQueries[QueryBucketModel.snippetMethodDec];
 
         if(valueList != null) {
             for (var j = 0; j < valueList.length; j++) {
@@ -146,8 +156,23 @@ var QueryBucketModel = {
 
 
             }
-        }else{
-            return "*:*"
+        }
+
+        if(valueListDec != null){
+            for (var j = 0; j < valueListDec.length; j++) {
+                if (QueryBucketModel.listOfActiveQueries[QueryBucketModel.snippetMethodDec][j] == true) {
+                    if (childQuery == "")
+                        childQuery = "(" + valueListDec[j] + ")";
+                    else
+                        childQuery = childQuery + " OR " + "(" + valueListDec[j] + ")";
+                }
+
+
+            }
+        }
+
+        if (childQuery == ""){
+            childQuery = "*:*";
         }
 
         //get method declaration queries
@@ -177,7 +202,7 @@ var QueryBucketModel = {
 
                     if(field == "") {
 
-                        if(key == QueryBucketModel.snippetMethodCall)
+                        if(key == QueryBucketModel.snippetMethodCall || key == QueryBucketModel.snippetMethodDec)
                             field = '((_query_:{!parent which=parent:true}';
                         else
                             field = key+":(";
@@ -187,9 +212,11 @@ var QueryBucketModel = {
                             field = field + "*";
                         }else {
                             if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
-                                && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall)
+                                && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
+                                && key != QueryBucketModel.snippetMethodDec)
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
-                            else if (key == QueryBucketModel.snippetMethodCall){
+                            else if (key == QueryBucketModel.snippetMethodCall
+                                    || key == QueryBucketModel.snippetMethodDec){
                                 field = field + valueList[j]+')';
                             }
                             else
@@ -198,9 +225,11 @@ var QueryBucketModel = {
 
                     }else{
                         if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
-                            && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall)
+                            && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
+                            && key != QueryBucketModel.snippetMethodDec)
                             field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
-                        else if (key == QueryBucketModel.snippetMethodCall){
+                        else if (key == QueryBucketModel.snippetMethodCall
+                                || key == QueryBucketModel.snippetMethodDec){
                             field = field + 'AND (_query_:{!parent which=parent:true}'+valueList[j]+')';
                         }
                         else

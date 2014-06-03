@@ -80,17 +80,17 @@ var BuildQueryBoxView = {
             var ClassNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
             ClassNameBox.width("98%");
             var ClassNameLabel = $("<text>Class Name</text><br>");
-            ClassNameBox.attr(SetupManager.ID_attr,QueryBucketModel.snippetMethodCallCallingClass);
+            ClassNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ClassBox);
 
             var MethodNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
             MethodNameBox.width("98%");
             var MethodNameLabel = $("<br><text>Method Name</text><br>");
-            MethodNameBox.attr(SetupManager.ID_attr,QueryBucketModel.snippetMethodCallName);
+            MethodNameBox.attr(SetupManager.ID_attr,QueryBucketModel.MethodBox);
 
             var ParameterNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
             ParameterNameBox.width("98%");
             var ParameterNameLabel = $("<br><text>Parameter Type</text><br>");
-            ParameterNameBox.attr(SetupManager.ID_attr,QueryBucketModel.snippetMethodCallParameters);
+            ParameterNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ParamBox);
 
 
             queryCell.append(ClassNameLabel);
@@ -113,6 +113,7 @@ var BuildQueryBoxView = {
 
 
 
+
             view.append(queryRow);
 
             //combo box for query type
@@ -124,7 +125,9 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.implementsField+'">implements interface</option>'+
                 '<option  value="'+QueryBucketModel.snippetImportsFiled+'">imports library</option>'+
                 '<option  value="'+QueryBucketModel.snippetMethodCall+'">method call</option>'+
-                '<option  value="'+QueryBucketModel.snippetMethodDeclaration+'">method declaration</option>'+
+                '<option  value="'+QueryBucketModel.snippetMethodDec+'">method declaration</option>'+
+
+
 //                '<option  value="'+QueryBucketModel.methodNameField+'">method name</option>'+
 //                '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
 //                '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
@@ -133,7 +136,7 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
                 '<option  value="'+QueryBucketModel.projectField+'">project</option>'+
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">year</option>'+
-//                '<option  value="'+QueryBucketModel.lastUpdatedField+'">month</option>'+
+//               '<option  value="'+QueryBucketModel.lastUpdatedField+'">month</option>'+
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">day</option>'+
                 '</select>');
 
@@ -162,7 +165,8 @@ var BuildQueryBoxView = {
                     ParameterNameLabel.hide();
 
 
-                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall){
+                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall
+                    || BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec){
 
                     ClassNameBox.show();
                     ClassNameLabel.show();
@@ -351,25 +355,73 @@ var BuildQueryBoxView = {
                 ParameterNameBox.val("");
             };
 
+            //for method dec queries
+            var methodDecQueryFunction = function(){
+                var query = null;
+                var methodCallValue = '';
+                if(ClassNameBox.val() != "") {
+                    methodCallValue = methodCallValue + '%2B'
+                        + QueryBucketModel.snippetMethodDeclarationClass + ':"' + ClassNameBox.val() + '"';
+                }
+                if(MethodNameBox.val() != "") {
+                    methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodDeclarationName
+                        + ':"' +MethodNameBox.val()+ '"';
+                }
+                if(ParameterNameBox.val() != "") {
+
+                    var params = String(ParameterNameBox.val()).split(/[ ,]+/);
+
+                    var paramQuery = "";
+                    for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+                        if(paramQuery == ""){
+                            paramQuery = '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
+                                + ':'+'"'+params[paramIndex]+'"';
+                        }else{
+                            paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
+                                + ':'+'"'+params[paramIndex]+'"';
+                        }
+
+                    }
+
+                    methodCallValue = methodCallValue + paramQuery+'';
+                }
+                query = new QueryModel(combo.val(), methodCallValue);
+                query.displayType = combo.find(":selected").text();
+                query.displayValue = ClassNameBox.val()+"."+MethodNameBox.val()+"("+ParameterNameBox.val()+")";
+                BuildQueryBoxView.addAndSubmit(query);
+                ClassNameBox.val("");
+                MethodNameBox.val("");
+                ParameterNameBox.val("");
+            }
+
 
 
 
             //auto complete for method calls
             ClassNameBox.autocomplete({
                 source: function( request, response ){
-                    QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
+                     QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
+                    else
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationClass, request, response);
                 }
             });
 
             MethodNameBox.autocomplete({
                 source: function( request, response ){
-                    QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallName, request, response);
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
+                       QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallName, request, response);
+                    else
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationName, request, response);
                 }
             });
 
             ParameterNameBox.autocomplete({
                 source: function( request, response ){
-                    QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
+                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
+                    else
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationParameters, request, response);
                 }
             });
 
@@ -377,7 +429,10 @@ var BuildQueryBoxView = {
             ClassNameBox.keypress(function(e){
                 if (e.keyCode == '13') {
                     e.preventDefault();
-                    methodCallQueryFunction();
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
+                     methodCallQueryFunction();
+                    else
+                    methodDecQueryFunction();
                 }
             });
 
@@ -385,14 +440,20 @@ var BuildQueryBoxView = {
             MethodNameBox.keypress(function(e){
                 if (e.keyCode == '13') {
                     e.preventDefault();
-                    methodCallQueryFunction();
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
+                        methodCallQueryFunction();
+                    else
+                        methodDecQueryFunction();
                 }
             });
 
             ParameterNameBox.keypress(function(e){
                 if (e.keyCode == '13') {
                     e.preventDefault();
-                    methodCallQueryFunction();
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
+                        methodCallQueryFunction();
+                    else
+                        methodDecQueryFunction();
                 }
             });
 

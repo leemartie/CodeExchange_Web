@@ -270,25 +270,35 @@ var Controller = {
 
                                   var aceRange = ace.require('ace/range').Range;
 
+                                  var CSSclass = "";
+
+                                  if(endSplit[0].indexOf("method") > -1){
+                                      CSSclass = "decChild";
+                                  }else{
+                                      CSSclass = "child";
+                                  }
+
+
+
                                   var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
-                                      rowNumber, endColumnNumber), "child","background");
+                                      rowNumber, endColumnNumber), CSSclass,"background");
 
                                   localMarkers.push(markerID);
 
-                                  annotationArray.push({
-                                      row: rowNumber,
-                                      column: columnNumber,
-                                      text: "new query for: "+"["+"method declaration"+"]"+" "+"",
-                                      type: "info",
-                                      queryType: type,
-                                      queryValue: value
-
-                                  });
-
-                                  annotationKey[i] = {
-                                      row: rowNumber,
-                                      annotationArrayindex: annotationArray.length-1
-                                  };
+//                                  annotationArray.push({
+//                                      row: rowNumber,
+//                                      column: columnNumber,
+//                                      text: "",
+//                                      type: "warning",
+//                                      queryType: type,
+//                                      queryValue: value
+//
+//                                  });
+//
+//                                  annotationKey[i] = {
+//                                      row: rowNumber,
+//                                      annotationArrayindex: annotationArray.length-1
+//                                  };
 
                               }
                           }

@@ -86,12 +86,15 @@ var QueryManager = {
 		QueryManager.currentResponse = response;
 
 
-        if(field == QueryBucketModel.snippetMethodCallCallingClass)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallCallingClass).val();
-        else if(field == QueryBucketModel.snippetMethodCallName)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallName).val();
-        else if(field == QueryBucketModel.snippetMethodCallParameters)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.snippetMethodCallParameters).val();
+        if(field == QueryBucketModel.snippetMethodCallCallingClass
+            || field == QueryBucketModel.snippetMethodDeclarationClass)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ClassBox).val();
+        else if(field == QueryBucketModel.snippetMethodCallName
+            || field == QueryBucketModel.snippetMethodDeclarationName)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.MethodBox).val();
+        else if(field == QueryBucketModel.snippetMethodCallParameters
+            || field == QueryBucketModel.snippetMethodDeclarationParameters)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ParamBox).val();
         else
             QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 
@@ -108,7 +111,11 @@ var QueryManager = {
 
         if( field != QueryBucketModel.snippetMethodCallCallingClass &&
             field != QueryBucketModel.snippetMethodCallName         &&
-            field != QueryBucketModel.snippetMethodCallParameters     ) {
+            field != QueryBucketModel.snippetMethodCallParameters   &&
+
+            field != QueryBucketModel.snippetMethodDeclarationName   &&
+            field != QueryBucketModel.snippetMethodDeclarationClass   &&
+            field != QueryBucketModel.snippetMethodDeclarationParameters  ) {
             queryAutoComplete = 'http://' + URLQueryCreator.server + ':' + URLQueryCreator.port + '/solr/' + URLQueryCreator.collection + '/select/?' +
                 'rows=0&q=' + queryFilter + '&facet=true' +
                 '&facet.field=' + field +
@@ -710,18 +717,22 @@ function autoCompleteCallBack(data){
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetImportsFiled){
         var results = data.facet_counts.facet_fields.snippet_imports;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClass){
-
         var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class;
-
-
-
     }
     else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallName){
         var results = data.facet_counts.facet_fields.snippet_method_invocation_name;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallParameters){
         var results = data.facet_counts.facet_fields.snippet_method_invocation_arg_types;
-
     }
+    else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationClass){
+        var results = data.facet_counts.facet_fields.snippet_method_dec_declaring_class;
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationName){
+        var results = data.facet_counts.facet_fields.snippet_method_dec_name;
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationParameters){
+        var results = data.facet_counts.facet_fields.snippet_method_dec_parameter_types;
+    }
+
+
 
 //    else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClassShort) {
 //        var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class_short;
