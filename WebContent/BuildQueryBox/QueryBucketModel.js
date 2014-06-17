@@ -22,6 +22,8 @@ var QueryBucketModel = {
     methodNameField                 : "snippet_method_invocations",
     sizeField                       : "snippet_size",
     complexityField                 : "snippet_path_complexity_class_sum",
+    importCountField                : "snippet_imports_count",
+    functionCountField              : "snippet_number_of_functions",
     snippetMethodCall               : "is_method_invocation_Child",
     snippetMethodDec                : "is_method_dec_child",
 
@@ -33,6 +35,13 @@ var QueryBucketModel = {
     snippetMethodCallCallingClassShort : "snippet_method_invocation_calling_class_short",
     snippetMethodCallName           : "snippet_method_invocation_name",
     snippetMethodCallParameters     : "snippet_method_invocation_arg_types",
+
+    snippetClassGeneric             :   "snippet_is_generic",
+    snippetClassAbstract            :   "snippet_is_abstract",
+    snippetClassWildCard            :   "snippet_is_wildcard",
+    snippetInnerClass               :   "snippet_is_innerClass",
+
+    snippetHasComments              :   "snippet_has_comments",
 
     ClassBox: "ClassBox",
     MethodBox: "MethodBox",
@@ -213,7 +222,8 @@ var QueryBucketModel = {
                         }else {
                             if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
                                 && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
-                                && key != QueryBucketModel.snippetMethodDec)
+                                && key != QueryBucketModel.snippetMethodDec && key != QueryBucketModel.importCountField
+                                && key != QueryBucketModel.functionCountField)
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
                             else if (key == QueryBucketModel.snippetMethodCall
                                     || key == QueryBucketModel.snippetMethodDec){
@@ -226,7 +236,8 @@ var QueryBucketModel = {
                     }else{
                         if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
                             && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
-                            && key != QueryBucketModel.snippetMethodDec)
+                            && key != QueryBucketModel.snippetMethodDec && key != QueryBucketModel.importCountField
+                            && key != QueryBucketModel.functionCountField)
                             field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
                         else if (key == QueryBucketModel.snippetMethodCall
                                 || key == QueryBucketModel.snippetMethodDec){

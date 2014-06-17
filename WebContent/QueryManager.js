@@ -70,7 +70,7 @@ var QueryManager = {
 	},
 	
 	submitSpellCheck	:	function(request,response,val){
-		var url = 'http://codeexchange.ics.uci.edu:8983/solr/CodeExchangeIndex/spell?q=(snippet_code:'+val+')'+
+		var url = 'http://grok.ics.uci.edu:8983/solr/CodeExchangeIndex/spell?q=(snippet_code:'+val+')'+
 			'&rows=0&spellcheck=true&spellcheck.collate=true&indent=on&wt=json&callback=?&json.wrf=spellCheck';
 		
 		QueryManager.currentResponse = response;
@@ -527,7 +527,8 @@ function on_nextData(data) {
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
-
+                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[i],item.snippet_imports_count);
+                    Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
 
 //                    if(item.snippet_granularity == "Class")
 //                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
@@ -640,6 +641,8 @@ function on_data(data) {
 	//				Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
+                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[i],item.snippet_imports_count);
+                    Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
 
                     //Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 //                    if(item.snippet_granularity == "Class")

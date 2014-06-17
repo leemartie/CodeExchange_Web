@@ -118,15 +118,19 @@ var BuildQueryBoxView = {
 
             //combo box for query type
             var combo = $('<select name="queryType">'+
-                '<option  style="background-color: black; color:white" disabled>Fuzzy query</option>'+
+                '<option  style="background-color: black; color:white" disabled>problem domain query</option>'+
                 '<option  value="'+QueryBucketModel.snippetField+'" selected>keywords</option>'+
                 '<option  style="background-color: black; color:white" disabled>Technical query</option>'+
                 '<option  value="'+QueryBucketModel.extendsField+'">extends class</option>'+
                 '<option  value="'+QueryBucketModel.implementsField+'">implements interface</option>'+
                 '<option  value="'+QueryBucketModel.snippetImportsFiled+'">imports library</option>'+
-                '<option  value="'+QueryBucketModel.snippetMethodCall+'">method call</option>'+
-                '<option  value="'+QueryBucketModel.snippetMethodDec+'">method declaration</option>'+
-
+                '<option  value="'+QueryBucketModel.snippetMethodCall+'">has method call</option>'+
+                '<option  value="'+QueryBucketModel.snippetMethodDec+'">has method declaration</option>'+
+                '<option  value="'+QueryBucketModel.snippetClassGeneric+'">is generic</option>'+
+                '<option  value="'+QueryBucketModel.snippetClassAbstract+'">is abstract</option>'+
+                '<option  value="'+QueryBucketModel.snippetClassWildCard+'">has wildcard</option>'+
+ //               '<option  value="'+QueryBucketModel.snippetInnerClass+'">is inner class</option>'+
+  //              '<option  value="'+QueryBucketModel.snippetHasComments+'">has comments</option>'+
 
 //                '<option  value="'+QueryBucketModel.methodNameField+'">method name</option>'+
 //                '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
@@ -146,8 +150,11 @@ var BuildQueryBoxView = {
             combo.change(function(event){
                 BuildQueryBoxModel.currentQueryType = combo.val();
 
-                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.recursiveField
-                    || BuildQueryBoxModel.currentQueryType == QueryBucketModel.varargsField){
+                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassGeneric ||
+                    BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassAbstract ||
+                    BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassWildCard ||
+                    BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetInnerClass ||
+                    BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetHasComments){
                     queryBox.hide();
                     truebox.show();
                     trueboxLabel.show();

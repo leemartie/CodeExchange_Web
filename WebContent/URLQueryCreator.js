@@ -1,10 +1,10 @@
 var URLQueryCreator = {
-		server : 'level1router.ics.uci.edu',
+		server : 'grok.ics.uci.edu',
 		
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 	//	authorCollection	 :  'GitHubAuthorIndex',
 	//	projectCollection	 :  'GitHubProjectIndex',
-		port					: 8983,
+		port					: 9001,
 		
 		getQueryURL	:	function(callbackFunctionName){
 
@@ -18,10 +18,9 @@ var URLQueryCreator = {
 				+ '&fl=id snippet_author_name snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
 				+ 'snippet_address_upper_bound snippet_project_id '
-                + 'snippet_containing_class_id snippet_code snippet_granularity '
-                + 'snippet_path_complexity_class_sum snippet_changed_code_churn '
-                + 'snippet_size snippet_variable_names_delimited snippet_class_name_delimited snippet_class_name '
-                + 'snippet_method_dec_parameter_types'
+                + 'snippet_code snippet_imports_count snippet_number_of_functions '
+                + 'snippet_path_complexity_class_sum '
+                + 'snippet_size snippet_variable_names_delimited'
 				+ '&facet=true'
                 + '&facet.field=snippet_imports'
                 + '&facet.field=snippet_project_id'
@@ -30,8 +29,6 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_extends'
                 + '&facet.field=snippet_implements'
                 + '&facet.field=snippet_variable_names_delimited'
-                + '&facet.field=snippet_variable_names_delimited'
-                + '&facet.field=snippet_class_name_delimited'
                 + '&facet.mincount=1'
 				+ '&facet.limit=10'
                 + '&expand=true'

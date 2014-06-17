@@ -451,11 +451,25 @@ var Controller = {
 			return $(SetupManager.pound+SetupManager.queryInput_ID).val();
 		},
 
+    /**
+     * COMPLEXITY
+     * @param meta
+     * @param complexity
+     */
         setComplexityReformulation: function(meta,complexity){
-            var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-              var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/decreseComplexity.png"></img>');
-            var codeComplexity = $('<text><u>less complex[+]</u></text>');
-            codeComplexity.click(function(event){
+
+
+            var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+
+            var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
+            tableIncreaseDecrease.append(tr1);
+            var td1 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            td1.attr("align","center");
+            tr1.append(td1);
+
+
+            var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+            icon.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"[* TO "+(complexity-1)+"]");
                 query.displayType = "complexity";
                 query.displayValue = String("less than "+(complexity));
@@ -464,17 +478,22 @@ var Controller = {
 
             });
 
+            icon.addClass("MetaQuery");
 
-         //   metadiv.addClass("MetaBorder");
-          //  codeComplexity.addClass("MetaBorder");
-            codeComplexity.addClass("MetaQuery");
+            var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
+            tableIncreaseDecrease.append(tr2);
+            var td2 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            tr2.append(td2);
+            td2.attr("align","center");
 
+            var tr3 = $(SetupManager.trOpen+SetupManager.trClose);
+            tableIncreaseDecrease.append(tr3);
+            var td3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            tr3.append(td3);
+            td3.attr("align","center");
 
-
-            var metadiv2 = $(SetupManager.divOpen+SetupManager.divClose);
-            var icon2  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/increaseComplexity.png"></img>');
-            var codeComplexity2 = $('<text><u>more complex[+]</u></text>');
-            codeComplexity2.click(function(event){
+            var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+            icon2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"["+(complexity+1)+" TO *]");
                 query.displayType = "complexity";
                 query.displayValue = String("more than "+(complexity));
@@ -484,18 +503,16 @@ var Controller = {
             });
 
 
-        //    metadiv2.addClass("MetaBorder");
-          //  codeComplexity2.addClass("MetaBorder");
-            codeComplexity2.addClass("MetaQuery");
+            icon2.addClass("MetaQuery");
 
 
 
 
+            td1.append(icon2);
 
-            metadiv.append(icon);
-            metadiv.append(codeComplexity);
-            metadiv2.append(icon2);
-            metadiv2.append(codeComplexity2);
+            td2.append("<text>complexity</text>");
+
+            td3.append(icon);
 
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -503,8 +520,7 @@ var Controller = {
             table.append(row);
             var td = $(SetupManager.tdOpen+SetupManager.tdClose);
             row.append(td);
-            td.append(metadiv);
-            td.append(metadiv2);
+            td.append(tableIncreaseDecrease);
 
             table.addClass("MetaGroupBorder");
             table.width("10%");
@@ -512,14 +528,106 @@ var Controller = {
 
 
             $(SetupManager.pound+meta).append(table);
-         //   $(SetupManager.pound+meta).append(metadiv2);
         },
 
+    /**
+     * IMPORTS
+     * @param meta
+     * @param complexity
+     */
+    setImportsReformulation: function(meta,importCount){
+
+
+        var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+
+        var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
+        tableIncreaseDecrease.append(tr1);
+        var td1 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        td1.attr("align","center");
+        tr1.append(td1);
+
+
+        var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+        icon.click(function(event){
+            var query = new QueryModel(QueryBucketModel.importCountField,"[* TO "+(importCount-1)+"]");
+            query.displayType = "import count";
+            query.displayValue = String("less than "+(importCount));
+            query.rangeQuery = true;
+            BuildQueryBoxView.addAndSubmit(query);
+
+        });
+
+        icon.addClass("MetaQuery");
+
+        var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
+        tableIncreaseDecrease.append(tr2);
+        var td2 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        tr2.append(td2);
+        td2.attr("align","center");
+
+        var tr3 = $(SetupManager.trOpen+SetupManager.trClose);
+        tableIncreaseDecrease.append(tr3);
+        var td3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        tr3.append(td3);
+        td3.attr("align","center");
+
+        var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+        icon2.click(function(event){
+            var query = new QueryModel(QueryBucketModel.importCountField,"["+(importCount+1)+" TO *]");
+            query.displayType = "import count";
+            query.displayValue = String("more than "+(importCount));
+            query.rangeQuery = true;
+            BuildQueryBoxView.addAndSubmit(query);
+
+        });
+
+
+        icon2.addClass("MetaQuery");
+
+
+
+
+        td1.append(icon2);
+
+        td2.append("<text>imports</text>");
+
+        td3.append(icon);
+
+
+        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        table.append(row);
+        var td = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row.append(td);
+        td.append(tableIncreaseDecrease);
+
+        table.addClass("MetaGroupBorder");
+        table.width("10%");
+        table.height("10%");
+
+
+        $(SetupManager.pound+meta).append(table);
+    },
+
+    /**
+     * SIZE
+     *
+     * @param meta
+     * @param size
+     */
         setSizeReformulation: function(meta, size){
-            var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-            var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/decreseLength.png"></img>');
-            var codeSize = $('<text><u>shorter[+]</u></text>');
-            codeSize.click(function(event){
+
+            var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+
+            var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
+            tableIncreaseDecrease.append(tr1);
+            var td1 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            td1.attr("align","center");
+            tr1.append(td1);
+
+
+            var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+            icon.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"[* TO "+(size-1)+"]");
                 query.displayType = "size";
                 query.displayValue = String("less than "+(size)+" characters");
@@ -529,16 +637,23 @@ var Controller = {
             });
 
 
-           // metadiv.addClass("MetaBorder");
-          //  codeSize.addClass("MetaBorder");
-            codeSize.addClass("MetaQuery");
+            icon.addClass("MetaQuery");
+
+            var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
+            tableIncreaseDecrease.append(tr2);
+            var td2 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            tr2.append(td2);
+            td2.attr("align","center");
+
+            var tr3 = $(SetupManager.trOpen+SetupManager.trClose);
+            tableIncreaseDecrease.append(tr3);
+            var td3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            tr3.append(td3);
+            td3.attr("align","center");
 
 
-
-            var metadiv2 = $(SetupManager.divOpen+SetupManager.divClose);
-            var icon2  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/increaseLength.png"></img>');
-            var codeSize2 = $('<text><u>longer[+]</u></text>');
-            codeSize2.click(function(event){
+            var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+            icon2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"["+(size+1)+" TO *]");
                 query.displayType = "size";
                 query.displayValue = String("more than "+(size)+" characters");
@@ -548,26 +663,24 @@ var Controller = {
             });
 
 
-           // metadiv2.addClass("MetaBorder");
-          //  codeSize2.addClass("MetaBorder");
-            codeSize2.addClass("MetaQuery");
+            icon2.addClass("MetaQuery");
 
 
 
 
 
-            metadiv.append(icon);
-            metadiv.append(codeSize);
-            metadiv2.append(icon2);
-            metadiv2.append(codeSize2);
+            td1.append(icon2);
+
+            td2.append("<text>length</text>");
+
+            td3.append(icon);
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
             var row = $(SetupManager.trOpen+SetupManager.trClose);
             table.append(row);
             var td = $(SetupManager.tdOpen+SetupManager.tdClose);
             row.append(td);
-            td.append(metadiv);
-            td.append(metadiv2);
+            td.append(tableIncreaseDecrease);
 
             table.addClass("MetaGroupBorder");
             table.width("10%");
@@ -576,9 +689,86 @@ var Controller = {
             $(SetupManager.pound+meta).append(table);
 
 
-        //    $(SetupManager.pound+meta).append(metadiv);
-          //  $(SetupManager.pound+meta).append(metadiv2);
         },
+
+    /**
+     * FUNCTION count
+     * @param meta
+     * @param complexity
+     */
+    setFunctionCountReformulation: function(meta,functionCount){
+
+
+        var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+
+        var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
+        tableIncreaseDecrease.append(tr1);
+        var td1 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        td1.attr("align","center");
+        tr1.append(td1);
+
+
+        var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+        icon.click(function(event){
+            var query = new QueryModel(QueryBucketModel.functionCountField,"[* TO "+(functionCount-1)+"]");
+            query.displayType = "method count";
+            query.displayValue = String("less than "+(functionCount));
+            query.rangeQuery = true;
+            BuildQueryBoxView.addAndSubmit(query);
+
+        });
+
+        icon.addClass("MetaQuery");
+
+        var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
+        tableIncreaseDecrease.append(tr2);
+        var td2 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        tr2.append(td2);
+        td2.attr("align","center");
+
+        var tr3 = $(SetupManager.trOpen+SetupManager.trClose);
+        tableIncreaseDecrease.append(tr3);
+        var td3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        tr3.append(td3);
+        td3.attr("align","center");
+
+        var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+        icon2.click(function(event){
+            var query = new QueryModel(QueryBucketModel.functionCountField,"["+(functionCount+1)+" TO *]");
+            query.displayType = "method count";
+            query.displayValue = String("more than "+(functionCount));
+            query.rangeQuery = true;
+            BuildQueryBoxView.addAndSubmit(query);
+
+        });
+
+
+        icon2.addClass("MetaQuery");
+
+
+
+
+        td1.append(icon2);
+
+        td2.append("<text>methods</text>");
+
+        td3.append(icon);
+
+
+        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        table.append(row);
+        var td = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row.append(td);
+        td.append(tableIncreaseDecrease);
+
+        table.addClass("MetaGroupBorder");
+        table.width("10%");
+        table.height("10%");
+
+
+        $(SetupManager.pound+meta).append(table);
+    },
 
 		setAuthorName	:	function(meta, name){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
