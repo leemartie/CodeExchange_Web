@@ -48,7 +48,7 @@
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderModel.js"></script>
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderView.js"></script>
 <script type="text/javascript" src="jQueryRotate.js"></script>
-<script type="text/javascript" src="ace-builds/src-noconflict/ace.js"></script>
+<script type="text/javascript" src="ace-builds/src-noconflict/ace.js" charset="utf-8"></script>
 
 
 <script>
@@ -72,12 +72,17 @@
 
     .child{
         position:absolute;
-        background:rgba(255,255,0,0.15);
+        background: lightsalmon;
         z-index:40;
         border-radius: 50px;
     }
 
-
+    .classHeadHighlight{
+        position:absolute;
+        background:lightsteelblue;
+        z-index:40;
+        border-radius: 50px;
+    }
     .decChild{
         position:absolute;
         background:rgba(0,255,0,0.2);
@@ -304,6 +309,17 @@
     
     .Header{
     	
+    }
+
+    .CriticBorder{
+        background-color:lightgoldenrodyellow;
+
+
+
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        border-color: lightblue;
+
     }
     
 	td.HeaderTD{

@@ -66,10 +66,19 @@ var Controller = {
                       var row = 0;
                       var classRow = 0;
 
+//local markers array
+                      var localMarkers = new Array();
+
+
                       for(var i = 0; i < newLines.length; i++){
+
                            var indexOfClass = newLines[i].indexOf(" class ");
-                          if( indexOfClass != -1 && classRow == 0){
-                              classRow = i;
+                          if( indexOfClass != -1){
+
+                              var aceRange = ace.require('ace/range').Range;
+                              var markerID = editor.session.addMarker(new aceRange(i, 0,
+                                  i, 1000), "classHeadHighlight","background");
+                              localMarkers.push(markerID);
                           }
 
                       }
@@ -82,6 +91,8 @@ var Controller = {
                           }
 
                       }
+
+                      var classStart = start;
 
 //annotations
                       editor.session.clearAnnotations();
@@ -203,11 +214,11 @@ var Controller = {
 
                       var regEx = new RegExp( word, "gi" );
 
-                      editor.findAll(regEx,{
-                          //caseSensitive: false,
-                          //wholeWord: true,
-                          regExp: true
-                      });
+//                      editor.findAll(regEx,{
+//                          //caseSensitive: false,
+//                          //wholeWord: true,
+//                          regExp: true
+//                      });
 
 
 ///EXPAND CHILDREN
@@ -246,7 +257,7 @@ var Controller = {
 
 
 
-                      var localMarkers = new Array();
+
 
                       for (var property in expanded) {
                           if(property.toLowerCase().localeCompare(codeID.toLowerCase()) != 0)
@@ -262,6 +273,8 @@ var Controller = {
                                   var start = startSplit[1];
 
                                   var rowNumber = Controller.getRow(cumLength, parseInt(start), 0, cumLength.length);
+
+
                                   var columnNumber = parseInt(start) - cumLength[rowNumber];
 
                                   var end = endSplit[1];
@@ -270,7 +283,7 @@ var Controller = {
 
                                   var aceRange = ace.require('ace/range').Range;
 
-                                  var CSSclass = "";
+                                  var CSSclass = "child";
 
                                   if(endSplit[0].indexOf("method") > -1){
                                       CSSclass = "decChild";
@@ -303,6 +316,12 @@ var Controller = {
                               }
                           }
                       }
+
+                      //for class
+                      var aceRange = ace.require('ace/range').Range;
+
+
+
 
 
                       editor.session.setAnnotations(annotationArray);
@@ -350,11 +369,11 @@ var Controller = {
 
                           var regEx = new RegExp( word, "gi" );
 
-                          editor.findAll(regEx,{
-                              //caseSensitive: false,
-                              //wholeWord: true,
-                              regExp: true
-                          });
+//                          editor.findAll(regEx,{
+//                              //caseSensitive: false,
+//                              //wholeWord: true,
+//                              regExp: true
+//                          });
 
 
                       });
@@ -395,6 +414,8 @@ var Controller = {
      }
 
     },
+
+
 
 
 
@@ -460,6 +481,7 @@ var Controller = {
 
 
             var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+            tableIncreaseDecrease.addClass("CriticBorder");
 
             var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
             tableIncreaseDecrease.append(tr1);
@@ -539,6 +561,7 @@ var Controller = {
 
 
         var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+        tableIncreaseDecrease.addClass("CriticBorder");
 
         var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
         tableIncreaseDecrease.append(tr1);
@@ -618,6 +641,7 @@ var Controller = {
         setSizeReformulation: function(meta, size){
 
             var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+            tableIncreaseDecrease.addClass("CriticBorder");
 
             var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
             tableIncreaseDecrease.append(tr1);
@@ -700,6 +724,7 @@ var Controller = {
 
 
         var tableIncreaseDecrease = $(SetupManager.tableOpen+SetupManager.tableClose);
+        tableIncreaseDecrease.addClass("CriticBorder");
 
         var tr1 = $(SetupManager.trOpen+SetupManager.trClose);
         tableIncreaseDecrease.append(tr1);
@@ -726,6 +751,7 @@ var Controller = {
         tr2.append(td2);
         td2.attr("align","center");
 
+
         var tr3 = $(SetupManager.trOpen+SetupManager.trClose);
         tableIncreaseDecrease.append(tr3);
         var td3 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -751,6 +777,7 @@ var Controller = {
         td1.append(icon2);
 
         td2.append("<text>methods</text>");
+
 
         td3.append(icon);
 
