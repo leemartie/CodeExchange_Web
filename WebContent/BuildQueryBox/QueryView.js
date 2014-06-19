@@ -19,6 +19,9 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 
 
+       if(displayValue != null && displayValue.length > 30)
+         displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
+
        this.row.append(this.cell);
        table.append(this.row);
        var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">'+displayValue+'</font></text>');

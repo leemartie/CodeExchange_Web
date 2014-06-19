@@ -543,17 +543,30 @@ var SetupManager = {
 				screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth*(3/4);
 				var screenHeightBuffer = screenHeight*(3/4)-75;
-				
-				$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)+30);
+
+                if(!Controller.isExpanded)
+				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells)+30);
+                else {
+                    $('.Result').width(((screenBuffer) ) + 30);
+                }
+
 				$('.Result').height((screenHeightBuffer));
 
-				$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
+                if(!Controller.isExpanded)
+				    $('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
+                else {
+                    $('.ResultTD').width(((screenBuffer) ) + 30);
+                }
+
+
 				$('.ResultTD').height((screenHeightBuffer));		
 				//$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
-			
-				
-				$('.ResultTR').width(((screenBuffer)));
-				$('.ResultTR').height((screenHeightBuffer));
+
+
+				    $('.ResultTR').width(((screenBuffer)));
+
+
+                $('.ResultTR').height((screenHeightBuffer));
 			//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
 				
 				

@@ -29,6 +29,8 @@ var Controller = {
         childIdsToMethodIncParams  : new Array(),
         childIdsToMethodIncCallingClass : new Array(),
 
+        isExpanded : false,
+
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
@@ -1446,16 +1448,16 @@ var Controller = {
 			  var number = id.charAt(id.length-1);
 			  var result = SetupManager.resultPreArray_ID[number];
 
-			  previousHeight = $(SetupManager.pound+result).height();
-	          previousWidth = $(SetupManager.pound+result).width();
-	          previousX = $(SetupManager.pound+result).left;
-	          previousY = $(SetupManager.pound+result).top;
+			Controller.previousHeight = $(SetupManager.pound+result).height();
+            Controller.previousWidth = $(SetupManager.pound+result).width();
+            Controller.previousX = $(SetupManager.pound+result).left;
+            Controller.previousY = $(SetupManager.pound+result).top;
 
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth-$('.FilterSideTD').width()-46;
-				var screenHeightBuffer = previousHeight;
+				var screenHeightBuffer = Controller.previousHeight;
 
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 
@@ -1468,6 +1470,8 @@ var Controller = {
 
             var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
             editor.resize();
+
+            Controller.isExpanded = true;
 
 		},
 
@@ -1492,15 +1496,19 @@ var Controller = {
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 
 
-		            width: previousWidth,
-		            height: previousHeight,
-		            left:	previousX+'px',
-		            top:	previousY+'px'
+		            width: Controller.previousWidth,
+		            height: Controller.previousHeight,
+		            left:	Controller.previousX+'px',
+		            top:	Controller.previousY+'px'
 		          }, 0 );
 
             var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
             editor.resize();
 
+            Controller.isExpanded = false;
+
+            //important to get the resizing right..
+            $(window).trigger('resize');
 
 		},
 
