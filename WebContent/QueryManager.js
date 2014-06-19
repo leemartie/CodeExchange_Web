@@ -382,7 +382,7 @@ function facetCompleteCallBack(data){
 
     var snippet_variable_names_delimited = data.facet_counts.facet_fields.snippet_variable_names_delimited;
 
-    var keywordMax = 6;
+    var keywordMax = 8;
     for(i = 0; i<snippet_variable_names_delimited.length; i = i+2) {
         if(i >= keywordMax)
             continue;

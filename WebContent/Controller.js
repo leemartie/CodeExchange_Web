@@ -24,7 +24,9 @@ var Controller = {
         childRows : new Array(),
         childIdsToColStart : new Array(),
         childIdsToColEnd : new Array(),
-
+        childIdsToMethodIncDecClass : new Array(),
+        childIdsToMethodIncName : new Array(),
+        childIdsToMethodIncParams  : new Array(),
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
@@ -264,9 +266,9 @@ var Controller = {
 //                      Controller.childIdsToColStart.length = 0;
 //                      Controller.childIdsToColEnd.length = 0;
 
-//                      var TokenTooltip = ace.require("kitchen-sink/token_tooltip").TokenTooltip;
-//                      editor.tokenTooltip = new TokenTooltip(editor);
-                        var count = 0;
+                      var TokenTooltip = ace.require("kitchen-sink/token_tooltip").TokenTooltip;
+                      editor.tokenTooltip = new TokenTooltip(editor);
+
                       for (var property in expanded) {
                           if(property.toLowerCase().localeCompare(codeID.toLowerCase()) != 0)
                             continue;
@@ -319,6 +321,16 @@ var Controller = {
                                   Controller.childIdsToColStart[childrenDocs[id_index].id] = columnNumber;
                                   Controller.childIdsToColEnd[childrenDocs[id_index].id] = endColumnNumber;
 
+
+                                  Controller.childIdsToMethodIncDecClass[childrenDocs[id_index].id] =
+                                      childrenDocs[id_index].snippet_method_invocation_declaring_class;
+
+                                  Controller.childIdsToMethodIncParams[childrenDocs[id_index].id] =
+                                      childrenDocs[id_index].snippet_method_invocation_arg_types_place;
+
+                                  Controller.childIdsToMethodIncName[childrenDocs[id_index].id] =
+                                      childrenDocs[id_index].snippet_method_invocation_name;
+
                                   localMarkers.push(markerID);
 
 //                                  annotationArray.push({
@@ -355,7 +367,7 @@ var Controller = {
 
 
 
-
+//listener
                           editor.container.addEventListener("mouseup", function(e) {
                               var target = e.target;
 
@@ -379,7 +391,16 @@ var Controller = {
                                   var rowOfIds = Controller.childRows[editorNumber][docPos.row];
 
                                  if(rowOfIds.length == 1) {
-                                      alert(rowOfIds[0]);
+                                      var toolTip = "Declaring class: "+
+                                          Controller.childIdsToMethodIncDecClass[rowOfIds[0]]
+                                          +"\n"
+                                          +Controller.childIdsToMethodIncName[rowOfIds[0]]
+                                          +"\n"
+                                          +Controller.childIdsToMethodIncParams[rowOfIds[0]]
+                                          ;
+
+
+                                      alert(toolTip);
                                   }else{
                                       //need to get the closest column
                                       var foundId = "";
@@ -402,7 +423,7 @@ var Controller = {
                                           }//if
                                       }//for
 
-                                     alert(foundId);
+                                     alert(Controller.childIdsToMethodIncName[foundId]);
                                   }//else
 
                               }
