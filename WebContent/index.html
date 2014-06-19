@@ -49,7 +49,7 @@
 <script type="text/javascript" src="QueryRecommender/QueryRecommenderView.js"></script>
 <script type="text/javascript" src="jQueryRotate.js"></script>
 <script type="text/javascript" src="ace-builds/src-noconflict/ace.js" charset="utf-8"></script>
-
+<script type="text/javascript" src="ace-builds/src-noconflict/token_tooltip.js"></script>
 
 <script>
 
@@ -72,14 +72,47 @@
 
     .child{
         position:absolute;
-        background: lightsalmon;
+        background: #DCD0FF;
         z-index:40;
         border-radius: 50px;
+
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
+    .tooltip{
+        display: inline;
+        position: relative;
+    }
+
+    .tooltip:hover:after{
+        background: #333;
+        background: rgba(0,0,0,.8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 220px;
+    }
+
+    .tooltip:hover:before{
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: 20px;
+        content: "";
+        left: 50%;
+        position: absolute;
+        z-index: 99;
     }
 
     .classHeadHighlight{
         position:absolute;
-        background:lightsteelblue;
+        background:#d3d3d3;
         z-index:40;
         border-radius: 50px;
     }
@@ -312,7 +345,7 @@
     }
 
     .CriticBorder{
-        background-color:lightgoldenrodyellow;
+
 
 
 

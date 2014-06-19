@@ -612,6 +612,10 @@ var SetupManager = {
             editor.getSession().setUseWrapMode(true);
             editor.setReadOnly(false);
 
+
+
+
+
             var editor2 = ace.edit('result1');
             editor2.setTheme("ace/theme/xcode");
             editor2.getSession().setMode("ace/mode/java");
@@ -619,11 +623,14 @@ var SetupManager = {
             editor2.setReadOnly(false);
 
 
+
             var editor3 = ace.edit('result2');
             editor3.setTheme("ace/theme/xcode");
             editor3.getSession().setMode("ace/mode/java");
             editor3.getSession().setUseWrapMode(true);
             editor3.setReadOnly(false);
+
+
 
 
             SetupManager.resultEditors.push(editor);

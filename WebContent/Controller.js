@@ -21,6 +21,10 @@ var Controller = {
         gridOn : false,
         markers : new Array(),
 
+        childRows : new Array(),
+        childIdsToColStart : new Array(),
+        childIdsToColEnd : new Array(),
+
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
@@ -65,6 +69,16 @@ var Controller = {
                       var count = 0;
                       var row = 0;
                       var classRow = 0;
+
+//remove current markers
+                      var currentMarkers = Controller.markers[editorNumber];
+                      if(currentMarkers != null){
+                          for(var k = 0; k < currentMarkers.length; k++){
+                              editor.session.removeMarker(currentMarkers[k]);
+                          }
+                          currentMarkers.length = 0;
+                      }
+
 
 //local markers array
                       var localMarkers = new Array();
@@ -242,23 +256,17 @@ var Controller = {
                               cumLength.push(cuml);
                           }
 
+//                      //clear it out
+//                      if(Controller.childRows[editorNumber] != null)
+//                        Controller.childRows[editorNumber].length = 0;
+//
+//                      Controller.childRows.length = 0;
+//                      Controller.childIdsToColStart.length = 0;
+//                      Controller.childIdsToColEnd.length = 0;
 
-
-
-                          var currentMarkers = Controller.markers[editorNumber];
-                          if(currentMarkers != null){
-                              for(var k = 0; k < currentMarkers.length; k++){
-                                  editor.session.removeMarker(currentMarkers[k]);
-                              }
-                              currentMarkers.length = 0;
-                          }
-
-
-
-
-
-
-
+//                      var TokenTooltip = ace.require("kitchen-sink/token_tooltip").TokenTooltip;
+//                      editor.tokenTooltip = new TokenTooltip(editor);
+                        var count = 0;
                       for (var property in expanded) {
                           if(property.toLowerCase().localeCompare(codeID.toLowerCase()) != 0)
                             continue;
@@ -296,6 +304,21 @@ var Controller = {
                                   var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
                                       rowNumber, endColumnNumber), CSSclass,"background");
 
+
+                                  if(Controller.childRows[editorNumber] == null){
+                                      Controller.childRows[editorNumber] = new Array();
+                                  }
+
+
+                                  if(Controller.childRows[editorNumber][rowNumber] == null){
+                                      Controller.childRows[editorNumber][rowNumber] = new Array();
+                                  }
+
+
+                                  Controller.childRows[editorNumber][rowNumber].push(childrenDocs[id_index].id);
+                                  Controller.childIdsToColStart[childrenDocs[id_index].id] = columnNumber;
+                                  Controller.childIdsToColEnd[childrenDocs[id_index].id] = endColumnNumber;
+
                                   localMarkers.push(markerID);
 
 //                                  annotationArray.push({
@@ -332,6 +355,61 @@ var Controller = {
 
 
 
+
+                          editor.container.addEventListener("mouseup", function(e) {
+                              var target = e.target;
+
+                              //method call
+                              if (target.classList.contains("child")) {
+                                  var r = editor.renderer;
+                                  var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
+
+                                  var x = e.clientX;
+                                  var y = e.clientY;
+
+                                  var offset = (x + r.scrollLeft - canvasPos.left - r.$padding) / r.characterWidth;
+                                  var row = Math.floor((y + r.scrollTop - canvasPos.top) / r.lineHeight);
+                                  var col = Math.round(offset);
+
+                                  var screenPos = {row: row, column: col, side: offset - col > 0 ? 1 : -1};
+                                  var docPos = editor.session.screenToDocumentPosition(screenPos.row, screenPos.column);
+
+                                 // alert(docPos.row +" "+docPos.column);
+
+                                  var rowOfIds = Controller.childRows[editorNumber][docPos.row];
+
+                                 if(rowOfIds.length == 1) {
+                                      alert(rowOfIds[0]);
+                                  }else{
+                                      //need to get the closest column
+                                      var foundId = "";
+                                      var lastStart = 0;
+                                      for(var i = 0; i<rowOfIds.length; i++){
+                                          var start = Controller.childIdsToColStart[rowOfIds[i]];
+                                          var end   = Controller.childIdsToColEnd[rowOfIds[i]];
+
+                                          if(start <= docPos.column && end >= docPos.column){
+                                              if(foundId == "") {
+                                                  foundId = rowOfIds[i];
+                                                  lastStart = start;
+                                              }//if
+                                              else{
+                                                  if(lastStart < start){
+                                                      foundId = rowOfIds[i];
+                                                      lastStart = start;
+                                                  }//if
+                                              }//else
+                                          }//if
+                                      }//for
+
+                                     alert(foundId);
+                                  }//else
+
+                              }
+
+
+
+                          });
 
 
 

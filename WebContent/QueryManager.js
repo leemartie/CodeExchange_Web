@@ -361,7 +361,7 @@ var QueryManager = {
 
 		// alert(url);
 		$.getJSON(url);
-	},
+	}
 	
 	
 
@@ -382,15 +382,17 @@ function facetCompleteCallBack(data){
 
     var snippet_variable_names_delimited = data.facet_counts.facet_fields.snippet_variable_names_delimited;
 
-
+    var keywordMax = 6;
     for(i = 0; i<snippet_variable_names_delimited.length; i = i+2) {
-        if(i >= 12)
+        if(i >= keywordMax)
             continue;
 
         var variableName = snippet_variable_names_delimited[i];
 
-        if(variableName == "")
+        if(variableName == "" || variableName.length == 1) {
+            keywordMax = keywordMax +2;
             continue;
+        }
 
         var query4 = new QueryModel(QueryBucketModel.snippetField, variableName);
         query4.displayType = "keywords";
