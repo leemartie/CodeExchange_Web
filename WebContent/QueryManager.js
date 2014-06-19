@@ -95,6 +95,8 @@ var QueryManager = {
         else if(field == QueryBucketModel.snippetMethodCallParameters
             || field == QueryBucketModel.snippetMethodDeclarationParameters)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ParamBox).val();
+        else if(field == QueryBucketModel.snippetMethodDeclarationReturn)
+            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ReturnBox).val();
         else
             QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
 
@@ -114,6 +116,7 @@ var QueryManager = {
             field != QueryBucketModel.snippetMethodCallParameters   &&
 
             field != QueryBucketModel.snippetMethodDeclarationName   &&
+            field != QueryBucketModel.snippetMethodDeclarationReturn   &&
             field != QueryBucketModel.snippetMethodDeclarationClass   &&
             field != QueryBucketModel.snippetMethodDeclarationParameters  ) {
             queryAutoComplete = 'http://' + URLQueryCreator.server + ':' + URLQueryCreator.port + '/solr/' + URLQueryCreator.collection + '/select/?' +
@@ -735,6 +738,8 @@ function autoCompleteCallBack(data){
         var results = data.facet_counts.facet_fields.snippet_method_dec_name;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationParameters){
         var results = data.facet_counts.facet_fields.snippet_method_dec_parameter_types;
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationReturn){
+        var results = data.facet_counts.facet_fields.snippet_method_dec_return_type;
     }
 
 

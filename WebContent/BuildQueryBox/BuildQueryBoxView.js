@@ -48,6 +48,60 @@ var BuildQueryBoxView = {
             queryCell.append(queryLabel);
             queryCell.append(queryBox);
 
+
+
+
+
+            //this is for method invocations
+
+            var ClassNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            ClassNameBox.width("98%");
+            var ClassNameLabel = $("<text>Class Name</text><br>");
+            ClassNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ClassBox);
+
+            var MethodNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            MethodNameBox.width("98%");
+            var MethodNameLabel = $("<br><text>Method Name</text><br>");
+            MethodNameBox.attr(SetupManager.ID_attr,QueryBucketModel.MethodBox);
+
+            var ParameterNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            ParameterNameBox.width("98%");
+            var ParameterNameLabel = $("<br><text>Parameter Type</text><br>");
+            ParameterNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ParamBox);
+
+
+            var ReturnTypeBox = $(SetupManager.inputOpen+SetupManager.inputClose);
+            ReturnTypeBox.width("98%");
+            var ReturnTypeLabel = $("<br><text>Return Type</text><br>");
+            ReturnTypeBox.attr(SetupManager.ID_attr,QueryBucketModel.ReturnBox);
+
+
+            queryCell.append(ClassNameLabel);
+            queryCell.append(ClassNameBox);
+
+            queryCell.append(MethodNameLabel);
+            queryCell.append(MethodNameBox);
+
+            queryCell.append(ParameterNameLabel);
+            queryCell.append(ParameterNameBox);
+
+            queryCell.append(ReturnTypeLabel);
+            queryCell.append(ReturnTypeBox);
+
+            ClassNameBox.hide();
+            ClassNameLabel.hide();
+
+            MethodNameBox.hide();
+            MethodNameLabel.hide();
+
+            ParameterNameBox.hide();
+            ParameterNameLabel.hide();
+
+            ReturnTypeBox.hide();
+            ReturnTypeLabel.hide();
+
+
+
             //this is for queries of true false values
             var truebox = $(SetupManager.inputOpen+SetupManager.inputClose);
             var trueboxLabel = $("<text >true</text>");
@@ -74,42 +128,38 @@ var BuildQueryBoxView = {
             falsebox.hide();
             falseboxLabel.hide();
 
-
-            //this is for method invocations
-
-            var ClassNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
-            ClassNameBox.width("98%");
-            var ClassNameLabel = $("<text>Class Name</text><br>");
-            ClassNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ClassBox);
-
-            var MethodNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
-            MethodNameBox.width("98%");
-            var MethodNameLabel = $("<br><text>Method Name</text><br>");
-            MethodNameBox.attr(SetupManager.ID_attr,QueryBucketModel.MethodBox);
-
-            var ParameterNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
-            ParameterNameBox.width("98%");
-            var ParameterNameLabel = $("<br><text>Parameter Type</text><br>");
-            ParameterNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ParamBox);
+            //............Generic check box
+            var checkboxGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
+            var checkboxLabelGeneric = $("<text >generic</text>");
+            checkboxGeneric.attr("type","checkbox");
+            checkboxGeneric.attr("value","generic");
 
 
-            queryCell.append(ClassNameLabel);
-            queryCell.append(ClassNameBox);
 
-            queryCell.append(MethodNameLabel);
-            queryCell.append(MethodNameBox);
+            queryCell.append(checkboxGeneric);
+            queryCell.append(checkboxLabelGeneric);
 
-            queryCell.append(ParameterNameLabel);
-            queryCell.append(ParameterNameBox);
+            queryCell.width("100%");
 
-            ClassNameBox.hide();
-            ClassNameLabel.hide();
+            checkboxGeneric.hide();
+            checkboxLabelGeneric.hide();
 
-            MethodNameBox.hide();
-            MethodNameLabel.hide();
+            //.................Variable Arguments check box
+            var checkboxVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
+            var checkboxLabelVarArgs = $("<text >variable args</text>");
+            checkboxVarArgs.attr("type","checkbox");
+            checkboxVarArgs.attr("value","varArgs");
 
-            ParameterNameBox.hide();
-            ParameterNameLabel.hide();
+
+            queryCell.append(checkboxVarArgs);
+            queryCell.append(checkboxLabelVarArgs);
+
+            queryCell.width("100%");
+
+            checkboxVarArgs.hide();
+            checkboxLabelVarArgs.hide();
+
+            //.................
 
 
 
@@ -162,6 +212,12 @@ var BuildQueryBoxView = {
                     falsebox.show();
                     falseboxLabel.show();
 
+                    checkboxGeneric.hide();
+                    checkboxLabelGeneric.hide();
+                    checkboxVarArgs.hide();
+                    checkboxLabelVarArgs.hide();
+                    ReturnTypeBox.hide();
+                    ReturnTypeLabel.hide();
 
                     ClassNameBox.hide();
                     ClassNameLabel.hide();
@@ -173,8 +229,7 @@ var BuildQueryBoxView = {
                     ParameterNameLabel.hide();
 
 
-                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall
-                    || BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec){
+                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall){
 
                     ClassNameBox.show();
                     ClassNameLabel.show();
@@ -190,6 +245,35 @@ var BuildQueryBoxView = {
                     falsebox.hide();
                     trueboxLabel.hide();
                     falseboxLabel.hide();
+
+                    checkboxGeneric.hide();
+                    checkboxLabelGeneric.hide();
+                    checkboxVarArgs.hide();
+                    checkboxLabelVarArgs.hide();
+                    ReturnTypeBox.hide();
+                    ReturnTypeLabel.hide();
+                }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec){
+                    ClassNameBox.show();
+                    ClassNameLabel.show();
+
+                    MethodNameBox.show();
+                    MethodNameLabel.show();
+
+                    ParameterNameBox.show();
+                    ParameterNameLabel.show();
+
+                    ReturnTypeBox.show();
+                    ReturnTypeLabel.show();
+
+                    queryBox.hide();
+
+
+                    checkboxGeneric.show();
+                    checkboxLabelGeneric.show();
+
+                    checkboxVarArgs.show();
+                    checkboxLabelVarArgs.show();
+
                 }
                 else{
                     queryBox.show();
@@ -197,6 +281,13 @@ var BuildQueryBoxView = {
                     falsebox.hide();
                     trueboxLabel.hide();
                     falseboxLabel.hide();
+
+                    checkboxGeneric.hide();
+                    checkboxLabelGeneric.hide();
+                    checkboxVarArgs.hide();
+                    checkboxLabelVarArgs.hide();
+                    ReturnTypeBox.hide();
+                    ReturnTypeLabel.hide();
 
 
                     ClassNameBox.hide();
@@ -367,6 +458,12 @@ var BuildQueryBoxView = {
             var methodDecQueryFunction = function(){
                 var query = null;
                 var methodCallValue = '';
+
+                if(ReturnTypeBox.val() != "") {
+                    methodCallValue = methodCallValue + '%2B'
+                        + QueryBucketModel.snippetMethodDeclarationReturn + ':"' + ReturnTypeBox.val() + '"';
+                }
+
                 if(ClassNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodDeclarationClass + ':"' + ClassNameBox.val() + '"';
@@ -395,11 +492,13 @@ var BuildQueryBoxView = {
                 }
                 query = new QueryModel(combo.val(), methodCallValue);
                 query.displayType = combo.find(":selected").text();
-                query.displayValue = ClassNameBox.val()+"."+MethodNameBox.val()+"("+ParameterNameBox.val()+")";
+                query.displayValue = ReturnTypeBox.val()+':'+ClassNameBox.val()+"."+
+                    MethodNameBox.val()+"("+ParameterNameBox.val()+")";
                 BuildQueryBoxView.addAndSubmit(query);
                 ClassNameBox.val("");
                 MethodNameBox.val("");
                 ParameterNameBox.val("");
+                ReturnTypeBox.val("");
             }
 
 
@@ -430,6 +529,12 @@ var BuildQueryBoxView = {
                          QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
                     else
                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationParameters, request, response);
+                }
+            });
+
+            ReturnTypeBox.autocomplete({
+                source: function( request, response ){
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationReturn, request, response);
                 }
             });
 
@@ -466,6 +571,12 @@ var BuildQueryBoxView = {
             });
 
 
+            ReturnTypeBox.keypress(function(e){
+                if (e.keyCode == '13') {
+                    e.preventDefault();
+                    methodDecQueryFunction();
+                }
+            });
 
 			return view
 			

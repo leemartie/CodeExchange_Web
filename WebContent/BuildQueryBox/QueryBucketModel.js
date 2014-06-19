@@ -30,6 +30,9 @@ var QueryBucketModel = {
     snippetMethodDeclarationName       : "snippet_method_dec_name",
     snippetMethodDeclarationClass      : "snippet_method_dec_declaring_class",
     snippetMethodDeclarationParameters : "snippet_method_dec_parameter_types",
+    snippetMethodDeclarationReturn     : "snippet_method_dec_return_type",
+    snippetMethodDeclarationGeneric    : "snippet_method_dec_is_generic",
+    snippetMethodDeclarationVarArgs    : "snippet_method_dec_is_var_args",
 
     snippetMethodCallCallingClass   : "snippet_method_invocation_calling_class",
     snippetMethodCallCallingClassShort : "snippet_method_invocation_calling_class_short",
@@ -49,6 +52,7 @@ var QueryBucketModel = {
     ClassBox: "ClassBox",
     MethodBox: "MethodBox",
     ParamBox: "ParamBox",
+    ReturnBox : "ReturnBox",
 
     listOfKeys           :   new Array(),
 

@@ -1502,13 +1502,14 @@ var Controller = {
 		            top:	Controller.previousY+'px'
 		          }, 0 );
 
-            var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
-            editor.resize();
+
 
             Controller.isExpanded = false;
 
             //important to get the resizing right..
             $(window).trigger('resize');
+            var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
+            editor.resize();
 
 		},
 
