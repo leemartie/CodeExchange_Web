@@ -73,11 +73,18 @@
     .child{
         position:absolute;
         background: #DCD0FF;
+
         z-index:40;
         border-radius: 50px;
 
+
         pointer-events: auto;
         cursor: pointer;
+
+        /*background-image: url('http://level1router.ics.uci.edu/upArrow.png');*/
+        /*background-repeat: no-repeat;*/
+        /*padding-left: 30px;  *//* width of the image plus a little extra padding */
+        /*display: block;  *//* may not need this, but I've found I do */
     }
 
     .tooltip{
@@ -112,13 +119,13 @@
 
     .classHeadHighlight{
         position:absolute;
-        background:#d3d3d3;
+
         z-index:40;
         border-radius: 50px;
     }
     .decChild{
         position:absolute;
-        background:rgba(0,255,0,0.2);
+
         z-index:40;
         border-radius: 50px;
     }
@@ -557,7 +564,9 @@
             border-bottom-right-radius: 5px;
 
             background-color:#ffffff;
-            overflow:hidden;
+            overflow:scroll;
+            height: 200px;
+            overflow-x:hidden;
         }
 
         .QueryBucketOverflow{
@@ -587,6 +596,10 @@
             padding-right:0px;
 
 
+        }
+
+        .textWrap{
+            word-wrap:break-word;
         }
 
     .TrailQueryView{

@@ -330,7 +330,7 @@ var BuildQueryBoxView = {
                 var methodCallValue = '';
                 if(ClassNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B'
-                        + QueryBucketModel.snippetMethodCallCallingClass + ':"' + ClassNameBox.val() + '"';
+                        + QueryBucketModel.snippetMethodCallDecClass + ':"' + ClassNameBox.val() + '"';
                 }
                 if(MethodNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName

@@ -27,6 +27,8 @@ var Controller = {
         childIdsToMethodIncDecClass : new Array(),
         childIdsToMethodIncName : new Array(),
         childIdsToMethodIncParams  : new Array(),
+        childIdsToMethodIncCallingClass : new Array(),
+
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
@@ -331,6 +333,9 @@ var Controller = {
                                   Controller.childIdsToMethodIncName[childrenDocs[id_index].id] =
                                       childrenDocs[id_index].snippet_method_invocation_name;
 
+                                  Controller.childIdsToMethodIncCallingClass[childrenDocs[id_index].id] =
+                                      childrenDocs[id_index].snippet_method_invocation_calling_class;
+
                                   localMarkers.push(markerID);
 
 //                                  annotationArray.push({
@@ -397,10 +402,13 @@ var Controller = {
                                           +Controller.childIdsToMethodIncName[rowOfIds[0]]
                                           +"\n"
                                           +Controller.childIdsToMethodIncParams[rowOfIds[0]]
-                                          ;
+                                          +"\n"
+                                          +Controller.childIdsToMethodIncDecClass[rowOfIds[0]];
 
 
-                                      alert(toolTip);
+                                     Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[rowOfIds[0]],
+                                         Controller.childIdsToMethodIncParams[rowOfIds[0]],
+                                         Controller.childIdsToMethodIncName[rowOfIds[0]]);
                                   }else{
                                       //need to get the closest column
                                       var foundId = "";
@@ -423,7 +431,11 @@ var Controller = {
                                           }//if
                                       }//for
 
-                                     alert(Controller.childIdsToMethodIncName[foundId]);
+                                     if(foundId != "") {
+                                         Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[foundId],
+                                             Controller.childIdsToMethodIncParams[foundId],
+                                             Controller.childIdsToMethodIncName[foundId]);
+                                     }
                                   }//else
 
                               }
@@ -490,6 +502,64 @@ var Controller = {
 
 
 		},
+
+
+    addMethodcallQuery: function(callingClass, params, name){
+        var query = null;
+        var methodCallValue = '';
+        if(callingClass != null) {
+            methodCallValue = methodCallValue + '%2B'
+                + QueryBucketModel.snippetMethodCallDecClass + ':"' + callingClass + '"';
+        }else{
+            callingClass = "";
+        }
+        if(name != null) {
+            methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
+                + ':"' +name+ '"';
+        }else{
+            name = "";
+        }
+
+        var formatedParams = "";
+
+        if(params != null) {
+
+            var params = String(params).split(/[ ,]+/);
+
+            var paramQuery = "";
+
+            var formatedParams = "";
+
+            for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+                var paramString = params[paramIndex].substring(0,params[paramIndex].length-2);
+
+                if(paramIndex == 0)
+                    formatedParams = paramString;
+                else{
+                    formatedParams = formatedParams+","+paramString
+                }
+
+                if(paramQuery == ""){
+                    paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
+                        + ':'+'"'+params[paramIndex]+'"';
+                }else{
+                    paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
+                        + ':'+'"'+params[paramIndex]+'"';
+                }
+
+            }
+
+            methodCallValue = methodCallValue + paramQuery+'';
+        }else{
+            params = "";
+        }
+        query = new QueryModel(QueryBucketModel.snippetMethodCall, methodCallValue);
+        query.displayType = "has method call";
+        query.displayValue = callingClass+"."+name+"("+formatedParams+")";
+        BuildQueryBoxView.addAndSubmit(query);
+
+
+    },
     /**
      * Finds the row the character position is on in a binary search way
      * @param newLineArray

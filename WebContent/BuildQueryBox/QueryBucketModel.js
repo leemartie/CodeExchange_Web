@@ -35,6 +35,9 @@ var QueryBucketModel = {
     snippetMethodCallCallingClassShort : "snippet_method_invocation_calling_class_short",
     snippetMethodCallName           : "snippet_method_invocation_name",
     snippetMethodCallParameters     : "snippet_method_invocation_arg_types",
+    snippetMethodCallParametersPlace     : "snippet_method_invocation_arg_types_place",
+
+    snippetMethodCallDecClass   :   "snippet_method_invocation_declaring_class",
 
     snippetClassGeneric             :   "snippet_is_generic",
     snippetClassAbstract            :   "snippet_is_abstract",

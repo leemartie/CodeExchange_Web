@@ -20,11 +20,11 @@ var QueryBucketView = {
         queryBucketRow.append(queryBucketCell);
         QueryBucketView.queryBucket.append(queryBucketRow);
 
-        QueryBucketView.queryBucket.addClass("QueryBucket");
+      ///  QueryBucketView.queryBucket.addClass("QueryBucket");
 
-
-
-        return QueryBucketView.queryBucket;
+        var div = $('<div class="QueryBucket">'+'</div>');
+        div.append(QueryBucketView.queryBucket);
+        return div;
 
     },
 

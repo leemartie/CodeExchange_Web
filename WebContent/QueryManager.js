@@ -526,11 +526,11 @@ function on_nextData(data) {
 					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
 							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
 					//Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
-					//Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
                     Controller.setImportsReformulation(SetupManager.metaDivArray_ID[i],item.snippet_imports_count);
-                    Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
+                  //  Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
 
 //                    if(item.snippet_granularity == "Class")
 //                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
@@ -639,12 +639,12 @@ function on_data(data) {
                             expandedChildren, item.id);
 					
 				//	Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
-				//	Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
+					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
 	//				Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
                     Controller.setImportsReformulation(SetupManager.metaDivArray_ID[i],item.snippet_imports_count);
-                    Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
+                  //  Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
 
                     //Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
 //                    if(item.snippet_granularity == "Class")
