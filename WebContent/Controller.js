@@ -522,37 +522,37 @@ var Controller = {
 
         var formatedParams = "";
 
-        if(params != null) {
-
-            var params = String(params).split(/[ ,]+/);
-
-            var paramQuery = "";
-
-            var formatedParams = "";
-
-            for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
-                var paramString = params[paramIndex].substring(0,params[paramIndex].length-2);
-
-                if(paramIndex == 0)
-                    formatedParams = paramString;
-                else{
-                    formatedParams = formatedParams+","+paramString
-                }
-
-                if(paramQuery == ""){
-                    paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
-                        + ':'+'"'+params[paramIndex]+'"';
-                }else{
-                    paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
-                        + ':'+'"'+params[paramIndex]+'"';
-                }
-
-            }
-
-            methodCallValue = methodCallValue + paramQuery+'';
-        }else{
-            params = "";
-        }
+//        if(params != null) {
+//
+//            var params = String(params).split(/[ ,]+/);
+//
+//            var paramQuery = "";
+//
+//            var formatedParams = "";
+//
+//            for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+//                var paramString = params[paramIndex].substring(0,params[paramIndex].length-2);
+//
+//                if(paramIndex == 0)
+//                    formatedParams = paramString;
+//                else{
+//                    formatedParams = formatedParams+","+paramString
+//                }
+//
+//                if(paramQuery == ""){
+//                    paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
+//                        + ':'+'"'+params[paramIndex]+'"';
+//                }else{
+//                    paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
+//                        + ':'+'"'+params[paramIndex]+'"';
+//                }
+//
+//            }
+//
+//            methodCallValue = methodCallValue + paramQuery+'';
+//        }else{
+//            params = "";
+//        }
         query = new QueryModel(QueryBucketModel.snippetMethodCall, methodCallValue);
         query.displayType = "has method call";
         query.displayValue = callingClass+"."+name+"("+formatedParams+")";
