@@ -501,16 +501,19 @@ var Controller = {
                                 if(target.classList.contains("import")){
                                     toolTip = "*Click to search for code importing this*"
                                     target.setAttribute("title",toolTip)
+                                    return;
                                 }
 
-                                if(target.classList.contains("extends")){
+                                else if(target.classList.contains("extends")){
                                     toolTip = "*Click to search for code extending this*"
                                     target.setAttribute("title",toolTip)
+                                    return;
                                 }
 
-                                if(target.classList.contains("implements")){
+                                else if(target.classList.contains("implements")){
                                     toolTip = "*Click to search for code implementing this*"
                                     target.setAttribute("title",toolTip)
+                                    return;
                                 }
 
                                 var rowOfIds = Controller.childRows[editorNumber][docPos.row];
@@ -609,14 +612,17 @@ var Controller = {
 
                                 if(target.classList.contains("import")){
                                     Controller.addImportQuery(docPos.row, editorNumber);
+                                    return;
                                 }
 
-                                if(target.classList.contains("extends")){
+                                else if(target.classList.contains("extends")){
                                     Controller.addExtendsQuery(Controller.editorToExtendsQuery[editorNumber]);
+                                    return;
                                 }
 
-                                if(target.classList.contains("implements")){
+                                else if(target.classList.contains("implements")){
                                     Controller.addImplementsQuery(Controller.editorToImplementsQuery[editorNumber]);
+                                    return;
                                 }
 
                                 var rowOfIds = Controller.childRows[editorNumber][docPos.row];
@@ -817,13 +823,13 @@ var Controller = {
         BuildQueryBoxView.addAndSubmit(query);
     },
 
-    addImplementsQuery : function(importsList){
+    addImplementsQuery : function(implementsList){
 
-        for(var i = 0; i < importsList.length; i++){
+        for(var i = 0; i < implementsList.length; i++){
             var query = null;
-            query = new QueryModel(QueryBucketModel.implementsField, importsList[i]);
-            query.displayType = "imports";
-            query.displayValue = importsList;
+            query = new QueryModel(QueryBucketModel.implementsField, implementsList[i]);
+            query.displayType = "implements";
+            query.displayValue = implementsList;
             BuildQueryBoxView.addAndSubmit(query);
 
         }
