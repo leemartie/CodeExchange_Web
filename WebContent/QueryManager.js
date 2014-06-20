@@ -526,8 +526,12 @@ function on_nextData(data) {
 					//var correctURL = url.replace(wrongVersion,correctVersion);
 
 
-					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
-							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations);
+                    var expandedChildren = data.expanded;
+
+                    Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
+                        url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
+                        expandedChildren, item.id);
+
 					//Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
@@ -636,6 +640,8 @@ function on_data(data) {
 
 
                     var expandedChildren = data.expanded;
+
+
 
 					Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
 							url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,

@@ -49,190 +49,189 @@ var Controller = {
 		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID){
 
 			var url = "http://level1router.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
-			//var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
-			//$(SetupManager.pound+codeNode).attr("src",codeURL);
-
-			$.getJSON(url).fail(function(data, textStatus, jqXHR) {
-			 //   alert( data + textStatus + jqXHR);
 
 
-			 //   $(SetupManager.pound+codeNode).empty();
-			//	$(SetupManager.pound+codeNode).append("<pre>deleted or moved code</pre>");
-                var editor = ace.edit(codeNode);
-                editor.getSession().setValue("deleted or moved code");
+            var classStart = start;
 
+            (function(codeNode, editorNumber, classStart, expanded){
+                $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
-			  }).success(function(data, textStatus, jqXHR ) {
-				  $.each(data, function(index, element) {
-					    var code = element;
+                    var editor = ace.edit(codeNode);
+                    editor.getSession().setValue("deleted or moved code");
 
-                      var editor = ace.edit(codeNode);
-                      editor.getSession().setValue(code);
+                }).success(function(data, textStatus, jqXHR ) {
+                    $.each(data, function(index, element) {
+                        var code = element;
 
-                      editor.setHighlightActiveLine(true);
+                        var editor = ace.edit(codeNode);
+                        editor.getSession().setValue(code);
 
-                      var newLines = String(code).split("\n");
-                      var count = 0;
-                      var row = 0;
-                      var classRow = 0;
+                        editor.setHighlightActiveLine(true);
+
+                        var newLines = String(code).split("\n");
+                        var count = 0;
+                        var row = 0;
+                        var classRow = 0;
 
 //remove current markers
-                      var currentMarkers = Controller.markers[editorNumber];
-                      if(currentMarkers != null){
-                          for(var k = 0; k < currentMarkers.length; k++){
-                              editor.session.removeMarker(currentMarkers[k]);
-                          }
-                          currentMarkers.length = 0;
-                      }
+                        var currentMarkers = Controller.markers[editorNumber];
+                        if(currentMarkers != null){
+                            for(var k = 0; k < currentMarkers.length; k++){
+                                editor.session.removeMarker(currentMarkers[k]);
+                            }
+                            currentMarkers.length = 0;
+                        }
 
 
 //local markers array
-                      var localMarkers = new Array();
+                        var localMarkers = new Array();
 
 
-                      for(var i = 0; i < newLines.length; i++){
+                        for(var i = 0; i < newLines.length; i++){
 
-                           var indexOfClass = newLines[i].indexOf(" class ");
-                          if( indexOfClass != -1){
+                            var indexOfClass = newLines[i].indexOf("class ");
+                            if( indexOfClass != -1){
 
-                              var aceRange = ace.require('ace/range').Range;
-                              var markerID = editor.session.addMarker(new aceRange(i, 0,
-                                  i, 1000), "classHeadHighlight","background");
-                              localMarkers.push(markerID);
-                          }
+                                var aceRange = ace.require('ace/range').Range;
+                                var markerID = editor.session.addMarker(new aceRange(i, 0,
+                                    i, 1000), "classHeadHighlight","background");
+                                localMarkers.push(markerID);
+                            }
 
-                      }
+                        }
 
-                      for(var i = 0; i < newLines.length; i++){
-                          count = count + newLines[i].length;
-                          if(count >= start) {
-                              row = i;
-                              i = newLines.length;
-                          }
 
-                      }
 
-                      var classStart = start;
+                        for(var i = 0; i < newLines.length; i++){
+                            count = count + newLines[i].length;
+                            if(count >= classStart) {
+                                row = i;
+                                i = newLines.length;
+                            }
+
+                        }
+
+
 
 //annotations
-                      editor.session.clearAnnotations();
-                      editor.session.clearBreakpoints();
+                        editor.session.clearAnnotations();
+                        editor.session.clearBreakpoints();
 
 
-                      var annotationArray = new Array();
-                      var annotationKey = new Array();
+                        var annotationArray = new Array();
+                        var annotationKey = new Array();
 
-                      for(var i = 0; i < newLines.length; i++){
-                          var indexOfClass = newLines[i].indexOf("import ");
+                        for(var i = 0; i < newLines.length; i++){
+                            var indexOfClass = newLines[i].indexOf("import ");
 
-                          annotationKey[i] = {
-                              row: i,
-                              annotationArrayindex: -1
-                          };
+                            annotationKey[i] = {
+                                row: i,
+                                annotationArrayindex: -1
+                            };
 
-                          if( indexOfClass != -1){
-                              var type = QueryBucketModel.snippetImportsFiled;
-                              var startIndex = 7;
+                            if( indexOfClass != -1){
+                                var type = QueryBucketModel.snippetImportsFiled;
+                                var startIndex = 7;
 
-                              if(newLines[i].indexOf("static") != -1) {
-                                  startIndex = 13;
-                              }
+                                if(newLines[i].indexOf("static") != -1) {
+                                    startIndex = 13;
+                                }
 
-                              var indexOfSemiColon = newLines[i].indexOf(";");
-                              var indexOfStar = newLines[i].indexOf("*");
-
-
-                              if(indexOfStar != -1)
-                                  indexOfSemiColon = indexOfStar-1;
-
-                                  var value = newLines[i].substring(startIndex, indexOfSemiColon);
+                                var indexOfSemiColon = newLines[i].indexOf(";");
+                                var indexOfStar = newLines[i].indexOf("*");
 
 
+                                if(indexOfStar != -1)
+                                    indexOfSemiColon = indexOfStar-1;
 
-                                  annotationArray.push({
-                                      row: i,
-                                      column: 0,
-                                      text: "add query part: "+"["+"imports"+"]"+" "+value,
-                                      type: "info",
-                                      queryType: type,
-                                      queryValue: value
-
-                                  });
-
-                              annotationKey[i] = {
-                                  row: i,
-                                  annotationArrayindex: annotationArray.length-1
-                              };
-
-                          }
-
-
-                      }
+                                var value = newLines[i].substring(startIndex, indexOfSemiColon);
 
 
 
-                      Controller.annotationsArrayByEditor[editorNumber] = annotationArray.slice(0);
-                      Controller.annotationsArrayKeyByEditor[editorNumber] = annotationKey.slice(0);
+                                annotationArray.push({
+                                    row: i,
+                                    column: 0,
+                                    text: "add query part: "+"["+"imports"+"]"+" "+value,
+                                    type: "info",
+                                    queryType: type,
+                                    queryValue: value
 
-                      editor.on("guttermousedown", function(e){
-                          var target = e.domEvent.target;
+                                });
 
-                          var row = e.getDocumentPosition().row;
-                              editor.session.clearBreakpoints();
-                              editor.session.setBreakpoint(row);
+                                annotationKey[i] = {
+                                    row: i,
+                                    annotationArrayindex: annotationArray.length-1
+                                };
 
-                          var annotation = Controller.annotationsArrayByEditor[editorNumber]
-                              [Controller.annotationsArrayKeyByEditor[editorNumber][row].annotationArrayindex];
+                            }
 
-                          if(annotation != null) {
-                              var type = annotation.queryType;
-                              var value = annotation.queryValue;
 
-                              var query = new QueryModel(type, value);
-                              query.displayType = "imports";
-                              query.displayValue = value;
-
-                              BuildQueryBoxView.addAndSubmit(query);
-                          }
-                          e.stop();
-                      });
+                        }
 
 
 
+                        Controller.annotationsArrayByEditor[editorNumber] = annotationArray.slice(0);
+                        Controller.annotationsArrayKeyByEditor[editorNumber] = annotationKey.slice(0);
+
+                        editor.on("guttermousedown", function(e){
+                            var target = e.domEvent.target;
+
+                            var row = e.getDocumentPosition().row;
+                            editor.session.clearBreakpoints();
+                            editor.session.setBreakpoint(row);
+
+                            var annotation = Controller.annotationsArrayByEditor[editorNumber]
+                                [Controller.annotationsArrayKeyByEditor[editorNumber][row].annotationArrayindex];
+
+                            if(annotation != null) {
+                                var type = annotation.queryType;
+                                var value = annotation.queryValue;
+
+                                var query = new QueryModel(type, value);
+                                query.displayType = "imports";
+                                query.displayValue = value;
+
+                                BuildQueryBoxView.addAndSubmit(query);
+                            }
+                            e.stop();
+                        });
 
 
-                    //  editor.gotoLine(row-2);
 
-                  //    editor.getSession().foldAll(classRow+2,newLines.length);
-                 //     editor.getSession().foldAll(row+2,newLines.length);
+
+
+                        //  editor.gotoLine(row-2);
+
+                        //    editor.getSession().foldAll(classRow+2,newLines.length);
+                        //     editor.getSession().foldAll(row+2,newLines.length);
 
 //                      var aceRange = ace.require('ace/range').Range;
 //                      var adjRangeAce = new aceRange(row, 0, row+1, 0);
 //                      editor.session.addMarker(adjRangeAce,"highlightBackground","background",false);
 
-                      var word = "";
-                      for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
-                          var query = QueryBucketModel.stackOfQueries[i];
+                        var word = "";
+                        for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
+                            var query = QueryBucketModel.stackOfQueries[i];
 
                             if(query.type == QueryBucketModel.sizeField
                                 || query.type == QueryBucketModel.complexityField)
                                 continue;
 
-                         var  words = query.value.split(' ');
-                          for( var j  = 0; j < words.length; j++){
-                              var part = words[j];
+                            var  words = query.value.split(' ');
+                            for( var j  = 0; j < words.length; j++){
+                                var part = words[j];
 
-                              if(word == "")
-                                  word = part;
-                              else
-                                  word = word+'|'+part;
-                          }
+                                if(word == "")
+                                    word = part;
+                                else
+                                    word = word+'|'+part;
+                            }
 
 
 
-                      }
+                        }
 
-                      var regEx = new RegExp( word, "gi" );
+                        var regEx = new RegExp( word, "gi" );
 
 //                      editor.findAll(regEx,{
 //                          //caseSensitive: false,
@@ -241,104 +240,105 @@ var Controller = {
 //                      });
 
 
-///EXPAND CHILDREN
-//                      //highlighting children
-//                      var lines = editor.getSession().getValue().split("\n")
-//                      var charSum = new Array();
-//                      var totalSum = 0;
+
+
+                        var cumLength = [];
+                        var cnt = editor.session.getLength();
+                        var cuml = 0, nlLength = editor.session.getDocument().getNewLineCharacter().length;
+                        cumLength.push(cuml);
+                        var text = editor.session.getLines(0, cnt);
+                        for(var i=0; i< cnt; i++){
+                            cuml += text[i].length + nlLength;
+                            cumLength.push(cuml);
+                        }
+
+//scroll to line the class is on
+                        var rowOfClass = Controller.getRow(cumLength, parseInt(classStart), 0, cumLength.length);
+                        //alert(rowOfClass+" "+classStart);
+                        editor.scrollToLine(rowOfClass, true, true, (function(){}));
+
+//                        var markerID = editor.session.addMarker(new aceRange(rowOfClass, 0,
+//                            rowOfClass, 1000), "classFound","background");
 //
-//                      for(var sumIndex = 0; sumIndex < lines.length; sumIndex++){
-//                          totalSum = totalSum + lines[sumIndex].length;
-//                          charSum.push(totalSum);
-//                      }
+//                        localMarkers.push(markerID);
 
-                          var cumLength = [];
-                          var cnt = editor.session.getLength();
-                          var cuml = 0, nlLength = editor.session.getDocument().getNewLineCharacter().length;
-                          cumLength.push(cuml);
-                          var text = editor.session.getLines(0, cnt);
-                          for(var i=0; i< cnt; i++){
-                              cuml += text[i].length + nlLength;
-                              cumLength.push(cuml);
-                          }
-
-//                      //clear it out
-//                      if(Controller.childRows[editorNumber] != null)
-//                        Controller.childRows[editorNumber].length = 0;
+////clear it out
+//                        if(Controller.childRows[editorNumber] != null)
+//                            Controller.childRows[editorNumber].length = 0;
 //
-//                      Controller.childRows.length = 0;
-//                      Controller.childIdsToColStart.length = 0;
-//                      Controller.childIdsToColEnd.length = 0;
+//                        Controller.childRows.length = 0;
+//                        Controller.childIdsToColStart.length = 0;
+//                        Controller.childIdsToColEnd.length = 0;
 
-                      var TokenTooltip = ace.require("kitchen-sink/token_tooltip").TokenTooltip;
-                      editor.tokenTooltip = new TokenTooltip(editor);
+                        var TokenTooltip = ace.require("kitchen-sink/token_tooltip").TokenTooltip;
+                        editor.tokenTooltip = new TokenTooltip(editor);
 
-                      for (var property in expanded) {
-                          if(property.toLowerCase().localeCompare(codeID.toLowerCase()) != 0)
-                            continue;
-                          if (expanded.hasOwnProperty(property)) {
-                              var childrenDocs = expanded[property].docs;
+                        for (var property in expanded) {
+                            if(property.toLowerCase().localeCompare(codeID.toLowerCase()) != 0)
+                                continue;
+                            if (expanded.hasOwnProperty(property)) {
+                                var childrenDocs = expanded[property].docs;
 
-                              for(var id_index = 0; id_index < childrenDocs.length; id_index++){
-                                  var split = childrenDocs[id_index].id.split('&');
-                                  var startSplit  = split[2].split('=');
-                                  var endSplit    = split[3].split('=');
+                                for(var id_index = 0; id_index < childrenDocs.length; id_index++){
+                                    var split = childrenDocs[id_index].id.split('&');
+                                    var startSplit  = split[2].split('=');
+                                    var endSplit    = split[3].split('=');
 
-                                  var start = startSplit[1];
+                                    var start = startSplit[1];
 
-                                  var rowNumber = Controller.getRow(cumLength, parseInt(start), 0, cumLength.length);
-
-
-                                  var columnNumber = parseInt(start) - cumLength[rowNumber];
-
-                                  var end = endSplit[1];
-
-                                  var endColumnNumber = parseInt(end) - cumLength[rowNumber];
-
-                                  var aceRange = ace.require('ace/range').Range;
-
-                                  var CSSclass = "child";
-
-                                  if(endSplit[0].indexOf("method") > -1){
-                                      CSSclass = "decChild";
-                                  }else{
-                                      CSSclass = "child";
-                                  }
+                                    var rowNumber = Controller.getRow(cumLength, parseInt(start), 0, cumLength.length);
 
 
+                                    var columnNumber = parseInt(start) - cumLength[rowNumber];
 
-                                  var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
-                                      rowNumber, endColumnNumber), CSSclass,"background");
+                                    var end = endSplit[1];
 
+                                    var endColumnNumber = parseInt(end) - cumLength[rowNumber];
 
-                                  if(Controller.childRows[editorNumber] == null){
-                                      Controller.childRows[editorNumber] = new Array();
-                                  }
+                                    var aceRange = ace.require('ace/range').Range;
 
+                                    var CSSclass = "child";
 
-                                  if(Controller.childRows[editorNumber][rowNumber] == null){
-                                      Controller.childRows[editorNumber][rowNumber] = new Array();
-                                  }
-
-
-                                  Controller.childRows[editorNumber][rowNumber].push(childrenDocs[id_index].id);
-                                  Controller.childIdsToColStart[childrenDocs[id_index].id] = columnNumber;
-                                  Controller.childIdsToColEnd[childrenDocs[id_index].id] = endColumnNumber;
+                                    if(endSplit[0].indexOf("method") > -1){
+                                        CSSclass = "decChild";
+                                    }else{
+                                        CSSclass = "child";
+                                    }
 
 
-                                  Controller.childIdsToMethodIncDecClass[childrenDocs[id_index].id] =
-                                      childrenDocs[id_index].snippet_method_invocation_declaring_class;
 
-                                  Controller.childIdsToMethodIncParams[childrenDocs[id_index].id] =
-                                      childrenDocs[id_index].snippet_method_invocation_arg_types_place;
+                                    var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
+                                        rowNumber, endColumnNumber), CSSclass,"background");
 
-                                  Controller.childIdsToMethodIncName[childrenDocs[id_index].id] =
-                                      childrenDocs[id_index].snippet_method_invocation_name;
 
-                                  Controller.childIdsToMethodIncCallingClass[childrenDocs[id_index].id] =
-                                      childrenDocs[id_index].snippet_method_invocation_calling_class;
+                                    if(Controller.childRows[editorNumber] == null){
+                                        Controller.childRows[editorNumber] = new Array();
+                                    }
 
-                                  localMarkers.push(markerID);
+
+                                    if(Controller.childRows[editorNumber][rowNumber] == null){
+                                        Controller.childRows[editorNumber][rowNumber] = new Array();
+                                    }
+
+
+                                    Controller.childRows[editorNumber][rowNumber].push(childrenDocs[id_index].id);
+                                    Controller.childIdsToColStart[childrenDocs[id_index].id] = columnNumber;
+                                    Controller.childIdsToColEnd[childrenDocs[id_index].id] = endColumnNumber;
+
+
+                                    Controller.childIdsToMethodIncDecClass[childrenDocs[id_index].id] =
+                                        childrenDocs[id_index].snippet_method_invocation_declaring_class;
+
+                                    Controller.childIdsToMethodIncParams[childrenDocs[id_index].id] =
+                                        childrenDocs[id_index].snippet_method_invocation_arg_types_place;
+
+                                    Controller.childIdsToMethodIncName[childrenDocs[id_index].id] =
+                                        childrenDocs[id_index].snippet_method_invocation_name;
+
+                                    Controller.childIdsToMethodIncCallingClass[childrenDocs[id_index].id] =
+                                        childrenDocs[id_index].snippet_method_invocation_calling_class;
+
+                                    localMarkers.push(markerID);
 
 //                                  annotationArray.push({
 //                                      row: rowNumber,
@@ -355,132 +355,121 @@ var Controller = {
 //                                      annotationArrayindex: annotationArray.length-1
 //                                  };
 
-                              }
-                          }
-                      }
+                                }
+                            }
+                        }
 
-                      //for class
-                      var aceRange = ace.require('ace/range').Range;
+                        //for class
+                        var aceRange = ace.require('ace/range').Range;
 
-
-
-
-
-                      editor.session.setAnnotations(annotationArray);
-                      annotationArray.length = 0;
-                      annotationKey.length = 0;
-                      Controller.markers[editorNumber] = localMarkers;
+                        editor.session.setAnnotations(annotationArray);
+                        annotationArray.length = 0;
+                        annotationKey.length = 0;
+                        Controller.markers[editorNumber] = localMarkers;
 
 
 
 
 //listener
-                          editor.container.addEventListener("mouseup", function(e) {
-                              var target = e.target;
+                        editor.container.addEventListener("mouseup", function(e) {
+                            var target = e.target;
 
-                              //method call
-                              if (target.classList.contains("child")) {
-                                  var r = editor.renderer;
-                                  var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
+                            //method call
+                            if (target.classList.contains("child")) {
+                                var r = editor.renderer;
+                                var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
-                                  var x = e.clientX;
-                                  var y = e.clientY;
+                                var x = e.clientX;
+                                var y = e.clientY;
 
-                                  var offset = (x + r.scrollLeft - canvasPos.left - r.$padding) / r.characterWidth;
-                                  var row = Math.floor((y + r.scrollTop - canvasPos.top) / r.lineHeight);
-                                  var col = Math.round(offset);
+                                var offset = (x + r.scrollLeft - canvasPos.left - r.$padding) / r.characterWidth;
+                                var row = Math.floor((y + r.scrollTop - canvasPos.top) / r.lineHeight);
+                                var col = Math.round(offset);
 
-                                  var screenPos = {row: row, column: col, side: offset - col > 0 ? 1 : -1};
-                                  var docPos = editor.session.screenToDocumentPosition(screenPos.row, screenPos.column);
+                                var screenPos = {row: row, column: col, side: offset - col > 0 ? 1 : -1};
+                                var docPos = editor.session.screenToDocumentPosition(screenPos.row, screenPos.column);
 
-                                 // alert(docPos.row +" "+docPos.column);
+                                // alert(docPos.row +" "+docPos.column);
 
-                                  var rowOfIds = Controller.childRows[editorNumber][docPos.row];
+                                var rowOfIds = Controller.childRows[editorNumber][docPos.row];
 
-                                 if(rowOfIds.length == 1) {
-                                      var toolTip = "Declaring class: "+
-                                          Controller.childIdsToMethodIncDecClass[rowOfIds[0]]
-                                          +"\n"
-                                          +Controller.childIdsToMethodIncName[rowOfIds[0]]
-                                          +"\n"
-                                          +Controller.childIdsToMethodIncParams[rowOfIds[0]]
-                                          +"\n"
-                                          +Controller.childIdsToMethodIncDecClass[rowOfIds[0]];
-
-
-                                     Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[rowOfIds[0]],
-                                         Controller.childIdsToMethodIncParams[rowOfIds[0]],
-                                         Controller.childIdsToMethodIncName[rowOfIds[0]]);
-                                  }else{
-                                      //need to get the closest column
-                                      var foundId = "";
-                                      var lastStart = 0;
-                                      for(var i = 0; i<rowOfIds.length; i++){
-                                          var start = Controller.childIdsToColStart[rowOfIds[i]];
-                                          var end   = Controller.childIdsToColEnd[rowOfIds[i]];
-
-                                          if(start <= docPos.column && end >= docPos.column){
-                                              if(foundId == "") {
-                                                  foundId = rowOfIds[i];
-                                                  lastStart = start;
-                                              }//if
-                                              else{
-                                                  if(lastStart < start){
-                                                      foundId = rowOfIds[i];
-                                                      lastStart = start;
-                                                  }//if
-                                              }//else
-                                          }//if
-                                      }//for
-
-                                     if(foundId != "") {
-                                         Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[foundId],
-                                             Controller.childIdsToMethodIncParams[foundId],
-                                             Controller.childIdsToMethodIncName[foundId]);
-                                     }
-                                  }//else
-
-                              }
+                                if(rowOfIds.length == 1) {
+                                    var toolTip = "Declaring class: "+
+                                        Controller.childIdsToMethodIncDecClass[rowOfIds[0]]
+                                        +"\n"
+                                        +Controller.childIdsToMethodIncName[rowOfIds[0]]
+                                        +"\n"
+                                        +Controller.childIdsToMethodIncParams[rowOfIds[0]]
+                                        +"\n"
+                                        +Controller.childIdsToMethodIncDecClass[rowOfIds[0]];
 
 
+                                    Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[rowOfIds[0]],
+                                        Controller.childIdsToMethodIncParams[rowOfIds[0]],
+                                        Controller.childIdsToMethodIncName[rowOfIds[0]]);
+                                }else{
+                                    //need to get the closest column
+                                    var foundId = "";
+                                    var lastStart = 0;
+                                    for(var i = 0; i<rowOfIds.length; i++){
+                                        var start = Controller.childIdsToColStart[rowOfIds[i]];
+                                        var end   = Controller.childIdsToColEnd[rowOfIds[i]];
 
-                          });
+                                        if(start <= docPos.column && end >= docPos.column){
+                                            if(foundId == "") {
+                                                foundId = rowOfIds[i];
+                                                lastStart = start;
+                                            }//if
+                                            else{
+                                                if(lastStart < start){
+                                                    foundId = rowOfIds[i];
+                                                    lastStart = start;
+                                                }//if
+                                            }//else
+                                        }//if
+                                    }//for
+
+                                    if(foundId != "") {
+                                        Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[foundId],
+                                            Controller.childIdsToMethodIncParams[foundId],
+                                            Controller.childIdsToMethodIncName[foundId]);
+                                    }
+                                }//else
+
+                            }
 
 
 
-
-
-
-
+                        });
 
 
 
 //blur
-                      editor.on("blur", function(){
-                          var word = "";
-                          for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
-                              var query = QueryBucketModel.stackOfQueries[i];
+                        editor.on("blur", function(){
+                            var word = "";
+                            for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
+                                var query = QueryBucketModel.stackOfQueries[i];
 
 
-                              if(query.type == QueryBucketModel.sizeField
-                                  || query.type == QueryBucketModel.complexityField)
-                                  continue;
+                                if(query.type == QueryBucketModel.sizeField
+                                    || query.type == QueryBucketModel.complexityField)
+                                    continue;
 
-                              var  words = query.value.split(' ');
-                              for( var j  = 0; j < words.length; j++){
-                                  var part = words[j];
+                                var  words = query.value.split(' ');
+                                for( var j  = 0; j < words.length; j++){
+                                    var part = words[j];
 
-                                  if(word == "")
-                                      word = part;
-                                  else
-                                      word = word+'|'+part;
-                              }
+                                    if(word == "")
+                                        word = part;
+                                    else
+                                        word = word+'|'+part;
+                                }
 
 
 
-                          }
+                            }
 
-                          var regEx = new RegExp( word, "gi" );
+                            var regEx = new RegExp( word, "gi" );
 
 //                          editor.findAll(regEx,{
 //                              //caseSensitive: false,
@@ -489,7 +478,22 @@ var Controller = {
 //                          });
 
 
-                      });
+                        });
+
+
+
+
+
+
+
+
+                    });
+                }); // end of sucess function
+
+
+
+
+            })(codeNode, editorNumber,classStart,expanded);
 
 
 
@@ -499,8 +503,6 @@ var Controller = {
 
 
 
-                  });
-			  });
 
 
 		},

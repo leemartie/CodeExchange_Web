@@ -10,7 +10,14 @@ var BuildQueryBoxView = {
             //make title
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
+
+
             titleRow.append(titleCell);
+
+            var addCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            titleRow.append(addCell);
+
             var label = $("<text>Build Query</text>");
             label.addClass("BuildQueryTitle");
             titleCell.append(label);
@@ -159,9 +166,38 @@ var BuildQueryBoxView = {
             checkboxVarArgs.hide();
             checkboxLabelVarArgs.hide();
 
-            //.................
+            //........add button.........
 
+//
+//            var icon  = $('<img width=16 height=16 src="http://level1router.ics.uci.edu/add.png"></img>');
+//            icon.addClass("addQueryIcon");
+//
+//            var divBuffer = $('<div></div>');
+//            divBuffer.addClass("topBuffer");
+//            divBuffer.append(icon);
+//
+//            queryCell.append(divBuffer);
+//            icon.click(function(event){
+//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+//                    methodCallQueryFunction();
+//                }
+//                else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec) {
+//                    methodDecQueryFunction();
+//                }
+//                else{
+//                    var query = null;
+//                    query = new QueryModel(combo.val(), queryBox.val());
+//                    query.displayType = combo.find(":selected").text();
+//                    query.displayValue = queryBox.val();
+//                    BuildQueryBoxView.addAndSubmit(query);
+//
+//                    queryBox.val("");
+//                }
+//
+//
+//            });
 
+            //...........................
 
 
             view.append(queryRow);
@@ -392,7 +428,7 @@ var BuildQueryBoxView = {
             });
 
 
-            //add keypress  for 'enter' listener to submit query
+//add keypress  for 'enter' listener to submit query
             queryBox.keypress(function(e) {
                 if (e.keyCode == '13') {
                     e.preventDefault();
@@ -464,6 +500,16 @@ var BuildQueryBoxView = {
                         + QueryBucketModel.snippetMethodDeclarationReturn + ':"' + ReturnTypeBox.val() + '"';
                 }
 
+                if(checkboxGeneric[0].checked) {
+                    methodCallValue = methodCallValue + '%2B'
+                        + QueryBucketModel.snippetMethodDeclarationGeneric + ':"' + true + '"';
+                }
+
+                if(checkboxVarArgs[0].checked) {
+                    methodCallValue = methodCallValue + '%2B'
+                        + QueryBucketModel.snippetMethodDeclarationVarArgs + ':"' + true + '"';
+                }
+
                 if(ClassNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodDeclarationClass + ':"' + ClassNameBox.val() + '"';
@@ -494,6 +540,14 @@ var BuildQueryBoxView = {
                 query.displayType = combo.find(":selected").text();
                 query.displayValue = ReturnTypeBox.val()+':'+ClassNameBox.val()+"."+
                     MethodNameBox.val()+"("+ParameterNameBox.val()+")";
+
+                if(checkboxGeneric[0].checked){
+                    query.displayValue = "[generic]" + query.displayValue;
+                }
+                if(checkboxVarArgs[0].checked){
+                    query.displayValue = "[var args]" + query.displayValue;
+                }
+
                 BuildQueryBoxView.addAndSubmit(query);
                 ClassNameBox.val("");
                 MethodNameBox.val("");
