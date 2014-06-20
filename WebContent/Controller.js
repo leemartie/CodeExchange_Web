@@ -617,26 +617,36 @@ var Controller = {
 
 		},
 
+    /**
+     * this creates the tool tips
+     * @param declaringClass
+     * @param callingClass
+     * @param methodName
+     * @param params
+     * @returns {string}
+     */
     createToolTip : function (declaringClass, callingClass, methodName, params){
-        var toolTip = "";
+        var toolTip =      "*Click to search for similar method calls*\n";
+
+        toolTip = toolTip + "\n------------------INFO------------------\n"
 
         if(declaringClass != null){
-            if(declaringClass.length > 30)
-                declaringClass = [declaringClass.slice(0, 30), '\n\t\t', declaringClass.slice(30)].join('');
+            if(declaringClass.length > 20)
+                declaringClass = [declaringClass.slice(0, 20), '\n\t\t', declaringClass.slice(20)].join('');
 
             toolTip = toolTip + "[Declaring Class] "+declaringClass;
         }
 
         if(callingClass != null){
-            if(callingClass.length > 30)
-                callingClass = [callingClass.slice(0, 30), '\n\t\t', callingClass.slice(30)].join('');
+            if(callingClass.length > 20)
+                callingClass = [callingClass.slice(0, 20), '\n\t\t', callingClass.slice(20)].join('');
 
             toolTip = toolTip + "\n[Calling Class] "+callingClass;
         }
 
         if(methodName != null){
-            if(methodName.length > 30)
-                methodName = [methodName.slice(0, 30), '\n\t\t', methodName.slice(30)].join('');
+            if(methodName.length > 20)
+                methodName = [methodName.slice(0, 30), '\n\t\t', methodName.slice(20)].join('');
 
             toolTip = toolTip + "\n[Method Name] "+methodName;
         }
@@ -648,8 +658,8 @@ var Controller = {
 
             for(var i = 0; i<paramArray.length; i++){
 
-                if(paramArray[i].length > 30)
-                    paramArray[i] = [paramArray[i].slice(0, 30), '\n\t\t', paramArray[i].slice(30)].join('');
+                if(paramArray[i].length > 20)
+                    paramArray[i] = [paramArray[i].slice(0, 20), '\n\t\t', paramArray[i].slice(20)].join('');
 
                 paramArray[i] = paramArray[i].substring(0,paramArray[i].length-2)
 
