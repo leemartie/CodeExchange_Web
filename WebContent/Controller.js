@@ -283,8 +283,10 @@ var Controller = {
 
 //scroll to line the class is on
                         var rowOfClass = Controller.getRow(cumLength, parseInt(classStart), 0, cumLength.length);
-                        //alert(rowOfClass+" "+classStart);
-                        editor.scrollToLine(rowOfClass, false, false, (function(){}));
+
+                        //need this line here because of an issue with the ace editor
+                        editor.resize(true);
+                        editor.scrollToLine(rowOfClass, true, false, (function(){}));
                         var aceRange = ace.require('ace/range').Range;
 
                         var characters = newLines[rowOfClass];
@@ -296,7 +298,11 @@ var Controller = {
                             for(var k = 0; k<newLines.length; k++){
                                 characters = newLines[newRow];
 
-                                if(!(characters.indexOf("*") > -1) && !(characters.indexOf("@") > -1)){
+                                if(!(characters.indexOf("*") > -1) && !(characters.indexOf("@") > -1)
+                                    &&(characters.trim().toLowerCase().substring(0,5) == 'publi' ||
+                                        characters.trim().toLowerCase().substring(0,5) == 'priva' ||
+                                    characters.trim().toLowerCase().substring(0,5) == 'prote') ||
+                                    characters.trim().toLowerCase().substring(0,5) == 'class'){
                                     break;
                                 }else{
                                     newRow++;
