@@ -32,6 +32,10 @@ var Controller = {
 
         rowToImportQuery        : new Array(),
 
+        editorToExtendsQuery    : new Array(),
+
+        editorToImplementsQuery : new Array(),
+
         isExpanded : false,
 
 		/**
@@ -49,14 +53,15 @@ var Controller = {
 
 		},
 
-		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID){
+		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID, extendsResult,
+            implementsResult){
 
 			var url = "http://level1router.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 
 
             var classStart = start;
 
-            (function(codeNode, editorNumber, classStart, expanded){
+            (function(codeNode, editorNumber, classStart, expanded, extendsResult, implementsResult){
                 $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
                     var editor = ace.edit(codeNode);
@@ -75,6 +80,12 @@ var Controller = {
                         var count = 0;
                         var row = 0;
                         var classRow = 0;
+
+//assigning extendsResult
+                        Controller.editorToExtendsQuery[editorNumber] = extendsResult;
+
+//assigning implementsResult
+                        Controller.editorToImplementsQuery[editorNumber] = implementsResult;
 
 //remove current markers
                         var currentMarkers = Controller.markers[editorNumber];
@@ -298,7 +309,35 @@ var Controller = {
                         var markerID = editor.session.addMarker(new aceRange(newRow, 0,
                             newRow, 1000), "classFound","background");
 
+
+
                         localMarkers.push(markerID);
+
+
+//let's find if the extends or implements is clicked then we can refine query by this...
+                        var classLine = newLines[newRow];
+                        //add marker
+                        var indexExtends = classLine.indexOf(" extends ");
+
+                        if( indexExtends > -1){
+                            var markerID = editor.session.addMarker(new aceRange(newRow, indexExtends+1,
+                                newRow, indexExtends+1+7), "extends","background");
+
+                            localMarkers.push(markerID);
+
+                            Controller.editorToExtendsQuery
+                        }
+
+                        var indexImplements = classLine.indexOf(" implements ");
+
+                        if( indexImplements > -1){
+                            var markerID = editor.session.addMarker(new aceRange(newRow, indexImplements+1,
+                                newRow, indexImplements+1+10), "implements","background");
+
+                            localMarkers.push(markerID);
+                        }
+
+
 
 ////clear it out
 //                        if(Controller.childRows[editorNumber] != null)
@@ -434,7 +473,8 @@ var Controller = {
 
                             //method call
                             if (target.classList.contains("tip") || target.classList.contains("tipDec")
-                                || target.classList.contains("import")) {
+                                || target.classList.contains("import") || target.classList.contains("extends")
+                                || target.classList.contains("implements")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -454,6 +494,16 @@ var Controller = {
 
                                 if(target.classList.contains("import")){
                                     toolTip = "*Click to search for code importing this*"
+                                    target.setAttribute("title",toolTip)
+                                }
+
+                                if(target.classList.contains("extends")){
+                                    toolTip = "*Click to search for code extending this*"
+                                    target.setAttribute("title",toolTip)
+                                }
+
+                                if(target.classList.contains("implements")){
+                                    toolTip = "*Click to search for code implementing this*"
                                     target.setAttribute("title",toolTip)
                                 }
 
@@ -534,7 +584,8 @@ var Controller = {
 
                             //method call
                             if (target.classList.contains("tip")|| target.classList.contains("tipDec")
-                                || target.classList.contains("import")) {
+                                || target.classList.contains("import") || target.classList.contains("extends")
+                                || target.classList.contains("implements")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -552,6 +603,14 @@ var Controller = {
 
                                 if(target.classList.contains("import")){
                                     Controller.addImportQuery(screenPos.row, editorNumber);
+                                }
+
+                                if(target.classList.contains("extends")){
+                                    Controller.addExtendsQuery(Controller.editorToExtendsQuery[editorNumber]);
+                                }
+
+                                if(target.classList.contains("implements")){
+                                    Controller.addImplementsQuery(Controller.editorToImplementsQuery[editorNumber]);
                                 }
 
                                 var rowOfIds = Controller.childRows[editorNumber][docPos.row];
@@ -666,7 +725,7 @@ var Controller = {
 
 
 
-            })(codeNode, editorNumber,classStart,expanded);
+            })(codeNode, editorNumber,classStart,expanded, extendsResult, implementsResult);
 
 
 
@@ -749,6 +808,27 @@ var Controller = {
         query.displayType = "has method declaration";
         query.displayValue = ":."+name+"("+")";
 
+        BuildQueryBoxView.addAndSubmit(query);
+    },
+
+    addImplementsQuery : function(importsList){
+
+        for(var i = 0; i < importsList.length; i++){
+            var query = null;
+            query = new QueryModel(QueryBucketModel.implementsField, importsList[i]);
+            query.displayType = "imports";
+            query.displayValue = importsList;
+            BuildQueryBoxView.addAndSubmit(query);
+
+        }
+
+    },
+
+    addExtendsQuery : function(extendsClass){
+        var query = null;
+        query = new QueryModel(QueryBucketModel.extendsField, extendsClass);
+        query.displayType = "extends";
+        query.displayValue = extendsClass;
         BuildQueryBoxView.addAndSubmit(query);
     },
 
