@@ -36,7 +36,7 @@ var URLQueryCreator = {
                 + '&expand=true'
                 + '&expand.rows=5000'
                 + '&expand.field=expand_id'
-                + '&expand.q='+childQuery;  // could also query by those that met the children query
+                + '&expand.q=*:*'//+childQuery;  // could also query by those that met the children query
 
 			for(var i = 0; i < FilterManager.filters.length;i++){
 				filter = FilterManager.filters[i];

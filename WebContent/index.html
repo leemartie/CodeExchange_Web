@@ -71,6 +71,9 @@
 
     .classFound{
         position:absolute;
+        background-color: #d3d3d3;
+        z-index:40;
+        border-radius: 50px;
 
     }
 
@@ -108,35 +111,45 @@
         /*display: block;  *//* may not need this, but I've found I do */
     }
 
-    .tooltip{
-        display: inline;
-        position: relative;
+    .tip{
+        position:absolute;
+
+
+        z-index:40;
+        border-radius: 50px;
+
+
+        pointer-events: auto;
+        cursor: pointer;
     }
 
-    .tooltip:hover:after{
-        background: #333;
-        background: rgba(0,0,0,.8);
-        border-radius: 5px;
-        bottom: 26px;
-        color: #fff;
-        content: attr(title);
-        left: 20%;
-        padding: 5px 15px;
-        position: absolute;
-        z-index: 98;
-        width: 220px;
-    }
-
-    .tooltip:hover:before{
+    .tip:hover:before{
         border: solid;
         border-color: #333 transparent;
         border-width: 6px 6px 0 6px;
-        bottom: 20px;
+        bottom: 30px;
         content: "";
-        left: 50%;
+        left: -40%;
         position: absolute;
         z-index: 99;
     }
+
+    .tip:hover:after{
+        background: #333;
+        background: rgba(0,0,0,1);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(test);
+        left: -40%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 280px;
+
+    }
+
+
 
     .classHeadHighlight{
         position:absolute;

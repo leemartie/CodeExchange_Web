@@ -87,18 +87,18 @@ var Controller = {
                         var localMarkers = new Array();
 
 
-                        for(var i = 0; i < newLines.length; i++){
-
-                            var indexOfClass = newLines[i].indexOf("class ");
-                            if( indexOfClass != -1){
-
-                                var aceRange = ace.require('ace/range').Range;
-                                var markerID = editor.session.addMarker(new aceRange(i, 0,
-                                    i, 1000), "classHeadHighlight","background");
-                                localMarkers.push(markerID);
-                            }
-
-                        }
+//                        for(var i = 0; i < newLines.length; i++){
+//
+//                            var indexOfClass = newLines[i].indexOf(/^([*]||[/])"class"/);
+//                            if( indexOfClass != -1){
+//
+//                                var aceRange = ace.require('ace/range').Range;
+//                                var markerID = editor.session.addMarker(new aceRange(i, 0,
+//                                    i, 1000), "classHeadHighlight","background");
+//                                localMarkers.push(markerID);
+//                            }
+//
+//                        }
 
 
 
@@ -255,12 +255,32 @@ var Controller = {
 //scroll to line the class is on
                         var rowOfClass = Controller.getRow(cumLength, parseInt(classStart), 0, cumLength.length);
                         //alert(rowOfClass+" "+classStart);
-                        editor.scrollToLine(rowOfClass, true, true, (function(){}));
+                        editor.scrollToLine(rowOfClass, false, false, (function(){}));
+                        var aceRange = ace.require('ace/range').Range;
 
-//                        var markerID = editor.session.addMarker(new aceRange(rowOfClass, 0,
-//                            rowOfClass, 1000), "classFound","background");
-//
-//                        localMarkers.push(markerID);
+                        var characters = newLines[rowOfClass];
+                        var newRow = rowOfClass;
+
+
+                        if((characters.indexOf("/*") > -1)){
+
+                            for(var k = 0; k<newLines.length; k++){
+                                characters = newLines[newRow];
+
+                                if(!(characters.indexOf("*") > -1)){
+                                    break;
+                                }else{
+                                    newRow++;
+                                }
+                            }
+
+                        }
+
+
+                        var markerID = editor.session.addMarker(new aceRange(newRow, 0,
+                            newRow, 1000), "classFound","background");
+
+                        localMarkers.push(markerID);
 
 ////clear it out
 //                        if(Controller.childRows[editorNumber] != null)
@@ -308,7 +328,12 @@ var Controller = {
 
 
                                     var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
-                                        rowNumber, endColumnNumber), CSSclass,"background");
+                                        rowNumber, endColumnNumber), CSSclass,"background",false);
+
+                                    var markerID2 = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
+                                        rowNumber, endColumnNumber), "tip","background",true);
+
+                                    localMarkers.push(markerID2);
 
 
                                     if(Controller.childRows[editorNumber] == null){
@@ -339,6 +364,8 @@ var Controller = {
                                         childrenDocs[id_index].snippet_method_invocation_calling_class;
 
                                     localMarkers.push(markerID);
+
+
 
 //                                  annotationArray.push({
 //                                      row: rowNumber,
@@ -371,11 +398,94 @@ var Controller = {
 
 
 //listener
+
+ //move
+                        editor.container.addEventListener("mousemove", function(e){
+                            var target = e.target;
+
+                            //method call
+                            if (target.classList.contains("tip")) {
+                                var r = editor.renderer;
+                                var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
+
+                                var x = e.clientX;
+                                var y = e.clientY;
+
+                                var offset = (x + r.scrollLeft - canvasPos.left - r.$padding) / r.characterWidth;
+                                var row = Math.floor((y + r.scrollTop - canvasPos.top) / r.lineHeight);
+                                var col = Math.round(offset);
+
+                                var screenPos = {row: row, column: col, side: offset - col > 0 ? 1 : -1};
+                                var docPos = editor.session.screenToDocumentPosition(screenPos.row, screenPos.column);
+
+                                // alert(docPos.row +" "+docPos.column);
+
+                                var rowOfIds = Controller.childRows[editorNumber][docPos.row];
+
+                                if(rowOfIds.length == 1) {
+
+                                        var dec = Controller.childIdsToMethodIncDecClass[rowOfIds[0]];
+
+                                        var name =  Controller.childIdsToMethodIncName[rowOfIds[0]];
+
+                                        var params = Controller.childIdsToMethodIncParams[rowOfIds[0]];
+
+                                        var calling = Controller.childIdsToMethodIncCallingClass[rowOfIds[0]];
+
+
+
+                                    var toolTip = Controller.createToolTip(dec,calling,name,params);
+
+                                         //tool tip
+                                    target.setAttribute("test",toolTip);
+
+
+                                }else{
+                                    //need to get the closest column
+                                    var foundId = "";
+                                    var lastStart = 0;
+                                    for(var i = 0; i<rowOfIds.length; i++){
+                                        var start = Controller.childIdsToColStart[rowOfIds[i]];
+                                        var end   = Controller.childIdsToColEnd[rowOfIds[i]];
+
+                                        if(start <= docPos.column && end >= docPos.column){
+                                            if(foundId == "") {
+                                                foundId = rowOfIds[i];
+                                                lastStart = start;
+                                            }//if
+                                            else{
+                                                if(lastStart < start){
+                                                    foundId = rowOfIds[i];
+                                                    lastStart = start;
+                                                }//if
+                                            }//else
+                                        }//if
+                                    }//for
+
+                                    if(foundId != "") {
+                                        var dec = Controller.childIdsToMethodIncDecClass[foundId];
+
+                                        var name =  Controller.childIdsToMethodIncName[foundId];
+
+                                        var params = Controller.childIdsToMethodIncParams[foundId];
+
+                                        var calling = Controller.childIdsToMethodIncCallingClass[foundId];
+
+                                        var toolTip = Controller.createToolTip(dec,calling,name,params);
+
+                                        //tool tip
+                                        target.setAttribute("test",toolTip);
+                                    }
+                                }//else
+                            }
+                        });
+
+ //up
                         editor.container.addEventListener("mouseup", function(e) {
                             var target = e.target;
 
                             //method call
-                            if (target.classList.contains("child")) {
+                            if (target.classList.contains("tip")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -506,6 +616,53 @@ var Controller = {
 
 
 		},
+
+    createToolTip : function (declaringClass, callingClass, methodName, params){
+        var toolTip = "";
+
+        if(declaringClass != null){
+            if(declaringClass.length > 30)
+                declaringClass = [declaringClass.slice(0, 30), '\n\t\t', declaringClass.slice(30)].join('');
+
+            toolTip = toolTip + "[Declaring Class] "+declaringClass;
+        }
+
+        if(callingClass != null){
+            if(callingClass.length > 30)
+                callingClass = [callingClass.slice(0, 30), '\n\t\t', callingClass.slice(30)].join('');
+
+            toolTip = toolTip + "\n[Calling Class] "+callingClass;
+        }
+
+        if(methodName != null){
+            if(methodName.length > 30)
+                methodName = [methodName.slice(0, 30), '\n\t\t', methodName.slice(30)].join('');
+
+            toolTip = toolTip + "\n[Method Name] "+methodName;
+        }
+
+        if(params != null){
+
+            var paramArray = String(params).split(",");
+
+
+            for(var i = 0; i<paramArray.length; i++){
+
+                if(paramArray[i].length > 30)
+                    paramArray[i] = [paramArray[i].slice(0, 30), '\n\t\t', paramArray[i].slice(30)].join('');
+
+                paramArray[i] = paramArray[i].substring(0,paramArray[i].length-2)
+
+                toolTip = toolTip + "\n[Parameter Type] "+paramArray[i];
+            }
+
+
+
+        }
+
+
+        return toolTip;
+    },
 
 
     addMethodcallQuery: function(callingClass, params, name){
