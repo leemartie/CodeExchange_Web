@@ -94,6 +94,18 @@
 
     }
 
+    .import{
+        position:absolute;
+        background: lightcyan;
+
+        z-index:40;
+        border-radius: 50px;
+
+
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
     .child{
         position:absolute;
         background: #DCD0FF;
@@ -123,30 +135,16 @@
         cursor: pointer;
     }
 
-    .tip:hover:before{
-        border: solid;
-        border-color: #333 transparent;
-        border-width: 6px 6px 0 6px;
-        bottom: 30px;
-        content: "";
-        left: -20%;
-        position: absolute;
-        z-index: 99;
-    }
+    .tipDec{
+        position:absolute;
 
-    .tip:hover:after{
-        background: #333;
-        background: rgba(0,0,0,1);
-        border-radius: 5px;
-        bottom: 26px;
-        color: #fff;
-        content: attr(test);
-        left: -20%;
-        padding: 15px 15px ;
-        position: absolute;
-        z-index: 98;
-        width: 280px;
 
+        z-index:40;
+        border-radius: 50px;
+
+
+        pointer-events: auto;
+        cursor: pointer;
     }
 
 

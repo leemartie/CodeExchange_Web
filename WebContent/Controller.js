@@ -28,6 +28,9 @@ var Controller = {
         childIdsToMethodIncName : new Array(),
         childIdsToMethodIncParams  : new Array(),
         childIdsToMethodIncCallingClass : new Array(),
+        childIdsToMethodDecName : new Array(),
+
+        rowToImportQuery        : new Array(),
 
         isExpanded : false,
 
@@ -146,22 +149,36 @@ var Controller = {
 
                                 var value = newLines[i].substring(startIndex, indexOfSemiColon);
 
+                                var aceRange = ace.require('ace/range').Range;
+                                var markerID = editor.session.addMarker(new aceRange(i, 0,
+                                    i, 1000), "import","background");
+
+                                localMarkers.push(markerID);
+
+                                var query = new QueryModel(type, value);
+                                query.displayType = "imports";
+                                query.displayValue = value;
+
+                                if(Controller.rowToImportQuery[editorNumber] == null){
+                                    Controller.rowToImportQuery[editorNumber] = new Array();
+                                }
+                                Controller.rowToImportQuery[editorNumber][i] = query;
 
 
-                                annotationArray.push({
-                                    row: i,
-                                    column: 0,
-                                    text: "add query part: "+"["+"imports"+"]"+" "+value,
-                                    type: "info",
-                                    queryType: type,
-                                    queryValue: value
-
-                                });
-
-                                annotationKey[i] = {
-                                    row: i,
-                                    annotationArrayindex: annotationArray.length-1
-                                };
+//                                annotationArray.push({
+//                                    row: i,
+//                                    column: 0,
+//                                    text: "add query part: "+"["+"imports"+"]"+" "+value,
+//                                    type: "info",
+//                                    queryType: type,
+//                                    queryValue: value
+//
+//                                });
+//
+//                                annotationKey[i] = {
+//                                    row: i,
+//                                    annotationArrayindex: annotationArray.length-1
+//                                };
 
                             }
 
@@ -173,28 +190,29 @@ var Controller = {
                         Controller.annotationsArrayByEditor[editorNumber] = annotationArray.slice(0);
                         Controller.annotationsArrayKeyByEditor[editorNumber] = annotationKey.slice(0);
 
-                        editor.on("guttermousedown", function(e){
-                            var target = e.domEvent.target;
-
-                            var row = e.getDocumentPosition().row;
-                            editor.session.clearBreakpoints();
-                            editor.session.setBreakpoint(row);
-
-                            var annotation = Controller.annotationsArrayByEditor[editorNumber]
-                                [Controller.annotationsArrayKeyByEditor[editorNumber][row].annotationArrayindex];
-
-                            if(annotation != null) {
-                                var type = annotation.queryType;
-                                var value = annotation.queryValue;
-
-                                var query = new QueryModel(type, value);
-                                query.displayType = "imports";
-                                query.displayValue = value;
-
-                                BuildQueryBoxView.addAndSubmit(query);
-                            }
-                            e.stop();
-                        });
+//gutter code
+//                        editor.on("guttermousedown", function(e){
+//                            var target = e.domEvent.target;
+//
+//                            var row = e.getDocumentPosition().row;
+//                            editor.session.clearBreakpoints();
+//                            editor.session.setBreakpoint(row);
+//
+//                            var annotation = Controller.annotationsArrayByEditor[editorNumber]
+//                                [Controller.annotationsArrayKeyByEditor[editorNumber][row].annotationArrayindex];
+//
+//                            if(annotation != null) {
+//                                var type = annotation.queryType;
+//                                var value = annotation.queryValue;
+//
+//                                var query = new QueryModel(type, value);
+//                                query.displayType = "imports";
+//                                query.displayValue = value;
+//
+//                                BuildQueryBoxView.addAndSubmit(query);
+//                            }
+//                            e.stop();
+//                        });
 
 
 
@@ -330,10 +348,18 @@ var Controller = {
                                     var markerID = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
                                         rowNumber, endColumnNumber), CSSclass,"background",false);
 
-                                    var markerID2 = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
-                                        rowNumber, endColumnNumber), "tip","background",true);
+                                    if(CSSclass == "child") {
+                                        var markerID2 = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
+                                            rowNumber, endColumnNumber), "tip", "background", true);
 
-                                    localMarkers.push(markerID2);
+                                        localMarkers.push(markerID2);
+                                    }else if(CSSclass == "decChild"){
+                                        var markerID2 = editor.session.addMarker(new aceRange(rowNumber, columnNumber,
+                                            rowNumber, endColumnNumber), "tipDec", "background", true);
+
+                                        localMarkers.push(markerID2);
+                                    }
+
 
 
                                     if(Controller.childRows[editorNumber] == null){
@@ -362,6 +388,9 @@ var Controller = {
 
                                     Controller.childIdsToMethodIncCallingClass[childrenDocs[id_index].id] =
                                         childrenDocs[id_index].snippet_method_invocation_calling_class;
+
+                                    Controller.childIdsToMethodDecName[childrenDocs[id_index].id] =
+                                        childrenDocs[id_index].snippet_method_dec_name;
 
                                     localMarkers.push(markerID);
 
@@ -404,7 +433,8 @@ var Controller = {
                             var target = e.target;
 
                             //method call
-                            if (target.classList.contains("tip")) {
+                            if (target.classList.contains("tip") || target.classList.contains("tipDec")
+                                || target.classList.contains("import")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -420,27 +450,39 @@ var Controller = {
 
                                 // alert(docPos.row +" "+docPos.column);
 
+
+
+                                if(target.classList.contains("import")){
+                                    toolTip = "*Click to search for code importing this*"
+                                    target.setAttribute("title",toolTip)
+                                }
+
                                 var rowOfIds = Controller.childRows[editorNumber][docPos.row];
 
-                                if(rowOfIds.length == 1) {
+                                if(rowOfIds!= null && rowOfIds.length == 1) {
+                                    var toolTip = "";
 
+                                    if(target.classList.contains("tip")) {
                                         var dec = Controller.childIdsToMethodIncDecClass[rowOfIds[0]];
 
-                                        var name =  Controller.childIdsToMethodIncName[rowOfIds[0]];
+                                        var name = Controller.childIdsToMethodIncName[rowOfIds[0]];
 
                                         var params = Controller.childIdsToMethodIncParams[rowOfIds[0]];
 
                                         var calling = Controller.childIdsToMethodIncCallingClass[rowOfIds[0]];
 
+                                        toolTip = Controller.createToolTip(dec, calling, name, params);
+                                    }else if(target.classList.contains("tipDec")){
+                                        toolTip = "*Click to search for similar method declarations*"
+                                    }
 
 
-                                    var toolTip = Controller.createToolTip(dec,calling,name,params);
 
                                          //tool tip
-                                    target.setAttribute("test",toolTip);
+                                    target.setAttribute("title",toolTip);
 
 
-                                }else{
+                                }else if(rowOfIds!= null){
                                     //need to get the closest column
                                     var foundId = "";
                                     var lastStart = 0;
@@ -463,6 +505,9 @@ var Controller = {
                                     }//for
 
                                     if(foundId != "") {
+                                        var toolTip = "";
+
+                                        if(target.classList.contains("tip")) {
                                         var dec = Controller.childIdsToMethodIncDecClass[foundId];
 
                                         var name =  Controller.childIdsToMethodIncName[foundId];
@@ -471,10 +516,13 @@ var Controller = {
 
                                         var calling = Controller.childIdsToMethodIncCallingClass[foundId];
 
-                                        var toolTip = Controller.createToolTip(dec,calling,name,params);
+                                        toolTip = Controller.createToolTip(dec,calling,name,params);
+                                        }else if(target.classList.contains("tipDec")){
+                                            toolTip = "*Click to search for similar method declarations*"
+                                        }
 
                                         //tool tip
-                                        target.setAttribute("test",toolTip);
+                                        target.setAttribute("title",toolTip);
                                     }
                                 }//else
                             }
@@ -485,7 +533,8 @@ var Controller = {
                             var target = e.target;
 
                             //method call
-                            if (target.classList.contains("tip")) {
+                            if (target.classList.contains("tip")|| target.classList.contains("tipDec")
+                                || target.classList.contains("import")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -501,9 +550,13 @@ var Controller = {
 
                                 // alert(docPos.row +" "+docPos.column);
 
+                                if(target.classList.contains("import")){
+                                    Controller.addImportQuery(screenPos.row, editorNumber);
+                                }
+
                                 var rowOfIds = Controller.childRows[editorNumber][docPos.row];
 
-                                if(rowOfIds.length == 1) {
+                                if(rowOfIds!= null && rowOfIds.length == 1) {
                                     var toolTip = "Declaring class: "+
                                         Controller.childIdsToMethodIncDecClass[rowOfIds[0]]
                                         +"\n"
@@ -514,10 +567,15 @@ var Controller = {
                                         +Controller.childIdsToMethodIncDecClass[rowOfIds[0]];
 
 
-                                    Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[rowOfIds[0]],
-                                        Controller.childIdsToMethodIncParams[rowOfIds[0]],
-                                        Controller.childIdsToMethodIncName[rowOfIds[0]]);
-                                }else{
+//sends a method call query
+                                    if(target.classList.contains("tip")) {
+                                        Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[rowOfIds[0]],
+                                            Controller.childIdsToMethodIncParams[rowOfIds[0]],
+                                            Controller.childIdsToMethodIncName[rowOfIds[0]]);
+                                    }else{
+                                        Controller.addMethodDecQuery(Controller.childIdsToMethodDecName[rowOfIds[0]])
+                                    }
+                                }else if (rowOfIds!= null){
                                     //need to get the closest column
                                     var foundId = "";
                                     var lastStart = 0;
@@ -540,9 +598,14 @@ var Controller = {
                                     }//for
 
                                     if(foundId != "") {
-                                        Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[foundId],
-                                            Controller.childIdsToMethodIncParams[foundId],
-                                            Controller.childIdsToMethodIncName[foundId]);
+//sends a method call query
+                                        if(target.classList.contains("tip")) {
+                                            Controller.addMethodcallQuery(Controller.childIdsToMethodIncDecClass[foundId],
+                                                Controller.childIdsToMethodIncParams[foundId],
+                                                Controller.childIdsToMethodIncName[foundId]);
+                                        }else{
+                                            Controller.addMethodDecQuery(Controller.childIdsToMethodDecName[rowOfIds[0]])
+                                        }
                                     }
                                 }//else
 
@@ -626,29 +689,29 @@ var Controller = {
      * @returns {string}
      */
     createToolTip : function (declaringClass, callingClass, methodName, params){
-        var toolTip =      "*Click to search for similar method calls*\n";
+        var toolTip =      "*Click to add query for similar method calls*\n";
 
-        toolTip = toolTip + "\n------------------INFO------------------\n"
+        toolTip = toolTip + "\n---------------------------INFO---------------------------\n"
 
         if(declaringClass != null){
-            if(declaringClass.length > 20)
-                declaringClass = [declaringClass.slice(0, 20), '\n\t\t', declaringClass.slice(20)].join('');
+//            if(declaringClass.length > 20)
+//                declaringClass = [declaringClass.slice(0, 20), '\n\t\t', declaringClass.slice(20)].join('');
 
-            toolTip = toolTip + "[Declaring Class] "+declaringClass;
+            toolTip = toolTip + "[Declaring Class]\t"+declaringClass;
         }
 
         if(callingClass != null){
-            if(callingClass.length > 20)
-                callingClass = [callingClass.slice(0, 20), '\n\t\t', callingClass.slice(20)].join('');
+//            if(callingClass.length > 20)
+//                callingClass = [callingClass.slice(0, 20), '\n\t\t', callingClass.slice(20)].join('');
 
-            toolTip = toolTip + "\n[Calling Class] "+callingClass;
+            toolTip = toolTip + "\n[Calling Class]\t\t"+callingClass;
         }
 
         if(methodName != null){
-            if(methodName.length > 20)
-                methodName = [methodName.slice(0, 30), '\n\t\t', methodName.slice(20)].join('');
+//            if(methodName.length > 20)
+//                methodName = [methodName.slice(0, 30), '\n\t\t', methodName.slice(20)].join('');
 
-            toolTip = toolTip + "\n[Method Name] "+methodName;
+            toolTip = toolTip + "\n[Method Name]\t"+methodName;
         }
 
         if(params != null){
@@ -658,12 +721,12 @@ var Controller = {
 
             for(var i = 0; i<paramArray.length; i++){
 
-                if(paramArray[i].length > 20)
-                    paramArray[i] = [paramArray[i].slice(0, 20), '\n\t\t', paramArray[i].slice(20)].join('');
+//                if(paramArray[i].length > 20)
+//                    paramArray[i] = [paramArray[i].slice(0, 20), '\n\t\t', paramArray[i].slice(20)].join('');
 
                 paramArray[i] = paramArray[i].substring(0,paramArray[i].length-2)
 
-                toolTip = toolTip + "\n[Parameter Type] "+paramArray[i];
+                toolTip = toolTip + "\n[Parameter Type]\t"+paramArray[i];
             }
 
 
@@ -672,6 +735,26 @@ var Controller = {
 
 
         return toolTip;
+    },
+
+    addMethodDecQuery: function(name){
+      var query = null;
+
+        var methodDecValue = '';
+
+        methodDecValue = methodDecValue + '%2B' +
+                QueryBucketModel.snippetMethodDeclarationName +':"'+name+'"';
+
+        query = new QueryModel(QueryBucketModel.snippetMethodDec, methodDecValue);
+        query.displayType = "has method declaration";
+        query.displayValue = ":."+name+"("+")";
+
+        BuildQueryBoxView.addAndSubmit(query);
+    },
+
+    addImportQuery: function(row,editorNumber){
+        var query = Controller.rowToImportQuery[editorNumber][row];
+        BuildQueryBoxView.addAndSubmit(query);
     },
 
 
