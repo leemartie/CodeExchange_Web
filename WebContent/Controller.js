@@ -138,16 +138,16 @@ var Controller = {
                         for(var i = 0; i < newLines.length; i++){
                             var indexOfClass = newLines[i].indexOf("import ");
 
-                            annotationKey[i] = {
-                                row: i,
-                                annotationArrayindex: -1
-                            };
+//                            annotationKey[i] = {
+//                                row: i,
+//                                annotationArrayindex: -1
+//                            };
 
-                            if( indexOfClass != -1){
+                            if( indexOfClass > -1){
                                 var type = QueryBucketModel.snippetImportsFiled;
                                 var startIndex = 7;
 
-                                if(newLines[i].indexOf("static") != -1) {
+                                if(newLines[i].indexOf("static") > -1) {
                                     startIndex = 13;
                                 }
 
@@ -155,7 +155,7 @@ var Controller = {
                                 var indexOfStar = newLines[i].indexOf("*");
 
 
-                                if(indexOfStar != -1)
+                                if(indexOfStar > -1)
                                     indexOfSemiColon = indexOfStar-1;
 
                                 var value = newLines[i].substring(startIndex, indexOfSemiColon);
@@ -296,7 +296,7 @@ var Controller = {
                             for(var k = 0; k<newLines.length; k++){
                                 characters = newLines[newRow];
 
-                                if(!(characters.indexOf("*") > -1)){
+                                if(!(characters.indexOf("*") > -1) && !(characters.indexOf("@") > -1)){
                                     break;
                                 }else{
                                     newRow++;
@@ -602,7 +602,7 @@ var Controller = {
                                 // alert(docPos.row +" "+docPos.column);
 
                                 if(target.classList.contains("import")){
-                                    Controller.addImportQuery(screenPos.row, editorNumber);
+                                    Controller.addImportQuery(docPos.row, editorNumber);
                                 }
 
                                 if(target.classList.contains("extends")){
@@ -1843,6 +1843,10 @@ var Controller = {
             var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
             editor.resize();
 
+            for(var i = 0; i <SetupManager.resultEditors.length; i++){
+                editor.resize();
+            }
+
 		},
 
 		/**
@@ -1880,6 +1884,8 @@ var Controller = {
 
         if(Controller.gridOn)
             QueryGridView.update();
+
+
 
     }
 

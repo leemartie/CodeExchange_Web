@@ -13,12 +13,13 @@ var QueryTrailNavView = {
 
 
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        centerCell.attr("align","center");
+        centerCell.attr("align","right");
         var createNewQueryButton = $(SetupManager.buttonOpen+"create new query"+SetupManager.buttonClose);
         createNewQueryButton.button();
 
         centerCell.attr("width","50%");
-        createNewQueryButton.width("100%");
+        createNewQueryButton.width("90%");
+        createNewQueryButton.height("99%");
         createNewQueryButton.attr("disabled", false);
 
         createNewQueryButton.click(function(event) {
@@ -38,14 +39,15 @@ var QueryTrailNavView = {
         navTable.append(gridRow);
         var gridCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
-        gridCell.attr("align","center");
-        gridCell.attr("width","50%");
+        gridCell.attr("align","left");
+        gridCell.attr("width","90%");
         var gridButton = $(SetupManager.buttonOpen+SetupManager.buttonClose);
 
         gridButton.append("<text>query grid on</text>");
         gridButton.button();
 
-        gridButton.width("100%");
+        gridButton.width("90%");
+        gridButton.height("99%");
 
         gridButton.click(function(event) {
             Controller.showGrid();

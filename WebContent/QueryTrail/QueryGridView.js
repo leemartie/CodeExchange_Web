@@ -74,6 +74,11 @@ var QueryGridView = {
 
 
                 var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
+                var cellDiv = $(SetupManager.divOpen+SetupManager.divClose);
+
+
+
                 row.append(cell);
 
                 var query = stack[j];

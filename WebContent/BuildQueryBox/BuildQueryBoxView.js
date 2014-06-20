@@ -310,6 +310,11 @@ var BuildQueryBoxView = {
                     checkboxVarArgs.show();
                     checkboxLabelVarArgs.show();
 
+                    truebox.hide();
+                    trueboxLabel.hide();
+                    falsebox.hide();
+                    falseboxLabel.hide();
+
                 }
                 else{
                     queryBox.show();

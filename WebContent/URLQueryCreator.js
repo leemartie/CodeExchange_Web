@@ -48,7 +48,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows='+SetupManager.numberOfCells+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+6+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 
