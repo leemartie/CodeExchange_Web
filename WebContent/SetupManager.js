@@ -12,6 +12,7 @@ var SetupManager = {
 		//These are the id's of each element created
 		//button
 		searchBtn_ID	:	"search",
+
 		
 		//button
 		searchExpandBtn_ID	:	"searchExpandButton",
@@ -156,6 +157,8 @@ var SetupManager = {
 		
 		//distance from side of screen
 		sideBuffer	:	50,
+
+        cellStatus : new Array(),
 		
 		/**
 		 * FUNCTION: create the site visual structures and listeners
@@ -752,9 +755,16 @@ var SetupManager = {
 				$(SetupManager.pound+SetupManager.expandBtnArray_ID[i]).text("").
 					append($('<img align="middle" height="30" src="http://level1router.ics.uci.edu/expand.png" width="30"></img>')).width("30");
 
-				
 
 
+                var resultOptions_id = "resultOptions"+i;
+
+
+
+                var statusCell = $("<div>"+"</div>");
+                statusCell.attr("id","cellStatus"+i);
+
+                $(SetupManager.pound+resultOptions_id).append(statusCell);
 				
 				
 

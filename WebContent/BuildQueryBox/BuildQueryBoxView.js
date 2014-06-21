@@ -223,9 +223,9 @@ var BuildQueryBoxView = {
 //                '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
 //                '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
                 '<option  style="background-color: black; color:white" disabled>Social query</option>'+
-                '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
+//                '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
                 '<option  value="'+QueryBucketModel.projectField+'">project</option>'+
-                '<option  value="'+QueryBucketModel.humanLanguageOfComments+'">human language</option>'+
+//                '<option  value="'+QueryBucketModel.humanLanguageOfComments+'">human language</option>'+
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">year</option>'+
 //               '<option  value="'+QueryBucketModel.lastUpdatedField+'">month</option>'+
 //                '<option  value="'+QueryBucketModel.lastUpdatedField+'">day</option>'+
@@ -233,15 +233,77 @@ var BuildQueryBoxView = {
 
             combo.width("97%");
 
+            var langShort = ['af','ar','bg','bn','cs','da',	'de','el','en',	'es',
+                'et','fa','fi','fr','gu','he','hi',	'hr','hu','id','it',
+                'ja','kn','ko','lt','lv','mk','ml','mr',
+                'ne','nl','no',	'pa','pl','pt',	'ro','ru','sk',	'sl',
+                'so', 'sq','sv','sw','ta','te',	'th','tl','tr',
+                'uk','ur','vi','zh-cn',	'zh-tw'];
+            var langLong = ['Afrikaans', 'Arabic', 'Bulgarian', 'Bengali', 'Czech',
+                'Danish', 'German', 'Greek', 'English', 'Spanish',
+                'Estonian', 'Persian', 'Finnish', 'French', 'Gujarati',
+                'Hebrew', 'Hindi', 'Croatian', 'Hungarian', 'Indonesian',
+                'Italian', 'Japanese', 'Kannada', 'Korean', 'Lithuanian',
+                'Latvian', 'Macedonian', 'Malayalam', 'Marathi', 'Nepali',
+                'Dutch', 'Norwegian','Punjabi','Polish','Portuguese',
+                'Romanian',	'Russian',	'Slovak','Slovene',
+                'Somali','Albanian','Swedish','Swahili',
+                'Tamil','Telugu','Thai','Tagalog','Turkish',
+                'Ukrainian','Urdu',	'Vietnamese','Simplified Chinese','Traditional Chinese'];
+
+            //select language
+            var selectLanguage = $("<select></select>");
+
+            for(var i = 0; i <langShort.length; i++){
+                var option = $('<option value="'+langShort[i]+'">'+langLong[i]+'</option>');
+
+                if(langShort[i] == "en"){
+                    option = $('<option selected="selected" value="'+langShort[i]+'">'+langLong[i]+'</option>');
+                    QueryManager.humanLanguageOfComments = "en";
+                }
+                selectLanguage.append(option);
+
+            }
+
+            queryCell.append(selectLanguage);
+            selectLanguage.hide();
+
+
+
 
             combo.change(function(event){
                 BuildQueryBoxModel.currentQueryType = combo.val();
 
-                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassGeneric ||
+                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.humanLanguageOfComments){
+                    selectLanguage.show();
+                    queryBox.hide();
+                    truebox.hide();
+                    trueboxLabel.hide();
+                    falsebox.hide();
+                    falseboxLabel.hide();
+
+                    checkboxGeneric.hide();
+                    checkboxLabelGeneric.hide();
+                    checkboxVarArgs.hide();
+                    checkboxLabelVarArgs.hide();
+                    ReturnTypeBox.hide();
+                    ReturnTypeLabel.hide();
+
+                    ClassNameBox.hide();
+                    ClassNameLabel.hide();
+
+                    MethodNameBox.hide();
+                    MethodNameLabel.hide();
+
+                    ParameterNameBox.hide();
+                    ParameterNameLabel.hide();
+                }
+                else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassGeneric ||
                     BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassAbstract ||
                     BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetClassWildCard ||
                     BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetInnerClass ||
                     BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetHasComments){
+                    selectLanguage.hide();
                     queryBox.hide();
                     truebox.show();
                     trueboxLabel.show();
@@ -266,7 +328,7 @@ var BuildQueryBoxView = {
 
 
                 }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall){
-
+                    selectLanguage.hide();
                     ClassNameBox.show();
                     ClassNameLabel.show();
 
@@ -289,6 +351,7 @@ var BuildQueryBoxView = {
                     ReturnTypeBox.hide();
                     ReturnTypeLabel.hide();
                 }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec){
+                    selectLanguage.hide();
                     ClassNameBox.show();
                     ClassNameLabel.show();
 
@@ -317,6 +380,7 @@ var BuildQueryBoxView = {
 
                 }
                 else{
+                    selectLanguage.hide();
                     queryBox.show();
                     truebox.hide();
                     falsebox.hide();
@@ -431,6 +495,17 @@ var BuildQueryBoxView = {
                 falsebox.prop('checked', false);
 
             });
+
+ //language query
+//            selectLanguage.change(function(event){
+//                var query = new QueryModel(QueryBucketModel.humanLanguageOfComments
+//                    , selectLanguage.val());
+//                query.displayType = "human language";
+//                query.displayValue = selectLanguage.find(":selected").text();
+//                BuildQueryBoxView.addAndSubmit(query);
+//
+//                truebox.prop('checked', false);
+//            });
 
 
 //add keypress  for 'enter' listener to submit query

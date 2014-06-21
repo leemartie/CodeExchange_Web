@@ -56,6 +56,11 @@ var Controller = {
 		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID, extendsResult,
             implementsResult){
 
+            $(SetupManager.pound+"cellStatus"+editorNumber).empty();
+            var text = $("<text>"+"downloading..."+"</text>");
+            text.addClass("CellStatus");
+            $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
+
 			var url = "http://level1router.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 
 
@@ -69,6 +74,13 @@ var Controller = {
 
                 }).success(function(data, textStatus, jqXHR ) {
                     $.each(data, function(index, element) {
+
+
+                        $(SetupManager.pound+"cellStatus"+editorNumber).empty();
+                        var text = $("<text>"+""+"</text>");
+                        $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
+
+
                         var code = element;
 
                         var editor = ace.edit(codeNode);

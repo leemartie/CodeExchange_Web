@@ -49,6 +49,8 @@ var QueryBucketModel = {
 
     snippetHasComments              :   "snippet_has_comments",
 
+    humanLanguageOfComments         : "snippet_human_language",
+
     ClassBox: "ClassBox",
     MethodBox: "MethodBox",
     ParamBox: "ParamBox",
