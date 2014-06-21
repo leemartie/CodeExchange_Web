@@ -36,6 +36,8 @@ var Controller = {
 
         editorToImplementsQuery : new Array(),
 
+        editorToPackageQuery       : new Array(),
+
         isExpanded : false,
 
 		/**
@@ -160,6 +162,36 @@ var Controller = {
 //                                annotationArrayindex: -1
 //                            };
 
+
+                            //check for package
+                            var indexOfPackage = newLines[i].indexOf("package ");
+                            if( indexOfPackage > -1) {
+                                var indexOfSemiColon = newLines[i].indexOf(";");
+                                var indexOfStar = newLines[i].indexOf("*");
+                                var startIndex = 8;
+
+                                if (indexOfStar > -1)
+                                    indexOfSemiColon = indexOfStar - 1;
+
+                                var value = newLines[i].substring(startIndex, indexOfSemiColon);
+
+                                var query = new QueryModel(QueryBucketModel.snippetPackage, value);
+                                query.displayType = "package";
+                                query.displayValue = value;
+
+                                if(Controller.editorToPackageQuery[editorNumber] == null){
+                                    Controller.editorToPackageQuery[editorNumber] = new Array();
+                                }
+                                Controller.editorToPackageQuery[editorNumber] = query;
+
+                                var aceRange = ace.require('ace/range').Range;
+                                var markerID = editor.session.addMarker(new aceRange(i, 0,
+                                    i, 7), "package","background");
+
+                                localMarkers.push(markerID);
+                            }
+
+                            //check for imports
                             if( indexOfClass > -1){
                                 var type = QueryBucketModel.snippetImportsFiled;
                                 var startIndex = 7;
@@ -497,7 +529,7 @@ var Controller = {
                             //method call
                             if (target.classList.contains("tip") || target.classList.contains("tipDec")
                                 || target.classList.contains("import") || target.classList.contains("extends")
-                                || target.classList.contains("implements")) {
+                                || target.classList.contains("implements") || target.classList.contains("package")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -529,6 +561,12 @@ var Controller = {
 
                                 else if(target.classList.contains("implements")){
                                     toolTip = "*Click to search for code implementing this*"
+                                    target.setAttribute("title",toolTip)
+                                    return;
+                                }
+
+                                else if(target.classList.contains("package")){
+                                    toolTip = "*Click to search for code in this package*"
                                     target.setAttribute("title",toolTip)
                                     return;
                                 }
@@ -611,7 +649,7 @@ var Controller = {
                             //method call
                             if (target.classList.contains("tip")|| target.classList.contains("tipDec")
                                 || target.classList.contains("import") || target.classList.contains("extends")
-                                || target.classList.contains("implements")) {
+                                || target.classList.contains("implements") || target.classList.contains("package")) {
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -639,6 +677,11 @@ var Controller = {
 
                                 else if(target.classList.contains("implements")){
                                     Controller.addImplementsQuery(Controller.editorToImplementsQuery[editorNumber]);
+                                    return;
+                                }
+
+                                else if(target.classList.contains("package")){
+                                    Controller.addPackageQuery(Controller.editorToPackageQuery[editorNumber]);
                                     return;
                                 }
 
@@ -864,6 +907,11 @@ var Controller = {
     addImportQuery: function(row,editorNumber){
         var query = Controller.rowToImportQuery[editorNumber][row];
         BuildQueryBoxView.addAndSubmit(query);
+    },
+
+    addPackageQuery: function(query){
+
+        BuildQueryBoxView.addAndSubmit(query)
     },
 
 
