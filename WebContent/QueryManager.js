@@ -746,6 +746,8 @@ function autoCompleteCallBack(data){
         var results = data.facet_counts.facet_fields.snippet_method_dec_parameter_types;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationReturn){
         var results = data.facet_counts.facet_fields.snippet_method_dec_return_type;
+    }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetPackage){
+        var results = data.facet_counts.facet_fields.snippet_package;
     }
 
 

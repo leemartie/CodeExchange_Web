@@ -43,7 +43,7 @@ var QueryTrailNavView = {
         gridCell.attr("width","90%");
         var gridButton = $(SetupManager.buttonOpen+SetupManager.buttonClose);
 
-        gridButton.append("<text>query grid on</text>");
+        gridButton.append("<text>query history on</text>");
         gridButton.button();
 
         gridButton.width("90%");
@@ -54,9 +54,9 @@ var QueryTrailNavView = {
 
             gridButton.empty();
             if(Controller.gridOn){
-                gridButton.append("<text>query grid off</text>");
+                gridButton.append("<text>query history off</text>");
             }else{
-                gridButton.append("<text>query grid on</text>");
+                gridButton.append("<text>query history on</text>");
             }
 
         });

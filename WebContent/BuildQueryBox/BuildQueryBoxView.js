@@ -215,6 +215,7 @@ var BuildQueryBoxView = {
                 '<option  value="'+QueryBucketModel.snippetClassGeneric+'">is generic</option>'+
                 '<option  value="'+QueryBucketModel.snippetClassAbstract+'">is abstract</option>'+
                 '<option  value="'+QueryBucketModel.snippetClassWildCard+'">has wildcard</option>'+
+                '<option  value="'+QueryBucketModel.snippetPackage+'">in package</option>'+
  //               '<option  value="'+QueryBucketModel.snippetInnerClass+'">is inner class</option>'+
   //              '<option  value="'+QueryBucketModel.snippetHasComments+'">has comments</option>'+
 

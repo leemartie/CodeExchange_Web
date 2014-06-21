@@ -70,7 +70,12 @@ var Controller = {
                 $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
                     var editor = ace.edit(codeNode);
-                    editor.getSession().setValue("deleted or moved code");
+                    editor.getSession().setValue("");
+
+                    $(SetupManager.pound+"cellStatus"+editorNumber).empty();
+                    var text = $("<text>"+"Oops... this code has been moved or deleted."+"</text>");
+                    text.addClass("CellStatus");
+                    $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
                 }).success(function(data, textStatus, jqXHR ) {
                     $.each(data, function(index, element) {

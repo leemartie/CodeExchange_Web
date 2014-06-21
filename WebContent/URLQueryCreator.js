@@ -22,7 +22,8 @@ var URLQueryCreator = {
                 + 'snippet_path_complexity_class_sum '
                 + 'snippet_size snippet_variable_names_delimited snippet_method_invocation_arg_types_place '
                 + 'snippet_method_invocation_declaring_class snippet_method_invocation_name '
-                + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements'
+                + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements '
+                + 'snippet_package'
 				+ '&facet=true'
                 + '&facet.field=snippet_imports'
                 + '&facet.field=snippet_project_id'
@@ -48,7 +49,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows='+6+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+SetupManager.numberOfCells+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 
