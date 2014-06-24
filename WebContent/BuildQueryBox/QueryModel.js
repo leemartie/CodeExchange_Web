@@ -13,4 +13,7 @@ function QueryModel(type, value) {
     this.score = 0;
     this.rangeQuery = false;
 
+    function toString(){
+        return "type: "+this.type+", value: "+this.value;
+    }
 }

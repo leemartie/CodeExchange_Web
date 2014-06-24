@@ -350,8 +350,8 @@ var Controller = {
                                 if(!(characters.indexOf("*") > -1) && !(characters.indexOf("@") > -1)
                                     &&(characters.trim().toLowerCase().substring(0,5) == 'publi' ||
                                         characters.trim().toLowerCase().substring(0,5) == 'priva' ||
-                                    characters.trim().toLowerCase().substring(0,5) == 'prote') ||
-                                    characters.trim().toLowerCase().substring(0,5) == 'class'){
+                                    characters.trim().toLowerCase().substring(0,5) == 'prote' ||
+                                    characters.trim().toLowerCase().substring(0,5) == 'class')){
                                     break;
                                 }else{
                                     newRow++;
@@ -926,6 +926,7 @@ var Controller = {
         }
         if(name != null) {
             methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
+                + ':"' +name+ '"';
                 + ':"' +name+ '"';
         }else{
             name = "";

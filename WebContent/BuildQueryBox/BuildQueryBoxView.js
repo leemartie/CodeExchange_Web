@@ -527,6 +527,10 @@ var BuildQueryBoxView = {
 //                    }
                       BuildQueryBoxView.addAndSubmit(query);
 
+//LOG IT
+                     UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder)
+                         , queryBox.val());
+                     UsageLogger.printEvents();
                     queryBox.val("");
 
                 }
