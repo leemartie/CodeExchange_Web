@@ -14,19 +14,24 @@
 
         if (id != undefined && id != "undefined" && id != "") {
             Client.id = id;
+//LOG IT
+            UsageLogger.addEvent(UsageLogger.SESSION_START,null);
         }else{
             Client.id = getClientId();
 
         }
 
-        UsageLogger.addEvent(UsageLogger.SESSION_START,null);
+
 
 		SetupManager.setupSite();
 
 	}
 
     function setCookie(id) {
-        document.cookie = "id=" + id;
+        // Build the expiration date string:
+        var expiration_date = new Date();
+        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+        document.cookie = "id=" + id+"; expires=" + expiration_date.toGMTString();
     }
 
     function getCookie(cname) {
@@ -49,7 +54,8 @@
 
             Client.id = data.id;
             setCookie(Client.id);
-
+//LOG IT
+            UsageLogger.addEvent(UsageLogger.SESSION_START,null);
         });
 
     }

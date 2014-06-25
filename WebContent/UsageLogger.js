@@ -13,6 +13,10 @@ var UsageLogger = {
     QUERY_BUILDER_PACKAGE               : "QUERY_BUILDER_PACKAGE",
     QUERY_BUILDER_PROJECT               : "QUERY_BUILDER_PROJECT",
 
+    QUERY_BUILDER_IS_GENERIC            : "QUERY_BUILDER_IS_GENERIC",
+    QUERY_BUILDER_IS_WILDCARD           : "QUERY_BUILDER_IS_WILDCARD",
+    QUERY_BUILDER_IS_ABSTRACT           : "QUERY_BUILDER_IS_ABSTRACT",
+
 ///QUERY CRITICISMS
     QUERY_CRITICISMS_LENGTH             : "QUERY_CRITICISMS_LENGTH",
     QUERY_CRITICISMS_COMPLEXITY         : "QUERY_CRITICISMS_COMPLEXITY",
@@ -120,6 +124,12 @@ var UsageLogger = {
                     return UsageLogger.QUERY_BUILDER_IMPLEMENTS;
                 case QueryBucketModel.projectField:
                     return UsageLogger.QUERY_BUILDER_PROJECT;
+                case QueryBucketModel.snippetClassAbstract:
+                    return UsageLogger.QUERY_BUILDER_IS_ABSTRACT;
+                case QueryBucketModel.snippetClassGeneric:
+                    return UsageLogger.QUERY_BUILDER_IS_GENERIC;
+                case QueryBucketModel.snippetClassWildCard:
+                    return UsageLogger.QUERY_BUILDER_IS_WILDCARD;
                 default :
                     return null;
             }
