@@ -881,6 +881,8 @@ var Controller = {
         query.displayValue = ":."+name+"("+")";
 
         BuildQueryBoxView.addAndSubmit(query);
+        //LOG IT
+        UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
     },
 
     addImplementsQuery : function(implementsList){
@@ -891,7 +893,8 @@ var Controller = {
             query.displayType = "implements";
             query.displayValue = implementsList;
             BuildQueryBoxView.addAndSubmit(query);
-
+//LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
         }
 
     },
@@ -902,16 +905,22 @@ var Controller = {
         query.displayType = "extends";
         query.displayValue = extendsClass;
         BuildQueryBoxView.addAndSubmit(query);
+        //LOG IT
+        UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
     },
 
     addImportQuery: function(row,editorNumber){
         var query = Controller.rowToImportQuery[editorNumber][row];
         BuildQueryBoxView.addAndSubmit(query);
+        //LOG IT
+        UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
     },
 
     addPackageQuery: function(query){
 
         BuildQueryBoxView.addAndSubmit(query)
+        //LOG IT
+        UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
     },
 
 
@@ -969,7 +978,8 @@ var Controller = {
         query.displayType = "has method call";
         query.displayValue = callingClass+"."+name+"("+formatedParams+")";
         BuildQueryBoxView.addAndSubmit(query);
-
+//LOG IT
+        UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
 
     },
     /**
@@ -1078,7 +1088,8 @@ var Controller = {
                 query.displayValue = String("less than "+(complexity));
                 query.rangeQuery = true;
                 BuildQueryBoxView.addAndSubmit(query);
-
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
             });
 
             icon.addClass("MetaQuery");
@@ -1102,6 +1113,9 @@ var Controller = {
                 query.displayValue = String("more than "+(complexity));
                 query.rangeQuery = true;
                 BuildQueryBoxView.addAndSubmit(query);
+
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
 
             });
 
@@ -1158,7 +1172,8 @@ var Controller = {
             query.displayValue = String("less than "+(importCount));
             query.rangeQuery = true;
             BuildQueryBoxView.addAndSubmit(query);
-
+//LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
         });
 
         icon.addClass("MetaQuery");
@@ -1182,6 +1197,9 @@ var Controller = {
             query.displayValue = String("more than "+(importCount));
             query.rangeQuery = true;
             BuildQueryBoxView.addAndSubmit(query);
+
+//LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
 
         });
 
@@ -1238,6 +1256,9 @@ var Controller = {
                 query.displayValue = String("less than "+(size)+" characters");
                 query.rangeQuery = true;
                 BuildQueryBoxView.addAndSubmit(query);
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
+
 
             });
 
@@ -1264,6 +1285,9 @@ var Controller = {
                 query.displayValue = String("more than "+(size)+" characters");
                 query.rangeQuery = true;
                 BuildQueryBoxView.addAndSubmit(query);
+
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
 
             });
 
@@ -1477,7 +1501,8 @@ var Controller = {
                 query.displayType = "project";
                 query.displayValue = name;
                 BuildQueryBoxView.addAndSubmit(query);
-
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
             });
 
 

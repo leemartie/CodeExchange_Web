@@ -520,7 +520,15 @@ var SetupManager = {
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
 				append($('<img align="middle" height="30" src="http://level1router.ics.uci.edu/collapse.png" width="30"></img>')).width("30");
-	        	
+
+
+//LOG IT
+                if(number == 0)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL1,null);
+                else if (number == 1)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
+                else if (number == 2)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
 	          
 	        } else {
 	        	Controller.collapseCell(cellSelected);	  
@@ -528,7 +536,17 @@ var SetupManager = {
 
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
 				append($('<img align="middle" height="30" src="http://level1router.ics.uci.edu/expand.png" width="30"></img>')).width("30");
-	        }
+                //LOG IT
+                if(number == 0)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL1,null);
+                else if (number == 1)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL2,null);
+                else if (number == 2)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL3,null);
+
+
+
+	            }
 	        collapsed = !collapsed;
 
 	      });
@@ -629,14 +647,25 @@ var SetupManager = {
             editor.setReadOnly(false);
 
 
+            editor.on("copy", function(text){
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL1,null);
+
+            });
 
 
 
-            var editor2 = ace.edit('result1');
+                    var editor2 = ace.edit('result1');
             editor2.setTheme("ace/theme/xcode");
             editor2.getSession().setMode("ace/mode/java");
             editor2.getSession().setUseWrapMode(true);
             editor2.setReadOnly(false);
+
+            editor2.on("copy", function(text){
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL2,null);
+            });
 
 
 
@@ -646,7 +675,10 @@ var SetupManager = {
             editor3.getSession().setUseWrapMode(true);
             editor3.setReadOnly(false);
 
-
+            editor3.on("copy", function(text){
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL3,null);
+            });
 
 
             SetupManager.resultEditors.push(editor);

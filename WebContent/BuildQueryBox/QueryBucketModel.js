@@ -92,10 +92,19 @@ var QueryBucketModel = {
     activateQuery: function(type, index, stackIndex){
         QueryBucketModel.listOfActiveQueries[type][index] = true;
         QueryBucketModel.stackOfQueries[stackIndex].active = true;
+
+//LOG IT
+        UsageLogger.addEvent(UsageLogger.ACTIVATE_QUERY,QueryBucketModel.stackOfQueries[stackIndex]);
     },
+
+
     deactivateQuery: function(type, index, stackIndex){
         QueryBucketModel.listOfActiveQueries[type][index] = false;
         QueryBucketModel.stackOfQueries[stackIndex].active = false;
+
+//LOG IT
+
+        UsageLogger.addEvent(UsageLogger.DEACTIVATE_QUERY,QueryBucketModel.stackOfQueries[stackIndex]);
     },
 
     removeQuery :   function(index){

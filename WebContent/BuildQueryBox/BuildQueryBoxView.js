@@ -478,6 +478,9 @@ var BuildQueryBoxView = {
                 query.displayType = combo.find(":selected").text();
                 query.displayValue = true;
                 BuildQueryBoxView.addAndSubmit(query);
+//LOG IT
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
 
                 truebox.prop('checked', false);
 
@@ -492,6 +495,9 @@ var BuildQueryBoxView = {
 
 
                 BuildQueryBoxView.addAndSubmit(query);
+//LOG IT
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
 
                 falsebox.prop('checked', false);
 
@@ -528,9 +534,9 @@ var BuildQueryBoxView = {
                       BuildQueryBoxView.addAndSubmit(query);
 
 //LOG IT
-                     UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder)
-                         , queryBox.val());
-                     UsageLogger.printEvents();
+                    //LOG IT
+                    UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
+
                     queryBox.val("");
 
                 }
@@ -570,6 +576,10 @@ var BuildQueryBoxView = {
                 query.displayType = combo.find(":selected").text();
                 query.displayValue = ClassNameBox.val()+"."+MethodNameBox.val()+"("+ParameterNameBox.val()+")";
                 BuildQueryBoxView.addAndSubmit(query);
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
+
                 ClassNameBox.val("");
                 MethodNameBox.val("");
                 ParameterNameBox.val("");
@@ -634,6 +644,10 @@ var BuildQueryBoxView = {
                 }
 
                 BuildQueryBoxView.addAndSubmit(query);
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
+
                 ClassNameBox.val("");
                 MethodNameBox.val("");
                 ParameterNameBox.val("");
@@ -685,6 +699,7 @@ var BuildQueryBoxView = {
                      methodCallQueryFunction();
                     else
                     methodDecQueryFunction();
+
                 }
             });
 
@@ -696,6 +711,7 @@ var BuildQueryBoxView = {
                         methodCallQueryFunction();
                     else
                         methodDecQueryFunction();
+
                 }
             });
 
@@ -706,6 +722,7 @@ var BuildQueryBoxView = {
                         methodCallQueryFunction();
                     else
                         methodDecQueryFunction();
+
                 }
             });
 
@@ -714,6 +731,7 @@ var BuildQueryBoxView = {
                 if (e.keyCode == '13') {
                     e.preventDefault();
                     methodDecQueryFunction();
+
                 }
             });
 

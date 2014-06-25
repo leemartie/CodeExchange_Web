@@ -29,6 +29,8 @@ var QueryTrailNavView = {
             Controller.clearAllCode();
             Controller.setStatus("Let's find some code");
             $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
+//LOG IT
+        UsageLogger.addEvent(UsageLogger.NEW_QUERY_BUTTON_CLICKED,null);
 
        });
 
@@ -55,8 +57,12 @@ var QueryTrailNavView = {
             gridButton.empty();
             if(Controller.gridOn){
                 gridButton.append("<text>query history off</text>");
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
             }else{
                 gridButton.append("<text>query history on</text>");
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_OFF,null);
             }
 
         });

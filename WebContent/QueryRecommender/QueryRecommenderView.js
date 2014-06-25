@@ -45,7 +45,8 @@ var QueryRecommenderView = {
             button.height("15px");
             (function(query){button.click(function(){
                 BuildQueryBoxView.addAndSubmit(query)
-
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Recommendation),query);
 
             })})(QueryRecommenderModel.recommendedQueries[i]);
 

@@ -64,6 +64,8 @@ var UsageLogger = {
     WINDOW_COPY_CELL2                   : "WINDOW_COPY_CELL2",
     WINDOW_COPY_CELL3                   : "WINDOW_COPY_CELL3",
 
+
+
 //QUERY HISTORY
 
     QUERY_HISTORY_BUTTON_ON             : "QUERY_HISTORY_BUTTON_ON",
@@ -74,14 +76,19 @@ var UsageLogger = {
 //NEW QUERY BUTTON
     NEW_QUERY_BUTTON_CLICKED            : "NEW_QUERY_BUTTON_CLICKED",
 
+    DEACTIVATE_QUERY                    : "DEACTIVATE_QUERY",
+    ACTIVATE_QUERY                      : "ACTIVATE_QUERY",
+
     //keeping track of stored events to send at some time
     events                              : new Array(),
 
 //used to indicate where for converQueryToEventType
-    Query_Builder : "",
-    Query_Recommendation : "",
-    Query_Criticisms    : "",
-    Query_Code_Prop     : "",
+    Query_Builder : "Query_Builder",
+    Query_Recommendation : "Query_Recommendation",
+    Query_Criticisms    : "Query_Criticisms",
+    Query_Code_Prop     : "Query_Code_Prop",
+
+    LastTimeStamp       : "",
 
     convertQueryToEventType: function(query,where){
 
@@ -131,7 +138,7 @@ var UsageLogger = {
                         return UsageLogger.QUERY_CRITICISMS_LENGTH
                     case QueryBucketModel.complexityField:
                         return UsageLogger.QUERY_CRITICISMS_COMPLEXITY
-                    case QueryBucketModel.implementsField:
+                    case QueryBucketModel.importCountField:
                         return UsageLogger.QUERY_CRITICISMS_IMPORTS
                     default :
                         return null;
@@ -159,16 +166,58 @@ var UsageLogger = {
         }
     },
 
-    addEvent: function(eventType,value){
-        var event = new Event(Client.id,eventType,value);
+    addEvent: function(eventType, query){
+
+        var event = new Event(Client.id,eventType, query);
         UsageLogger.events.push(event);
+        UsageLogger.uploadEvents();
     },
 
-    printEvents : function(){
-        for(var i = 0; i < UsageLogger.events.length; i++){
-            alert(Client.id+" "+UsageLogger.events[i].eventType+" "+UsageLogger.events[i].eventValue);
+    uploadEvents : function(){
+        for(var i = 0; i < UsageLogger.events.length; i++) {
+
+            var id = Client.id;
+            var eventType = UsageLogger.events[i].eventType;
+
+            var queryType = null;
+            var queryValue = null;
+            var queryActive = null;
+
+
+            if (UsageLogger.events[i].query != null) {
+                queryType = UsageLogger.events[i].query.type;
+                queryValue = UsageLogger.events[i].query.value;
+                queryActive = UsageLogger.events[i].query.active;
+            }
+
+            var timeStamp = UsageLogger.events[i].timeStamp;
+
+            UsageLogger.LastTimeStamp = timeStamp;
+
+            var url = "http://level1router.ics.uci.edu/logEvent.php?id="+id+
+                "&eventType="+eventType+
+                "&queryType="+queryType+
+                "&queryValue="+queryValue+
+                "&queryActive="+queryActive+
+                "&timeStamp="+timeStamp+
+                "&callback=?&json.wrf=displayCode";
+
+            $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+                //alert(data.status);
+
+            }).success(function(data, textStatus, jqXHR ) {
+                $.each(data, function(index, element) {
+                   //     alert(data.status);
+                });
+            });
+
+            break;
         }
+
+         UsageLogger.events.length = 0;
     }
+
+
 
 
 
