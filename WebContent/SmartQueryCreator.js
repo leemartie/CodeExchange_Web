@@ -27,9 +27,18 @@ var SmartQueryCreator = {
 		},
 
 		escapeSpecialCharacters: function(value) {
-            var specials = ['*', '+', '-', '&', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\', '|'];
+
+
+
+            var specials = ['*', '+', '-',  '!', '(', ')', '{', '}', '[',
+                ']', '^', '"', '~', '*', '?', ':', '\\', '/','|'];
+
+
+
             var regexp = new RegExp("(\\" + specials.join("|\\") + ")", "g");
-            return value.replace(regexp, "\\$1");
+            value = value.replace(regexp, "\\$1");
+
+            return value;
           },
 		
 		escapeDots: function(value) {
