@@ -548,26 +548,34 @@ var Controller = {
 
 
                                 if(target.classList.contains("import")){
-                                    toolTip = "*Click to search for code importing this*"
-                                    target.setAttribute("title",toolTip)
+                                    toolTip = "*Click to search for code importing this*";
+                                    target.setAttribute("title",toolTip);
+//LOG IT
+                                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_IMPORTS,null);
                                     return;
                                 }
 
                                 else if(target.classList.contains("extends")){
-                                    toolTip = "*Click to search for code extending this*"
-                                    target.setAttribute("title",toolTip)
+                                    toolTip = "*Click to search for code extending this*";
+                                    target.setAttribute("title",toolTip);
+//LOG IT
+                                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_EXTENDS,null);
                                     return;
                                 }
 
                                 else if(target.classList.contains("implements")){
-                                    toolTip = "*Click to search for code implementing this*"
-                                    target.setAttribute("title",toolTip)
+                                    toolTip = "*Click to search for code implementing this*";
+                                    target.setAttribute("title",toolTip);
+//LOG IT
+                                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_IMPLEMENTS,null);
                                     return;
                                 }
 
                                 else if(target.classList.contains("package")){
-                                    toolTip = "*Click to search for code in this package*"
-                                    target.setAttribute("title",toolTip)
+                                    toolTip = "*Click to search for code in this package*";
+                                    target.setAttribute("title",toolTip);
+//LOG IT
+                                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_PACKAGE,null);
                                     return;
                                 }
 
@@ -590,7 +598,8 @@ var Controller = {
                                         toolTip = "*Click to search for similar method declarations*"
                                     }
 
-
+//LOG IT
+                                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_METHOD_CALL,null);
 
                                          //tool tip
                                     target.setAttribute("title",toolTip);
@@ -634,12 +643,26 @@ var Controller = {
                                         }else if(target.classList.contains("tipDec")){
                                             toolTip = "*Click to search for similar method declarations*"
                                         }
+//LOG IT
+                                        UsageLogger.addEvent(UsageLogger.TOOL_TIP_METHOD_DECLARATION,null);
 
                                         //tool tip
                                         target.setAttribute("title",toolTip);
                                     }
                                 }//else
+                            }else {
+
+                                //clear last event so that we can log re-entering a tool tip
+                                if (UsageLogger.LastEventType == UsageLogger.TOOL_TIP_METHOD_DECLARATION
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_METHOD_CALL
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_EXTENDS
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_IMPLEMENTS
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_IMPORTS
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_PACKAGE) {
+                                    UsageLogger.LastEventType = "";
+                                }
                             }
+
                         });
 
  //up

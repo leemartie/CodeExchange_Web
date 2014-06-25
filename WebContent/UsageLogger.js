@@ -13,7 +13,6 @@ var UsageLogger = {
     QUERY_BUILDER_PACKAGE               : "QUERY_BUILDER_PACKAGE",
     QUERY_BUILDER_PROJECT               : "QUERY_BUILDER_PROJECT",
 
-
 ///QUERY CRITICISMS
     QUERY_CRITICISMS_LENGTH             : "QUERY_CRITICISMS_LENGTH",
     QUERY_CRITICISMS_COMPLEXITY         : "QUERY_CRITICISMS_COMPLEXITY",
@@ -65,9 +64,7 @@ var UsageLogger = {
     WINDOW_COPY_CELL3                   : "WINDOW_COPY_CELL3",
 
 
-
 //QUERY HISTORY
-
     QUERY_HISTORY_BUTTON_ON             : "QUERY_HISTORY_BUTTON_ON",
     QUERY_HISTORY_BUTTON_OFF            : "QUERY_HISTORY_BUTTON_OFF",
     QUERY_HISTORY_CELL_CLICK            : "QUERY_HISTORY_CELL_CLICK",
@@ -76,8 +73,15 @@ var UsageLogger = {
 //NEW QUERY BUTTON
     NEW_QUERY_BUTTON_CLICKED            : "NEW_QUERY_BUTTON_CLICKED",
 
+//ACTIVE QUERY
     DEACTIVATE_QUERY                    : "DEACTIVATE_QUERY",
     ACTIVATE_QUERY                      : "ACTIVATE_QUERY",
+
+//PAGE NAVIGATION
+    PAGE_CHANGE                         : "PAGE_CHANGE",
+
+    SESSION_START                      : "SESSION_START",
+
 
     //keeping track of stored events to send at some time
     events                              : new Array(),
@@ -89,6 +93,9 @@ var UsageLogger = {
     Query_Code_Prop     : "Query_Code_Prop",
 
     LastTimeStamp       : "",
+    LastEventType       : "",
+
+    optionalValue       : null,
 
     convertQueryToEventType: function(query,where){
 
@@ -166,11 +173,49 @@ var UsageLogger = {
         }
     },
 
-    addEvent: function(eventType, query){
+    addEvent: function(eventType, query, optionalValue){
+
+//don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_METHOD_CALL &&
+            eventType == UsageLogger.TOOL_TIP_METHOD_CALL){
+            return;
+        }
+//don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_EXTENDS &&
+            eventType == UsageLogger.TOOL_TIP_EXTENDS){
+            return;
+        }
+//don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_IMPLEMENTS &&
+            eventType == UsageLogger.TOOL_TIP_IMPLEMENTS){
+            return;
+        }
+//don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_IMPORTS &&
+            eventType == UsageLogger.TOOL_TIP_IMPORTS){
+            return;
+        }
+//don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_METHOD_DECLARATION &&
+            eventType == UsageLogger.TOOL_TIP_METHOD_DECLARATION){
+            return;
+        }
+//don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_PACKAGE &&
+            eventType == UsageLogger.TOOL_TIP_PACKAGE){
+            return;
+        }
+
+        if(optionalValue == undefined)
+            optionalValue = null;
+
+        UsageLogger.optionalValue = optionalValue;
 
         var event = new Event(Client.id,eventType, query);
         UsageLogger.events.push(event);
         UsageLogger.uploadEvents();
+
+        UsageLogger.LastEventType = eventType;
     },
 
     uploadEvents : function(){
@@ -199,6 +244,7 @@ var UsageLogger = {
                 "&queryType="+queryType+
                 "&queryValue="+queryValue+
                 "&queryActive="+queryActive+
+                "&optionalValue="+UsageLogger.optionalValue+
                 "&timeStamp="+timeStamp+
                 "&callback=?&json.wrf=displayCode";
 

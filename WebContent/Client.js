@@ -12,12 +12,14 @@
 
         var id = getCookie("id");
 
-        if (id != undefined && id != "undefined") {
+        if (id != undefined && id != "undefined" && id != "") {
             Client.id = id;
         }else{
             Client.id = getClientId();
 
         }
+
+        UsageLogger.addEvent(UsageLogger.SESSION_START,null);
 
 		SetupManager.setupSite();
 

@@ -359,11 +359,14 @@ var QueryManager = {
 	 * @returns
 	 */
 	nextResult : function() {
-		
+
 		var url = URLQueryCreator.getQueryURL('on_nextData');
 
 		// alert(url);
 		$.getJSON(url);
+//LOG IT
+        UsageLogger.addEvent(UsageLogger.PAGE_CHANGE,null,(QueryManager.currentStart/SetupManager.numberOfCells)+1);
+
 	}
 	
 	
@@ -555,6 +558,8 @@ function on_nextData(data) {
 	clearInterval(SetupManager.rotateStatusVar);
 
     facetCompleteCallBack(data);
+
+
 
 }
 
