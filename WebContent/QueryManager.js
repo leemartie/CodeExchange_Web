@@ -679,6 +679,8 @@ function on_data(data) {
 	
 	// update status
 	Controller.setStatus("DONE - " + total);
+//LOG IT
+    UsageLogger.addEvent(UsageLogger.RESULTS_FOUND,null,total);
 
 	QueryManager.makeNavigation(data.response.numFound, SetupManager.numberOfCells);
 	

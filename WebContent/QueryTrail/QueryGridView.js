@@ -30,8 +30,9 @@ var QueryGridView = {
                         var number = id.substring(id.length - 1);
                         for (var i = 0; i < QueryGridModel.history[number].length; i++) {
                             BuildQueryBoxView.addAndSubmit(QueryGridModel.history[number][i]);
+                            UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_CLICK,QueryGridModel.history[number][i]);
                         }
-                        UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_CLICK,null);
+
                     }else{
                         QueryGridView.added = false;
                     }
@@ -99,7 +100,7 @@ var QueryGridView = {
                 (function(query){button.click(function(){
                     BuildQueryBoxView.addAndSubmit(query);
                     QueryGridView.added = true;
-                    UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_PART_CLICK,null);
+                    UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_PART_CLICK,query);
                 })}(query));
 
                 row.append(buttonCell);

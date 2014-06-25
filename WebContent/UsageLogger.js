@@ -67,6 +67,10 @@ var UsageLogger = {
     WINDOW_COPY_CELL2                   : "WINDOW_COPY_CELL2",
     WINDOW_COPY_CELL3                   : "WINDOW_COPY_CELL3",
 
+    WINDOW_CUT_CELL1                   : "WINDOW_CUT_CELL1",
+    WINDOW_CUT_CELL2                   : "WINDOW_CUT_CELL2",
+    WINDOW_CUT_CELL3                   : "WINDOW_CUT_CELL3",
+
 
 //QUERY HISTORY
     QUERY_HISTORY_BUTTON_ON             : "QUERY_HISTORY_BUTTON_ON",
@@ -85,6 +89,8 @@ var UsageLogger = {
     PAGE_CHANGE                         : "PAGE_CHANGE",
 
     SESSION_START                      : "SESSION_START",
+
+    RESULTS_FOUND                       : "RESULTS_FOUND",
 
 
     //keeping track of stored events to send at some time
@@ -216,7 +222,7 @@ var UsageLogger = {
             return;
         }
 
-        if(optionalValue == undefined)
+        if(optionalValue == undefined || optionalValue == null)
             optionalValue = null;
 
         UsageLogger.optionalValue = optionalValue;

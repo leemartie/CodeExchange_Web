@@ -650,7 +650,14 @@ var SetupManager = {
             editor.on("copy", function(text){
 
                 //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL1,null);
+                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL1,null, Controller.currentURLs[0]);
+
+            });
+
+            editor.on("cut", function(text){
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL1,null, Controller.currentURLs[0]);
 
             });
 
@@ -664,9 +671,15 @@ var SetupManager = {
 
             editor2.on("copy", function(text){
                 //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL2,null);
+                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL2,null, Controller.currentURLs[1]);
             });
 
+            editor.on("cut", function(text){
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL2,null, Controller.currentURLs[1]);
+
+            });
 
 
             var editor3 = ace.edit('result2');
@@ -677,7 +690,14 @@ var SetupManager = {
 
             editor3.on("copy", function(text){
                 //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL3,null);
+                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL3,null, Controller.currentURLs[2]);
+            });
+
+            editor.on("cut", function(text){
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL3,null, Controller.currentURLs[2]);
+
             });
 
 

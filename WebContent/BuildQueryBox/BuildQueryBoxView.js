@@ -482,7 +482,7 @@ var BuildQueryBoxView = {
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
 
-                truebox.prop('checked', false);
+                //truebox.prop('selected', $(this).val());
 
             });
 
@@ -499,7 +499,7 @@ var BuildQueryBoxView = {
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
 
-                falsebox.prop('checked', false);
+                //falsebox.prop('selected', $(this).val());
 
             });
 

@@ -40,6 +40,8 @@ var Controller = {
 
         isExpanded : false,
 
+        currentURLs             : new Array(),
+
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
@@ -67,6 +69,8 @@ var Controller = {
 
 
             var classStart = start;
+
+            Controller.currentURLs[editorNumber] = codeURL;
 
             (function(codeNode, editorNumber, classStart, expanded, extendsResult, implementsResult){
                 $.getJSON(url).fail(function(data, textStatus, jqXHR) {
