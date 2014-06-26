@@ -29,7 +29,7 @@ var QueryBucketModel = {
 
     snippetMethodDeclarationName       : "snippet_method_dec_name",
     snippetMethodDeclarationClass      : "snippet_method_dec_declaring_class",
-    snippetMethodDeclarationParameters : "snippet_method_dec_parameter_types",
+    snippetMethodDeclarationParameters : "snippet_method_dec_parameter_types_count",
     snippetMethodDeclarationReturn     : "snippet_method_dec_return_type",
     snippetMethodDeclarationGeneric    : "snippet_method_dec_is_generic",
     snippetMethodDeclarationVarArgs    : "snippet_method_dec_is_var_args",
@@ -37,7 +37,7 @@ var QueryBucketModel = {
     snippetMethodCallCallingClass   : "snippet_method_invocation_calling_class",
     snippetMethodCallCallingClassShort : "snippet_method_invocation_calling_class_short",
     snippetMethodCallName           : "snippet_method_invocation_name",
-    snippetMethodCallParameters     : "snippet_method_invocation_arg_types",
+    snippetMethodCallParameters     : "snippet_method_invocation_arg_types_count",
     snippetMethodCallParametersPlace     : "snippet_method_invocation_arg_types_place",
 
     snippetMethodCallDecClass   :   "snippet_method_invocation_declaring_class",

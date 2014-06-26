@@ -75,6 +75,7 @@ var BuildQueryBoxView = {
 
             var ParameterNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
             ParameterNameBox.width("98%");
+            ParameterNameBox.attr("placeholder","param 1, param 2, ...");
             var ParameterNameLabel = $("<br><text>Parameter Type</text><br>");
             ParameterNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ParamBox);
 
@@ -571,14 +572,16 @@ var BuildQueryBoxView = {
 
                     var params = String(ParameterNameBox.val()).split(/[ ,]+/);
 
+                    var paramsWithCount =  BuildQueryBoxView.appendWithCount(params);
+
                     var paramQuery = "";
-                    for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+                    for(var paramIndex = 0; paramIndex < paramsWithCount.length; paramIndex++){
                         if(paramQuery == ""){
                             paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParameters
-                                + ':'+'"'+params[paramIndex]+'"';
+                                + ':'+'"'+paramsWithCount[paramIndex]+'"';
                         }else{
                             paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParameters
-                                + ':'+'"'+params[paramIndex]+'"';
+                                + ':'+'"'+paramsWithCount[paramIndex]+'"';
                         }
 
                     }
@@ -630,14 +633,16 @@ var BuildQueryBoxView = {
 
                     var params = String(ParameterNameBox.val()).split(/[ ,]+/);
 
+                    var paramsWithCount =  BuildQueryBoxView.appendWithCount(params);
+
                     var paramQuery = "";
-                    for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+                    for(var paramIndex = 0; paramIndex < paramsWithCount.length; paramIndex++){
                         if(paramQuery == ""){
                             paramQuery = '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
-                                + ':'+'"'+params[paramIndex]+'"';
+                                + ':'+'"'+paramsWithCount[paramIndex]+'"';
                         }else{
                             paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
-                                + ':'+'"'+params[paramIndex]+'"';
+                                + ':'+'"'+paramsWithCount[paramIndex]+'"';
                         }
 
                     }
@@ -779,6 +784,32 @@ var BuildQueryBoxView = {
 //                },50);
             }
 
+        },
+
+    appendWithCount: function(params){
+        var paramsWithCount = new Array();
+
+        var skip = new Array();
+
+        for(var i = 0; i<params.length; i++){
+                var count = 0;
+
+            if(skip.indexOf(params[i]) > -1){
+                continue;
+            }
+
+            for(var j = i; j<params.length; j++){
+                if(params[i] == params[j]){
+                    count++;
+                }
+
+            }
+
+            paramsWithCount.push(params[i]+"_"+count);
+            skip.push(params[i]);
         }
+
+        return paramsWithCount;
+    }
 		
 }
