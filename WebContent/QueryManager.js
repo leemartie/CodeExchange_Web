@@ -376,6 +376,27 @@ var QueryManager = {
 
 };
 
+function getIntersectionImports(docs){
+    $.each(docs,
+        function(i, item) {
+
+            var imports = item.snippet_imports;
+            $.each(docs,
+                function(j, item) {
+
+                    if(j<=i){
+                        return;
+                    }
+
+
+                }
+            );
+
+        });
+
+
+}
+
 /**
  *
  * @param data
@@ -388,7 +409,10 @@ function facetCompleteCallBack(data){
 
     var snippet_variable_names_delimited = data.facet_counts.facet_fields.snippet_variable_names_delimited;
 
-    var keywordMax = 8;
+    var keywordMax = 12;
+
+    var wordsSuggested = "";
+
     for(i = 0; i<snippet_variable_names_delimited.length; i = i+2) {
         if(i >= keywordMax)
             continue;
@@ -400,6 +424,29 @@ function facetCompleteCallBack(data){
             continue;
         }
 
+//seeing if it is already in suggestions
+        if(wordsSuggested.indexOf(variableName) > -1){
+            keywordMax = keywordMax +2;
+            continue;
+        }
+
+//testing if it is in keywords already
+        if(QueryBucketModel.listOfQueries[QueryBucketModel.snippetField] != null) {
+            var recommendationInQuery = false;
+            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.snippetField].length; k++) {
+                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.snippetField][k];
+                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
+                    recommendationInQuery = true;
+                    break;
+                }
+
+            }
+            if (recommendationInQuery) {
+                keywordMax = keywordMax + 2;
+                continue;
+            }
+        }
+        wordsSuggested = wordsSuggested +" "+variableName;
         var query4 = new QueryModel(QueryBucketModel.snippetField, variableName);
         query4.displayType = "keywords";
         query4.displayValue = variableName;
@@ -460,6 +507,22 @@ function facetCompleteCallBack(data){
         if(importName == "")
             continue;
 
+//testing if it is in keywords already
+        if(QueryBucketModel.listOfQueries[QueryBucketModel.snippetImportsFiled] != null) {
+            var recommendationInQuery = false;
+            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.snippetImportsFiled].length; k++) {
+                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.snippetImportsFiled][k];
+                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
+                    recommendationInQuery = true;
+                    break;
+                }
+
+            }
+            if (recommendationInQuery) {
+                keywordMax = keywordMax + 2;
+                continue;
+            }
+        }
         var query4 = new QueryModel(QueryBucketModel.snippetImportsFiled, importName);
         query4.displayType = "imports library";
         query4.displayValue = importName;
@@ -477,6 +540,22 @@ function facetCompleteCallBack(data){
         if(extendsName == "")
             continue;
 
+        //testing if it is in keywords already
+        if(QueryBucketModel.listOfQueries[QueryBucketModel.extendsField] != null) {
+            var recommendationInQuery = false;
+            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.extendsField].length; k++) {
+                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.extendsField][k];
+                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
+                    recommendationInQuery = true;
+                    break;
+                }
+
+            }
+            if (recommendationInQuery) {
+                keywordMax = keywordMax + 2;
+                continue;
+            }
+        }
         var query2 = new QueryModel(QueryBucketModel.extendsField, extendsName);
         query2.displayType = "extends class";
         query2.displayValue = extendsName;
@@ -493,6 +572,22 @@ function facetCompleteCallBack(data){
         if(implementsName == "")
             continue;
 
+//testing if it is in keywords already
+        if(QueryBucketModel.listOfQueries[QueryBucketModel.implementsField] != null) {
+            var recommendationInQuery = false;
+            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.implementsField].length; k++) {
+                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.implementsField][k];
+                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
+                    recommendationInQuery = true;
+                    break;
+                }
+
+            }
+            if (recommendationInQuery) {
+                keywordMax = keywordMax + 2;
+                continue;
+            }
+        }
         var query3 = new QueryModel(QueryBucketModel.implementsField, implementsName);
         query3.displayType = "implements interface";
         query3.displayValue = implementsName;
