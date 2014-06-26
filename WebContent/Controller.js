@@ -1120,6 +1120,9 @@ var Controller = {
             });
 
             icon.addClass("MetaQuery");
+        icon.mouseover(function(event){
+            icon.attr("title","decrease branch complexity by more than this (for loops, if statments, try/catch, etc...)");
+        });
 
             var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
             tableIncreaseDecrease.append(tr2);
@@ -1149,7 +1152,9 @@ var Controller = {
 
             icon2.addClass("MetaQuery");
 
-
+        icon2.mouseover(function(event){
+            icon2.attr("title","increase branch complexity by more than this (for loops, if statments, try/catch, etc...)");
+        });
 
 
             td1.append(icon2);
@@ -1205,6 +1210,10 @@ var Controller = {
 
         icon.addClass("MetaQuery");
 
+        icon.mouseover(function(event){
+            icon.attr("title","decrease length by more than this");
+        });
+
         var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
         tableIncreaseDecrease.append(tr2);
         var td2 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -1233,7 +1242,9 @@ var Controller = {
 
         icon2.addClass("MetaQuery");
 
-
+        icon2.mouseover(function(event){
+            icon2.attr("title","increase imports by more than this");
+        });
 
 
         td1.append(icon2);
@@ -1289,6 +1300,10 @@ var Controller = {
 
             });
 
+        icon.mouseover(function(event){
+           icon.attr("title","decrease length by more than this");
+        });
+
 
             icon.addClass("MetaQuery");
 
@@ -1317,6 +1332,10 @@ var Controller = {
                 UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Criticisms),query);
 
             });
+
+        icon2.mouseover(function(event){
+            icon2.attr("title","increase length by more than this");
+        });
 
 
             icon2.addClass("MetaQuery");

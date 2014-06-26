@@ -15,9 +15,9 @@ var SmartQueryCreator = {
 	
 			for(var i = 0; i<queryArray.length; i++){
 				if(i == 0){
-					tempQuery = queryArray[i];
+					tempQuery = encodeURIComponent(queryArray[i]);
 				}else{
-					tempQuery = tempQuery + " AND " +queryArray[i];
+					tempQuery = tempQuery + " AND " +encodeURIComponent(queryArray[i]);
 				}
 				
 			}

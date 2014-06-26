@@ -44,7 +44,9 @@ var BuildQueryBoxView = {
 
 
 
-
+            queryBox.mouseover(function(event){
+                queryBox.attr("title","hit enter in text box to submit query");
+            });
 
 
 
@@ -107,7 +109,18 @@ var BuildQueryBoxView = {
             ReturnTypeBox.hide();
             ReturnTypeLabel.hide();
 
-
+            ClassNameBox.mouseover(function(event){
+                ClassNameBox.attr("title","hit enter in text box to submit query");
+            });
+            MethodNameBox.mouseover(function(event){
+                MethodNameBox.attr("title","hit enter in text box to submit query");
+            });
+            ParameterNameBox.mouseover(function(event){
+                ParameterNameBox.attr("title","hit enter in text box to submit query");
+            });
+            ReturnTypeBox.mouseover(function(event){
+                ReturnTypeBox.attr("title","hit enter in text box to submit query");
+            });
 
             //this is for queries of true false values
             var truebox = $(SetupManager.inputOpen+SetupManager.inputClose);

@@ -13,7 +13,7 @@ var URLQueryCreator = {
 			var start = QueryManager.currentStart;
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ encodeURIComponent(query)
+				+ query
 				+ '&start=' + start
 				+ '&fl=id snippet_author_name snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
