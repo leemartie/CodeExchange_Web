@@ -724,37 +724,38 @@ function spellCheck(data){
 function autoCompleteCallBack(data){
 	if(Controller.currentStatus != "SEARCHING...")
 		Controller.setStatus("DONE - searching for autocomplete recommendations");
-	
+	var results = null;
+
 	if(QueryManager.currentAutoCompleteField == QueryBucketModel.extendsField){
-		var results =  data.facet_counts.facet_fields.snippet_extends;
+		results =  data.facet_counts.facet_fields.snippet_extends;
 	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.implementsField){
-		var results = data.facet_counts.facet_fields.snippet_implements;
+		results = data.facet_counts.facet_fields.snippet_implements;
 	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.authorFiled){
-        var results = data.facet_counts.facet_fields.snippet_version_author;
+        results = data.facet_counts.facet_fields.snippet_version_author;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.projectField){
-        var results = data.facet_counts.facet_fields.snippet_project_name;
+        results = data.facet_counts.facet_fields.snippet_project_name;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.returnTypeField){
-        var results = data.facet_counts.facet_fields.snippet_return_type;
+        results = data.facet_counts.facet_fields.snippet_return_type;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetImportsFiled){
-        var results = data.facet_counts.facet_fields.snippet_imports;
+        results = data.facet_counts.facet_fields.snippet_imports;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallCallingClass){
-        var results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class;
+        results = data.facet_counts.facet_fields.snippet_method_invocation_calling_class;
     }
     else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallName){
-        var results = data.facet_counts.facet_fields.snippet_method_invocation_name;
+        results = data.facet_counts.facet_fields.snippet_method_invocation_name;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallParameters){
-        var results = data.facet_counts.facet_fields.snippet_method_invocation_arg_types;
+        results = data.facet_counts.facet_fields.snippet_method_invocation_arg_types_count;
     }
     else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationClass){
-        var results = data.facet_counts.facet_fields.snippet_method_dec_declaring_class;
+        results = data.facet_counts.facet_fields.snippet_method_dec_declaring_class;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationName){
-        var results = data.facet_counts.facet_fields.snippet_method_dec_name;
+        results = data.facet_counts.facet_fields.snippet_method_dec_name;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationParameters){
-        var results = data.facet_counts.facet_fields.snippet_method_dec_parameter_types;
+        results = data.facet_counts.facet_fields.snippet_method_dec_parameter_types_count;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationReturn){
-        var results = data.facet_counts.facet_fields.snippet_method_dec_return_type;
+        results = data.facet_counts.facet_fields.snippet_method_dec_return_type;
     }else if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetPackage){
-        var results = data.facet_counts.facet_fields.snippet_package;
+        results = data.facet_counts.facet_fields.snippet_package;
     }
 
 
@@ -764,7 +765,7 @@ function autoCompleteCallBack(data){
 //    }
 
     //recommend auto complete
-    if(results.length > 0){
+    if(results != null && results.length > 0){
         var temp = new Array();
         for(var i = 0; i<results.length; i++){
             //skip the odds because those are frequency counts and not results
@@ -774,6 +775,10 @@ function autoCompleteCallBack(data){
             temp.push(results[i]);
         }
         var mappedResults = $.map( temp, function( item ) {
+            if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodDeclarationParameters ||
+                QueryManager.currentAutoCompleteField == QueryBucketModel.snippetMethodCallParameters  ){
+                item = item.substring(0,item.length-2);
+            }
             return {
                 "label": item,
                 "value": item
