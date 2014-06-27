@@ -1993,8 +1993,18 @@ var Controller = {
             editor.resize();
 
             for(var i = 0; i <SetupManager.resultEditors.length; i++){
+                var editor = ace.edit(SetupManager.resultPreArray_ID[i]);
                 editor.resize();
+
+//                if(i> 0 && QueryManager.totalResuls == 1){
+//                    editor.session.setValue("");
+//                }else if(i > 0 && QueryManager.totalResuls == 2){
+//                    editor.session.setValue("");
+//                }
+
             }
+
+
 
 		},
 
