@@ -33,8 +33,33 @@ var BuildQueryBoxView = {
             queryBox.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
             queryBox.autocomplete({
                 source: function( request, response ){
-                    QueryManager.submitSpellCheck(request, response,queryBox.val());
+                    QueryManager.submitAutoComplete(QueryBucketModel.snippetField, request, response);
+//                    QueryManager.submitSpellCheck(request, response,queryBox.val());
+                },
+                focus: function() {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function( event, ui ) {
+                    var terms = null;
+
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec ||
+                        BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall ) {
+                        terms = queryBox.val().split(/[\s,]+/);
+                    }else{
+                        terms = queryBox.val().split(/[\s]+/);
+                    }
+
+
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push( ui.item.value );
+
+                    queryBox.val( terms.join( " " ) );
+                    return false;
                 }
+
             });
 
 
@@ -700,6 +725,29 @@ var BuildQueryBoxView = {
                          QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
                     else
                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationParameters, request, response);
+                },
+                focus: function() {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function( event, ui ) {
+                    var terms = null;
+
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec ||
+                        BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall ) {
+                        terms = ParameterNameBox.val().split(/[\s,]+/);
+                    }else{
+                        terms = ParameterNameBox.val().split(/[\s]+/);
+                    }
+
+
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push( ui.item.value );
+
+                    ParameterNameBox.val( terms.join( ", " ) );
+                    return false;
                 }
             });
 

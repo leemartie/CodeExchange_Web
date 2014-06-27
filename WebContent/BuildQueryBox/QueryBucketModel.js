@@ -44,6 +44,7 @@ var QueryBucketModel = {
 
     snippetPackage              :   "snippet_package",
 
+
     snippetClassGeneric             :   "snippet_is_generic",
     snippetClassAbstract            :   "snippet_is_abstract",
     snippetClassWildCard            :   "snippet_is_wildcard",
@@ -52,6 +53,8 @@ var QueryBucketModel = {
     snippetHasComments              :   "snippet_has_comments",
 
     humanLanguageOfComments         : "snippet_human_language",
+
+    snippet_variable_names_delimited: "snippet_variable_names_delimited",
 
     ClassBox: "ClassBox",
     MethodBox: "MethodBox",

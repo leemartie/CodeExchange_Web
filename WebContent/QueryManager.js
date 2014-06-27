@@ -86,6 +86,8 @@ var QueryManager = {
 		QueryManager.currentResponse = response;
 
 
+
+
         if(field == QueryBucketModel.snippetMethodCallCallingClass
             || field == QueryBucketModel.snippetMethodDeclarationClass)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ClassBox).val();
@@ -93,13 +95,26 @@ var QueryManager = {
             || field == QueryBucketModel.snippetMethodDeclarationName)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.MethodBox).val();
         else if(field == QueryBucketModel.snippetMethodCallParameters
-            || field == QueryBucketModel.snippetMethodDeclarationParameters)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ParamBox).val();
+            || field == QueryBucketModel.snippetMethodDeclarationParameters) {
+
+            var words = $(SetupManager.pound + QueryBucketModel.ParamBox).val();
+            words = words.split(/[\s,]+/);
+            QueryManager.completeUserTyped = words[words.length-1];
+        }
         else if(field == QueryBucketModel.snippetMethodDeclarationReturn)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ReturnBox).val();
-        else
-            QueryManager.completeUserTyped = $(SetupManager.pound+SetupManager.queryInput_ID).val();
+        else {
+            var words = $(SetupManager.pound + SetupManager.queryInput_ID).val();
+            words = words.split(/[\s]+/);
+            QueryManager.completeUserTyped = words[words.length-1];
+        }
 
+
+        //keyword completion
+        if(field == QueryBucketModel.snippetField){
+            field = QueryBucketModel.snippet_variable_names_delimited;
+
+        }
 
 
 		var queryFilter = QueryBucketModel.constructQuery();
@@ -821,7 +836,10 @@ function autoCompleteCallBack(data){
 		Controller.setStatus("DONE - searching for autocomplete recommendations");
 	var results = null;
 
-	if(QueryManager.currentAutoCompleteField == QueryBucketModel.extendsField){
+    if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippet_variable_names_delimited){
+        results =  data.facet_counts.facet_fields.snippet_variable_names_delimited;
+    }
+	else if(QueryManager.currentAutoCompleteField == QueryBucketModel.extendsField){
 		results =  data.facet_counts.facet_fields.snippet_extends;
 	}else if(QueryManager.currentAutoCompleteField == QueryBucketModel.implementsField){
 		results = data.facet_counts.facet_fields.snippet_implements;
