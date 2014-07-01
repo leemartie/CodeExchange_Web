@@ -137,13 +137,13 @@ var QueryManager = {
             queryAutoComplete = 'http://' + URLQueryCreator.server + ':' + URLQueryCreator.port + '/solr/' + URLQueryCreator.collection + '/select/?' +
                 'rows=0&q=' + queryFilter + '&facet=true' +
                 '&facet.field=' + field +
-                '&facet.mincount=1' + '&facet.limit=20' + '&facet.prefix=' + QueryManager.completeUserTyped +
+                '&facet.mincount=1' + '&facet.limit=20' + '&facet.prefix=' + QueryManager.completeUserTyped.toLowerCase() +
                 '&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
         }else{
             queryAutoComplete = 'http://' + URLQueryCreator.server + ':' + URLQueryCreator.port + '/solr/' + URLQueryCreator.collection + '/select/?' +
                 'rows=0&q=' + '*:*' + '&facet=true' +
                 '&facet.field=' + field +
-                '&facet.mincount=1' + '&facet.limit=20' + '&facet.prefix=' + QueryManager.completeUserTyped +
+                '&facet.mincount=1' + '&facet.limit=20' + '&facet.prefix=' + QueryManager.completeUserTyped.toLowerCase() +
                 '&indent=on&wt=json&callback=?&json.wrf=autoCompleteCallBack';
         }
 		QueryManager.currentAutoCompleteField = field;
