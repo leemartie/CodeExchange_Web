@@ -71,6 +71,8 @@ var UsageLogger = {
     WINDOW_CUT_CELL2                   : "WINDOW_CUT_CELL2",
     WINDOW_CUT_CELL3                   : "WINDOW_CUT_CELL3",
 
+    AUTO_COMPLETE_SELECTED              : "AUTO_COMPLETE_SELECTED",
+
 
 //QUERY HISTORY
     QUERY_HISTORY_BUTTON_ON             : "QUERY_HISTORY_BUTTON_ON",

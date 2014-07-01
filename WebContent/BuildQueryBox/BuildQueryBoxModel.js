@@ -4,7 +4,7 @@
 
 var BuildQueryBoxModel = {
 
-    currentQueryType    :   ""
+    currentQueryType    :   "snippet_code"
 
 
 }

@@ -424,6 +424,8 @@ function facetCompleteCallBack(data){
 
     var snippet_variable_names_delimited = data.facet_counts.facet_fields.snippet_variable_names_delimited;
 
+    //data.facet_counts.facet_fields.snippet_class_name_delimited;
+
     var keywordMax = 12;
 
     var wordsSuggested = "";
@@ -510,6 +512,8 @@ function facetCompleteCallBack(data){
 //        query1.score = authors[i+1];
 //        QueryRecommenderModel.addRecommendedQuery(query1);
 //    }
+
+
 
     var snippet_imports = data.facet_counts.facet_fields.snippet_imports;
 

@@ -42,6 +42,7 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_extends'
                 + '&facet.field=snippet_implements'
                 + '&facet.field=snippet_variable_names_delimited'
+                + '&facet.field=snippet_method_invocation_name'
                 + '&facet.mincount=1'
 				+ '&facet.limit=14'
                 + '&expand=true'

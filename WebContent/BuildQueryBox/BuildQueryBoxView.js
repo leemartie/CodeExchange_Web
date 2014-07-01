@@ -51,10 +51,14 @@ var BuildQueryBoxView = {
                     }
 
 
+
                     // remove the current input
                     terms.pop();
                     // add the selected item
                     terms.push( ui.item.value );
+
+//LOG IT
+                    UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,  BuildQueryBoxModel.currentQueryType);
 
                     queryBox.val( terms.join( " " ) );
                     return false;
@@ -446,19 +450,19 @@ var BuildQueryBoxView = {
 
 
                 }
-                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
-                    queryBox.autocomplete({
-                        source: function( request, response ){
-                            QueryManager.submitSpellCheck(request, response,queryBox.val());
-                        }
-                    });
-                }else{
-                    queryBox.autocomplete({
-                        source: function( request, response ){
-                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
-                        }
-                    });
-                }
+//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
+//                    queryBox.autocomplete({
+//                        source: function( request, response ){
+//                            QueryManager.submitSpellCheck(request, response,queryBox.val());
+//                        }
+//                    });
+//                }else{
+//                    queryBox.autocomplete({
+//                        source: function( request, response ){
+//                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
+//                        }
+//                    });
+               // }
             });
 
 
@@ -703,28 +707,62 @@ var BuildQueryBoxView = {
             //auto complete for method calls
             ClassNameBox.autocomplete({
                 source: function( request, response ){
-                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
-                     QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
-                    else
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
+
+                    }
+                    else {
                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationClass, request, response);
+
+                    }
+                },
+                //logging selection of autocomplete function
+                select: function( event, ui ) {
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+//LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                            QueryBucketModel.snippetMethodCallCallingClass);
+                    }
+                    else {
+//LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                            QueryBucketModel.snippetMethodDeclarationClass);
+                    }
                 }
             });
 
             MethodNameBox.autocomplete({
                 source: function( request, response ){
-                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
-                       QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallName, request, response);
-                    else
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallName, request, response);
+                    }
+                    else {
                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationName, request, response);
+                    }
+                },
+                //logging selection of autocomplete function
+                select: function( event, ui ) {
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+                        //LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                            QueryBucketModel.snippetMethodCallName);
+                    }
+                    else {
+                        //LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                            QueryBucketModel.snippetMethodDeclarationName);
+                    }
                 }
             });
 
             ParameterNameBox.autocomplete({
                 source: function( request, response ){
-                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall)
-                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
-                    else
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+                        QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallParameters, request, response);
+                    }
+                    else {
                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationParameters, request, response);
+                    }
                 },
                 focus: function() {
                     // prevent value inserted on focus
@@ -741,12 +779,26 @@ var BuildQueryBoxView = {
                     }
 
 
+
                     // remove the current input
                     terms.pop();
                     // add the selected item
                     terms.push( ui.item.value );
 
                     ParameterNameBox.val( terms.join( ", " ) );
+
+                    //LOG IT
+                    if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall) {
+                        //LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                            QueryBucketModel.snippetMethodCallParameters);
+                    }
+                    else {
+                        //LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                            QueryBucketModel.snippetMethodDeclarationParameters);
+                    }
+
                     return false;
                 }
             });
