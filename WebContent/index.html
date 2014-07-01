@@ -78,7 +78,7 @@
 
         z-index:40;
         border-radius: 50px;
-
+        opacity: 0.7;
 
         pointer-events: auto;
         cursor: pointer;
@@ -89,7 +89,7 @@
         background-color: #d3d3d3;
         z-index:40;
         border-radius: 50px;
-
+        opacity: 0.7;
     }
 
     .topBuffer{
@@ -115,7 +115,7 @@
 
         z-index:40;
         border-radius: 50px;
-
+        opacity: 0.7;
 
         pointer-events: auto;
         cursor: pointer;
@@ -128,7 +128,7 @@
         z-index:40;
         border-radius: 50px;
 
-
+        opacity: 0.4;
         pointer-events: auto;
         cursor: pointer;
     }
@@ -140,7 +140,7 @@
         z-index:40;
         border-radius: 50px;
 
-
+        opacity: 0.4;
         pointer-events: auto;
         cursor: pointer;
     }
@@ -157,6 +157,8 @@
         cursor: pointer;
 
         font-size: 15pt;
+
+        opacity: 0.6;
 
         /*background-image: url('http://level1router.ics.uci.edu/upArrow.png');*/
         /*background-repeat: no-repeat;*/
@@ -199,7 +201,7 @@
     .decChild{
         position:absolute;
         background: lightgreen;
-
+        opacity: 0.4;
         z-index:40;
         border-radius: 50px;
     }
@@ -646,10 +648,10 @@
 
             background-color: lightblue;
             font-size: 14px;
-            border-bottom: 3px solid;
-            border-right: 3px solid;
-            border-left: 3px solid;
-            border-top: 3px solid;
+            border-bottom: 1px solid;
+            border-right: 1px solid;
+            border-left: 1px solid;
+            border-top: 1px solid;
 
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
@@ -662,6 +664,8 @@
             height: 200px;
             overflow-x:hidden;
         }
+
+
 
         .QueryBucketOverflow{
             overflow:scroll;
@@ -737,8 +741,10 @@
         }
 
     .QueryViewDeactive{
-        background-color:darkgray;
-        color:#ffffff;
+        background-color:white;
+
+        opacity:0.4;
+
         font-size: 12px;
         border: 1px solid;
         padding-top: 0px;
@@ -778,11 +784,44 @@
 }
 
 .QueryRecommenderView{
-
+    height: 200px;
+   /* overflow-y: scroll;*/
 }
 
 .AnnotationQuery{
     background-color: red;
+}
+
+.QueryCell{
+    border: 1px solid;
+    background-color: #E2D4B2;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.QueryInput{
+    background-color: #d4ebf2;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.recommendCell{
+
+
+    border: 1px solid;
+    border-color: #d4ebf2;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 

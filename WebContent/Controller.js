@@ -551,6 +551,7 @@ var Controller = {
 
 
 
+
                                 if(target.classList.contains("import")){
                                     toolTip = "*Click to search for code importing this*";
                                     target.setAttribute("title",toolTip);
@@ -1121,7 +1122,7 @@ var Controller = {
 
             icon.addClass("MetaQuery");
         icon.mouseover(function(event){
-            icon.attr("title","decrease branch complexity by more than this (for loops, if statments, try/catch, etc...)");
+            icon.attr("title","decrease branch complexity by more than this code(decrease for loops, if statments, try/catch, etc...)");
         });
 
             var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1153,7 +1154,7 @@ var Controller = {
             icon2.addClass("MetaQuery");
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase branch complexity by more than this (for loops, if statments, try/catch, etc...)");
+            icon2.attr("title","increase branch complexity by more than this code (increase for loops, if statments, try/catch, etc...)");
         });
 
 
@@ -1211,7 +1212,7 @@ var Controller = {
         icon.addClass("MetaQuery");
 
         icon.mouseover(function(event){
-            icon.attr("title","decrease length by more than this");
+            icon.attr("title","decrease length by more than this code");
         });
 
         var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1243,7 +1244,7 @@ var Controller = {
         icon2.addClass("MetaQuery");
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase imports by more than this");
+            icon2.attr("title","increase imports by more than this code");
         });
 
 
@@ -1301,7 +1302,7 @@ var Controller = {
             });
 
         icon.mouseover(function(event){
-           icon.attr("title","decrease length by more than this");
+           icon.attr("title","decrease length by more than this code");
         });
 
 
@@ -1334,7 +1335,7 @@ var Controller = {
             });
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase length by more than this");
+            icon2.attr("title","increase length by more than this code");
         });
 
 

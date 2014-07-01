@@ -596,7 +596,7 @@ function facetCompleteCallBack(data){
             var recommendationInQuery = false;
             for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.implementsField].length; k++) {
                 var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.implementsField][k];
-                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
+                if (queryValue != null && variableName != null && queryValue.toLowerCase() == variableName.toLowerCase()) {
                     recommendationInQuery = true;
                     break;
                 }

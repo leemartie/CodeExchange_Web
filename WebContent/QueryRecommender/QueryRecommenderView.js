@@ -13,6 +13,8 @@ var QueryRecommenderView = {
         QueryRecommenderView.view.addClass("QueryRecommenderView");
         QueryRecommenderView.view.height("200px");
 
+
+
         return QueryRecommenderView.view;
 
 

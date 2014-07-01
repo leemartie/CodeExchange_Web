@@ -18,7 +18,7 @@ var BuildQueryBoxView = {
             var addCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(addCell);
 
-            var label = $("<text>Build Query</text>");
+            var label = $("<text>Enter Query</text>");
             label.addClass("BuildQueryTitle");
             titleCell.append(label);
             titleCell.attr("align", "center");
@@ -64,12 +64,16 @@ var BuildQueryBoxView = {
                     return false;
                 }
 
+            }).keyup(function (e) {
+                if(e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }
             });
 
 
 
             queryBox.width("98%");
-            queryBox.attr(SetupManager.placeholder_attr, "type query for selected type");
+            queryBox.attr(SetupManager.placeholder_attr, "type query and hit enter");
 
 
 
@@ -80,10 +84,10 @@ var BuildQueryBoxView = {
 
 
 
-            var queryLabel = $("<text>add a query part</text><br/>");
+            var queryLabel = $("<text>value</text><br/>");
             queryLabel.addClass("QueryTypeTitle");
             queryCell.attr("align", "center");
-            queryCell.append(queryLabel);
+           // queryCell.append(queryLabel);
             queryCell.append(queryBox);
 
 
@@ -97,10 +101,12 @@ var BuildQueryBoxView = {
             var ClassNameLabel = $("<text>Class Name</text><br>");
             ClassNameBox.attr(SetupManager.ID_attr,QueryBucketModel.ClassBox);
 
+
             var MethodNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
             MethodNameBox.width("98%");
             var MethodNameLabel = $("<br><text>Method Name</text><br>");
             MethodNameBox.attr(SetupManager.ID_attr,QueryBucketModel.MethodBox);
+            MethodNameBox.attr(SetupManager.placeholder_attr, "type method name");
 
             var ParameterNameBox = $(SetupManager.inputOpen+SetupManager.inputClose);
             ParameterNameBox.width("98%");
@@ -170,6 +176,8 @@ var BuildQueryBoxView = {
             queryCell.append(trueboxLabel);
             queryCell.append(falsebox);
             queryCell.append(falseboxLabel);
+
+            queryCell.addClass("QueryInput");
 
             queryCell.width("100%");
 
@@ -243,7 +251,7 @@ var BuildQueryBoxView = {
             //...........................
 
 
-            view.append(queryRow);
+
 
             //combo box for query type
             var combo = $('<select name="queryType">'+
@@ -276,6 +284,7 @@ var BuildQueryBoxView = {
                 '</select>');
 
             combo.width("97%");
+
 
             var langShort = ['af','ar','bg','bn','cs','da',	'de','el','en',	'es',
                 'et','fa','fi','fr','gu','he','hi',	'hr','hu','id','it',
@@ -372,12 +381,16 @@ var BuildQueryBoxView = {
 
 
                 }else if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall){
+                    ClassNameBox.attr(SetupManager.placeholder_attr, "class name (ex: java.util.hashmap)");
+
                     selectLanguage.hide();
                     ClassNameBox.show();
                     ClassNameLabel.show();
 
                     MethodNameBox.show();
                     MethodNameLabel.show();
+
+                    MethodNameBox.attr(SetupManager.placeholder_attr, "method name (ex: put)");
 
                     ParameterNameBox.show();
                     ParameterNameLabel.show();
@@ -398,15 +411,18 @@ var BuildQueryBoxView = {
                     selectLanguage.hide();
                     ClassNameBox.show();
                     ClassNameLabel.show();
+                    ClassNameBox.attr(SetupManager.placeholder_attr, "class name");
 
                     MethodNameBox.show();
                     MethodNameLabel.show();
+                    MethodNameBox.attr(SetupManager.placeholder_attr, "method name (ex: sort)");
 
                     ParameterNameBox.show();
                     ParameterNameLabel.show();
 
                     ReturnTypeBox.show();
                     ReturnTypeLabel.show();
+                    ReturnTypeBox.attr(SetupManager.placeholder_attr, "type name (ex: java.lang.String)");
 
                     queryBox.hide();
 
@@ -450,19 +466,23 @@ var BuildQueryBoxView = {
 
 
                 }
-//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
-//                    queryBox.autocomplete({
-//                        source: function( request, response ){
-//                            QueryManager.submitSpellCheck(request, response,queryBox.val());
-//                        }
-//                    });
-//                }else{
-//                    queryBox.autocomplete({
-//                        source: function( request, response ){
-//                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
-//                        }
-//                    });
-               // }
+                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
+                    queryBox.autocomplete({
+                        source: function( request, response ){
+                            QueryManager.submitSpellCheck(request, response,queryBox.val());
+                        }
+                    });
+                }else{
+                    queryBox.autocomplete({
+                        source: function( request, response ){
+                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
+                        }
+                    }).keyup(function (e) {
+                        if(e.which === 13) {
+                            $(".ui-menu-item").hide();
+                        }
+                    });
+               }
             });
 
 
@@ -472,36 +492,25 @@ var BuildQueryBoxView = {
             queryTypeRow.append(queryTypeCell);
             var queryTypeLabel = $("<text>type</text>");
             queryTypeLabel.addClass("QueryTypeTitle");
-            queryTypeCell.append(queryTypeLabel);
+          //  queryTypeCell.append(queryTypeLabel);
             queryTypeCell.append(combo);
             queryTypeCell.attr("align", "center");
+            combo.addClass("QueryCell");
             view.append(queryTypeRow);
 
-            //title for query recommendations
-            var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
-            var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            titleRow.append(titleCell);
-            var label = $("<text>Query Part Recommendations</text>");
-            label.addClass("QueryTypeTitle");
-            titleCell.append($("<hr>"));
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-            view.append(titleRow);
+            view.append(queryRow);
 
-            //query Recommendations
-            var recommendRow =$(SetupManager.trOpen+SetupManager.trClose);
-            var recommendCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            recommendRow.append(recommendCell);
-            recommendCell.append(QueryRecommenderView.getView());
-            view.append(recommendRow);
+
+
+
 
             //title for bucket
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(titleCell);
-            var label = $("<text>Your Current Query</text>");
+            var label = $("<text>Current Query</text>");
             label.addClass("BuildQueryTitle");
-            titleCell.append($("<hr>"));
+           // titleCell.append($("<hr>"));
             titleCell.append(label);
             titleCell.attr("align", "center");
             view.append(titleRow);
@@ -513,6 +522,25 @@ var BuildQueryBoxView = {
             var queryBucketRowInParentTable = $(SetupManager.trOpen+SetupManager.trClose);
             queryBucketRowInParentTable.append(queryBucketCellInParentTable);
             view.append(queryBucketRowInParentTable);
+
+            //            //title for query recommendations
+            var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
+            var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            titleRow.append(titleCell);
+            var label = $("<text>Recommendations</text>");
+            label.addClass("BuildQueryTitle");
+           // titleCell.append($("<hr>"));
+            titleCell.append(label);
+            titleCell.attr("align", "center");
+            view.append(titleRow);
+
+            //query Recommendations
+            var recommendRow =$(SetupManager.trOpen+SetupManager.trClose);
+            var recommendCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            recommendRow.append(recommendCell);
+            recommendCell.append(QueryRecommenderView.getView());
+            recommendCell.addClass("recommendCell");
+            view.append(recommendRow);
 
             truebox.click(function(){
                 //access value of changed radio group with $(this).val()
@@ -728,8 +756,14 @@ var BuildQueryBoxView = {
                         UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
                             QueryBucketModel.snippetMethodDeclarationClass);
                     }
+
+                    return false;
                 }
-            });
+            }).keyup(function (e) {
+                if(e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }
+            });;
 
             MethodNameBox.autocomplete({
                 source: function( request, response ){
@@ -752,8 +786,14 @@ var BuildQueryBoxView = {
                         UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
                             QueryBucketModel.snippetMethodDeclarationName);
                     }
+
+                    return false;
                 }
-            });
+            }).keyup(function (e) {
+                if(e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }
+            });;
 
             ParameterNameBox.autocomplete({
                 source: function( request, response ){
@@ -801,13 +841,21 @@ var BuildQueryBoxView = {
 
                     return false;
                 }
-            });
+            }).keyup(function (e) {
+                if(e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }
+            });;
 
             ReturnTypeBox.autocomplete({
                 source: function( request, response ){
                         QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationReturn, request, response);
                 }
-            });
+            }).keyup(function (e) {
+                if(e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }
+            });;
 
             //listening for enter
             ClassNameBox.keypress(function(e){
