@@ -257,7 +257,7 @@ var UsageLogger = {
 
             UsageLogger.LastTimeStamp = timeStamp;
 
-            var url = "http://level1router.ics.uci.edu/logEvent.php?id="+id+
+            var url = "http://codeexchange.ics.uci.edu/logEvent.php?id="+id+
                 "&eventType="+eventType+
                 "&queryType="+queryType+
                 "&queryValue="+queryValue+

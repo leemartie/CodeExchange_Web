@@ -1,10 +1,10 @@
 var URLQueryCreator = {
-		server : 'grok.ics.uci.edu',
+		server : 'codeexchange.ics.uci.edu',
 		
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 	//	authorCollection	 :  'GitHubAuthorIndex',
 	//	projectCollection	 :  'GitHubProjectIndex',
-		port					: 9001,
+		port					: 9000,
 		
 		getQueryURL	:	function(callbackFunctionName){
 

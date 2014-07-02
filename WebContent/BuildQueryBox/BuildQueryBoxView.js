@@ -466,23 +466,62 @@ var BuildQueryBoxView = {
 
 
                 }
-                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
-                    queryBox.autocomplete({
-                        source: function( request, response ){
-                            QueryManager.submitSpellCheck(request, response,queryBox.val());
+
+                queryBox.autocomplete({
+                    source: function( request, response ){
+                        QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
+//                    QueryManager.submitSpellCheck(request, response,queryBox.val());
+                    },
+                    focus: function() {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function( event, ui ) {
+                        var terms = null;
+
+                        if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec ||
+                            BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall ) {
+                            terms = queryBox.val().split(/[\s,]+/);
+                        }else{
+                            terms = queryBox.val().split(/[\s]+/);
                         }
-                    });
-                }else{
-                    queryBox.autocomplete({
-                        source: function( request, response ){
-                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
-                        }
-                    }).keyup(function (e) {
-                        if(e.which === 13) {
-                            $(".ui-menu-item").hide();
-                        }
-                    });
-               }
+
+
+
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push( ui.item.value );
+
+//LOG IT
+                        UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,  BuildQueryBoxModel.currentQueryType);
+
+                        queryBox.val( terms.join( " " ) );
+                        return false;
+                    }
+
+                }).keyup(function (e) {
+                    if(e.which === 13) {
+                        $(".ui-menu-item").hide();
+                    }
+                });
+//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
+//                    queryBox.autocomplete({
+//                        source: function( request, response ){
+//                            QueryManager.submitSpellCheck(request, response,queryBox.val());
+//                        }
+//                    });
+//                }else{
+//                    queryBox.autocomplete({
+//                        source: function( request, response ){
+//                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
+//                        }
+//                    }).keyup(function (e) {
+//                        if(e.which === 13) {
+//                            $(".ui-menu-item").hide();
+//                        }
+//                    });
+//               }
             });
 
 

@@ -65,7 +65,7 @@ var Controller = {
             text.addClass("CellStatus");
             $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
-			var url = "http://level1router.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
+			var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
 
 
             var classStart = start;
@@ -399,8 +399,8 @@ var Controller = {
 
 
 ////clear it out
-//                        if(Controller.childRows[editorNumber] != null)
-//                            Controller.childRows[editorNumber].length = 0;
+                        if(Controller.childRows[editorNumber] != null)
+                            Controller.childRows[editorNumber].length = 0;
 //
 //                        Controller.childRows.length = 0;
 //                        Controller.childIdsToColStart.length = 0;
@@ -971,37 +971,37 @@ var Controller = {
 
         var formatedParams = "";
 
-//        if(params != null) {
-//
-//            var params = String(params).split(/[ ,]+/);
-//
-//            var paramQuery = "";
-//
-//            var formatedParams = "";
-//
-//            for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
-//                var paramString = params[paramIndex].substring(0,params[paramIndex].length-2);
-//
-//                if(paramIndex == 0)
-//                    formatedParams = paramString;
-//                else{
-//                    formatedParams = formatedParams+","+paramString
-//                }
-//
-//                if(paramQuery == ""){
-//                    paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
-//                        + ':'+'"'+params[paramIndex]+'"';
-//                }else{
-//                    paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
-//                        + ':'+'"'+params[paramIndex]+'"';
-//                }
-//
-//            }
-//
-//            methodCallValue = methodCallValue + paramQuery+'';
-//        }else{
-//            params = "";
-//        }
+        if(params != null) {
+
+            var params = String(params).split(/[ ,]+/);
+
+            var paramQuery = "";
+
+            formatedParams = "";
+
+            for(var paramIndex = 0; paramIndex < params.length; paramIndex++){
+                var paramString = params[paramIndex].substring(0,params[paramIndex].length-2);
+
+                if(paramIndex == 0)
+                    formatedParams = paramString;
+                else{
+                    formatedParams = formatedParams+","+paramString
+                }
+
+                if(paramQuery == ""){
+                    paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
+                        + ':'+'"'+params[paramIndex]+'"';
+                }else{
+                    paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParametersPlace
+                        + ':'+'"'+params[paramIndex]+'"';
+                }
+
+            }
+
+            methodCallValue = methodCallValue + paramQuery+'';
+        }else{
+            params = "";
+        }
         query = new QueryModel(QueryBucketModel.snippetMethodCall, methodCallValue);
         query.displayType = "has method call";
         query.displayValue = callingClass+"."+name+"("+formatedParams+")";
@@ -1109,7 +1109,7 @@ var Controller = {
             tr1.append(td1);
 
 
-            var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+            var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
             icon.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"[* TO "+(complexity-1)+"]");
                 query.displayType = "complexity";
@@ -1137,7 +1137,7 @@ var Controller = {
             tr3.append(td3);
             td3.attr("align","center");
 
-            var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+            var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
             icon2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"["+(complexity+1)+" TO *]");
                 query.displayType = "complexity";
@@ -1198,7 +1198,7 @@ var Controller = {
         tr1.append(td1);
 
 
-        var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+        var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
         icon.click(function(event){
             var query = new QueryModel(QueryBucketModel.importCountField,"[* TO "+(importCount-1)+"]");
             query.displayType = "import count";
@@ -1227,7 +1227,7 @@ var Controller = {
         tr3.append(td3);
         td3.attr("align","center");
 
-        var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+        var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
         icon2.click(function(event){
             var query = new QueryModel(QueryBucketModel.importCountField,"["+(importCount+1)+" TO *]");
             query.displayType = "import count";
@@ -1288,7 +1288,7 @@ var Controller = {
             tr1.append(td1);
 
 
-            var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+            var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
             icon.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"[* TO "+(size-1)+"]");
                 query.displayType = "size";
@@ -1321,7 +1321,7 @@ var Controller = {
             td3.attr("align","center");
 
 
-            var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+            var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
             icon2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"["+(size+1)+" TO *]");
                 query.displayType = "size";
@@ -1385,7 +1385,7 @@ var Controller = {
         tr1.append(td1);
 
 
-        var icon  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/downArrow.png"></img>');
+        var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
         icon.click(function(event){
             var query = new QueryModel(QueryBucketModel.functionCountField,"[* TO "+(functionCount-1)+"]");
             query.displayType = "method count";
@@ -1410,7 +1410,7 @@ var Controller = {
         tr3.append(td3);
         td3.attr("align","center");
 
-        var icon2  = $('<img width=15 height=15 src="http://level1router.ics.uci.edu/upArrow.png"></img>');
+        var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
         icon2.click(function(event){
             var query = new QueryModel(QueryBucketModel.functionCountField,"["+(functionCount+1)+" TO *]");
             query.displayType = "method count";
@@ -1451,7 +1451,7 @@ var Controller = {
 
 		setAuthorName	:	function(meta, name){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/author.png"></img>');
+			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/author.png"></img>');
 			var authName = $('<div><u>'+name+'[+]</u></div>');
 
 
@@ -1540,7 +1540,7 @@ var Controller = {
 		 */
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<img width=20 height=20 src="http://level1router.ics.uci.edu/project.png"></img>');
+			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
 			var projectName = $('<div><u>'+name+'[+]</u></div>');
 
             projectName.click(function(event){
