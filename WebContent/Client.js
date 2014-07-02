@@ -45,7 +45,7 @@
     }
 
     function getClientId(){
-        var url = "http://level1router.ics.uci.edu/logger.php"+"?callback=?&json.wrf=displayCode";
+        var url = "http://codeexchange.ics.uci.edu/logger.php"+"?callback=?&json.wrf=displayCode";
 
         $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
