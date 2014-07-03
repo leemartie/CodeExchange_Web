@@ -4,7 +4,7 @@ var URLQueryCreator = {
 		collection	:	'CodeExchangeIndex',//'noTagImportCollection',
 	//	authorCollection	 :  'GitHubAuthorIndex',
 	//	projectCollection	 :  'GitHubProjectIndex',
-		port					: 9000,
+		port					: 8983,
 		
 		getQueryURL	:	function(callbackFunctionName){
 

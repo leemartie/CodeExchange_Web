@@ -121,6 +121,29 @@ var QueryBucketModel = {
 
     },
 
+    /*detects if this value of type is already covered by current query*/
+    hasQuery : function(value, type){
+
+        for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
+            var query = QueryBucketModel.stackOfQueries[i];
+
+            if(query.type == QueryBucketModel.snippetField
+                && type == QueryBucketModel.snippetField){
+
+                if(query.value.indexOf(value) > -1 || value.indexOf(query.value) > -1){
+                    return true;
+                }
+
+            }else{
+                if(query.type == type && query.value == value){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    },
+
     inStack : function(query){
 
         for(var i = 0; i<QueryBucketModel.stackOfQueries.length; i++){

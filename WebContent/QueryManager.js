@@ -436,33 +436,28 @@ function facetCompleteCallBack(data){
 
         var variableName = snippet_variable_names_delimited[i];
 
+        if(variableName == null)
+            continue;
+
+ //skipping suggestions that are empty or only 1 character long
         if(variableName == "" || variableName.length == 1) {
             keywordMax = keywordMax +2;
             continue;
         }
 
-//seeing if it is already in suggestions
-        if(wordsSuggested.indexOf(variableName) > -1){
+//seeing if it is already in suggestions or a singular form of a plural
+        if(wordsSuggested.indexOf(variableName) > -1 || wordsSuggested.indexOf(variableName+'s') > -1
+            || wordsSuggested.indexOf(variableName.substring(0,variableName.length-1)) > -1){
             keywordMax = keywordMax +2;
             continue;
         }
 
 //testing if it is in keywords already
-        if(QueryBucketModel.listOfQueries[QueryBucketModel.snippetField] != null) {
-            var recommendationInQuery = false;
-            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.snippetField].length; k++) {
-                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.snippetField][k];
-                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
-                    recommendationInQuery = true;
-                    break;
-                }
-
-            }
-            if (recommendationInQuery) {
-                keywordMax = keywordMax + 2;
-                continue;
-            }
+        if(QueryBucketModel.hasQuery(variableName.toLowerCase(), QueryBucketModel.snippetField)){
+            keywordMax = keywordMax +2;
+            continue;
         }
+
         wordsSuggested = wordsSuggested +" "+variableName;
         var query4 = new QueryModel(QueryBucketModel.snippetField, variableName);
         query4.displayType = "keywords";
@@ -523,25 +518,18 @@ function facetCompleteCallBack(data){
 
         var importName = snippet_imports[i];
 
+        if(importName == null)
+            continue;
+
         if(importName == "")
             continue;
 
 //testing if it is in keywords already
-        if(QueryBucketModel.listOfQueries[QueryBucketModel.snippetImportsFiled] != null) {
-            var recommendationInQuery = false;
-            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.snippetImportsFiled].length; k++) {
-                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.snippetImportsFiled][k];
-                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
-                    recommendationInQuery = true;
-                    break;
-                }
-
-            }
-            if (recommendationInQuery) {
-                keywordMax = keywordMax + 2;
-                continue;
-            }
+        if(QueryBucketModel.hasQuery(importName.toLowerCase(), QueryBucketModel.snippetImportsFiled)){
+            keywordMax = keywordMax +2;
+            continue;
         }
+
         var query4 = new QueryModel(QueryBucketModel.snippetImportsFiled, importName);
         query4.displayType = "imports library";
         query4.displayValue = importName;
@@ -556,25 +544,18 @@ function facetCompleteCallBack(data){
 
         var extendsName = extendsRecommend[i];
 
+        if(extendsName == null)
+            continue;
+
         if(extendsName == "")
             continue;
 
         //testing if it is in keywords already
-        if(QueryBucketModel.listOfQueries[QueryBucketModel.extendsField] != null) {
-            var recommendationInQuery = false;
-            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.extendsField].length; k++) {
-                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.extendsField][k];
-                if (queryValue.toLowerCase() == variableName.toLowerCase()) {
-                    recommendationInQuery = true;
-                    break;
-                }
-
-            }
-            if (recommendationInQuery) {
-                keywordMax = keywordMax + 2;
-                continue;
-            }
+        if(QueryBucketModel.hasQuery(extendsName.toLowerCase(), QueryBucketModel.extendsField)){
+            keywordMax = keywordMax +2;
+            continue;
         }
+
         var query2 = new QueryModel(QueryBucketModel.extendsField, extendsName);
         query2.displayType = "extends class";
         query2.displayValue = extendsName;
@@ -588,24 +569,16 @@ function facetCompleteCallBack(data){
             continue;
         var implementsName = implementsRecommend[i];
 
+        if(implementsName == null)
+            continue;
+
         if(implementsName == "")
             continue;
 
 //testing if it is in keywords already
-        if(QueryBucketModel.listOfQueries[QueryBucketModel.implementsField] != null) {
-            var recommendationInQuery = false;
-            for (var k = 0; k < QueryBucketModel.listOfQueries[QueryBucketModel.implementsField].length; k++) {
-                var queryValue = QueryBucketModel.listOfQueries[QueryBucketModel.implementsField][k];
-                if (queryValue != null && variableName != null && queryValue.toLowerCase() == variableName.toLowerCase()) {
-                    recommendationInQuery = true;
-                    break;
-                }
-
-            }
-            if (recommendationInQuery) {
-                keywordMax = keywordMax + 2;
-                continue;
-            }
+        if(QueryBucketModel.hasQuery(implementsName.toLowerCase(), QueryBucketModel.implementsField)){
+            keywordMax = keywordMax +2;
+            continue;
         }
         var query3 = new QueryModel(QueryBucketModel.implementsField, implementsName);
         query3.displayType = "implements interface";
