@@ -36,6 +36,9 @@ var QueryGridView = {
                     }else{
                         QueryGridView.added = false;
                     }
+                    $(SetupManager.pound+"gridButton").empty();
+                    $(SetupManager.pound+"gridButton").append("<text>show query history</text>");
+                    Controller.showGrid();
                 });
 
             cell.addClass("GridCell");
@@ -61,7 +64,7 @@ var QueryGridView = {
             $(SetupManager.pound+"GridCell"+(cellID)).empty();
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-            table.append($("<tr><th>query number: "+i+"</tr></th>"));
+            table.append($("<tr><th>query number: "+(i+1)+"</tr></th>"));
             table.height("100%");
             var row = $(SetupManager.trOpen+SetupManager.trClose);
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -101,6 +104,9 @@ var QueryGridView = {
                     BuildQueryBoxView.addAndSubmit(query);
                     QueryGridView.added = true;
                     UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_PART_CLICK,query);
+                    $(SetupManager.pound+"gridButton").empty();
+                    $(SetupManager.pound+"gridButton").append("<text>show query history</text>");
+                    Controller.showGrid();
                 })}(query));
 
                 row.append(buttonCell);
@@ -129,7 +135,7 @@ var QueryGridView = {
 
 
 
-        table.append($("<tr><th>query number: "+lastCell+"</tr></th>"));
+        table.append($("<tr><th>query number: "+(lastCell+1)+"</tr></th>"));
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -166,6 +172,10 @@ var QueryGridView = {
             (function(query){button.click(function(){
                 BuildQueryBoxView.addAndSubmit(query)
                 QueryGridView.added = true;
+                UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_PART_CLICK,query);
+                $(SetupManager.pound+"gridButton").empty();
+                $(SetupManager.pound+"gridButton").append("<text>show query history</text>");
+                Controller.showGrid();
             })}(query));
 
             row.append(buttonCell);

@@ -2045,6 +2045,14 @@ var Controller = {
         if(Controller.gridOn)
             QueryGridView.update();
 
+        //refresh editors
+        if(!Controller.gridOn){
+            for(var i = 0; i <SetupManager.resultEditors.length; i++){
+                var editor = ace.edit(SetupManager.resultPreArray_ID[i]);
+                editor.resize();
+            }
+        }
+
 
 
     }

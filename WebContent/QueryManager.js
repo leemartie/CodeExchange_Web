@@ -511,9 +511,10 @@ function facetCompleteCallBack(data){
 
 
     var snippet_imports = data.facet_counts.facet_fields.snippet_imports;
+    keywordMax = 6;
 
     for(i = 0; i<snippet_imports.length; i = i+2) {
-        if(i >= 6)
+        if(i >= keywordMax)
             continue;
 
         var importName = snippet_imports[i];
@@ -538,8 +539,9 @@ function facetCompleteCallBack(data){
     }
 
     var extendsRecommend = data.facet_counts.facet_fields.snippet_extends;
+    keywordMax = 6;
     for(i = 0; i<extendsRecommend.length; i = i+2) {
-        if(i >= 6)
+        if(i >= keywordMax)
             continue;
 
         var extendsName = extendsRecommend[i];
@@ -564,8 +566,9 @@ function facetCompleteCallBack(data){
     }
 
     var implementsRecommend = data.facet_counts.facet_fields.snippet_implements;
+    keywordMax = 6;
     for(i = 0; i<implementsRecommend.length; i = i+2) {
-        if(i >= 6)
+        if(i >= keywordMax)
             continue;
         var implementsName = implementsRecommend[i];
 

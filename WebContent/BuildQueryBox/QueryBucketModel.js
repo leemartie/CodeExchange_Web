@@ -130,12 +130,13 @@ var QueryBucketModel = {
             if(query.type == QueryBucketModel.snippetField
                 && type == QueryBucketModel.snippetField){
 
-                if(query.value.indexOf(value) > -1 || value.indexOf(query.value) > -1){
+                if(query.value.toLowerCase().indexOf(value.toLowerCase()) > -1
+                    || value.toLowerCase().indexOf(query.value.toLowerCase()) > -1){
                     return true;
                 }
 
             }else{
-                if(query.type == type && query.value == value){
+                if(query.type == type && query.value.toLowerCase() == value.toLowerCase()){
                     return true;
                 }
             }
