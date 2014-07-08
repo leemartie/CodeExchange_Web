@@ -29,9 +29,10 @@ var QueryGridView = {
                         var id = this.id;
                         var number = id.substring(id.length - 1);
                         for (var i = 0; i < QueryGridModel.history[number].length; i++) {
-                            BuildQueryBoxView.addAndSubmit(QueryGridModel.history[number][i]);
+                            BuildQueryBoxView.addQuery(QueryGridModel.history[number][i]);
                             UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_CLICK,QueryGridModel.history[number][i]);
                         }
+                            BuildQueryBoxView.submitQuery();
 
                     }else{
                         QueryGridView.added = false;

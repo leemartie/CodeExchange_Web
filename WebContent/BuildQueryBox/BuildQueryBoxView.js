@@ -944,6 +944,27 @@ var BuildQueryBoxView = {
 			
 		},
 
+        addQuery: function(query){
+            if(QueryBucketModel.inStack(query) == false){
+                QueryBucketModel.addQuery(query);
+                QueryBucketView.update();
+
+                QueryTrailModel.pushQuery(QueryBucketModel.stackOfQueries.slice(0));//the slice is for cloning
+
+                var query = QueryBucketModel.constructQuery();
+                var childQuery = QueryBucketModel.constructChildQuery();
+
+                QueryManager.setQuery(query);
+                QueryManager.setChildQuery(childQuery);
+
+            }
+        },
+
+        submitQuery : function(){
+            Controller.setStatus("SEARCHING...");
+            QueryManager.submitQuery();
+        },
+
         addAndSubmit: function(query){
 
             if(QueryBucketModel.inStack(query) == false){
