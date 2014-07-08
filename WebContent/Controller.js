@@ -2068,9 +2068,12 @@ var Controller = {
         $(SetupManager.pound+SetupManager.resultTable_ID).toggle();
         QueryGridView.grid.toggle();
         Controller.gridOn = !Controller.gridOn;
+        var screenBuffer = screenWidth*(3/4);
 
-        if(Controller.gridOn)
+        if(Controller.gridOn) {
             QueryGridView.update();
+
+        }
 
         //refresh editors
         if(!Controller.gridOn){
@@ -2078,6 +2081,8 @@ var Controller = {
                 var editor = ace.edit(SetupManager.resultPreArray_ID[i]);
                 editor.resize();
             }
+
+
         }
 
 

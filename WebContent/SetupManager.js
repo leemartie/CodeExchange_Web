@@ -595,7 +595,7 @@ var SetupManager = {
                 $('.GridCell').height((screenHeightBuffer/5));
                 $('.GridCell').width((screenWidth/5));
                 $('.Grid').height((screenHeightBuffer+115));
-               // $('.Grid').width(((screenBuffer))+ 30);
+
 				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 				
@@ -603,9 +603,11 @@ var SetupManager = {
 				//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 
 
-                $('.QueryBucket').height(screenHeightBuffer-450);
+                $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
 				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
+
+                $('.Grid').width(screenWidth - $('.FilterSideTD').width()-32);
 				
 				
 			});
@@ -629,7 +631,7 @@ var SetupManager = {
             $('.GridCell').height((screenHeightBuffer/5));
             $('.GridCell').width((screenWidth/5));
             $('.Grid').height((screenHeightBuffer+115));
-            //$('.Grid').width(((screenBuffer))+ 30);
+
 		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			
@@ -639,7 +641,9 @@ var SetupManager = {
 			
 			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
             var height = $('QueryRecommenderView').height;
-			$('.QueryBucket').height(screenHeightBuffer-450);
+            $('.QueryBucket').height(screenHeightBuffer *(1/4));
+
+            $('.Grid').width(screenWidth - $('.FilterSideTD').width()-32);
 
 
             var editor = ace.edit('result0');

@@ -20,8 +20,8 @@ var QueryGridView = {
             for(var j = 0; j<5; j++){
                 var cell= $(SetupManager.tdOpen+SetupManager.tdClose);
                 cell.attr("id","GridCell"+index);
-                  cell.width('25%');
-                   cell.height('25%');
+//                  cell.width('26%');
+//                   cell.height('26%');
                 row.append(cell);
 
                 cell.click(function(event){
@@ -29,6 +29,7 @@ var QueryGridView = {
                         var id = this.id;
                         var number = id.substring(id.length - 1);
                         for (var i = 0; i < QueryGridModel.history[number].length; i++) {
+//only add here so we don't send in each individualy... we want to send in bulk
                             BuildQueryBoxView.addQuery(QueryGridModel.history[number][i]);
                             UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_CLICK,QueryGridModel.history[number][i]);
                         }
@@ -65,7 +66,7 @@ var QueryGridView = {
             $(SetupManager.pound+"GridCell"+(cellID)).empty();
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-            table.append($("<tr><th>query number: "+(i+1)+"</tr></th>"));
+            table.append($("<tr><th>session number: "+(i+1)+"</tr></th>"));
             table.height("100%");
             var row = $(SetupManager.trOpen+SetupManager.trClose);
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -136,7 +137,7 @@ var QueryGridView = {
 
 
 
-        table.append($("<tr><th>query number: "+(lastCell+1)+"</tr></th>"));
+        table.append($("<tr><th>session number: "+(lastCell+1)+"</tr></th>"));
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -194,7 +195,7 @@ var QueryGridView = {
 
         $(SetupManager.pound+"GridCell"+(lastCell)).append(table);
 
-
+//end current query
 
 
     }
