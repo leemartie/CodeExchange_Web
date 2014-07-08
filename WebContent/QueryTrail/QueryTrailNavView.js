@@ -14,7 +14,7 @@ var QueryTrailNavView = {
 
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         centerCell.attr("align","right");
-        var createNewQueryButton = $(SetupManager.buttonOpen+"create new query"+SetupManager.buttonClose);
+        var createNewQueryButton = $(SetupManager.buttonOpen+"new search session"+SetupManager.buttonClose);
         createNewQueryButton.button();
 
         centerCell.attr("width","50%");

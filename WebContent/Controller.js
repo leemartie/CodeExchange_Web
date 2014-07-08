@@ -42,6 +42,10 @@ var Controller = {
 
         currentURLs             : new Array(),
 
+    //used so we can prevent doing the same function multiple times whent the even propgaes up
+        LAST_EVENT_TIME_UP     :"",
+        LAST_EVENT_TIME_MOVE     :"",
+
 		/**
 		 * Sets the code text of an html element
 		 * It expects that codeNode will be either result0,result1,result2,or result3
@@ -530,10 +534,22 @@ var Controller = {
                         editor.container.addEventListener("mousemove", function(e){
                             var target = e.target;
 
+
                             //method call
                             if (target.classList.contains("tip") || target.classList.contains("tipDec")
                                 || target.classList.contains("import") || target.classList.contains("extends")
                                 || target.classList.contains("implements") || target.classList.contains("package")) {
+
+
+//getting around multiple events propagating up
+                                if(Controller.LAST_EVENT_TIME_MOVE == "")
+                                    Controller.LAST_EVENT_TIME_MOVE = e.timeStamp;
+                                else if(Controller.LAST_EVENT_TIME_MOVE != e.timeStamp){
+                                    Controller.LAST_EVENT_TIME_MOVE = e.timeStamp;
+                                }else{
+                                    return;
+                                }
+
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 
@@ -548,8 +564,6 @@ var Controller = {
                                 var docPos = editor.session.screenToDocumentPosition(screenPos.row, screenPos.column);
 
                                 // alert(docPos.row +" "+docPos.column);
-
-
 
 
                                 if(target.classList.contains("import")){
@@ -674,10 +688,23 @@ var Controller = {
                         editor.container.addEventListener("mouseup", function(e) {
                             var target = e.target;
 
+
+
                             //method call
                             if (target.classList.contains("tip")|| target.classList.contains("tipDec")
                                 || target.classList.contains("import") || target.classList.contains("extends")
                                 || target.classList.contains("implements") || target.classList.contains("package")) {
+
+//getting around multiple events propogating up
+                                if(Controller.LAST_EVENT_TIME_UP == "")
+                                    Controller.LAST_EVENT_TIME_UP = e.timeStamp;
+                                else if(Controller.LAST_EVENT_TIME_UP != e.timeStamp){
+                                    Controller.LAST_EVENT_TIME_UP = e.timeStamp;
+                                }else{
+                                    return;
+                                }
+
+
                                 var r = editor.renderer;
                                 var canvasPos = r.rect || (r.rect = r.scroller.getBoundingClientRect());
 

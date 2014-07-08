@@ -595,6 +595,7 @@ var SetupManager = {
                 $('.GridCell').height((screenHeightBuffer/5));
                 $('.GridCell').width((screenWidth/5));
                 $('.Grid').height((screenHeightBuffer+115));
+               // $('.Grid').width(((screenBuffer))+ 30);
 				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 				
@@ -628,6 +629,7 @@ var SetupManager = {
             $('.GridCell').height((screenHeightBuffer/5));
             $('.GridCell').width((screenWidth/5));
             $('.Grid').height((screenHeightBuffer+115));
+            //$('.Grid').width(((screenBuffer))+ 30);
 		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
 //set dimensions of input box			

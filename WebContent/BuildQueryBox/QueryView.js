@@ -19,6 +19,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 
 
+
        if(displayValue != null && displayValue.length > 30)
          displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
 

@@ -255,9 +255,9 @@ var BuildQueryBoxView = {
 
             //combo box for query type
             var combo = $('<select name="queryType">'+
-                '<option  style="background-color: black; color:white" disabled>problem domain query</option>'+
+                '<option  style="background-color: #d4ebf2; color:black" disabled>Search by...</option>'+
                 '<option  value="'+QueryBucketModel.snippetField+'" selected>keywords</option>'+
-                '<option  style="background-color: black; color:white" disabled>Technical query</option>'+
+            //    '<option  style="background-color: #d4ebf2; color:black" disabled>Technical query</option>'+
                 '<option  value="'+QueryBucketModel.extendsField+'">extends class</option>'+
                 '<option  value="'+QueryBucketModel.implementsField+'">implements interface</option>'+
                 '<option  value="'+QueryBucketModel.snippetImportsFiled+'">imports library</option>'+
@@ -274,7 +274,7 @@ var BuildQueryBoxView = {
 //                '<option  value="'+QueryBucketModel.returnTypeField+'">return type</option>'+
 //                '<option  value="'+QueryBucketModel.recursiveField+'">is recursive</option>'+
 //                '<option  value="'+QueryBucketModel.varargsField+'">has variable arguments</option>'+
-                '<option  style="background-color: black; color:white" disabled>Social query</option>'+
+ //               '<option  style="background-color: #d4ebf2; color:black" disabled>Repository query</option>'+
 //                '<option  value="'+QueryBucketModel.authorFiled+'">author</option>'+
                 '<option  value="'+QueryBucketModel.projectField+'">project</option>'+
 //                '<option  value="'+QueryBucketModel.humanLanguageOfComments+'">human language</option>'+
