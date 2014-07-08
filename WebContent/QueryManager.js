@@ -812,8 +812,13 @@ function spellCheck(data){
 	;
 }
 function autoCompleteCallBack(data){
-	if(Controller.currentStatus != "SEARCHING...")
-		Controller.setStatus("DONE - searching for autocomplete recommendations");
+
+    if(Controller.currentStatus == "SEARCHING..."){
+        return;
+    }
+
+	if(Controller.currentStatus == "Searching for autocomplete recommendations...")
+		Controller.setStatus("DONE - Searching for autocomplete recommendations");
 	var results = null;
 
     if(QueryManager.currentAutoCompleteField == QueryBucketModel.snippet_variable_names_delimited){

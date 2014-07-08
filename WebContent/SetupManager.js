@@ -594,7 +594,7 @@ var SetupManager = {
 				$('.ResultTable').width(((screenBuffer)));
                 $('.GridCell').height((screenHeightBuffer/5));
                 $('.GridCell').width((screenWidth/5));
-                $('.Grid').height((screenHeightBuffer+115));
+                $('.Grid').height((screenHeightBuffer+135));
 
 				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
@@ -630,7 +630,7 @@ var SetupManager = {
 			$('.ResultTable').width(((screenBuffer)));
             $('.GridCell').height((screenHeightBuffer/5));
             $('.GridCell').width((screenWidth/5));
-            $('.Grid').height((screenHeightBuffer+115));
+            $('.Grid').height((screenHeightBuffer+135));
 
 		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
 
