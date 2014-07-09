@@ -2068,7 +2068,7 @@ var Controller = {
         $(SetupManager.pound+SetupManager.resultTable_ID).toggle();
         QueryGridView.grid.toggle();
         Controller.gridOn = !Controller.gridOn;
-        var screenBuffer = screenWidth*(3/4);
+
 
         if(Controller.gridOn) {
             QueryGridView.update();
