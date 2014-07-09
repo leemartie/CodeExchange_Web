@@ -45,6 +45,10 @@ var UsageLogger = {
     TOOL_TIP_EXTENDS                    : "TOOL_TIP_EXTENDS",
     TOOL_TIP_IMPORTS                    : "TOOL_TIP_IMPORTS",
     TOOL_TIP_IMPLEMENTS                 : "TOOL_TIP_IMPLEMENTS",
+    TOOL_TIP_DOWNLOAD_PROJECT           : "TOOL_TIP_DOWNLOAD_PROJECT",
+
+//DOWNLOAD PROJECT CLICK
+    DOWNLOAD_PROJECT                    : "DOWNLOAD_PROJECT",
 
 //CELL WINDOW
     WINDOW_EXPAND_CELL1                 : "WINDOW_EXPAND_CELL1",

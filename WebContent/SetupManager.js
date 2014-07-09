@@ -827,10 +827,22 @@ var SetupManager = {
                 projectURLCell.attr("id","projectURL"+i);
                 $(SetupManager.pound+resultOptions_id).append(projectURLCell);
                 $(SetupManager.pound+"projectURL"+i).addClass("URLStatus");
-				
 
-				
-				
+                $(SetupManager.pound+"projectURL"+i).click(function(event) {
+                    var id = event.currentTarget.id;
+                    var number = id.charAt(id.length-1);
+//LOG IT
+                 UsageLogger.addEvent(UsageLogger.DOWNLOAD_PROJECT,null,
+                         Controller.projectURLs[parseInt(number)]+"/"+Controller.versions[parseInt(number)]);
+              });
+
+                $(SetupManager.pound+"projectURL"+i).hover(function(event) {
+                    var id = event.currentTarget.id;
+                    var number = id.charAt(id.length-1);
+//LOG IT
+                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_DOWNLOAD_PROJECT,null,null);
+                });
+
 			}
 			
 

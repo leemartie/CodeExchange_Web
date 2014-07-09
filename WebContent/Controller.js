@@ -92,6 +92,8 @@ var Controller = {
                     text.addClass("CellStatus");
                     $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
+                    $(SetupManager.pound+"projectURL"+editorNumber).empty();
+
                 }).success(function(data, textStatus, jqXHR ) {
                     $.each(data, function(index, element) {
 
@@ -111,7 +113,7 @@ var Controller = {
                         var path = currentURL.substring(versionIndex+version.length);
 
                         $(SetupManager.pound+"projectURL"+editorNumber).attr("title",
-                            "Download the project to find dependencies.\nThe file path is: .."+path);
+                            "Download zip to find dependencies.\nFind this file at: .."+path);
                         $(SetupManager.pound+"projectURL"+editorNumber).append(projectURL);
 
 
@@ -1108,6 +1110,7 @@ var Controller = {
 
 		        //  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).empty();
 		          $(SetupManager.pound+SetupManager.metaDivArray_ID[i]).empty();
+                $(SetupManager.pound+"projectURL"+i).empty();
 			}
 		},
 
