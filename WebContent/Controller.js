@@ -1188,7 +1188,7 @@ var Controller = {
 
             icon.addClass("MetaQuery");
         icon.mouseover(function(event){
-            icon.attr("title","decrease branch complexity by more than this code(decrease for loops, if statments, try/catch, etc...)");
+            icon.attr("title","decrease branch complexity to be less than this code's complexity (decrease for loops, if statments, try/catch, etc...)");
         });
 
             var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1220,13 +1220,13 @@ var Controller = {
             icon2.addClass("MetaQuery");
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase branch complexity by more than this code (increase for loops, if statments, try/catch, etc...)");
+            icon2.attr("title","increase branch complexity to be more than this code's complexity (increase for loops, if statments, try/catch, etc...)");
         });
 
 
             td1.append(icon2);
 
-            td2.append("<text>complexity</text>");
+            td2.append("<text>complexity <font color='#8b0000'>" +complexity+"</font></text>");
 
             td3.append(icon);
 
@@ -1278,7 +1278,7 @@ var Controller = {
         icon.addClass("MetaQuery");
 
         icon.mouseover(function(event){
-            icon.attr("title","decrease length by more than this code");
+            icon.attr("title","decrease imports to be less than this code's imports");
         });
 
         var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1310,13 +1310,13 @@ var Controller = {
         icon2.addClass("MetaQuery");
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase imports by more than this code");
+            icon2.attr("title","increase imports to be more than this code's imports");
         });
 
 
         td1.append(icon2);
 
-        td2.append("<text>imports</text>");
+        td2.append("<text>imports <font color='#8b0000'>" +importCount+"</font></text>");
 
         td3.append(icon);
 
@@ -1368,7 +1368,7 @@ var Controller = {
             });
 
         icon.mouseover(function(event){
-           icon.attr("title","decrease length by more than this code");
+           icon.attr("title","decrease length to be less than this code's size (number of characters)");
         });
 
 
@@ -1401,7 +1401,7 @@ var Controller = {
             });
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase length by more than this code");
+            icon2.attr("title","increase length to be more than this code's size (number of characters)");
         });
 
 
@@ -1413,7 +1413,7 @@ var Controller = {
 
             td1.append(icon2);
 
-            td2.append("<text>length</text>");
+        td2.append("<text>size <font color='#8b0000'>" +size+"</font></text>");
 
             td3.append(icon);
 

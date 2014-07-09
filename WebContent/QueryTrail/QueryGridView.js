@@ -102,6 +102,8 @@ var QueryGridView = {
 //                button.width("25px");
 //                button.height("15px");
 
+                cell.attr("title","click to add to current query");
+
                 (function(query, cell){cell.click(function(){
                     BuildQueryBoxView.addAndSubmit(query);
                     QueryGridView.added = true;
@@ -191,7 +193,7 @@ var QueryGridView = {
 //            button.width("25px");
 //            button.height("15px");
 
-
+            cell.attr("title","click to add to current query");
             (function(query,cell){cell.click(function(){
                 BuildQueryBoxView.addAndSubmit(query)
                 QueryGridView.added = true;

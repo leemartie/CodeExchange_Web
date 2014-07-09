@@ -47,6 +47,8 @@ var QueryRecommenderView = {
 //            button.height("15px");
 
 
+            queryBucketCell.attr("title","click to add recommendation");
+
 //
             (function(query, cell){queryBucketCell.click(function(){
                 cell.removeClass("RecommendationHover");
