@@ -34,26 +34,57 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        this.row.addClass("QueryViewRow");
 
-       var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-       this.row.append(buttonCell);
+//       var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+//       this.row.append(buttonCell);
+//
+//       var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+//       buttonCell.append(button);
+//
+//       button.addClass("QueryViewButton");
+//       if(this.active == true){
+//           button.attr("value","-");
+//           button.append($("<text>-</text>"));
+//       }else{
+//           button.attr("value","+");
+//           button.append($("<text>+</text>"));
+//       }
+//
+//       button.width("25px");
+//       button.height("15px");
 
-       var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-       buttonCell.append(button);
+       var so = this;
 
-       button.addClass("QueryViewButton");
-       if(this.active == true){
-           button.attr("value","-");
-           button.append($("<text>-</text>"));
-       }else{
-           button.attr("value","+");
-           button.append($("<text>+</text>"));
-       }
+//
+       (function(){so.cell.mouseenter(function(){
 
-       button.width("25px");
-       button.height("15px");
+           if(so.active) {
+               so.cell.removeClass("QueryView");
+               so.cell.addClass("QueryViewHover");
+           }else{
+               so.cell.removeClass("QueryViewDeactive");
+               so.cell.addClass("QueryViewDeactiveHover");
+           }
 
-       (function(type, active, index, stackIndex){ button.click(function(event) {
-           button.empty();
+
+
+       })})();
+//
+       (function(){so.cell.mouseleave(function(){
+
+           if(so.active) {
+               so.cell.removeClass("QueryViewHover");
+               so.cell.addClass("QueryView");
+           }else{
+               so.cell.removeClass("QueryViewDeactiveHover");
+               so.cell.addClass("QueryViewDeactive");
+           }
+
+       })})();
+
+ //
+
+       (function(type, active, index, stackIndex){ so.cell.click(function(event) {
+           //button.empty();
 
            if(active == true){
                active = false;
@@ -89,17 +120,19 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        })})(this.type,this.active,this.index, this.stackIndex);
 
 
-       this.row.append(buttonCell);
+    //   this.row.append(buttonCell);
 
        this.cell.addClass("QueryView");
        return table;
    };
 
     this.setDeactive = function(){
+        this.cell.removeClass("QueryView");
         this.cell.addClass("QueryViewDeactive");
     };
 
     this.setActive = function(){
+        this.cell.removeClass("QueryViewDeactive");
         this.cell.addClass("QueryView");
     }
 

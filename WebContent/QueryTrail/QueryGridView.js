@@ -93,25 +93,43 @@ var QueryGridView = {
 
                 cell.append(label);
 
-                var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-                var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-                buttonCell.append(button);
-                button.addClass("QueryViewButton");
-                button.attr("value","+");
-                button.append($("<text>+</text>"));
-                button.width("25px");
-                button.height("15px");
+//                var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+//                var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+//                buttonCell.append(button);
+//                button.addClass("QueryViewButton");
+//                button.attr("value","+");
+//                button.append($("<text>+</text>"));
+//                button.width("25px");
+//                button.height("15px");
 
-                (function(query){button.click(function(){
+                (function(query, cell){cell.click(function(){
                     BuildQueryBoxView.addAndSubmit(query);
                     QueryGridView.added = true;
                     UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_PART_CLICK,query);
                     $(SetupManager.pound+"gridButton").empty();
                     $(SetupManager.pound+"gridButton").append("<text>show query history</text>");
                     Controller.showGrid();
-                })}(query));
+                })}(query, cell));
 
-                row.append(buttonCell);
+                //
+                (function(query,cell){cell.mouseenter(function(){
+
+                    cell.removeClass("GridRow");
+                    cell.addClass("GridRowHover");
+
+
+                })})(query,cell);
+//
+                (function(query,cell){cell.mouseleave(function(){
+
+
+                    cell.removeClass("GridRowHover");
+                    cell.addClass("GridRow");
+
+
+                })})(query,cell);
+
+   ///             row.append(buttonCell);
 
                 cell.width("100%");
 
@@ -163,24 +181,45 @@ var QueryGridView = {
             var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
             cell.append(label);
 
-            var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-            buttonCell.append(button);
-            button.addClass("QueryViewButton");
-            button.attr("value","+");
-            button.append($("<text>+</text>"));
-            button.width("25px");
-            button.height("15px");
-            (function(query){button.click(function(){
+
+//            var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+//            var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+//            buttonCell.append(button);
+//            button.addClass("QueryViewButton");
+//            button.attr("value","+");
+//            button.append($("<text>+</text>"));
+//            button.width("25px");
+//            button.height("15px");
+
+
+            (function(query,cell){cell.click(function(){
                 BuildQueryBoxView.addAndSubmit(query)
                 QueryGridView.added = true;
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_PART_CLICK,query);
                 $(SetupManager.pound+"gridButton").empty();
                 $(SetupManager.pound+"gridButton").append("<text>show query history</text>");
                 Controller.showGrid();
-            })}(query));
+            })}(query,cell));
 
-            row.append(buttonCell);
+            //
+            (function(query,cell){cell.mouseenter(function(){
+
+                cell.removeClass("GridRow");
+                cell.addClass("GridRowHover");
+
+
+            })})(query,cell);
+//
+            (function(query,cell){cell.mouseleave(function(){
+
+
+                    cell.removeClass("GridRowHover");
+                    cell.addClass("GridRow");
+
+
+            })})(query,cell);
+
+  //          row.append(buttonCell);
 
             cell.addClass("GridRow");
 

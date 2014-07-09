@@ -828,13 +828,14 @@ var SetupManager = {
                 $(SetupManager.pound+resultOptions_id).append(projectURLCell);
                 $(SetupManager.pound+"projectURL"+i).addClass("URLStatus");
 
-                $(SetupManager.pound+"projectURL"+i).click(function(event) {
-                    var id = event.currentTarget.id;
-                    var number = id.charAt(id.length-1);
-//LOG IT
-                 UsageLogger.addEvent(UsageLogger.DOWNLOAD_PROJECT,null,
-                         Controller.projectURLs[parseInt(number)]+"/"+Controller.versions[parseInt(number)]);
-              });
+////TODO:fix this so the hyper link does not take the evennt!!!!!!!!!!
+//                $(SetupManager.pound+"projectURL"+i).mousedown(function(event) {
+//                    var id = event.currentTarget.id;
+//                    var number = id.charAt(id.length-1);
+////LOG IT
+//                 UsageLogger.addEvent(UsageLogger.DOWNLOAD_PROJECT,null,
+//                         Controller.projectURLs[parseInt(number)]+"/"+Controller.versions[parseInt(number)]);
+//              });
 
                 $(SetupManager.pound+"projectURL"+i).hover(function(event) {
                     var id = event.currentTarget.id;

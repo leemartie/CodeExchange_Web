@@ -103,8 +103,25 @@ var Controller = {
                         $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
                         $(SetupManager.pound+"projectURL"+editorNumber).empty();
-                        var projectURL = $('<a href="'+Controller.projectURLs[editorNumber]
-                            +'/archive/'+Controller.versions[editorNumber]+'.zip'+'">Download the GitHub project</a>');
+
+                        var urlToProject = Controller.projectURLs[editorNumber]
+                            +'/archive/'+Controller.versions[editorNumber]+'.zip';
+
+                        var projectURL = $('<text">Download the GitHub project</text>');
+
+                        projectURL.addClass("downloadLink");
+
+                        projectURL.click(function(e) {
+
+ //LOG IT
+                            UsageLogger.addEvent(UsageLogger.DOWNLOAD_PROJECT,null,urlToProject);
+
+//have to set this time out so there is enough time for the log post to go through
+                            setTimeout(function() {
+                            window.location.href = urlToProject;
+                            }, 250);
+
+                        });
 
                         var currentURL = Controller.currentURLs[editorNumber];
                         var versionIndex = currentURL.indexOf(version);

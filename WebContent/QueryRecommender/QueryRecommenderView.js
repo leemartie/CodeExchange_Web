@@ -39,28 +39,54 @@ var QueryRecommenderView = {
 
             var label = $('<text><font color="#8b0000">['+displayType+'] </font><font color="black">'+displayValue+'</font></text>');
 
-            var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-            button.addClass("QueryViewButtonRecommend");
-            button.attr("value","+");
-            button.append($("<text>+</text>"));
-            button.width("25px");
-            button.height("15px");
-            (function(query){button.click(function(){
+//            var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+//            button.addClass("QueryViewButtonRecommend");
+//            button.attr("value","+");
+//            button.append($("<text>+</text>"));
+//            button.width("25px");
+//            button.height("15px");
+
+
+//
+            (function(query, cell){queryBucketCell.click(function(){
+                cell.removeClass("RecommendationHover");
+                cell.addClass("RecommendationDown");
+
                 BuildQueryBoxView.addAndSubmit(query)
 //LOG IT
                 UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Recommendation),query);
 
-            })})(QueryRecommenderModel.recommendedQueries[i]);
+
+            })})(QueryRecommenderModel.recommendedQueries[i],queryBucketCell);
+//
+            (function(query,cell){queryBucketCell.mouseenter(function(){
+
+                cell.removeClass("QueryRecommendation");
+                cell.addClass("RecommendationHover");
+
+
+            })})(QueryRecommenderModel.recommendedQueries[i],queryBucketCell);
+//
+            (function(query,cell){queryBucketCell.mouseleave(function(){
+
+                if(cell.attr("class") != "RecommendationDown") {
+                    cell.removeClass("RecommendationHover");
+                    cell.addClass("QueryRecommendation");
+                }
+
+            })})(QueryRecommenderModel.recommendedQueries[i],queryBucketCell);
+
+
 
 
 
             queryBucketCell.append(label);
-            var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            buttonCell.append(button);
+    //        var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+    //        buttonCell.append(button);
 
             queryBucketCell.addClass("QueryRecommendation");
             queryBucketRow.append(queryBucketCell);
-            queryBucketRow.append(buttonCell);
+           // queryBucketRow.append(buttonCell);
 
             QueryRecommenderView.view.append(queryBucketRow);
         }
