@@ -23,7 +23,7 @@ var URLQueryCreator = {
                 + 'snippet_size snippet_variable_names_delimited snippet_method_invocation_arg_types_place '
                 + 'snippet_method_invocation_declaring_class snippet_method_invocation_name '
                 + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements '
-                + 'snippet_package score'
+                + 'snippet_package snippet_project_address snippet_this_version score'
 				+ '&facet=true'
 
 //                + '&group.facet=true'

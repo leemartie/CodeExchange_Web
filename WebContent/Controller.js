@@ -42,6 +42,9 @@ var Controller = {
 
         currentURLs             : new Array(),
 
+        projectURLs             : new Array(),
+        versions             : new Array(),
+
     //used so we can prevent doing the same function multiple times whent the even propgaes up
         LAST_EVENT_TIME_UP     :"",
         LAST_EVENT_TIME_MOVE     :"",
@@ -62,7 +65,7 @@ var Controller = {
 		},
 
 		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID, extendsResult,
-            implementsResult){
+            implementsResult, projectURL, version){
 
             $(SetupManager.pound+"cellStatus"+editorNumber).empty();
             var text = $("<text>"+"downloading..."+"</text>");
@@ -75,8 +78,10 @@ var Controller = {
             var classStart = start;
 
             Controller.currentURLs[editorNumber] = codeURL;
+            Controller.projectURLs[editorNumber] = projectURL;
+            Controller.versions[editorNumber] = version;
 
-            (function(codeNode, editorNumber, classStart, expanded, extendsResult, implementsResult){
+            (function(codeNode, editorNumber, classStart, expanded, extendsResult, implementsResult, projectURL, version){
                 $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
                     var editor = ace.edit(codeNode);
@@ -94,6 +99,20 @@ var Controller = {
                         $(SetupManager.pound+"cellStatus"+editorNumber).empty();
                         var text = $("<text>"+""+"</text>");
                         $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
+
+                        $(SetupManager.pound+"projectURL"+editorNumber).empty();
+                        var projectURL = $('<a href="'+Controller.projectURLs[editorNumber]
+                            +'/archive/'+Controller.versions[editorNumber]+'.zip'+'">Download the GitHub project</a>');
+
+                        var currentURL = Controller.currentURLs[editorNumber];
+                        var versionIndex = currentURL.indexOf(version);
+
+
+                        var path = currentURL.substring(versionIndex+version.length);
+
+                        $(SetupManager.pound+"projectURL"+editorNumber).attr("title",
+                            "Download the project to find dependencies.\nThe file path is: .."+path);
+                        $(SetupManager.pound+"projectURL"+editorNumber).append(projectURL);
 
 
                         var code = element;
@@ -852,7 +871,7 @@ var Controller = {
 
 
 
-            })(codeNode, editorNumber,classStart,expanded, extendsResult, implementsResult);
+            })(codeNode, editorNumber,classStart,expanded, extendsResult, implementsResult, projectURL, version);
 
 
 

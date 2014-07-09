@@ -623,7 +623,8 @@ function on_nextData(data) {
 
                     Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
                         url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
-                        expandedChildren, item.id, item.snippet_extends, item.snippet_implements);
+                        expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
+                        item.snippet_project_address, item.snippet_this_version);
 
 					//Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
@@ -740,7 +741,8 @@ function on_data(data) {
 
                     Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
                         url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
-                        expandedChildren, item.id, item.snippet_extends, item.snippet_implements);
+                        expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
+                        item.snippet_project_address, item.snippet_this_version);
 					
 				//	Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
 					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);

@@ -821,9 +821,12 @@ var SetupManager = {
 
                 var statusCell = $("<div>"+"</div>");
                 statusCell.attr("id","cellStatus"+i);
-
                 $(SetupManager.pound+resultOptions_id).append(statusCell);
-				
+
+                var projectURLCell = $("<div>"+"</div>");
+                projectURLCell.attr("id","projectURL"+i);
+                $(SetupManager.pound+resultOptions_id).append(projectURLCell);
+                $(SetupManager.pound+"projectURL"+i).addClass("URLStatus");
 				
 
 				
