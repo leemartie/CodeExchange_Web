@@ -18,14 +18,16 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
 
+        table.addClass("QueryViewTable");
 
 
-       if(displayValue != null && displayValue.length > 30)
-         displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
+//       if(displayValue != null && displayValue.length > 30)
+//         displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
 
        this.row.append(this.cell);
        table.append(this.row);
        var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">'+displayValue+'</font></text>');
+
 
 
        this.cell.append(label);
@@ -33,6 +35,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        this.row.height("100%");
 
        this.row.addClass("QueryViewRow");
+
 
 //       var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 //       this.row.append(buttonCell);

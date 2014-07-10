@@ -66,6 +66,7 @@ var QueryGridView = {
             $(SetupManager.pound+"GridCell"+(cellID)).empty();
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+            table.addClass("QueryViewTable");
             table.append($("<tr><th>session number: "+(i+1)+"</tr></th>"));
             table.height("100%");
             var row = $(SetupManager.trOpen+SetupManager.trClose);
@@ -152,6 +153,7 @@ var QueryGridView = {
 
         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
         table.height("100%");
+        table.addClass("QueryViewTable");
 
 
 
@@ -163,6 +165,7 @@ var QueryGridView = {
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         cell.height("100%");
         row.append(cell);
+
 
         table.append(row);
 

@@ -147,6 +147,9 @@ var QueryBucketModel = {
 
     inStack : function(query){
 
+        if(query == null)
+            return true;
+
         for(var i = 0; i<QueryBucketModel.stackOfQueries.length; i++){
             var stackQuery = QueryBucketModel.stackOfQueries[i];
             if(query.type == stackQuery.type && query.value == stackQuery.value){
