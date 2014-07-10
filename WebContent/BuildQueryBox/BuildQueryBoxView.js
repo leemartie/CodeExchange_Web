@@ -682,10 +682,22 @@ var BuildQueryBoxView = {
                 if(ClassNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodCallDecClass + ':"' + ClassNameBox.val() + '"';
+
+                    if(!(/^[a-zA-Z0-9_.]+$/.test(ClassNameBox.val()))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, or period characters for class name...");
+                        return;
+                    }
                 }
                 if(MethodNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
                         + ':"' +MethodNameBox.val()+ '"';
+
+                    if(!(/^[a-zA-Z0-9_.]+$/.test(MethodNameBox.val()))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, or period characters for method name...");
+                        return;
+                    }
                 }
                 if(ParameterNameBox.val() != "") {
 
@@ -701,6 +713,12 @@ var BuildQueryBoxView = {
                         }else{
                             paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParameters
                                 + ':'+'"'+paramsWithCount[paramIndex]+'"';
+                        }
+
+                        if(!(/^[a-zA-Z0-9_.]+$/.test(paramsWithCount[paramIndex]))){
+                            Controller.setStatus("Please enter only alphanumeric, "+
+                                "underscore, or period characters for parameter names...");
+                            return;
                         }
 
                     }
@@ -720,14 +738,26 @@ var BuildQueryBoxView = {
                 ParameterNameBox.val("");
             };
 
+            var testCharacters = function(){
+
+            }
+
             //for method dec queries
             var methodDecQueryFunction = function(){
                 var query = null;
                 var methodCallValue = '';
 
+
+
                 if(ReturnTypeBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodDeclarationReturn + ':"' + ReturnTypeBox.val() + '"';
+
+                    if(!(/^[a-zA-Z0-9_.]+$/.test(ReturnTypeBox.val()))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, or period characters for return type...");
+                        return;
+                    }
                 }
 
                 if(checkboxGeneric[0].checked) {
@@ -743,10 +773,22 @@ var BuildQueryBoxView = {
                 if(ClassNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodDeclarationClass + ':"' + ClassNameBox.val() + '"';
+
+                    if(!(/^[a-zA-Z0-9_.]+$/.test(ClassNameBox.val()))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, or period characters for class name...");
+                        return;
+                    }
                 }
                 if(MethodNameBox.val() != "") {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodDeclarationName
                         + ':"' +MethodNameBox.val()+ '"';
+
+                    if(!(/^[a-zA-Z0-9_.]+$/.test(MethodNameBox.val()))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, or period characters for method name...");
+                        return;
+                    }
                 }
                 if(ParameterNameBox.val() != "") {
 
@@ -762,6 +804,12 @@ var BuildQueryBoxView = {
                         }else{
                             paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
                                 + ':'+'"'+paramsWithCount[paramIndex]+'"';
+                        }
+
+                        if(!(/^[a-zA-Z0-9_.]+$/.test(paramsWithCount[paramIndex]))){
+                            Controller.setStatus("Please enter only alphanumeric, "+
+                                "underscore, or period characters for parameter names...");
+                            return;
                         }
 
                     }
@@ -993,6 +1041,7 @@ var BuildQueryBoxView = {
             //empty so ignore...
             if(query.value == "" || query.value == ".()" || query.value == ":.()")
                 return;
+
 
             if(QueryBucketModel.inStack(query) == false){
                 QueryBucketModel.addQuery(query);

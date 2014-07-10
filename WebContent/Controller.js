@@ -359,7 +359,7 @@ var Controller = {
 
                         }
 
-                        var regEx = new RegExp( word, "gi" );
+//                        var regEx = new RegExp( word, "gi" );
 
 //                      editor.findAll(regEx,{
 //                          //caseSensitive: false,
@@ -870,7 +870,7 @@ var Controller = {
 
                             }
 
-                            var regEx = new RegExp( word, "gi" );
+//                            var regEx = new RegExp( word, "gi" );
 
 //                          editor.findAll(regEx,{
 //                              //caseSensitive: false,
