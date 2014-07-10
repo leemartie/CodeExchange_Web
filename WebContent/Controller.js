@@ -104,10 +104,18 @@ var Controller = {
 
                         $(SetupManager.pound+"projectURL"+editorNumber).empty();
 
+                        var currentURL = Controller.currentURLs[editorNumber];
+                        var versionIndex = currentURL.indexOf(version);
+
+
+                        var path = currentURL.substring(versionIndex+version.length);
+
                         var urlToProject = Controller.projectURLs[editorNumber]
                             +'/archive/'+Controller.versions[editorNumber]+'.zip';
 
-                        var projectURL = $('<text">Download the GitHub project</text>');
+
+                        var projectURL = $('<div><text></text>' +
+                            '<img  src="http://codeexchange.ics.uci.edu/zip.png"></img></div>');
 
                         projectURL.addClass("downloadLink");
 
@@ -123,14 +131,10 @@ var Controller = {
 
                         });
 
-                        var currentURL = Controller.currentURLs[editorNumber];
-                        var versionIndex = currentURL.indexOf(version);
 
-
-                        var path = currentURL.substring(versionIndex+version.length);
 
                         $(SetupManager.pound+"projectURL"+editorNumber).attr("title",
-                            "Download zip to find dependencies.\nFind this file at: .."+path);
+                            "Download the containing project to find dependencies.\nFind this code in file: .."+path);
                         $(SetupManager.pound+"projectURL"+editorNumber).append(projectURL);
 
 
@@ -1607,7 +1611,7 @@ var Controller = {
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
-			var projectName = $('<div><u>'+name+'[+]</u></div>');
+			var projectName = $('<div><u>'+name+'</u></div>');
 
             projectName.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);

@@ -18,11 +18,32 @@ var BuildQueryBoxView = {
             var addCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(addCell);
 
-            var label = $("<text>Enter Query</text>");
+            var label = $("<div></div><text>Enter Query</text></div>");
+
             label.addClass("BuildQueryTitle");
             titleCell.append(label);
             titleCell.attr("align", "center");
             view.append(titleRow);
+
+//flash for enter query
+            // set timeout
+            var tid = setTimeout(mycode(label), 500);
+
+            function mycode(label) {
+
+                label.animate({
+                    opacity: 0.3
+                }, 1500 );
+                label.animate({
+                    opacity: 1
+
+
+                }, 1500 );
+
+
+
+            }
+
 
             //row for query box
             var queryRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -178,6 +199,8 @@ var BuildQueryBoxView = {
             queryCell.append(falseboxLabel);
 
             queryCell.addClass("QueryInput");
+
+
 
             queryCell.width("100%");
 

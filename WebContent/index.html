@@ -351,7 +351,13 @@
 
     	  
     }
+
+    .ExpandButtonDiv{
+        padding:  5px;
+
+    }
     .ResultOptions{
+        position: relative;
         padding-left: 5px;
         padding-right: 5px;
         padding-top: 0px;
@@ -370,7 +376,8 @@
     .Expand{
     	top:0px;
     	float:right;
-    	  
+
+
     }
     .SpanCol{
     	colspan:2;
@@ -716,13 +723,20 @@
             font-family: Courier;
         }
 
+
         .downloadLink{
-            text-decoration:underline;
             cursor: pointer;
+            padding: 5px;
+            position: absolute;
+            font-size: 14px;
+
+
         }
 
         .URLStatus{
-            padding-top: 20px;
+            padding-top: 0px;
+            border-top: 1px solid;
+            border-color: lightblue;
 
             font-family: Courier;
         }
@@ -730,6 +744,14 @@
         .BuildQueryTitle {
             font-size: 16pt;
             font-family: Courier;
+
+            background-color: lightblue;
+        }
+
+        .BuildQueryTitleFlash{
+            background-color: #ffff00;
+            border-radius: 30px;
+            text-align: center;
         }
 
         .QueryTypeTitle{

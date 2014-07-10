@@ -807,8 +807,27 @@ var SetupManager = {
 				SetupManager.expandBtnArray_ID[i] = expandButton_id;
 				expandButton.attr(SetupManager.ID_attr, SetupManager.expandBtnArray_ID[i]);
 				expandButton.addClass("Expand");
+
+
+                var expandButtonDiv = $(SetupManager.divOpen+SetupManager.divClose);
+                expandButtonDiv.addClass("ExpandButtonDiv");
+                expandButtonDiv.append(expandButton);
+//project
+                var projectURLCell = $("<div>"+"</div>");
+                projectURLCell.attr("id","projectURL"+i);
+                $(SetupManager.pound+resultOptions_id).append(projectURLCell);
+                $(SetupManager.pound+"projectURL"+i).addClass("URLStatus");
+                $(SetupManager.pound+"projectURL"+i).hover(function(event) {
+                    var id = event.currentTarget.id;
+                    var number = id.charAt(id.length-1);
+//LOG IT
+                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_DOWNLOAD_PROJECT,null,null);
+                });
+
+
+
 				//add to result options
-				$(SetupManager.pound+resultOptions_id).append(expandButton);
+				$(SetupManager.pound+resultOptions_id).append(expandButtonDiv);
 				//button attributes
 				$(SetupManager.pound+SetupManager.expandBtnArray_ID[i]).text("").
 					append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
@@ -823,26 +842,7 @@ var SetupManager = {
                 statusCell.attr("id","cellStatus"+i);
                 $(SetupManager.pound+resultOptions_id).append(statusCell);
 
-                var projectURLCell = $("<div>"+"</div>");
-                projectURLCell.attr("id","projectURL"+i);
-                $(SetupManager.pound+resultOptions_id).append(projectURLCell);
-                $(SetupManager.pound+"projectURL"+i).addClass("URLStatus");
 
-////TODO:fix this so the hyper link does not take the evennt!!!!!!!!!!
-//                $(SetupManager.pound+"projectURL"+i).mousedown(function(event) {
-//                    var id = event.currentTarget.id;
-//                    var number = id.charAt(id.length-1);
-////LOG IT
-//                 UsageLogger.addEvent(UsageLogger.DOWNLOAD_PROJECT,null,
-//                         Controller.projectURLs[parseInt(number)]+"/"+Controller.versions[parseInt(number)]);
-//              });
-
-                $(SetupManager.pound+"projectURL"+i).hover(function(event) {
-                    var id = event.currentTarget.id;
-                    var number = id.charAt(id.length-1);
-//LOG IT
-                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_DOWNLOAD_PROJECT,null,null);
-                });
 
 			}
 			
