@@ -91,8 +91,13 @@ var QueryGridView = {
 
                 var query = stack[j];
 
-                query.displayValue = query.displayValue.replace(/</gi,"&lt;");
-                query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+                if(query.displayValue instanceof Array){
+                    query.displayValue = query.displayValue[0].replace(/</gi,"&lt;");
+                    query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+                }else{
+                    query.displayValue = query.displayValue.replace(/</gi,"&lt;");
+                    query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+                }
 
                 query.displayType = query.displayType.replace(/</gi,"&lt;");
                 query.displayType = query.displayType.replace(/</gi,"&gt;");
@@ -190,8 +195,16 @@ var QueryGridView = {
             row.append(cell);
 
             cell.attr("valign","bottom");
-            query.displayValue = query.displayValue.replace(/</gi,"&lt;");
-            query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+
+            if(query.displayValue instanceof Array){
+                query.displayValue = query.displayValue[0].replace(/</gi,"&lt;");
+                query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+            }else{
+                query.displayValue = query.displayValue.replace(/</gi,"&lt;");
+                query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+            }
+
+
 
             query.displayType = query.displayType.replace(/</gi,"&lt;");
             query.displayType = query.displayType.replace(/</gi,"&gt;");

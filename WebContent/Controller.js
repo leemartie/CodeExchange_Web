@@ -999,7 +999,7 @@ var Controller = {
     addExtendsQuery : function(extendsClass){
         var query = null;
         query = new QueryModel(QueryBucketModel.extendsField, extendsClass);
-        query.displayType = "extends";
+        query.displayType = "extends class";
         query.displayValue = extendsClass;
         BuildQueryBoxView.addAndSubmit(query);
         //LOG IT

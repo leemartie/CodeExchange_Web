@@ -26,8 +26,15 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        this.row.append(this.cell);
        table.append(this.row);
-       displayValue = displayValue.replace(/</gi,"&lt;");
-       displayValue = displayValue.replace(/</gi,"&gt;");
+
+       if(displayValue instanceof Array){
+           displayValue = displayValue[0].replace(/</gi,"&lt;");
+           displayValue = displayValue.replace(/</gi,"&gt;");
+       }else{
+           displayValue = displayValue.replace(/</gi,"&lt;");
+           displayValue = displayValue.replace(/</gi,"&gt;");
+       }
+
 
        displayType = displayType.replace(/</gi,"&lt;");
        displayType = displayType.replace(/</gi,"&gt;");
