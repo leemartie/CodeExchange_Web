@@ -2108,6 +2108,8 @@ var Controller = {
 		},
 
     showGrid    : function(){
+        $('.Grid').height($('.FilterSideTD').height());
+
         $(SetupManager.pound+SetupManager.resultTable_ID).toggle();
         QueryGridView.grid.toggle();
         Controller.gridOn = !Controller.gridOn;
@@ -2115,6 +2117,7 @@ var Controller = {
 
         if(Controller.gridOn) {
             QueryGridView.update();
+
 
         }
 

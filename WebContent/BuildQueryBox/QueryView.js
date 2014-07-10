@@ -33,7 +33,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        displayType = displayType.replace(/</gi,"&gt;");
 
 
-       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">"'+displayValue+'"</font></text>');
+       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">'+displayValue+'</font></text>');
 
 
 
