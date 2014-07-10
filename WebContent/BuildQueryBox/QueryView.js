@@ -26,7 +26,14 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        this.row.append(this.cell);
        table.append(this.row);
-       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">'+displayValue+'</font></text>');
+       displayValue = displayValue.replace(/</gi,"&lt;");
+       displayValue = displayValue.replace(/</gi,"&gt;");
+
+       displayType = displayType.replace(/</gi,"&lt;");
+       displayType = displayType.replace(/</gi,"&gt;");
+
+
+       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">"'+displayValue+'"</font></text>');
 
 
 

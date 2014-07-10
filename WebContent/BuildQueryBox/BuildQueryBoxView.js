@@ -683,9 +683,9 @@ var BuildQueryBoxView = {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodCallDecClass + ':"' + ClassNameBox.val() + '"';
 
-                    if(!(/^[a-zA-Z0-9_.]+$/.test(ClassNameBox.val()))){
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(ClassNameBox.val()))){
                         Controller.setStatus("Please enter only alphanumeric, "+
-                            "underscore, or period characters for class name...");
+                            "underscore, period, comma, less than, or greater than characters for class name...");
                         return;
                     }
                 }
@@ -693,9 +693,9 @@ var BuildQueryBoxView = {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
                         + ':"' +MethodNameBox.val()+ '"';
 
-                    if(!(/^[a-zA-Z0-9_.]+$/.test(MethodNameBox.val()))){
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(MethodNameBox.val()))){
                         Controller.setStatus("Please enter only alphanumeric, "+
-                            "underscore, or period characters for method name...");
+                            "underscore, period, comma, less than, or greater than characters for method name...");
                         return;
                     }
                 }
@@ -715,9 +715,9 @@ var BuildQueryBoxView = {
                                 + ':'+'"'+paramsWithCount[paramIndex]+'"';
                         }
 
-                        if(!(/^[a-zA-Z0-9_.]+$/.test(paramsWithCount[paramIndex]))){
+                        if(!(/^[a-zA-Z0-9_.,><]+$/.test(paramsWithCount[paramIndex]))){
                             Controller.setStatus("Please enter only alphanumeric, "+
-                                "underscore, or period characters for parameter names...");
+                                "underscore, period, comma, less than, or greater than characters for parameter names...");
                             return;
                         }
 
@@ -753,9 +753,9 @@ var BuildQueryBoxView = {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodDeclarationReturn + ':"' + ReturnTypeBox.val() + '"';
 
-                    if(!(/^[a-zA-Z0-9_.]+$/.test(ReturnTypeBox.val()))){
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(ReturnTypeBox.val()))){
                         Controller.setStatus("Please enter only alphanumeric, "+
-                            "underscore, or period characters for return type...");
+                            "underscore, period, comma, less than, or greater than characters for return type...");
                         return;
                     }
                 }
@@ -774,9 +774,9 @@ var BuildQueryBoxView = {
                     methodCallValue = methodCallValue + '%2B'
                         + QueryBucketModel.snippetMethodDeclarationClass + ':"' + ClassNameBox.val() + '"';
 
-                    if(!(/^[a-zA-Z0-9_.]+$/.test(ClassNameBox.val()))){
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(ClassNameBox.val()))){
                         Controller.setStatus("Please enter only alphanumeric, "+
-                            "underscore, or period characters for class name...");
+                            "underscore, period, comma, less than, or greater than characters for class name...");
                         return;
                     }
                 }
@@ -784,9 +784,9 @@ var BuildQueryBoxView = {
                     methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodDeclarationName
                         + ':"' +MethodNameBox.val()+ '"';
 
-                    if(!(/^[a-zA-Z0-9_.]+$/.test(MethodNameBox.val()))){
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(MethodNameBox.val()))){
                         Controller.setStatus("Please enter only alphanumeric, "+
-                            "underscore, or period characters for method name...");
+                            "underscore, period, comma, less than, or greater than characters for method name...");
                         return;
                     }
                 }
@@ -806,9 +806,9 @@ var BuildQueryBoxView = {
                                 + ':'+'"'+paramsWithCount[paramIndex]+'"';
                         }
 
-                        if(!(/^[a-zA-Z0-9_.]+$/.test(paramsWithCount[paramIndex]))){
+                        if(!(/^[a-zA-Z0-9_.,><]+$/.test(paramsWithCount[paramIndex]))){
                             Controller.setStatus("Please enter only alphanumeric, "+
-                                "underscore, or period characters for parameter names...");
+                                "underscore, period, comma, less than, or greater than characters for parameter names...");
                             return;
                         }
 

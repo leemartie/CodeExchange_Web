@@ -90,6 +90,13 @@ var QueryGridView = {
                 row.append(cell);
 
                 var query = stack[j];
+
+                query.displayValue = query.displayValue.replace(/</gi,"&lt;");
+                query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+
+                query.displayType = query.displayType.replace(/</gi,"&lt;");
+                query.displayType = query.displayType.replace(/</gi,"&gt;");
+
                 var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
 
                 cell.append(label);
@@ -183,6 +190,12 @@ var QueryGridView = {
             row.append(cell);
 
             cell.attr("valign","bottom");
+            query.displayValue = query.displayValue.replace(/</gi,"&lt;");
+            query.displayValue = query.displayValue.replace(/</gi,"&gt;");
+
+            query.displayType = query.displayType.replace(/</gi,"&lt;");
+            query.displayType = query.displayType.replace(/</gi,"&gt;");
+
             var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
             cell.append(label);
 
