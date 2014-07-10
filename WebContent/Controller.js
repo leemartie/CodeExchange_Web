@@ -988,7 +988,7 @@ var Controller = {
             var query = null;
             query = new QueryModel(QueryBucketModel.implementsField, implementsList[i]);
             query.displayType = "implements";
-            query.displayValue = implementsList;
+            query.displayValue = implementsList[i];
             BuildQueryBoxView.addAndSubmit(query);
 //LOG IT
             UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
