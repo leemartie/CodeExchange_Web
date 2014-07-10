@@ -990,6 +990,10 @@ var BuildQueryBoxView = {
 
         addAndSubmit: function(query){
 
+            //empty so ignore...
+            if(query.value == "" || query.value == ".()" || query.value == ":.()")
+                return;
+
             if(QueryBucketModel.inStack(query) == false){
                 QueryBucketModel.addQuery(query);
                 QueryBucketView.update();
