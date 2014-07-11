@@ -30,7 +30,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        if(displayValue instanceof Array){
            displayValue = displayValue[0].replace(/</gi,"&lt;");
            displayValue = displayValue.replace(/</gi,"&gt;");
-       }else{
+       }else if(displayValue instanceof Boolean){
            displayValue = displayValue.replace(/</gi,"&lt;");
            displayValue = displayValue.replace(/</gi,"&gt;");
        }
