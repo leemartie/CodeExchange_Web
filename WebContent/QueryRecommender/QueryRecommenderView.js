@@ -38,8 +38,10 @@ var QueryRecommenderView = {
 //            if(displayValue != null && displayValue.length > 30)
 //                displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
 
-            displayValue = displayValue.replace(/</gi,"&lt;");
-            displayValue = displayValue.replace(/</gi,"&gt;");
+            if(!displayValue instanceof Boolean){
+                displayValue = displayValue.replace(/</gi,"&lt;");
+                displayValue = displayValue.replace(/</gi,"&gt;");
+            }
 
             displayType = displayType.replace(/</gi,"&lt;");
             displayType = displayType.replace(/</gi,"&gt;");
