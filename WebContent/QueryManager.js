@@ -103,7 +103,11 @@ var QueryManager = {
         }
         else if(field == QueryBucketModel.snippetMethodDeclarationReturn)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ReturnBox).val();
-        else {
+        else if(SplashScreen.showing){
+            var words = $(SetupManager.pound + SplashScreen.InputSplashID).val();
+            words = words.split(/[\s]+/);
+            QueryManager.completeUserTyped = words[words.length-1];
+        }else{
             var words = $(SetupManager.pound + SetupManager.queryInput_ID).val();
             words = words.split(/[\s]+/);
             QueryManager.completeUserTyped = words[words.length-1];
@@ -699,6 +703,34 @@ function getMetaData(name, classID, metaDiv, count){
 	
 }
 
+
+function collectFirstExists(URLs){
+    var urlsThatExist = new Array();
+
+    $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+        return false;
+
+    }).success(function(data, textStatus, jqXHR ) {
+        return true;
+    });
+
+    return urlsThatExist;
+}
+
+function testExists(codeURL){
+    var url = "http://codeexchange.ics.uci.edu/getPage.php?url="+codeURL+"&callback=?&json.wrf=displayCode";
+
+
+    $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+        return false;
+
+    }).success(function(data, textStatus, jqXHR ) {
+        return true;
+    });
+
+return true;
+}
+
 /**
  * 
  * @param data
@@ -732,6 +764,9 @@ function on_data(data) {
 					
 					var url = String(item.snippet_address);
 				//	var correctURL = url.replace(wrongVersion,correctVersion);
+
+
+
 
 
 

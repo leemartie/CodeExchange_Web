@@ -494,9 +494,12 @@ var BuildQueryBoxView = {
                     source: function( request, response ){
                         QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
 //                    QueryManager.submitSpellCheck(request, response,queryBox.val());
+
+
                     },
                     focus: function() {
                         // prevent value inserted on focus
+
                         return false;
                     },
                     select: function( event, ui ) {
@@ -558,6 +561,7 @@ var BuildQueryBoxView = {
             queryTypeCell.append(combo);
             queryTypeCell.attr("align", "center");
             combo.addClass("QueryCell");
+
             view.append(queryTypeRow);
 
             view.append(queryRow);

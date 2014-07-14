@@ -23,7 +23,10 @@
 
 
 
-		SetupManager.setupSite();
+        //splash screen
+        SplashScreen.getSplash();
+        //needs to happen after splash screen
+		//SetupManager.setupSite();
 
 	}
 

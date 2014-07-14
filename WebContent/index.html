@@ -21,7 +21,8 @@
 <script type="text/javascript" src="jquery-migrate-1.2.1.js"></script>
 <script type="text/javascript" src="jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 
-
+<script type="text/javascript" src="CSSPopUp.js"></script>
+<script type="text/javascript" src="SplashScreen.js"></script>
 <script type="text/javascript" src="Client.js"></script>
 <script type="text/javascript" src="CodeResult.js"></script>
 <script type="text/javascript" src="QueryManager.js"></script>
@@ -966,14 +967,16 @@
     color: white;
 }
 
-.QueryRecommenderView{
-    height: 200px;
-   /* overflow-y: scroll;*/
-}
+    .QueryRecommenderView{
+       height: 200px;
+      /* overflow-y: scroll;*/
+    }
 
-.AnnotationQuery{
-    background-color: red;
-}
+    .AnnotationQuery{
+     background-color: red;
+    }
+
+
 
 .QueryCell{
     border: 1px solid;
@@ -1008,11 +1011,86 @@
     border-bottom-right-radius: 5px;
 }
 
+.SplashInput{
+    width:50%;
+    height: 50%;
+    font-size: 30px;
+    margin-top: 12px;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.SplashInputDiv{
+    background-color: lightgoldenrodyellow;
+    color:#ffffff;
+    box-shadow: 10px 10px 10px #FFBF00;
+
+    border-color: #ffffff;
+    border: 2px solid;
+
+    width: 90%;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+    margin: auto
+}
+
+.SplashTitle{
+    margin-bottom: 10px;
+    font-size: 50px;
+    color:black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.AutoComplete{
+    font-size: 20px;
+
+}
+
+.Splash{
+    background-color: lightblue;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    vertical-align: middle;
+
+
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+
+}
+
+    .subTitle{
+        margin-top: 20px;
+        font-size: 25px;
+    }
+
+.subtext{
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+
+    html { height: 100%; }
+
 
 
 </style>
 
-<div id="entireSite" >
+<div id="entireSite" height="100%">
 
 
 
