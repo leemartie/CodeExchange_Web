@@ -1,0 +1,17 @@
+var AdvancedSearched = {
+
+    getView: function() {
+
+        var outterDiv = $(SetupManager.divOpen+SetupManager.divClose);
+
+
+
+
+
+
+
+
+        return outterDiv;
+
+    }
+}

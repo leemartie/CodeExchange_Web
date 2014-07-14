@@ -7,6 +7,7 @@ var BuildQueryBoxView = {
 			var view = $(SetupManager.tableOpen+SetupManager.tableClose);
 
 
+
             //make title
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -23,7 +24,7 @@ var BuildQueryBoxView = {
             label.addClass("BuildQueryTitle");
             titleCell.append(label);
             titleCell.attr("align", "center");
-            view.append(titleRow);
+          //  view.append(titleRow);
 
 //flash for enter query
 //            // set timeout
@@ -109,7 +110,7 @@ var BuildQueryBoxView = {
             queryLabel.addClass("QueryTypeTitle");
             queryCell.attr("align", "center");
            // queryCell.append(queryLabel);
-            queryCell.append(queryBox);
+           // queryCell.append(queryBox);
 
 
 
@@ -531,23 +532,6 @@ var BuildQueryBoxView = {
                         $(".ui-menu-item").hide();
                     }
                 });
-//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetField){
-//                    queryBox.autocomplete({
-//                        source: function( request, response ){
-//                            QueryManager.submitSpellCheck(request, response,queryBox.val());
-//                        }
-//                    });
-//                }else{
-//                    queryBox.autocomplete({
-//                        source: function( request, response ){
-//                            QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
-//                        }
-//                    }).keyup(function (e) {
-//                        if(e.which === 13) {
-//                            $(".ui-menu-item").hide();
-//                        }
-//                    });
-//               }
             });
 
 
@@ -562,9 +546,9 @@ var BuildQueryBoxView = {
             queryTypeCell.attr("align", "center");
             combo.addClass("QueryCell");
 
-            view.append(queryTypeRow);
+            //view.append(queryTypeRow);
 
-            view.append(queryRow);
+            //view.append(queryRow);
 
 
 

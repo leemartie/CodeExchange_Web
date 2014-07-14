@@ -9,7 +9,7 @@ var SplashScreen = {
     getSplash : function(){
 
         var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
-        tableForSite.attr("height","45%");
+        tableForSite.attr("height","40%");
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
@@ -20,9 +20,11 @@ var SplashScreen = {
 
         var title = $("<div><text>CodeExchange</text></div>");
         title.addClass("SplashTitle");
-        cell.append(title);
 
 
+        var subtext = $("<div><text>Let's find some code</text></div>");
+        subtext.addClass("subtext");
+        title.append(subtext);
 
         var input = $(SetupManager.inputOpen+SetupManager.inputClose);
         input.addClass("SplashInput");
@@ -30,12 +32,17 @@ var SplashScreen = {
         input.attr(SetupManager.ID_attr,SplashScreen.InputSplashID);
 
         var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
+        inputDiv.append(title);
         inputDiv.append(input);
         inputDiv.addClass("SplashInputDiv");
 
 
 
+        cell.append(inputDiv);
 
+        var subtext = $("<div><text>A Java source code search engine.</text></div>");
+        subtext.addClass("footerText");
+        cell.append(subtext);
 
 //auto complete
         input.autocomplete({
@@ -88,11 +95,24 @@ var SplashScreen = {
             if (e.keyCode == '13') {
                 e.preventDefault();
 
-                tableForSite.hide();
-                SplashScreen.showing = false;
+                subtext.hide();
 
+                tableForSite.animate({
+                  height: '5%'
+                }, 700 );
 
-                SetupManager.setupSite();
+                cell.animate({
+
+                    backgroundColor: '#000000'
+                }, 700 );
+
+//                tableForSite.fadeTo(700, 0,function(){});
+
+                if(SplashScreen.showing){
+
+                    SetupManager.setupSite();
+                    SplashScreen.showing = false;
+                }
 
                 var query = null;
                 query = new QueryModel(QueryBucketModel.snippetField, input.val());
@@ -106,11 +126,10 @@ var SplashScreen = {
 
                 input.val("");
 
+
             }
         });
 
-
-        cell.append(inputDiv);
 
 
 
@@ -118,15 +137,15 @@ var SplashScreen = {
         cell.attr("align","center");
 
 
-        var subtext = $("<div><text>Let's find some code</text></div>");
-        subtext.addClass("subtext");
-        cell.append(subtext);
+
 
         var screenHeight = jQuery(window).height();
 
 
         $(SetupManager.pound+SetupManager.entireSiteDiv_ID).height(screenHeight-15);
         $(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableForSite);
+
+
 
     }
 
