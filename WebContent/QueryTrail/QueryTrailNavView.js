@@ -59,7 +59,7 @@ var QueryTrailNavView = {
 
             gridButton.empty();
             if(Controller.gridOn){
-                gridButton.append("<text>hide query history</text>");
+                gridButton.append("<text>show code results</text>");
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
             }else{

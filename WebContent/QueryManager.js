@@ -103,11 +103,12 @@ var QueryManager = {
         }
         else if(field == QueryBucketModel.snippetMethodDeclarationReturn)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ReturnBox).val();
-        else if(SplashScreen.showing){
-            var words = $(SetupManager.pound + SplashScreen.InputSplashID).val();
-            words = words.split(/[\s]+/);
-            QueryManager.completeUserTyped = words[words.length-1];
-        }else{
+//        else if(SplashScreen.showing){
+//            var words = $(SetupManager.pound + SplashScreen.InputSplashID).val();
+//            words = words.split(/[\s]+/);
+//            QueryManager.completeUserTyped = words[words.length-1];
+//        }
+        else{
             var words = $(SetupManager.pound + SetupManager.queryInput_ID).val();
             words = words.split(/[\s]+/);
             QueryManager.completeUserTyped = words[words.length-1];

@@ -56,7 +56,7 @@ var SplashScreen = {
 
         cell.append(inputDiv);
 
-        var subtext = $("<div><text>A Java source code search engine.</text></div>");
+        var subtext = $("<div><text>Search all the Java code in GitHUB</text></div>");
         subtext.addClass("footerText");
         cell.append(subtext);
 
