@@ -9,7 +9,8 @@ var QueryTrailNavView = {
         var navTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         var navigationRow = $(SetupManager.trOpen+SetupManager.trClose);
         navTable.append(navigationRow);
-
+        navTable.addClass("navView");
+        navTable.attr("cellpadding","5px");
 
 
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);

@@ -254,6 +254,7 @@ var SetupManager = {
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site
 			resultTD.append(tableOfResults);
+            resultTD.attr("valign","top");
 
             QueryGridView.setup();
             $(SetupManager.pound+SetupManager.resultsTD_ID).append(QueryGridView.grid);
@@ -283,9 +284,10 @@ var SetupManager = {
             filterSideTD.append(BuildQueryBoxView.getView());
 
 
-            filterSideTD.append(QueryTrailNavView.getView());
+         //   filterSideTD.append(QueryTrailNavView.getView());
 
 			
+
 
 
 //listener for expand button

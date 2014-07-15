@@ -28,14 +28,18 @@ var SplashScreen = {
 
         var input = $(SetupManager.inputOpen+SetupManager.inputClose);
         input.addClass("SplashInput");
-        input.attr(SetupManager.placeholder_attr, "type keywords and hit enter");
+        input.attr(SetupManager.placeholder_attr, "Type keywords and hit Enter");
         input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
 
 
 
-        var btn = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-        btn.append($("<text>Advanced Search</text>"));
-        btn.button();
+        var btn = $(SetupManager.divOpen+SetupManager.divClose);
+
+       // var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/wizard.png"></img>');
+       // btn.append(icon);
+        var label = $("<div><text> Advanced Search</text></div>");
+        label.addClass("AdvancedSearchText");
+        btn.append(label);
         btn.addClass("AdvancedSearch");
 
 
@@ -46,7 +50,7 @@ var SplashScreen = {
 
         inputDiv.append(title);
         inputDiv.append(input);
-       // inputDiv.append(btn);
+        inputDiv.append(btn);
 
 
 
@@ -56,7 +60,7 @@ var SplashScreen = {
 
         cell.append(inputDiv);
 
-        var subtext = $("<div><text>Search all the Java code in GitHUB</text></div>");
+        var subtext = $("<div><text>Search over 10 million Java classes in GitHUB</text></div>");
         subtext.addClass("footerText");
         cell.append(subtext);
 
@@ -125,6 +129,7 @@ var SplashScreen = {
 //                tableForSite.fadeTo(700, 0,function(){});
 
                 if(SplashScreen.showing){
+                    inputDiv.addClass("SplashFloatLeft");
 
                     SetupManager.setupSite();
                     SplashScreen.showing = false;

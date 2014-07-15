@@ -5,8 +5,7 @@ var BuildQueryBoxView = {
 		
 		getView:	function(){
 			var view = $(SetupManager.tableOpen+SetupManager.tableClose);
-
-
+            //view.attr("cellpadding","5");
 
             //make title
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -551,11 +550,14 @@ var BuildQueryBoxView = {
             //view.append(queryRow);
 
 
-
-
+            var currentQuery = $(SetupManager.tableOpen+SetupManager.tableClose);
+            //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
+            currentQuery.addClass("BucketView");
 
             //title for bucket
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
+
+
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(titleCell);
             var label = $("<text>Current Query</text>");
@@ -563,17 +565,28 @@ var BuildQueryBoxView = {
            // titleCell.append($("<hr>"));
             titleCell.append(label);
             titleCell.attr("align", "center");
-            view.append(titleRow);
+            currentQuery.append(titleRow);
 
             //row for query bucket
             var queryBucketCellInParentTable = $(SetupManager.tdOpen+SetupManager.tdClose);
+
             queryBucketCellInParentTable.append(QueryBucketView.getView());
             queryBucketCellInParentTable.attr("valign","bottom");
             var queryBucketRowInParentTable = $(SetupManager.trOpen+SetupManager.trClose);
             queryBucketRowInParentTable.append(queryBucketCellInParentTable);
-            view.append(queryBucketRowInParentTable);
 
-            //            //title for query recommendations
+            currentQuery.append(queryBucketRowInParentTable);
+
+            var rowCell = $(SetupManager.trOpen+SetupManager.tdOpen+SetupManager.tdClose+SetupManager.trClose);
+            rowCell.append(currentQuery);
+
+            view.append(rowCell);
+
+            var recommendationsTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+            //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
+            recommendationsTable.addClass("BucketView");
+
+ //title for query recommendations
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(titleCell);
@@ -582,7 +595,7 @@ var BuildQueryBoxView = {
            // titleCell.append($("<hr>"));
             titleCell.append(label);
             titleCell.attr("align", "center");
-            view.append(titleRow);
+            recommendationsTable.append(titleRow);
 
             //query Recommendations
             var recommendRow =$(SetupManager.trOpen+SetupManager.trClose);
@@ -590,7 +603,27 @@ var BuildQueryBoxView = {
             recommendRow.append(recommendCell);
             recommendCell.append(QueryRecommenderView.getView());
             recommendCell.addClass("recommendCell");
-            view.append(recommendRow);
+            recommendationsTable.append(recommendRow);
+
+            var rowCell = $(SetupManager.trOpen+SetupManager.tdOpen+SetupManager.tdClose+SetupManager.trClose);
+            rowCell.append(recommendationsTable);
+            view.append(rowCell);
+
+
+   //buttons
+            var buttonTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+            //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
+            buttonTable.addClass("BucketView");
+            var buttonRow =$(SetupManager.trOpen+SetupManager.trClose);
+            var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            buttonRow.append(buttonCell);
+            buttonCell.append(QueryTrailNavView.getView());
+
+            buttonTable.append(buttonRow);
+
+            var buttonCell = $(SetupManager.trOpen+SetupManager.tdOpen+SetupManager.tdClose+SetupManager.trClose);
+            buttonCell.append(buttonTable);
+            view.append(buttonCell);
 
             truebox.click(function(){
                 //access value of changed radio group with $(this).val()
@@ -624,17 +657,6 @@ var BuildQueryBoxView = {
 
             });
 
- //language query
-//            selectLanguage.change(function(event){
-//                var query = new QueryModel(QueryBucketModel.humanLanguageOfComments
-//                    , selectLanguage.val());
-//                query.displayType = "human language";
-//                query.displayValue = selectLanguage.find(":selected").text();
-//                BuildQueryBoxView.addAndSubmit(query);
-//
-//                truebox.prop('checked', false);
-//            });
-
 
 //add keypress  for 'enter' listener to submit query
             queryBox.keypress(function(e) {
@@ -646,12 +668,6 @@ var BuildQueryBoxView = {
                     query.displayType = combo.find(":selected").text();
                     query.displayValue = queryBox.val();
 
-//                    if(query.displayType == "year") {
-//                            var yearQuery = "["+queryBox.val()+"-01-01T00:00:00Z TO "+queryBox.val()+"-12-31T00:00:00Z]";
-//                            query = new QueryModel(combo.val(), yearQuery);
-//                            query.displayValue = queryBox.val();
-//                            query.displayType = combo.find(":selected").text();
-//                    }
                       BuildQueryBoxView.addAndSubmit(query);
 
 //LOG IT

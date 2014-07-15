@@ -1230,7 +1230,7 @@ var Controller = {
 
             td1.append(icon2);
 
-            td2.append("<text>complexity <font color='#8b0000'>" +complexity+"</font></text>");
+            td2.append("<text><font size='2'>complexity</font> <font color='#8b0000'>" +complexity+"</font></text>");
 
             td3.append(icon);
 
@@ -1320,7 +1320,7 @@ var Controller = {
 
         td1.append(icon2);
 
-        td2.append("<text>imports <font color='#8b0000'>" +importCount+"</font></text>");
+        td2.append("<text><font size='2'>imports</font> <font color='#8b0000'>" +importCount+"</font></text>");
 
         td3.append(icon);
 
@@ -1417,7 +1417,7 @@ var Controller = {
 
             td1.append(icon2);
 
-        td2.append("<text>size <font color='#8b0000'>" +size+"</font></text>");
+        td2.append("<text><font size='2'>size</font> <font color='#8b0000'>" +size+"</font></text>");
 
             td3.append(icon);
 
@@ -1611,7 +1611,7 @@ var Controller = {
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
 			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
-			var projectName = $('<div><u>'+name+'</u></div>');
+			var projectName = $('<div><u><font size="2">'+name+'</font></u></div>');
 
             projectName.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);

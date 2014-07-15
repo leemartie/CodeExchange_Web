@@ -24,6 +24,8 @@ var QueryBucketView = {
 
         var div = $('<div class="QueryBucket">'+'</div>');
         div.append(QueryBucketView.queryBucket);
+
+
         return div;
 
     },
@@ -31,7 +33,6 @@ var QueryBucketView = {
     update  :   function(){
 
         QueryBucketView.queryBucket.empty();
-
 
         var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
         var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
