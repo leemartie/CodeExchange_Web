@@ -15,7 +15,8 @@ var QueryTrailNavView = {
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         centerCell.attr("align","right");
         var createNewQueryButton = $(SetupManager.buttonOpen+"new search session"+SetupManager.buttonClose);
-        createNewQueryButton.button();
+        //createNewQueryButton.button();
+        createNewQueryButton.addClass("BottomButtons");
 
         centerCell.attr("width","50%");
         createNewQueryButton.width("90%");
@@ -47,10 +48,11 @@ var QueryTrailNavView = {
         gridButton.attr(SetupManager.ID_attr,"gridButton");
 
         gridButton.append("<text>show query history</text>");
-        gridButton.button();
+        //gridButton.button();
 
         gridButton.width("90%");
         gridButton.height("99%");
+        gridButton.addClass("BottomButtons");
 
         gridButton.click(function(event) {
             Controller.showGrid();

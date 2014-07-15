@@ -29,11 +29,27 @@ var SplashScreen = {
         var input = $(SetupManager.inputOpen+SetupManager.inputClose);
         input.addClass("SplashInput");
         input.attr(SetupManager.placeholder_attr, "type keywords and hit enter");
-        input.attr(SetupManager.ID_attr,SplashScreen.InputSplashID);
+        input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
+
+
+
+        var btn = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+        btn.append($("<text>Advanced Search</text>"));
+        btn.button();
+        btn.addClass("AdvancedSearch");
+
+
+
+
 
         var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
+
         inputDiv.append(title);
         inputDiv.append(input);
+       // inputDiv.append(btn);
+
+
+
         inputDiv.addClass("SplashInputDiv");
 
 
