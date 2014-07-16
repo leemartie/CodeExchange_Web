@@ -141,7 +141,7 @@ var SplashScreen = {
         input.keypress(function(e) {
             if (e.keyCode == '13') {
                 e.preventDefault();
-
+                input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
 
                 tableForSite.animate({
@@ -310,6 +310,7 @@ var SplashScreen = {
        var importsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
         importsCell.append(importsInput);
         importsInput.addClass("AdvancedInput");
+        importsInput.attr("placeholder","ex: java.io.File");
 
 //extends
         var extendsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -325,6 +326,7 @@ var SplashScreen = {
         extendsCell.append(extendsInput);
         extendsCell.attr("align","left");
         extendsInput.addClass("AdvancedInput");
+        extendsInput.attr("placeholder","ex: java.util.observable");
 
 
 //implements
@@ -341,6 +343,8 @@ var SplashScreen = {
         implementsCell.append(implementsInput);
         implementsCell.attr("align","left");
         implementsInput.addClass("AdvancedInput");
+        implementsInput.attr("placeholder","ex: java.util.observer");
+
 //class props
         var propsRow = $(SetupManager.trOpen+SetupManager.trClose);
         tableOneInput.append(propsRow);
@@ -405,6 +409,7 @@ var SplashScreen = {
         packageCell.append(packageInput);
         packageCell.attr("align","left");
         packageInput.addClass("AdvancedInput");
+        packageInput.attr("placeholder","ex: com.selimober.marsrovers");
 
         var projectRow = $(SetupManager.trOpen+SetupManager.trClose);
         tableWhereInput.append(projectRow);
@@ -419,7 +424,7 @@ var SplashScreen = {
         projectCell.append(projectInput);
         projectCell.attr("align","left");
         projectInput.addClass("AdvancedInput");
-
+        projectInput.attr("placeholder","ex: calico");
 
 //=======Method Call
         var methodCallTable = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -473,7 +478,7 @@ var SplashScreen = {
             methodCallParametersRow.append(methodCallParametersCell);
         var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
             methodCallParametersCell.append(methodCallParametersInput);
-            methodCallParametersInput.attr("placeholder","param 1, param 2, ...");
+            methodCallParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
         methodCallParametersInput.addClass("AdvancedInput");
 
         tableCell2.append(methodCallTable);
@@ -500,7 +505,7 @@ var SplashScreen = {
         methodCallClassRow.append(methodCallClassCell);
         var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
         methodCallClassCell.append(methodCallClassInput);
-        methodCallClassInput.attr(SetupManager.placeholder_attr, "class name");
+        methodCallClassInput.attr(SetupManager.placeholder_attr, "ex: Bootstrap");
         methodCallClassInput.addClass("AdvancedInput");
 
 //name
@@ -531,7 +536,7 @@ var SplashScreen = {
         methodCallParametersRow.append(methodCallParametersCell);
         var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
         methodCallParametersCell.append(methodCallParametersInput);
-        methodCallParametersInput.attr("placeholder","param 1, param 2, ...");
+        methodCallParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
         methodCallParametersInput.addClass("AdvancedInput");
 
 
@@ -600,6 +605,7 @@ var SplashScreen = {
         submitButton.append("<text>Submit</text>");
         submitButton.addClass("SubmitButton");
         tableCell4.append(submitButton);
+        tableCell4.attr("align","center");
 
         submitButton.mouseenter(function(event){
             submitButton.removeClass("SubmitButton");
@@ -621,4 +627,39 @@ var SplashScreen = {
     }
 
 
+}
+
+function setupAutoComplet(input, querytype){
+    //auto complete for method calls
+    input.autocomplete({
+        source: function( request, response ){
+            if(querytype == QueryBucketModel.snippetMethodCall) {
+                QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
+
+            }
+            else {
+                QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationClass, request, response);
+
+            }
+        },
+        //logging selection of autocomplete function
+        select: function( event, ui ) {
+            if(querytype == QueryBucketModel.snippetMethodCall) {
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                    QueryBucketModel.snippetMethodCallCallingClass);
+            }
+            else {
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
+                    QueryBucketModel.snippetMethodDeclarationClass);
+            }
+
+            return false;
+        }
+    }).keyup(function (e) {
+        if(e.which === 13) {
+            $(".ui-menu-item").hide();
+        }
+    });;
 }
