@@ -203,7 +203,7 @@ var SplashScreen = {
             "position" : "fixed",
             "background-color" : "#eee",
             "width" : "600px",
-            "height" : "500px",
+            "height" : "520px",
             "z-index" : "9002",
             "top" : "150px",
             "left" : (($(document).width() - 600) / 2)});
@@ -213,19 +213,33 @@ var SplashScreen = {
 
 
         var close = $('<div id="close"></div>');
-        close.css({"float":"right","padding-left":"2px","padding-right":"2px", "padding-top":"4px","width":"50px"});
+        close.addClass("CloseButton");
         close.addClass("SubmitButton");
         close.append($("<font size='2'><text>Close</text></font>"));
-        close.appendTo(div);
+        div.append(close);
+
         close.on("click",function(){
             $("#blanket").remove();
             $("#confirm").remove();
 
         });
 
+        close.mouseenter(function(event){
+            close.removeClass("CloseButton");
+            close.addClass("CloseButtonHover");
+        });
+
+        close.mouseleave( function(event){
+            close.removeClass("CloseButtonHover");
+            close.addClass("CloseButton");
+
+        });
 
 
-       div.append("<font size='2'><b><text>Find classes with...</text></b></font>");
+        var title = $("<div><font size='2'><b><text>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspFind classes with:</text></b></font></div>");
+
+
+       div.append(title);
         div.css({"background-color": "lightblue"});
 
 
@@ -264,9 +278,9 @@ var SplashScreen = {
         tableOneInput.addClass("AdvancedSearchTable");
         tableCell1.append(tableOneInput);
 
-        var header = $("<th>Properties</th>");
+        var header = $("<font size='2'><b><th>Properties</th></b></font>");
         header.attr("align",labelAlign);
-        header.attr("width",labelWidth);
+        header.attr("width","100%");
         tableOneInput.append(header);
 
 // imports
@@ -276,7 +290,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         importsRow.append(label);
-        label.append($("<text>Imports</text>"));
+        label.append($("<font size='2'><text>Imports</text></font>"));
        var importsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         importsRow.append(importsCell);
 
@@ -293,7 +307,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         extendsRow.append(label);
-        label.append($("<text>Extends</text>"));
+        label.append($("<font size='2'><text>Extends</text></font>"));
         var extendsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         extendsRow.append(extendsCell);
         var extendsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -309,7 +323,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         implementsRow.append(label);
-        label.append($("<text>Implements</text>"));
+        label.append($("<font size='2'><text>Implements</text></font>"));
         var implementsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         implementsRow.append(implementsCell);
         var implementsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -325,7 +339,7 @@ var SplashScreen = {
         cell1.attr("width",labelWidth);
         propsRow.append(cell1);
         var checkboxGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
-        var checkboxLabelGeneric = $("<text >generic</text>");
+        var checkboxLabelGeneric = $("<font size='2'><text >generic</text></font>");
 
         checkboxGeneric.attr("type","checkbox");
         checkboxGeneric.attr("value","generic");
@@ -346,7 +360,7 @@ var SplashScreen = {
         propsRow.append(cell2);
         var checkboxVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
 
-        var checkboxLabelVarArgs = $("<text >has wildcards</text>");
+        var checkboxLabelVarArgs = $("<font size='2'><text >has wildcards</text></font>");
 
         checkboxVarArgs.attr("type","checkbox");
         checkboxVarArgs.attr("value","varArgs");
@@ -362,9 +376,9 @@ var SplashScreen = {
         var methodCallTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         methodCallTable.addClass("AdvancedSearchTable");
 
-        var header = $("<th>Method Call</th>");
+        var header = $("<font size='2'><b><th>Method Call</th></b></font>");
         header.attr("align",labelAlign);
-        header.attr("width",labelWidth);
+        header.attr("width","100%");
         methodCallTable.append(header);
 //class
 
@@ -374,7 +388,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
             methodCallClassRow.append(label);
-            label.append($("<text>Class</text>"));
+            label.append($("<font size='2'><text>Class</text></font>"));
        var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             methodCallClassRow.append(methodCallClassCell);
        var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -389,7 +403,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
             methodCallNameRow.append(label);
-            label.append($("<text>Method</text>"));
+            label.append($("<font size='2'><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             methodCallNameRow.append(methodCallNameCell);
         var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -405,7 +419,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
             methodCallParametersRow.append(label);
-            label.append($("<text>Parameters</text>"));
+            label.append($("<font size='2'><text>Parameters</text></font>"));
         var methodCallParametersCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             methodCallParametersRow.append(methodCallParametersCell);
         var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -420,9 +434,9 @@ var SplashScreen = {
 //=======Method Declaration
         var methodCallTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         methodCallTable.addClass("AdvancedSearchTable");
-        var header = $("<th>Method Declaration</th>");
+        var header = $("<font size='2'><b><th>Method Declaration</th></b></font>");
         header.attr("align",labelAlign);
-        header.attr("width",labelWidth);
+        header.attr("width","100%");
         methodCallTable.append(header);
 //class
 
@@ -432,7 +446,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallClassRow.append(label);
-        label.append($("<text>Class</text>"));
+        label.append($("<font size='2'><text>Class</text></font>"));
         var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallClassRow.append(methodCallClassCell);
         var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -447,7 +461,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallNameRow.append(label);
-        label.append($("<text>Method</text>"));
+        label.append($("<font size='2'><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallNameRow.append(methodCallNameCell);
         var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -463,7 +477,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallParametersRow.append(label);
-        label.append($("<text>Parameters</text>"));
+        label.append($("<font size='2'><text>Parameters</text></font>"));
         var methodCallParametersCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallParametersRow.append(methodCallParametersCell);
         var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -479,7 +493,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         returnTypeRow.append(label);
-        label.append($("<text>Method</text>"));
+        label.append($("<font size='2'><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         returnTypeRow.append(methodCallNameCell);
         var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -496,7 +510,7 @@ var SplashScreen = {
         cell1.attr("width",labelWidth);
         propsRow.append(cell1);
         var checkboxGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
-        var checkboxLabelGeneric = $("<text >generic</text>");
+        var checkboxLabelGeneric = $("<font size='2'><text >generic</text></font>");
 
         checkboxGeneric.attr("type","checkbox");
         checkboxGeneric.attr("value","generic");
@@ -517,7 +531,7 @@ var SplashScreen = {
         propsRow.append(cell2);
         var checkboxVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
 
-        var checkboxLabelVarArgs = $("<text >variable args</text>");
+        var checkboxLabelVarArgs = $("<font size='2'><text >variable args</text></font>");
 
         checkboxVarArgs.attr("type","checkbox");
         checkboxVarArgs.attr("value","varArgs");
@@ -537,6 +551,17 @@ var SplashScreen = {
         submitButton.append("<text>Submit</text>");
         submitButton.addClass("SubmitButton");
         tableCell4.append(submitButton);
+
+        submitButton.mouseenter(function(event){
+            submitButton.removeClass("SubmitButton");
+            submitButton.addClass("SubmitButtonHover");
+        });
+
+        submitButton.mouseleave( function(event){
+            submitButton.removeClass("SubmitButtonHover");
+            submitButton.addClass("SubmitButton");
+
+        });
 
 
 

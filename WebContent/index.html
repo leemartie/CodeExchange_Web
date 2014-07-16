@@ -272,7 +272,7 @@
         padding-left: 0px;
         padding-right:0px;
         cursor: pointer;
-        box-shadow: 1px 1px 0px #FFBF00;
+        box-shadow: 0px 0px 0px #FFBF00;
 
         height:auto;
         width: 100px;
@@ -296,7 +296,7 @@
         padding-left: 0px;
         padding-right:0px;
         cursor: pointer;
-        box-shadow: 1px 1px 0px #FFBF00;
+        box-shadow: 0px 0px 0px #FFBF00;
         height:auto;
         word-wrap:break-word;
 
@@ -816,7 +816,7 @@
             padding-left: 0px;
             padding-right:0px;
             cursor: pointer;
-            box-shadow: 1px 1px 0px #FFBF00;
+            box-shadow: 0px 0px 0px #FFBF00;
             height:auto;
             padding: 1px;
             word-wrap:break-word;
@@ -988,12 +988,12 @@
 
 
         border-radius: 5px;
-        border-color: darkgray;
+        border-color: palegreen;;
         cursor: pointer;
         word-wrap:break-word;
         height:auto;
 
-        box-shadow: 1px 1px 0px palegreen;
+        box-shadow: 0px 0px 0px palegreen;
         padding: 2px;
 
     }
@@ -1041,6 +1041,7 @@
     border: 1px solid;
     border-color: #d4ebf2;
 
+
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
@@ -1060,7 +1061,7 @@
 .SplashInputDiv{
     background-color: lightgoldenrodyellow;
     color:#ffffff;
-    box-shadow: 3px 3px 3px #FFBF00;
+    box-shadow: 0px 0px 0px #FFBF00;
 
 
     border: 2px solid;
@@ -1201,7 +1202,7 @@
 
 
      box-shadow: 3px 3px 3px lightgreen;
-     background-color: #d3d3d3;
+     background-color: whitesmoke;
 
      border: 2px solid;
      border-color: #000000;
@@ -1214,13 +1215,15 @@
      border-bottom-right-radius: 15px;
 
      margin-top: 5px;
-     margin-bottom: 10px;
+     margin: 9px;
 
      text-align: center;
      vertical-align: middle;
      padding: 5px;
 
      cursor: pointer;
+
+
  }
 
 
@@ -1233,7 +1236,7 @@
 
 
     border: 1px solid;
-    background-color: #d3d3d3;
+    background-color: whitesmoke;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 
@@ -1241,7 +1244,7 @@
     border-bottom-right-radius: 15px;
 
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin: 10px;
 
     text-align: center;
     vertical-align: middle;
@@ -1318,6 +1321,27 @@
 
 }
 
+
+    .SubmitButtonHover{
+        box-shadow: 3px 3px 3px lightgreen;
+
+        border: 3px solid;
+        border-color: black;
+        background-color: whitesmoke;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        padding-top: 3px;
+        height: 30px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
 .SubmitButton{
     border: 1px solid;
     border-color: black;
@@ -1328,12 +1352,65 @@
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 
+    padding-top: 3px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.CloseButton{
+    border: 1px solid;
+    border-color: black;
+    background-color: whitesmoke;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     height: 20px;
     text-align: center;
     vertical-align: middle;
     font-size: 15px;
     cursor: pointer;
+
+    float:right;
+    padding-left:2px;
+    padding-right:2px;
+    padding-top:4px;
+    width:50px;
+    margin-right:4px;
+
 }
+
+    .CloseButtonHover{
+        box-shadow: 3px 3px 3px lightgreen;
+        border: 3px solid;
+
+        border-color: black;
+        background-color: whitesmoke;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        height: 20px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 15px;
+        cursor: pointer;
+
+        float:right;
+        padding-left:2px;
+        padding-right:2px;
+        padding-top:4px;
+        width:50px;
+        margin-right:2px;
+        margin-bottom:-4px;
+        margin-left:-2px;
+
+    }
 
 
 </style>
