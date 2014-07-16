@@ -203,7 +203,7 @@ var SplashScreen = {
             "position" : "fixed",
             "background-color" : "#eee",
             "width" : "600px",
-            "height" : "520px",
+            "height" : "600px",
             "z-index" : "9002",
             "top" : "150px",
             "left" : (($(document).width() - 600) / 2)});
@@ -236,7 +236,8 @@ var SplashScreen = {
         });
 
 
-        var title = $("<div><font size='2'><b><text>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspFind classes with:</text></b></font></div>");
+        var title = $("<div><font size='2'><b><text>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" +
+            "&nbsp&nbsp&nbsp&nbsp&nbspFind classes with:</text></b></font></div>");
 
 
        div.append(title);
@@ -256,6 +257,14 @@ var SplashScreen = {
         var tableCell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableRow.append(tableCell1);
         tableCell1.addClass("childAdvancedTable");
+
+        var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
+        table.append(tableRow);
+        var tableCell5 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        tableCell5.addClass("childAdvancedTable");
+        tableRow.append(tableCell5);
+
+
         var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(tableRow);
         var tableCell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -273,6 +282,8 @@ var SplashScreen = {
         var tableCell4 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableCell4.addClass("childAdvancedTable");
         tableRow.append(tableCell4);
+
+
 
         var tableOneInput = $(SetupManager.tableOpen+SetupManager.tableClose);
         tableOneInput.addClass("AdvancedSearchTable");
@@ -370,6 +381,44 @@ var SplashScreen = {
 
         propsRow.append(cell2);
         cell2.append(checkboxVarArgs);
+
+//package
+        var tableWhereInput = $(SetupManager.tableOpen+SetupManager.tableClose);
+        tableWhereInput.addClass("AdvancedSearchTable");
+        tableCell5.append(tableWhereInput);
+
+        var header = $("<font size='2'><b><th>Location</th></b></font>");
+        header.attr("align",labelAlign);
+        header.attr("width","100%");
+        tableWhereInput.append(header);
+
+        var packageRow = $(SetupManager.trOpen+SetupManager.trClose);
+        tableWhereInput.append(packageRow);
+        var label = $(SetupManager.tdOpen+SetupManager.tdClose);
+        label.attr("align",labelAlign);
+        label.attr("width",labelWidth);
+        packageRow.append(label);
+        label.append($("<font size='2'><text>Package</text></font>"));
+        var packageCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        packageRow.append(packageCell);
+        var packageInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        packageCell.append(packageInput);
+        packageCell.attr("align","left");
+        packageInput.addClass("AdvancedInput");
+
+        var projectRow = $(SetupManager.trOpen+SetupManager.trClose);
+        tableWhereInput.append(projectRow);
+        var label = $(SetupManager.tdOpen+SetupManager.tdClose);
+        label.attr("align",labelAlign);
+        label.attr("width",labelWidth);
+        projectRow.append(label);
+        label.append($("<font size='2'><text>Project</text></font>"));
+        var projectCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        projectRow.append(projectCell);
+        var projectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        projectCell.append(projectInput);
+        projectCell.attr("align","left");
+        projectInput.addClass("AdvancedInput");
 
 
 //=======Method Call

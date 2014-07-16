@@ -102,7 +102,8 @@ var QueryGridView = {
                 query.displayType = query.displayType.replace(/</gi,"&lt;");
                 query.displayType = query.displayType.replace(/</gi,"&gt;");
 
-                var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
+                var label = $('<text><font color="darkred" size="2">['+query.displayType+']</font> ' +
+                    '<font color="black" size="2">'+query.displayValue+'</font></text>');
 
                 cell.append(label);
 
@@ -209,7 +210,8 @@ var QueryGridView = {
             query.displayType = query.displayType.replace(/</gi,"&lt;");
             query.displayType = query.displayType.replace(/</gi,"&gt;");
 
-            var label = $('<text><font color="darkred">['+query.displayType+']</font> <font color="black">'+query.displayValue+'</font></text>');
+            var label = $('<text><font color="darkred" size="2">['+query.displayType+']</font> ' +
+                '<font color="black" size="2">'+query.displayValue+'</font></text>');
             cell.append(label);
 
 
