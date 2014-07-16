@@ -15,7 +15,9 @@ var QueryTrailNavView = {
 
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         centerCell.attr("align","right");
-        var createNewQueryButton = $(SetupManager.buttonOpen+"new search session"+SetupManager.buttonClose);
+        var createNewQueryButton = $(SetupManager.divOpen+"new search" +
+            SetupManager.divClose);
+        createNewQueryButton.css({    "padding-top": "13px", "padding-bottom": "13px"});
         //createNewQueryButton.button();
         createNewQueryButton.addClass("BottomButtons");
 
@@ -24,6 +26,18 @@ var QueryTrailNavView = {
         createNewQueryButton.height("99%");
         createNewQueryButton.attr("disabled", false);
 
+
+        createNewQueryButton.mouseenter(function(event) {
+            createNewQueryButton.removeClass("BottomButtons");
+            createNewQueryButton.addClass("BottomButtonsHover");
+
+        });
+
+        createNewQueryButton.mouseleave(function(event) {
+            createNewQueryButton.removeClass("BottomButtonsHover");
+            createNewQueryButton.addClass("BottomButtons");
+
+        });
         createNewQueryButton.click(function(event) {
 
             QueryBucketModel.removeAll();
@@ -45,10 +59,11 @@ var QueryTrailNavView = {
 
         gridCell.attr("align","left");
         gridCell.attr("width","90%");
-        var gridButton = $(SetupManager.buttonOpen+SetupManager.buttonClose);
+        var gridButton = $(SetupManager.divOpen+SetupManager.divClose);
         gridButton.attr(SetupManager.ID_attr,"gridButton");
 
-        gridButton.append("<text>show query history</text>");
+        gridButton.append("<text>show search history</text>");
+
         //gridButton.button();
 
         gridButton.width("90%");
@@ -64,7 +79,7 @@ var QueryTrailNavView = {
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
             }else{
-                gridButton.append("<text>show query history</text>");
+                gridButton.append("<text>show search history</text>");
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_OFF,null);
             }
@@ -74,6 +89,18 @@ var QueryTrailNavView = {
         gridCell.append(gridButton);
        // navigationRow.append(gridCell);
         navigationRow.append(gridCell);
+
+        gridButton.mouseenter(function(event) {
+            gridButton.removeClass("BottomButtons");
+            gridButton.addClass("BottomButtonsHover");
+
+        });
+
+        gridButton.mouseleave(function(event) {
+            gridButton.removeClass("BottomButtonsHover");
+            gridButton.addClass("BottomButtons");
+
+        });
 
         return navTable;
     }
