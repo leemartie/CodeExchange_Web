@@ -1063,13 +1063,7 @@ var BuildQueryBoxView = {
                 QueryManager.setChildQuery(childQuery);
 
                 QueryManager.submitQuery();
-//                    //make it lose focus so we can detect when user refocus on query it
-//                    $(SetupManager.pound+SetupManager.queryInput_ID).blur();
-//                var angle = 0;
-//                SetupManager.rotateStatusVar = setInterval(function(){
-//                    angle+=3;
-//                    $(SetupManager.pound+SetupManager.statusIconID).rotate(angle);
-//                },50);
+
             }
 
         },

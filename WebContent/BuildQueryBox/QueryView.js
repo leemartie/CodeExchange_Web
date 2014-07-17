@@ -40,7 +40,26 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        displayType = displayType.replace(/</gi,"&gt;");
 
 
-       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black">'+displayValue+'</font></text>');
+       var htmlEscapes = {
+           '&': '&amp;',
+           '<': '&lt;',
+           '>': '&gt;',
+           '"': '&quot;',
+           "'": '&#x27;',
+           '/': '&#x2F;'
+       };
+
+// Regex containing the keys listed immediately above.
+       var htmlEscaper = /[&<>"'\/]/g;
+
+// Escape a string for HTML interpolation.
+       var escape = function(string) {
+           return ('' + string).replace(htmlEscaper, function(match) {
+               return htmlEscapes[match];
+           });
+       };
+
+       var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black"><code>'+escape(displayValue)+'</code></font></text>');
 
 
 

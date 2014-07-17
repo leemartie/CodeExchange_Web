@@ -9,7 +9,7 @@ var SplashScreen = {
     getSplash : function(){
 
         var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
-        tableForSite.attr("height","40%");
+        tableForSite.attr("height","20%");
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
@@ -18,8 +18,12 @@ var SplashScreen = {
 
         row.append(cell);
 
+  //      var title = $("<div><img src='http://codeexchange.ics.uci.edu/logo.png'></img></div>");
+
+  //      title.addClass("SplashTitle");
         var title = $("<div><text>CodeExchange</text></div>");
         title.addClass("SplashTitle");
+
 
 
         var subtext = $("<div><text>Let's find some code</text></div>");
@@ -87,7 +91,7 @@ var SplashScreen = {
 
         cell.append(inputDiv);
 
-        var subtext = $("<div><text>Search over 10 million Java classes in GitHUB</text></div>");
+        var subtext = $("<div><text>Search over 10 million Java classes in GitHub</text></div>");
         subtext.addClass("footerText");
         cell.append(subtext);
 

@@ -54,6 +54,26 @@ var QueryGridView = {
     },
     update : function(){
 
+        var htmlEscapes = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '/': '&#x2F;'
+        };
+
+// Regex containing the keys listed immediately above.
+        var htmlEscaper = /[&<>"'\/]/g;
+
+// Escape a string for HTML interpolation.
+        var escape = function(string) {
+            return ('' + string).replace(htmlEscaper, function(match) {
+                return htmlEscapes[match];
+            });
+        };
+
+
         var lastCell = 0;
         for(var i = 0; i<QueryGridModel.history.length; i++){
             var stack = QueryGridModel.history[i];
@@ -103,7 +123,7 @@ var QueryGridView = {
                 query.displayType = query.displayType.replace(/</gi,"&gt;");
 
                 var label = $('<text><font color="darkred" size="2">['+query.displayType+']</font> ' +
-                    '<font color="black" size="2">'+query.displayValue+'</font></text>');
+                    '<font color="black" size="2">'+escape(query.displayValue)+'</font></text>');
 
                 cell.append(label);
 
@@ -211,7 +231,7 @@ var QueryGridView = {
             query.displayType = query.displayType.replace(/</gi,"&gt;");
 
             var label = $('<text><font color="darkred" size="2">['+query.displayType+']</font> ' +
-                '<font color="black" size="2">'+query.displayValue+'</font></text>');
+                '<font color="black" size="2">'+escape(query.displayValue)+'</font></text>');
             cell.append(label);
 
 
