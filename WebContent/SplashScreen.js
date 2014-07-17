@@ -9,33 +9,54 @@ var SplashScreen = {
     getSplash : function(){
 
         var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
-        tableForSite.attr("height","20%");
+        tableForSite.attr("height","40%");
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
         tableForSite.append(row);
-        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        var cellSubTable = $(SetupManager.tdOpen+SetupManager.tdClose);
 
+        row.append(cellSubTable);
+
+        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        subTable.addClass("SplashInputDiv");
+        subTable.attr("width","100%");
+
+        cellSubTable.append(subTable);
+
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(row);
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
 
-  //      var title = $("<div><img src='http://codeexchange.ics.uci.edu/logo.png'></img></div>");
-
-  //      title.addClass("SplashTitle");
-        var title = $("<div><text>CodeExchange</text></div>");
+        var title = $("<div><img src='http://codeexchange.ics.uci.edu/logo.png'></img></div>");
         title.addClass("SplashTitle");
+        cell.append(title);
+        cell.attr("width","100px");
+
+//        title.addClass("SplashTitle");
+//        var title = $("<div><text>CodeExchange</text></div>");
 
 
 
-        var subtext = $("<div><text>Let's find some code</text></div>");
-        subtext.addClass("subtext");
-        title.append(subtext);
+
+//        var subtext = $("<div><text>Let's find some code</text></div>");
+//        subtext.addClass("subtext");
+//        title.append(subtext);
+
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row.append(cell);
+
+        var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
 
         var input = $(SetupManager.inputOpen+SetupManager.inputClose);
+        inputDiv.append(input);
         input.addClass("SplashInput");
         input.attr(SetupManager.placeholder_attr, "Type keywords and hit Enter");
         input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
 
-
+        cell.append(inputDiv);
+        cell.attr("width","80%");
 
         var btn = $(SetupManager.divOpen+SetupManager.divClose);
 
@@ -74,26 +95,35 @@ var SplashScreen = {
         });
 
 
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row.append(cell);
+        cell.attr("width","10%");
+
+        cell.append(btn);
+
+
+ //       var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
+
+//        inputDiv.append(title);
+//        inputDiv.append(input);
+//        inputDiv.append(btn);
 
 
 
-        var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
-
-        inputDiv.append(title);
-        inputDiv.append(input);
-        inputDiv.append(btn);
 
 
 
-        inputDiv.addClass("SplashInputDiv");
 
-
-
-        cell.append(inputDiv);
+//        cell.append(inputDiv);
 
         var subtext = $("<div><text>Search over 10 million Java classes in GitHub</text></div>");
         subtext.addClass("footerText");
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        cell.attr("colspan","3");
+        row.append(cell);
         cell.append(subtext);
+        subTable.append(cell);
 
 //auto complete
         input.autocomplete({
@@ -150,17 +180,19 @@ var SplashScreen = {
 
                 tableForSite.animate({
                   height: '5%'
+
+
                 }, 700 );
 
-                cell.animate({
+                cellSubTable.animate({
 
-                    backgroundColor: '#000000'
+                    backgroundColor: '#d3d3d3'
                 }, 700 );
 
 //                tableForSite.fadeTo(700, 0,function(){});
 
                 if(SplashScreen.showing){
-                    inputDiv.addClass("SplashFloatLeft");
+                    subTable.addClass("SplashFloatLeft");
 
                     SetupManager.setupSite();
                     SplashScreen.showing = false;
@@ -185,8 +217,8 @@ var SplashScreen = {
 
 
 
-        cell.addClass("Splash");
-        cell.attr("align","center");
+        cellSubTable.addClass("Splash");
+        cellSubTable.attr("align","center");
 
 
 
@@ -205,7 +237,7 @@ var SplashScreen = {
        var div = $(SetupManager.divOpen+SetupManager.divClose);
         div.css({
             "position" : "fixed",
-            "background-color" : "#eee",
+            "background-color" : "#d3d3d3",
             "width" : "600px",
             "height" : "600px",
             "z-index" : "9002",
@@ -245,7 +277,7 @@ var SplashScreen = {
 
 
        div.append(title);
-        div.css({"background-color": "lightblue"});
+        div.css({"background-color": "#d3d3d3"});
 
 
 
@@ -253,7 +285,7 @@ var SplashScreen = {
         var labelWidth = "15%";
         var labelAlign = "left";
        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-        table.css({"background-color": "lightblue"});
+        table.css({"background-color": "#d3d3d3"});
 
 
        var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
