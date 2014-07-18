@@ -175,14 +175,14 @@ var SetupManager = {
 			var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableForSite);
 			tableForSite.addClass("HeaderTable");
-			tableForSite.addClass("SiteBack");
+//			tableForSite.addClass("SiteBack");
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).addClass("SiteBack");
 			tableForSite.attr(SetupManager.ID_attr,SetupManager.tableHeader_ID);
 			
 			var headerRow = $(SetupManager.trOpen+SetupManager.trClose);
 			tableForSite.append(headerRow);
-			headerRow.addClass("HeaderTR");
-			headerRow.addClass("HeaderBack");
+//			headerRow.addClass("HeaderTR");
+//			headerRow.addClass("HeaderBack");
 			
 			//query box
 			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -230,6 +230,7 @@ var SetupManager = {
 			pageNavigation.attr("valign","top");
 			pageNavigation.attr("align","center");
 			pageNavigation.attr("width","100%");
+
 			pageNavigation.addClass("PageNavigation");
 			
 			
@@ -239,6 +240,7 @@ var SetupManager = {
 			//result row
 			var resultRow = $(SetupManager.trOpen+SetupManager.trClose);
 			tableForSite.append(resultRow);
+
 			
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -392,7 +394,8 @@ var SetupManager = {
 
 				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
 
-                $('.Grid').width(screenWidth - $('.FilterSideTD').width()-32);
+
+                $('.Grid').width(screenWidth - $('.FilterSideTD').width()-33);
 				
 				
 			});
@@ -425,10 +428,11 @@ var SetupManager = {
 			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
 			
 			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
+
             var height = $('QueryRecommenderView').height;
             $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
-            $('.Grid').width(screenWidth - $('.FilterSideTD').width()-32);
+            $('.Grid').width(screenWidth - $('.FilterSideTD').width()-33);
 
 
             var editor = ace.edit('result0');

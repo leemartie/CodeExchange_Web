@@ -7,6 +7,7 @@ var BuildQueryBoxView = {
 			var view = $(SetupManager.tableOpen+SetupManager.tableClose);
             //view.attr("cellpadding","5");
 
+
             //make title
             var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -23,26 +24,7 @@ var BuildQueryBoxView = {
             label.addClass("BuildQueryTitle");
             titleCell.append(label);
             titleCell.attr("align", "center");
-          //  view.append(titleRow);
 
-//flash for enter query
-//            // set timeout
-//            var tid = setTimeout(mycode(label), 500);
-//
-//            function mycode(label) {
-//
-//                label.animate({
-//                    opacity: 0.3
-//                }, 1500 );
-//                label.animate({
-//                    opacity: 1
-//
-//
-//                }, 1500 );
-//
-//
-//
-//            }
 
 
             //row for query box

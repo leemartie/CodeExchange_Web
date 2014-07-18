@@ -24,15 +24,18 @@ var SplashScreen = {
 
         cellSubTable.append(subTable);
 
-        var row = $(SetupManager.trOpen+SetupManager.trClose);
-        subTable.append(row);
+        var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(titleRow);
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        row.append(cell);
+        titleRow.append(cell);
 
-        var title = $("<div><img src='http://codeexchange.ics.uci.edu/logo.png'></img></div>");
-        title.addClass("SplashTitle");
+        var title = $("<img src='http://codeexchange.ics.uci.edu/logo.png'></img>");
+
+        cell.attr("width","100%");
+        cell.attr("align","center");
+        cell.attr("colspan","3");
         cell.append(title);
-        cell.attr("width","100px");
+
 
 //        title.addClass("SplashTitle");
 //        var title = $("<div><text>CodeExchange</text></div>");
@@ -43,6 +46,18 @@ var SplashScreen = {
 //        var subtext = $("<div><text>Let's find some code</text></div>");
 //        subtext.addClass("subtext");
 //        title.append(subtext);
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(row);
+
+
+        var sideCellTitle= $(SetupManager.tdOpen+SetupManager.tdClose);
+        var title = $("<img src='http://codeexchange.ics.uci.edu/logo.png'></img>");
+
+
+        sideCellTitle.append(title);
+        row.append(sideCellTitle);
+        sideCellTitle.hide();
+
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
@@ -57,6 +72,7 @@ var SplashScreen = {
 
         cell.append(inputDiv);
         cell.attr("width","80%");
+        cell.css({"padding-right":"10px"});
 
         var btn = $(SetupManager.divOpen+SetupManager.divClose);
 
@@ -96,9 +112,10 @@ var SplashScreen = {
 
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
         row.append(cell);
         cell.attr("width","10%");
-
+        cell.css({"border-left":"1px solid","border-color":"darkgray"});
         cell.append(btn);
 
 
@@ -116,7 +133,7 @@ var SplashScreen = {
 
 //        cell.append(inputDiv);
 
-        var subtext = $("<div><text>Search over 10 million Java classes in GitHub</text></div>");
+        var subtext = $("<div><font color='gray'><text>Search over 10 million Java classes in GitHub</text></font></div>");
         subtext.addClass("footerText");
         var row = $(SetupManager.trOpen+SetupManager.trClose);
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -189,11 +206,15 @@ var SplashScreen = {
                     backgroundColor: '#d3d3d3'
                 }, 700 );
 
+
+
 //                tableForSite.fadeTo(700, 0,function(){});
 
                 if(SplashScreen.showing){
                     subTable.addClass("SplashFloatLeft");
-
+                    titleRow.hide();
+                    sideCellTitle.toggle();
+                    btn.height("50%");
                     SetupManager.setupSite();
                     SplashScreen.showing = false;
                 }

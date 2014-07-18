@@ -99,7 +99,7 @@
     }
 
     .addQueryIcon{
-        float: center;
+
         background-color: #d3d3d3;
         border: 2px solid;
         border-radius: 5px;
@@ -261,7 +261,7 @@
     }
 
     .GridRow{
-        background-color:lightgoldenrodyellow;
+        background-color:whitesmoke;
         color:#ffffff;
 
         border: 1px solid;
@@ -285,7 +285,7 @@
 
 
     .GridRowHover{
-        background-color:yellow;
+        background-color:lightgoldenrodyellow;
         color:#ffffff;
 
         border: 1px solid;
@@ -296,7 +296,7 @@
         padding-left: 0px;
         padding-right:0px;
         cursor: pointer;
-        box-shadow: 0px 0px 0px #FFBF00;
+        box-shadow: 3px 3px 3px darkgray;
         height:auto;
         word-wrap:break-word;
 
@@ -458,16 +458,21 @@
 
     }
 
-
+    .HeaderTable{
+        margin: 0;
+        padding: 0;
+    }
 
 
     table.ResultTable{
         background-color: #d3d3d3;
-        padding-top: 0px;
+        margin: 0;
+        padding: 0;
     }
 
     td.ResultTD{
         background-color: #d3d3d3;
+        height: 100%;
 
     }
 
@@ -486,7 +491,7 @@
     td.StatusTD{
         padding-top: 0px;
     	padding-bottom: 0px;
-    	padding-left: 0px;
+    	padding-left: 5px;
         padding-right: 5px;
     	height:15px;
 
@@ -499,9 +504,7 @@
     	float:left;
     }
 
-    .Header{
 
-    }
 
     .CriticBorder{
 
@@ -514,31 +517,6 @@
 
     }
 
-	td.HeaderTD{
-		vertical-align:top;
-		text-align:center;
-     	border: 1px solid;
-        background-color: #d3d3d3;
-
-	}
-
-	form.FilterHeader{
-		background-color:lightgray;
-		text-align:left;
-		vertical-align:top;
-		padding-top: 10px;
-	}
-
-
-	table.HeaderTable{
-		border-spacing: 4px;
-        background-color: #d3d3d3;
-	}
-
-	tr.HeaderTR{
-        background-color: #d3d3d3;
-
-	}
 
 	textarea{
 	    padding-top: 0px;
@@ -552,16 +530,7 @@
   		border: 1px solid;
 	}
 
-	.FilterSummary {
-		padding-top: 0px;
-    	padding-bottom: 0px;
-		height:30px;
-		resize: none;
-		font-size: 10pt;
-  		font-family: Courier;
-  		vertical-align:bottom;
 
-	}
 
 	div.Filter{
 		 overflow:scroll;
@@ -575,23 +544,13 @@
 
     }
 
-    td.FilterTD{
-    	text-align:left;
-        cursor:pointer;
-        background-color:	lightgray;
-    }
 
-
-
-    td.FilterHeaderTD{
-
-		text-align:left;
-     	border: 1px solid;
-    }
 
     td.FilterSideTD{
 
+
         border: 1px solid;
+        border-color: black;
 
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
@@ -600,8 +559,8 @@
         border-bottom-right-radius: 25px;
 
 
-        background-color: #2c4961;
-        height: 100%;
+        background-color: whitesmoke;
+
 
     }
 
@@ -657,6 +616,10 @@
    	 	text-indent: -15px;
 	}
 
+    td {
+        padding:0; margin:0;
+    }
+
 	.Check {
     width: 13px;
     height: 13px;
@@ -668,13 +631,9 @@
     overflow: hidden;
 	}
 
-	.FilterTitle{
-		color:#ffffff;
-	}
 
-	.FilterBackground{
-		background-color:#708090;
-	}
+
+
 
 	.SiteBack{
         background-color: #d3d3d3;
@@ -684,6 +643,10 @@
         background-color: #d3d3d3;
 
 	}
+
+    .HeaderTR{
+        margin: 2px;
+    }
 
 	.ResultsBack{
         background-color: #d3d3d3;
@@ -701,38 +664,38 @@
     	font-size: 14px
     }
 
-    .spaceUnder
-    {
-        margin: 10px;
-        height: 100%;
-    }
 
 
     .navView{
-        background-color: #2c4961;
+        background-color: whitesmoke;
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
 
         border-bottom-left-radius: 25px;
         border-bottom-right-radius: 25px;
-        padding: 10px;
-        margin: 1px;
+        padding: 9px;
+        padding-right: 7px;
+
+
     }
         .BucketView{
-            color:white;
-            background-color: #2c4961;
+
+            color:black;
+            background-color: whitesmoke;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
 
             border-bottom-left-radius: 25px;
             border-bottom-right-radius: 25px;
-             padding: 5px;
-            margin: 1px;
+             padding: 4px;
+            padding-right: 7px;
+
+
         }
 
         .QueryBucket{
 
-            background-color: #2c4961;
+            background-color: whitesmoke;
             font-size: 14px;
             border-bottom: 1px solid;
             border-right: 1px solid;
@@ -747,7 +710,7 @@
 
             background-color:#ffffff;
             overflow:scroll;
-            height: 250px;
+
             overflow-x:hidden;
         }
 
@@ -788,8 +751,9 @@
         .BuildQueryTitle {
             font-size: 16pt;
             font-family: Courier;
-
-            background-color: #2c4961;
+            padding: 0;
+            margin: 0;
+            background-color: whitesmoke;
         }
 
         .BuildQueryTitleFlash{
@@ -940,7 +904,7 @@
     }
 
     .RecommendationDown{
-        background-color: yellow;
+        background-color: lightgoldenrodyellow;
         color:white;
         font-size: 14px;
         border: 1px solid;
@@ -949,7 +913,7 @@
         padding-left: 0px;
         padding-right:0px;
 
-
+        box-shadow: 3px 3px 3px darkgray;
         border-radius: 5px;
         border-color: darkgray;
         cursor: pointer;
@@ -959,7 +923,7 @@
     }
 
     .RecommendationHover{
-        background-color: yellow;
+        background-color: lightgoldenrodyellow;
         color:#ffffff;
         font-size: 14px;
         border: 1px solid;
@@ -968,7 +932,7 @@
         padding-left: 0px;
         padding-right:0px;
 
-
+        box-shadow: 3px 3px 3px darkgray;
         border-radius: 5px;
         border-color: darkgray;
         cursor: pointer;
@@ -1165,15 +1129,18 @@
 
     text-align: center;
     vertical-align: middle;
-    height: 70%;
-    width: 90%;
-    margin-left: 20px;
 
+    width: 90%;
+    height:100%;
+
+
+    padding-bottom: 2px;
     cursor: pointer;
+
 }
 
  .AdvancedSearchText{
-     margin-top: 8px;
+     margin-top: 7px;
      text-align: center;
      vertical-align: middle;
  }
@@ -1195,9 +1162,11 @@
 
      text-align: center;
      vertical-align: middle;
-     height: 70%;
-     width: 90%;
 
+     width: 90%;
+    height:100%;
+
+     padding-bottom: 2px;
      cursor: pointer;
  }
 
