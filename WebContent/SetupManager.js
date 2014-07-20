@@ -175,6 +175,11 @@ var SetupManager = {
 			var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableForSite);
 			tableForSite.addClass("HeaderTable");
+            //border="0" cellpadding="0" cellspacing="0"
+            tableForSite.attr("cellpadding","0");
+            tableForSite.attr("cellspacing","0");
+            tableForSite.attr("border","0");
+
 //			tableForSite.addClass("SiteBack");
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).addClass("SiteBack");
 			tableForSite.attr(SetupManager.ID_attr,SetupManager.tableHeader_ID);
@@ -200,6 +205,9 @@ var SetupManager = {
 			
 			//--row for status
 			var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+            statusTable.attr("cellpadding","0");
+            statusTable.attr("cellspacing","0");
+            statusTable.attr("border","0");
 			var rowStatus = $(SetupManager.trOpen+SetupManager.trClose);
 			statusTable.append(rowStatus);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(statusTable);
@@ -252,6 +260,9 @@ var SetupManager = {
 			
 			//make table
 			var tableOfResults = $(SetupManager.tableOpen+SetupManager.tableClose);
+            tableOfResults.attr("cellpadding","0");
+            tableOfResults.attr("cellspacing","2");
+            tableOfResults.attr("border","0");
 			//set id
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site

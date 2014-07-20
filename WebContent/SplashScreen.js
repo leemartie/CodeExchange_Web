@@ -10,6 +10,9 @@ var SplashScreen = {
 
         var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
         tableForSite.attr("height","40%");
+        tableForSite.attr("cellpadding","0");
+        tableForSite.attr("cellspacing","0");
+        tableForSite.attr("border","0");
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
@@ -34,6 +37,7 @@ var SplashScreen = {
         cell.attr("width","100%");
         cell.attr("align","center");
         cell.attr("colspan","3");
+        //cell.css({"border-bottom": "1px solid", "border-color":"navy"});
         cell.append(title);
 
 
@@ -56,6 +60,7 @@ var SplashScreen = {
 
         sideCellTitle.append(title);
         row.append(sideCellTitle);
+        sideCellTitle.css({"padding-right":"50px"});
         sideCellTitle.hide();
 
 
@@ -72,12 +77,14 @@ var SplashScreen = {
 
         cell.append(inputDiv);
         cell.attr("width","80%");
-        cell.css({"padding-right":"10px"});
+        cell.css({"padding-right":"50px"});
+        cell.attr("align","center");
+
 
         var btn = $(SetupManager.divOpen+SetupManager.divClose);
 
-       // var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/wizard.png"></img>');
-       // btn.append(icon);
+        // var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/wizard.png"></img>');
+        // btn.append(icon);
         var label = $("<div><text> Advanced Search</text></div>");
         label.addClass("AdvancedSearchText");
         btn.append(label);
@@ -96,9 +103,9 @@ var SplashScreen = {
         btn.click(function(event) {
 
             $('<div id="blanket"></div>').
-                    appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+                appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
 
-            var advancedDiv = SplashScreen.setupAdvanvedSearch();
+            var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn);
 
 
 
@@ -115,11 +122,12 @@ var SplashScreen = {
 
         row.append(cell);
         cell.attr("width","10%");
-        cell.css({"border-left":"1px solid","border-color":"darkgray"});
+        cell.attr("align","left");
+        //cell.css({"border-left":"2px solid","border-color":"darkgray"});
         cell.append(btn);
 
 
- //       var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
+        //       var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
 
 //        inputDiv.append(title);
 //        inputDiv.append(input);
@@ -179,7 +187,7 @@ var SplashScreen = {
             },
 
             open: function(event, ui){
-                   $(".ui-menu").addClass("AutoComplete");
+                $(".ui-menu").addClass("AutoComplete");
             }
 
         }).keyup(function (e) {
@@ -196,7 +204,7 @@ var SplashScreen = {
                 subtext.hide();
 
                 tableForSite.animate({
-                  height: '5%'
+                    height: '5%'
 
 
                 }, 700 );
@@ -254,50 +262,21 @@ var SplashScreen = {
 
     },
 
-    setupAdvanvedSearch: function(){
-       var div = $(SetupManager.divOpen+SetupManager.divClose);
-        div.css({
-            "position" : "fixed",
-            "background-color" : "#d3d3d3",
-            "width" : "600px",
-            "height" : "600px",
-            "z-index" : "9002",
-            "top" : "150px",
-            "left" : (($(document).width() - 600) / 2)});
-
-       div.attr("id","confirm");
-       div.addClass("AdvancedForm");
+    setupAdvanvedSearch: function(input, subtext, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn){
+        var div = $(SetupManager.divOpen+SetupManager.divClose);
 
 
-        var close = $('<div id="close"></div>');
-        close.addClass("CloseButton");
-        close.addClass("SubmitButton");
-        close.append($("<font size='2'><text>Close</text></font>"));
-        div.append(close);
-
-        close.on("click",function(){
-            $("#blanket").remove();
-            $("#confirm").remove();
-
-        });
-
-        close.mouseenter(function(event){
-            close.removeClass("CloseButton");
-            close.addClass("CloseButtonHover");
-        });
-
-        close.mouseleave( function(event){
-            close.removeClass("CloseButtonHover");
-            close.addClass("CloseButton");
-
-        });
+        div.attr("id","confirm");
+        div.addClass("AdvancedForm");
 
 
-        var title = $("<div><font size='2'><b><text>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" +
-            "&nbsp&nbsp&nbsp&nbsp&nbspFind classes with:</text></b></font></div>");
 
 
-       div.append(title);
+
+        var title = $("<div><font size='2'><b><text>Find classes with:</text></b></font></div>");
+
+
+        div.append(title);
         div.css({"background-color": "#d3d3d3"});
 
 
@@ -305,40 +284,49 @@ var SplashScreen = {
 
         var labelWidth = "15%";
         var labelAlign = "left";
-       var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
         table.css({"background-color": "#d3d3d3"});
 
 
-       var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(tableRow);
         var tableCell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableRow.append(tableCell1);
         tableCell1.addClass("childAdvancedTable");
+        tableCell1.attr("colspan","2");
 
         var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(tableRow);
         var tableCell5 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableCell5.addClass("childAdvancedTable");
         tableRow.append(tableCell5);
-
+        tableCell5.attr("colspan","2");
 
         var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(tableRow);
         var tableCell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableRow.append(tableCell2);
         tableCell2.addClass("childAdvancedTable");
+        tableCell2.attr("colspan","2");
 
         var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(tableRow);
         var tableCell3 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableCell3.addClass("childAdvancedTable");
         tableRow.append(tableCell3);
+        tableCell3.attr("colspan","2");
 
         var tableRow = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(tableRow);
+        var tableCell6 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        tableCell6.addClass("childAdvancedTable");
+        tableRow.append(tableCell6);
+
         var tableCell4 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tableCell4.addClass("childAdvancedTable");
         tableRow.append(tableCell4);
+
+
 
 
 
@@ -352,19 +340,19 @@ var SplashScreen = {
         tableOneInput.append(header);
 
 // imports
-       var importsRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var importsRow = $(SetupManager.trOpen+SetupManager.trClose);
         tableOneInput.append(importsRow);
         var label = $(SetupManager.tdOpen+SetupManager.tdClose);
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         importsRow.append(label);
         label.append($("<font size='2'><text>Imports</text></font>"));
-       var importsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        var importsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         importsRow.append(importsCell);
 
 
         importsCell.attr("align","left");
-       var importsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        var importsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
         importsCell.append(importsInput);
         importsInput.addClass("AdvancedInput");
         importsInput.attr("placeholder","ex: java.io.File");
@@ -430,18 +418,18 @@ var SplashScreen = {
         cell2.attr("width",labelWidth);
 
         propsRow.append(cell2);
-        var checkboxVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
+        var checkboxWildCards = $(SetupManager.inputOpen+SetupManager.inputClose);
 
         var checkboxLabelVarArgs = $("<font size='2'><text >has wildcards</text></font>");
 
-        checkboxVarArgs.attr("type","checkbox");
-        checkboxVarArgs.attr("value","varArgs");
+        checkboxWildCards.attr("type","checkbox");
+        checkboxWildCards.attr("value","varArgs");
         cell2.append(checkboxLabelVarArgs);
         var cell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
         cell2.attr("align",labelAlign);
 
         propsRow.append(cell2);
-        cell2.append(checkboxVarArgs);
+        cell2.append(checkboxWildCards);
 
 //package
         var tableWhereInput = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -493,49 +481,49 @@ var SplashScreen = {
         methodCallTable.append(header);
 //class
 
-       var methodCallClassRow = $(SetupManager.trOpen+SetupManager.trClose);
-            methodCallTable.append(methodCallClassRow);
+        var methodCallClassRow = $(SetupManager.trOpen+SetupManager.trClose);
+        methodCallTable.append(methodCallClassRow);
         var label = $(SetupManager.tdOpen+SetupManager.tdClose);
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
-            methodCallClassRow.append(label);
-            label.append($("<font size='2'><text>Class</text></font>"));
-       var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            methodCallClassRow.append(methodCallClassCell);
-       var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-            methodCallClassCell.append(methodCallClassInput);
+        methodCallClassRow.append(label);
+        label.append($("<font size='2'><text>Class</text></font>"));
+        var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        methodCallClassRow.append(methodCallClassCell);
+        var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        methodCallClassCell.append(methodCallClassInput);
         methodCallClassInput.attr(SetupManager.placeholder_attr, "ex: java.util.hashmap");
         methodCallClassInput.addClass("AdvancedInput");
 
 //name
         var methodCallNameRow = $(SetupManager.trOpen+SetupManager.trClose);
-            methodCallTable.append(methodCallNameRow);
+        methodCallTable.append(methodCallNameRow);
         var label = $(SetupManager.tdOpen+SetupManager.tdClose);
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
-            methodCallNameRow.append(label);
-            label.append($("<font size='2'><text>Method</text></font>"));
+        methodCallNameRow.append(label);
+        label.append($("<font size='2'><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            methodCallNameRow.append(methodCallNameCell);
+        methodCallNameRow.append(methodCallNameCell);
         var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-            methodCallNameCell.append(methodCallNameInput);
-            methodCallNameInput.attr(SetupManager.placeholder_attr, "ex: put");
+        methodCallNameCell.append(methodCallNameInput);
+        methodCallNameInput.attr(SetupManager.placeholder_attr, "ex: put");
         methodCallNameInput.addClass("AdvancedInput");
 
 
 //parameters
         var methodCallParametersRow = $(SetupManager.trOpen+SetupManager.trClose);
-            methodCallTable.append(methodCallParametersRow);
+        methodCallTable.append(methodCallParametersRow);
         var label = $(SetupManager.tdOpen+SetupManager.tdClose);
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
-            methodCallParametersRow.append(label);
-            label.append($("<font size='2'><text>Parameters</text></font>"));
+        methodCallParametersRow.append(label);
+        label.append($("<font size='2'><text>Parameters</text></font>"));
         var methodCallParametersCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            methodCallParametersRow.append(methodCallParametersCell);
+        methodCallParametersRow.append(methodCallParametersCell);
         var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-            methodCallParametersCell.append(methodCallParametersInput);
-            methodCallParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
+        methodCallParametersCell.append(methodCallParametersInput);
+        methodCallParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
         methodCallParametersInput.addClass("AdvancedInput");
 
         tableCell2.append(methodCallTable);
@@ -560,10 +548,10 @@ var SplashScreen = {
         label.append($("<font size='2'><text>Class</text></font>"));
         var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallClassRow.append(methodCallClassCell);
-        var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-        methodCallClassCell.append(methodCallClassInput);
-        methodCallClassInput.attr(SetupManager.placeholder_attr, "ex: Bootstrap");
-        methodCallClassInput.addClass("AdvancedInput");
+        var methodDecClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        methodCallClassCell.append(methodDecClassInput);
+        methodDecClassInput.attr(SetupManager.placeholder_attr, "ex: Bootstrap");
+        methodDecClassInput.addClass("AdvancedInput");
 
 //name
         var methodCallNameRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -575,10 +563,10 @@ var SplashScreen = {
         label.append($("<font size='2'><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallNameRow.append(methodCallNameCell);
-        var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-        methodCallNameCell.append(methodCallNameInput);
-        methodCallNameInput.attr(SetupManager.placeholder_attr, "ex: sort");
-        methodCallNameInput.addClass("AdvancedInput");
+        var methodDecNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        methodCallNameCell.append(methodDecNameInput);
+        methodDecNameInput.attr(SetupManager.placeholder_attr, "ex: sort");
+        methodDecNameInput.addClass("AdvancedInput");
 
 
 //parameters
@@ -591,10 +579,10 @@ var SplashScreen = {
         label.append($("<font size='2'><text>Parameters</text></font>"));
         var methodCallParametersCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallParametersRow.append(methodCallParametersCell);
-        var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-        methodCallParametersCell.append(methodCallParametersInput);
-        methodCallParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
-        methodCallParametersInput.addClass("AdvancedInput");
+        var methodDecParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        methodCallParametersCell.append(methodDecParametersInput);
+        methodDecParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
+        methodDecParametersInput.addClass("AdvancedInput");
 
 
 //return type
@@ -607,10 +595,10 @@ var SplashScreen = {
         label.append($("<font size='2'><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         returnTypeRow.append(methodCallNameCell);
-        var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
-        methodCallNameCell.append(methodCallNameInput);
-        methodCallNameInput.attr(SetupManager.placeholder_attr, "ex: java.lang.String");
-        methodCallNameInput.addClass("AdvancedInput");
+        var methodDecReturnInput = $(SetupManager.inputOpen+SetupManager.inputClose);
+        methodCallNameCell.append(methodDecReturnInput);
+        methodDecReturnInput.attr(SetupManager.placeholder_attr, "ex: java.lang.String");
+        methodDecReturnInput.addClass("AdvancedInput");
 
 
         var propsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -620,17 +608,17 @@ var SplashScreen = {
         cell1.attr("align",labelAlign);
         cell1.attr("width",labelWidth);
         propsRow.append(cell1);
-        var checkboxGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
+        var checkboxDecGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
         var checkboxLabelGeneric = $("<font size='2'><text >generic</text></font>");
 
-        checkboxGeneric.attr("type","checkbox");
-        checkboxGeneric.attr("value","generic");
+        checkboxDecGeneric.attr("type","checkbox");
+        checkboxDecGeneric.attr("value","generic");
 
         cell1.append(checkboxLabelGeneric);
         var cell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
         cell1.attr("align",labelAlign);
         propsRow.append(cell1);
-        cell1.append(checkboxGeneric);
+        cell1.append(checkboxDecGeneric);
 
         var propsRow = $(SetupManager.trOpen+SetupManager.trClose);
         methodCallTable.append(propsRow);
@@ -640,21 +628,44 @@ var SplashScreen = {
         cell2.attr("width",labelWidth);
 
         propsRow.append(cell2);
-        var checkboxVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
+        var checkboxDecVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
 
         var checkboxLabelVarArgs = $("<font size='2'><text >variable args</text></font>");
 
-        checkboxVarArgs.attr("type","checkbox");
-        checkboxVarArgs.attr("value","varArgs");
+        checkboxDecVarArgs.attr("type","checkbox");
+        checkboxDecVarArgs.attr("value","varArgs");
         cell2.append(checkboxLabelVarArgs);
         var cell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
         cell2.attr("align",labelAlign);
 
         propsRow.append(cell2);
-        cell2.append(checkboxVarArgs);
+        cell2.append(checkboxDecVarArgs);
 
 
         tableCell3.append(methodCallTable);
+
+        var close = $('<div id="close"></div>');
+//        close.addClass("CloseButton");
+        close.addClass("SubmitButton");
+        close.append($("<text>Cancel</text>"));
+        tableCell6.append(close);
+        tableCell6.attr("align","center");
+        close.on("click",function(){
+            $("#blanket").remove();
+            $("#confirm").remove();
+
+        });
+
+        close.mouseenter(function(event){
+            close.removeClass("SubmitButton");
+            close.addClass("SubmitButtonHover");
+        });
+
+        close.mouseleave( function(event){
+            close.removeClass("SubmitButtonHover");
+            close.addClass("SubmitButton");
+
+        });
 
 
 //go button
@@ -675,48 +686,288 @@ var SplashScreen = {
 
         });
 
+        submitButton.click(function(event){
+                SplashScreen.addAllAndSubmit(importsInput,extendsInput,implementsInput,checkboxGeneric,checkboxWildCards,
+                                          packageInput,projectInput,methodCallClassInput,methodCallNameInput,
+                                          methodCallParametersInput,methodDecClassInput,methodDecNameInput,methodDecParametersInput,
+                                          methodDecReturnInput,checkboxDecGeneric,checkboxDecVarArgs);
+
+            $("#blanket").remove();
+            $("#confirm").remove();
+
+
+            input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
+            subtext.hide();
+
+            tableForSite.animate({
+                height: '5%'
+
+
+            }, 700 );
+
+            cellSubTable.animate({
+
+                backgroundColor: '#d3d3d3'
+            }, 700 );
+
+
+
+//                tableForSite.fadeTo(700, 0,function(){});
+
+            if(SplashScreen.showing){
+                subTable.addClass("SplashFloatLeft");
+                titleRow.hide();
+                sideCellTitle.toggle();
+                btn.height("50%");
+                SetupManager.setupSite();
+                SplashScreen.showing = false;
+            }
+
+        });
+
 
 
 
         div.append(table);
 
+        div.css({
+            "position" : "fixed",
+            "background-color" : "#d3d3d3",
+            "width" : "600px",
+            "overflow": "hidden",
+            "height": "auto",
+            "z-index" : "9002",
+            "top" : "150px",
+            "left" : (($(document).width() - 600) / 2)});
+
         return div;
+    }
+
+    ,
+
+    /***/
+    addAllAndSubmit: function(importsInput,extendsInput,implementsInput,checkboxGeneric,checkboxWildCards,
+                              packageInput,projectInput,methodCallClassInput,methodCallNameInput,
+                              methodCallParametersInput,methodDecClassInput,methodDecNameInput,methodDecParametersInput,
+                              methodDecReturnInput,checkboxDecGeneric,checkboxDecVarArgs){
+
+//checkboxGeneric[0].checked)
+
+        var listOfQuerires = new Array();
+
+        if(importsInput != null || importsInput != ""){
+            var query = new QueryModel(QueryBucketModel.snippetImportsFiled, importsInput.val());
+            query.displayType = "imports"
+            query.displayValue = importsInput.val();
+            listOfQuerires.push(query);
+        }
+        if(extendsInput != null || extendsInput != ""){
+            var query = new QueryModel(QueryBucketModel.extendsField, extendsInput.val());
+            query.displayType = "extends"
+            query.displayValue = extendsInput.val();
+            listOfQuerires.push(query);
+        }
+        if(implementsInput != null || implementsInput != ""){
+            var query = new QueryModel(QueryBucketModel.implementsField, implementsInput.val());
+            query.displayType = "implements"
+            query.displayValue = implementsInput.val();
+            listOfQuerires.push(query);
+        }
+        if(checkboxGeneric[0].checked){
+            var query = new QueryModel(QueryBucketModel.snippetClassGeneric, checkboxGeneric[0].checked+"");
+            query.displayType = "is generic"
+            query.displayValue = checkboxGeneric[0].checked;
+            listOfQuerires.push(query);
+        }
+
+        if(checkboxWildCards[0].checked){
+            var query = new QueryModel(QueryBucketModel.snippetClassWildCard, checkboxWildCards[0].checked+"");
+            query.displayType = "has wildcards"
+            query.displayValue = checkboxWildCards[0].checked;
+            listOfQuerires.push(query);
+        }
+        if(packageInput != null || packageInput != ""){
+            var query = new QueryModel(QueryBucketModel.snippetPackage, packageInput.val());
+            query.displayType = "package"
+            query.displayValue = packageInput.val();
+            listOfQuerires.push(query);
+        }
+//projectInput
+        if(projectInput != null || projectInput != ""){
+            var query = new QueryModel(QueryBucketModel.projectField, projectInput.val());
+            query.displayType = "project"
+            query.displayValue = projectInput.val();
+            listOfQuerires.push(query);
+        }
+
+//methodCallClassInput,methodCallNameInput,methodCallParametersInput
+        //for method call queries
+        var methodCallQueryFunction = function(){
+            var query = null;
+            var methodCallValue = '';
+            if(methodCallClassInput.val() != "") {
+                methodCallValue = methodCallValue + '%2B'
+                    + QueryBucketModel.snippetMethodCallDecClass + ':"' + methodCallClassInput.val() + '"';
+
+                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodCallClassInput.val()))){
+                    Controller.setStatus("Please enter only alphanumeric, "+
+                        "underscore, period, comma, less than, or greater than characters for class name...");
+                    return;
+                }
+            }
+            if(methodCallNameInput.val() != "") {
+                methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
+                    + ':"' +methodCallNameInput.val()+ '"';
+
+                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodCallNameInput.val()))){
+                    Controller.setStatus("Please enter only alphanumeric, "+
+                        "underscore, period, comma, less than, or greater than characters for method name...");
+                    return;
+                }
+            }
+            if(methodCallParametersInput.val() != "") {
+
+                var params = String(methodCallParametersInput.val()).split(/[ ,]+/);
+
+                var paramsWithCount =  BuildQueryBoxView.appendWithCount(params);
+
+                var paramQuery = "";
+                for(var paramIndex = 0; paramIndex < paramsWithCount.length; paramIndex++){
+                    if(paramQuery == ""){
+                        paramQuery = '%2B' + QueryBucketModel.snippetMethodCallParameters
+                            + ':'+'"'+paramsWithCount[paramIndex]+'"';
+                    }else{
+                        paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodCallParameters
+                            + ':'+'"'+paramsWithCount[paramIndex]+'"';
+                    }
+
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(paramsWithCount[paramIndex]))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, period, comma, less than, or greater than characters for parameter names...");
+                        return;
+                    }
+
+                }
+
+                methodCallValue = methodCallValue + paramQuery+'';
+            }
+            query = new QueryModel(QueryBucketModel.snippetMethodCall, methodCallValue);
+            query.displayType = "has method call";
+            query.displayValue = methodCallClassInput.val()+"."+methodCallNameInput.val()+"("+methodCallParametersInput.val()+")";
+
+            listOfQuerires.push(query)
+
+        };
+//calling it
+        methodCallQueryFunction();
+
+//methodDecClassInput,methodDecNameInput,methodDecParametersInput,methodDecReturnInput,checkboxDecGeneric,checkboxDecVarArgs
+        var methodDecQueryFunction = function(){
+            var query = null;
+            var methodCallValue = '';
+
+
+
+            if(methodDecReturnInput.val() != "") {
+                methodCallValue = methodCallValue + '%2B'
+                    + QueryBucketModel.snippetMethodDeclarationReturn + ':"' + methodDecReturnInput.val() + '"';
+
+                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodDecReturnInput.val()))){
+                    Controller.setStatus("Please enter only alphanumeric, "+
+                        "underscore, period, comma, less than, or greater than characters for return type...");
+                    return;
+                }
+            }
+
+            if(checkboxDecGeneric[0].checked) {
+                methodCallValue = methodCallValue + '%2B'
+                    + QueryBucketModel.snippetMethodDeclarationGeneric + ':"' + true + '"';
+            }
+
+            if(checkboxDecVarArgs[0].checked) {
+                methodCallValue = methodCallValue + '%2B'
+                    + QueryBucketModel.snippetMethodDeclarationVarArgs + ':"' + true + '"';
+            }
+
+            if(methodDecClassInput.val() != "") {
+                methodCallValue = methodCallValue + '%2B'
+                    + QueryBucketModel.snippetMethodDeclarationClass + ':"' + methodDecClassInput.val() + '"';
+
+                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodDecClassInput.val()))){
+                    Controller.setStatus("Please enter only alphanumeric, "+
+                        "underscore, period, comma, less than, or greater than characters for class name...");
+                    return;
+                }
+            }
+            if(methodDecNameInput.val() != "") {
+                methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodDeclarationName
+                    + ':"' +methodDecNameInput.val()+ '"';
+
+                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodDecNameInput.val()))){
+                    Controller.setStatus("Please enter only alphanumeric, "+
+                        "underscore, period, comma, less than, or greater than characters for method name...");
+                    return;
+                }
+            }
+            if(methodDecParametersInput.val() != "") {
+
+                var params = String(methodDecParametersInput.val()).split(/[ ,]+/);
+
+                var paramsWithCount =  BuildQueryBoxView.appendWithCount(params);
+
+                var paramQuery = "";
+                for(var paramIndex = 0; paramIndex < paramsWithCount.length; paramIndex++){
+                    if(paramQuery == ""){
+                        paramQuery = '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
+                            + ':'+'"'+paramsWithCount[paramIndex]+'"';
+                    }else{
+                        paramQuery = paramQuery +  '%2B' + QueryBucketModel.snippetMethodDeclarationParameters
+                            + ':'+'"'+paramsWithCount[paramIndex]+'"';
+                    }
+
+                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(paramsWithCount[paramIndex]))){
+                        Controller.setStatus("Please enter only alphanumeric, "+
+                            "underscore, period, comma, less than, or greater than characters for parameter names...");
+                        return;
+                    }
+
+                }
+
+                methodCallValue = methodCallValue + paramQuery+'';
+            }
+            query = new QueryModel(QueryBucketModel.snippetMethodDec, methodCallValue);
+            query.displayType = "declaration";
+            query.displayValue = methodDecReturnInput.val()+':'+methodDecClassInput.val()+"."+
+                methodDecNameInput.val()+"("+methodDecParametersInput.val()+")";
+
+            if(checkboxDecGeneric[0].checked){
+                query.displayValue = "[generic]" + query.displayValue;
+            }
+            if(checkboxDecVarArgs[0].checked){
+                query.displayValue = "[var args]" + query.displayValue;
+            }
+
+            listOfQuerires.push(query);
+            //methodDecClassInput,methodDecNameInput,methodDecParametersInput,methodDecReturnInput,checkboxDecGeneric,checkboxDecVarArgs
+        }
+
+        methodDecQueryFunction();
+
+        for(var i = 0; i < listOfQuerires.length; i++){
+            var query = listOfQuerires[i];
+            if(query.value != "" && query.value != ".()" && query.value != ":.()"){
+                BuildQueryBoxView.addQuery(query);
+            }
+
+        }
+
+        listOfQuerires.length = 0;
+        BuildQueryBoxView.submitQuery();
+
+
+
     }
 
 
 }
 
-function setupAutoComplet(input, querytype){
-    //auto complete for method calls
-    input.autocomplete({
-        source: function( request, response ){
-            if(querytype == QueryBucketModel.snippetMethodCall) {
-                QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodCallCallingClass, request, response);
-
-            }
-            else {
-                QueryManager.submitAutoComplete(QueryBucketModel.snippetMethodDeclarationClass, request, response);
-
-            }
-        },
-        //logging selection of autocomplete function
-        select: function( event, ui ) {
-            if(querytype == QueryBucketModel.snippetMethodCall) {
-//LOG IT
-                UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
-                    QueryBucketModel.snippetMethodCallCallingClass);
-            }
-            else {
-//LOG IT
-                UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,
-                    QueryBucketModel.snippetMethodDeclarationClass);
-            }
-
-            return false;
-        }
-    }).keyup(function (e) {
-        if(e.which === 13) {
-            $(".ui-menu-item").hide();
-        }
-    });;
-}

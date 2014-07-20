@@ -1,16 +1,17 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
 
-	
-   
-	<link href="jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
+
+
+    <link href="jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="jquery-ui-1.10.3.custom/development-bundle/demos/demos.css" type="text/css">
 
 
-<title>CodeExchange</title>
+    <title>CodeExchange</title>
 
 
 
@@ -57,570 +58,571 @@
 
 <script>
 
-	 $(document).ready(on_ready);
+    $(document).ready(on_ready);
 
 
-	 
+
 </script>
 
 <style type="text/css">
 
 
-	.Absolute{
+.Absolute{
 
-	position:'absolute';
+    position:'absolute';
 
-	}
+}
 
-    .package{
-        position:absolute;
-        background: lightgoldenrodyellow;
+.package{
+    position:absolute;
+    background: lightgoldenrodyellow;
 
-        z-index:40;
-        border-radius: 50px;
-        opacity: 0.7;
+    z-index:40;
+    border-radius: 50px;
+    opacity: 0.7;
 
-        pointer-events: auto;
-        cursor: pointer;
-    }
+    pointer-events: auto;
+    cursor: pointer;
+}
 
-    .classFound{
-        position:absolute;
-        background-color: #d3d3d3;
-        z-index:40;
-        border-radius: 50px;
-        opacity: 0.7;
-    }
+.classFound{
+    position:absolute;
+    background-color: #d3d3d3;
+    z-index:40;
+    border-radius: 50px;
+    opacity: 0.7;
+}
 
-    .topBuffer{
-        padding-top: 5px;
+.topBuffer{
+    padding-top: 5px;
 
 
-    }
+}
 
-    .addQueryIcon{
+.addQueryIcon{
 
-        background-color: #d3d3d3;
-        border: 2px solid;
-        border-radius: 5px;
-        pointer-events: auto;
-        cursor: pointer;
-        padding: 5px;
+    background-color: #d3d3d3;
+    border: 2px solid;
+    border-radius: 5px;
+    pointer-events: auto;
+    cursor: pointer;
+    padding: 5px;
 
-    }
+}
 
-    .import{
-        position:absolute;
-        background: lightcyan;
+.import{
+    position:absolute;
+    background: lightcyan;
 
-        z-index:40;
-        border-radius: 50px;
-        opacity: 0.7;
+    z-index:40;
+    border-radius: 50px;
+    opacity: 0.7;
 
-        pointer-events: auto;
-        cursor: pointer;
-    }
+    pointer-events: auto;
+    cursor: pointer;
+}
 
-    .implements{
-        position:absolute;
-        background: gold;
+.implements{
+    position:absolute;
+    background: gold;
 
-        z-index:40;
-        border-radius: 50px;
+    z-index:40;
+    border-radius: 50px;
 
-        opacity: 0.4;
-        pointer-events: auto;
-        cursor: pointer;
-    }
+    opacity: 0.4;
+    pointer-events: auto;
+    cursor: pointer;
+}
 
-    .extends{
-        position:absolute;
-        background: gold;
+.extends{
+    position:absolute;
+    background: gold;
 
-        z-index:40;
-        border-radius: 50px;
+    z-index:40;
+    border-radius: 50px;
 
-        opacity: 0.4;
-        pointer-events: auto;
-        cursor: pointer;
-    }
+    opacity: 0.4;
+    pointer-events: auto;
+    cursor: pointer;
+}
 
-    .child{
-        position:absolute;
-        background: #DCD0FF;
+.child{
+    position:absolute;
+    background: #DCD0FF;
 
-        z-index:40;
-        border-radius: 50px;
+    z-index:40;
+    border-radius: 50px;
 
 
-        pointer-events: auto;
-        cursor: pointer;
+    pointer-events: auto;
+    cursor: pointer;
 
-        font-size: 15pt;
+    font-size: 15pt;
 
-        opacity: 0.7;
+    opacity: 0.7;
 
-        /*background-image: url('http://level1router.ics.uci.edu/upArrow.png');*/
-        /*background-repeat: no-repeat;*/
-        /*padding-left: 30px;  *//* width of the image plus a little extra padding */
-        /*display: block;  *//* may not need this, but I've found I do */
-    }
+    /*background-image: url('http://level1router.ics.uci.edu/upArrow.png');*/
+    /*background-repeat: no-repeat;*/
+    /*padding-left: 30px;  *//* width of the image plus a little extra padding */
+    /*display: block;  *//* may not need this, but I've found I do */
+}
 
-    .tip{
-        position:absolute;
+.tip{
+    position:absolute;
 
 
-        z-index:40;
-        border-radius: 50px;
+    z-index:40;
+    border-radius: 50px;
 
 
-        pointer-events: auto;
-        cursor: pointer;
-    }
+    pointer-events: auto;
+    cursor: pointer;
+}
 
-    .tipDec{
-        position:absolute;
+.tipDec{
+    position:absolute;
 
 
-        z-index:40;
-        border-radius: 50px;
+    z-index:40;
+    border-radius: 50px;
 
 
-        pointer-events: auto;
-        cursor: pointer;
-    }
+    pointer-events: auto;
+    cursor: pointer;
+}
 
 
 
-    .classHeadHighlight{
-        position:absolute;
-        background-color: #d3d3d3;
-        z-index:40;
-        border-radius: 50px;
-    }
-    .decChild{
-        position:absolute;
-        background: lightgreen;
-        opacity: 0.4;
-        z-index:40;
-        border-radius: 50px;
-    }
+.classHeadHighlight{
+    position:absolute;
+    background-color: #d3d3d3;
+    z-index:40;
+    border-radius: 50px;
+}
+.decChild{
+    position:absolute;
+    background: lightgreen;
+    opacity: 0.4;
+    z-index:40;
+    border-radius: 50px;
+}
 
-    .Grid{
+.Grid{
 
 
-        background-color: #d3d3d3;
+    background-color: #d3d3d3;
 
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 
 
 
-        color: black;
-        width: 100%;
-    }
+    color: black;
+    width: 100%;
+}
 
-    .GridCell{
-        background-color: white;
-        color: black;
-        width: 100%;
-        border: 1px solid;
-        cursor:pointer;
+.GridCell{
+    background-color: white;
+    color: black;
+    width: 100%;
+    border: 1px solid;
+    cursor:pointer;
 
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 
 
 
-    }
+}
 
-    .GridCellHeader{
-        border: 1px solid;
+.GridCellHeader{
+    border: 1px solid;
 
 
-    }
+}
 
-    .GridCellHighLight{
-        border: 4px dotted;
+.GridCellHighLight{
+    border: 4px dotted;
 
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-    }
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
-    .GridCell:hover{
-        background-color:orange;
-    }
+.GridCell:hover{
+    background-color:orange;
+}
 
-    .GridRow{
-        background-color:whitesmoke;
-        color:#ffffff;
+.GridRow{
+    background-color:whitesmoke;
+    color:#ffffff;
 
-        border: 1px solid;
-        border-radius: 5px;
-        border-color: darkgray;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-        cursor: pointer;
-        box-shadow: 0px 0px 0px #FFBF00;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: darkgray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #FFBF00;
 
-        height:auto;
-        width: 100px;
-        word-wrap:break-word;
-        padding: 1px;
+    height:auto;
+    width: 100px;
+    word-wrap:break-word;
+    padding: 1px;
 
 
-    }
+}
 
 
 
-    .GridRowHover{
-        background-color:lightgoldenrodyellow;
-        color:#ffffff;
+.GridRowHover{
+    background-color:lightgoldenrodyellow;
+    color:#ffffff;
 
-        border: 1px solid;
-        border-radius: 5px;
-        border-color: darkgray;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-        cursor: pointer;
-        box-shadow: 3px 3px 3px darkgray;
-        height:auto;
-        word-wrap:break-word;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: darkgray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    cursor: pointer;
+    box-shadow: 3px 3px 3px darkgray;
+    height:auto;
+    word-wrap:break-word;
 
-        padding: 1px;
+    padding: 1px;
 
 
-    }
+}
 
-    .ace_gutter-cell.ace_breakpoint{
-        border-radius: 20px 0px 0px 20px;
-        box-shadow: 0px 0px 1px 1px red inset;
-    }
+.ace_gutter-cell.ace_breakpoint{
+    border-radius: 20px 0px 0px 20px;
+    box-shadow: 0px 0px 1px 1px red inset;
+}
 
-    .highlightBackground{
-        background-color: lightgoldenrodyellow;
-    }
+.highlightBackground{
+    background-color: lightgoldenrodyellow;
+}
 
-    .Cell
-    {
+.Cell
+{
 
-        border: solid;
-        border-width: thin;
-        padding-left: 5px;
-        padding-right: 5px;
-        background-color: white;
-        border-top-left-radius: 25px;
-        border-top-right-radius: 25px;
+    border: solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 
-        border-bottom-left-radius: 25px;
-        border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 
 
-    }
-    .Result
-    {
+}
+.Result
+{
 
-       border: 0px solid;
-        margin: 0px;
+    border: 0px solid;
+    margin: 0px;
 
-    }
+}
 
 
-    .Meta
-    {
-    	padding-left: 5px;
-        padding-right: 5px;
-        padding-top: 5px;
-        height: 30px;
+.Meta
+{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    height: 30px;
 
 
 
-    }
-    .MetaDatum{
-    	float: left;
-    	padding-right: 5px;
-    	padding-bottom: 0px;
-    	bottom:0;
+}
+.MetaDatum{
+    float: left;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    bottom:0;
 
 
-    }
+}
 
-    .ExpandButtonDiv{
-        padding:  5px;
+.ExpandButtonDiv{
+    padding:  5px;
 
-    }
-    .ResultOptions{
-        position: relative;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        top:0px;
+}
+.ResultOptions{
+    position: relative;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    top:0px;
 
-        height:55px;
+    height:55px;
 
-    }
-    button{
-    	height:35px;
-    	width:35px;
+}
+button{
+    height:35px;
+    width:35px;
 
 
-    }
-    .Expand{
-    	top:0px;
-    	float:right;
+}
+.Expand{
+    top:0px;
+    float:right;
 
 
-    }
-    .SpanCol{
-    	colspan:2;
-    }
-    .SpanRow{
-    	rowspan:2;
-    }
-    .LinkToPage{
-    	padding-top: 0px;
-    	padding-bottom: 0px;
-    	float:right;
-    	cursor:pointer;
-    	background-color:transparent;
-    	border:0px;
-        font-size: 16px;
+}
+.SpanCol{
+    colspan:2;
+}
+.SpanRow{
+    rowspan:2;
+}
+.LinkToPage{
+    padding: 0px;
+    margin: 0px;
+    margin-right: 10px;
+    float:right;
+    cursor:pointer;
+    background-color:transparent;
+    border:0px;
+    font-size: 16px;
 
 
 
-    }
-    .HighLightLink{
-    	background-color:lightgoldenrodyellow;
-    	text-decoration:underline;
-        color:black;
+}
+.HighLightLink{
+    background-color:lightgoldenrodyellow;
+    text-decoration:underline;
+    color:black;
 
-        border: 1px solid;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
+    border: 1px solid;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 
-        border-bottom-left-radius: 2px;
-        border-bottom-right-radius: 2px;
-    }
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
 
-    .ResultTotal{
-  	  float:right;
-    }
+.ResultTotal{
+    float:right;
+}
 
-    .Message{
-    	float:left;
-    	font-family:"Courier New", Courier, monospace";
-    	valign:"bottom";
-    	vertical-align:bottom;
-  	    padding-top: 5px;
-    	padding-bottom: 0px;
-    	padding-right: 5px;
-    	background-color:transparent;
-		font-size: 14px;
+.Message{
+    float:left;
+    font-family:"Courier New", Courier, monospace";
+valign:"bottom";
+    vertical-align:bottom;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+    background-color:transparent;
+    font-size: 14px;
 
-    }
+}
 
-    .code{
-    	font-size: 12px;
-    }
-    .MetaBorder{
-   	 padding-left: 5px;
-     padding-right: 5px;
+.code{
+    font-size: 12px;
+}
+.MetaBorder{
+    padding-left: 5px;
+    padding-right: 5px;
 
-     float: right;
+    float: right;
 
-    }
+}
 
-    .MetaGroupBorder{
-        padding-left: 5px;
-        padding-right: 5px;
+.MetaGroupBorder{
+    padding-left: 5px;
+    padding-right: 5px;
 
-        float: left;
+    float: left;
 
-    }
+}
 
 
-    .MetaQuery{
-        cursor:pointer;
+.MetaQuery{
+    cursor:pointer;
 
-    }
+}
 
-    .HeaderTable{
-        margin: 0;
-        padding: 0;
-    }
+.HeaderTable{
+    margin: 0;
+    padding: 0;
+}
 
 
-    table.ResultTable{
-        background-color: #d3d3d3;
-        margin: 0;
-        padding: 0;
-    }
+table.ResultTable{
+    background-color: #d3d3d3;
+    margin: 0;
+    padding: 0;
+}
 
-    td.ResultTD{
-        background-color: #d3d3d3;
-        height: 100%;
+td.ResultTD{
+    background-color: #d3d3d3;
+    height: 100%;
 
-    }
+}
 
 
 
-    tr.ResultTR{
-        background-color: #d3d3d3;
-    }
+tr.ResultTR{
+    background-color: #d3d3d3;
+}
 
-    em{
-    	background-color: yellow;
-    }
+em{
+    background-color: yellow;
+}
 
 
 
-    td.StatusTD{
-        padding-top: 0px;
-    	padding-bottom: 0px;
-    	padding-left: 5px;
-        padding-right: 5px;
-    	height:15px;
+td.StatusTD{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    height:15px;
 
 
-    }
+}
 
-    td.Logo{
+td.Logo{
 
-    	height:15px;
-    	float:left;
-    }
+    height:15px;
+    float:left;
+}
 
 
 
-    .CriticBorder{
+.CriticBorder{
 
 
 
 
-        border-top: 1px solid;
-        border-bottom: 1px solid;
-        border-color: lightblue;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: lightblue;
 
-    }
+}
 
 
-	textarea{
-	    padding-top: 0px;
-    	padding-bottom: 0px;
-		height:45px;
-		resize: none;
-		font-size: 17pt;
-  		font-family: Courier;
-  		overflow:hidden;
+textarea{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height:45px;
+    resize: none;
+    font-size: 17pt;
+    font-family: Courier;
+    overflow:hidden;
 
-  		border: 1px solid;
-	}
+    border: 1px solid;
+}
 
 
 
-	div.Filter{
-		 overflow:scroll;
-	}
+div.Filter{
+    overflow:scroll;
+}
 
 
-    .PeopleFilter{
-    	background-color: gray;
-    	border: 2px solid;
+.PeopleFilter{
+    background-color: gray;
+    border: 2px solid;
 
 
-    }
+}
 
 
 
-    td.FilterSideTD{
+td.FilterSideTD{
 
 
-        border: 1px solid;
-        border-color: black;
+    border: 1px solid;
+    border-color: black;
 
-        border-top-left-radius: 25px;
-        border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 
-        border-bottom-left-radius: 25px;
-        border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 
 
-        background-color: whitesmoke;
+    background-color: whitesmoke;
 
 
-    }
+}
 
-    table{
+table{
 
-    	width: 100%;
-    }
+    width: 100%;
+}
 
 
-    td.FilterTDhover{
-    	background-color: yellow;
-    }
+td.FilterTDhover{
+    background-color: yellow;
+}
 
-    td.FilterTDunHover{
-  	  	background-color: white;
-    }
+td.FilterTDunHover{
+    background-color: white;
+}
 
-    button.CloseFilter{
-    	padding-top: 0px;
-    	padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-		background: transparent;
-		border:none;
-		vertical-align:bottom;
-		text-align:left;
+button.CloseFilter{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    background: transparent;
+    border:none;
+    vertical-align:bottom;
+    text-align:left;
 
-    }
+}
 
-    div.FilterSelected{
-        padding-top: 0px;
-    	padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
+div.FilterSelected{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
 
-   	    display:inline-block;
- 	   font-size: 10pt;
- 	cursor:pointer;
+    display:inline-block;
+    font-size: 10pt;
+    cursor:pointer;
 
-    }
+}
 
 
 
 
 
-	.highlight{
-		background-color:transparent;
-	}
+.highlight{
+    background-color:transparent;
+}
 
-	label {
-    	display: block;
-    	padding-left: 15px;
-   	 	text-indent: -15px;
-	}
+label {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
 
-    td {
-        padding:0; margin:0;
-    }
+td {
+    padding:0; margin:0;
+}
 
-	.Check {
+.Check {
     width: 13px;
     height: 13px;
     padding: 0;
@@ -629,354 +631,355 @@
     position: relative;
     top: -1px;
     overflow: hidden;
-	}
-
-
-
-
-
-	.SiteBack{
-        background-color: #d3d3d3;
-	}
-
-	.HeaderBack{
-        background-color: #d3d3d3;
-
-	}
-
-    .HeaderTR{
-        margin: 2px;
-    }
-
-	.ResultsBack{
-        background-color: #d3d3d3;
-	}
-
-	.important{
-		background-color:orange;
-
-	}
-
-	    .Status
-    {
-    	background-color: #d3d3d3;
-    	color:black;
-    	font-size: 14px
-    }
-
-
-
-    .navView{
-        background-color: whitesmoke;
-        border-top-left-radius: 25px;
-        border-top-right-radius: 25px;
-
-        border-bottom-left-radius: 25px;
-        border-bottom-right-radius: 25px;
-        padding: 9px;
-        padding-right: 7px;
-
-
-    }
-        .BucketView{
-
-            color:black;
-            background-color: whitesmoke;
-            border-top-left-radius: 25px;
-            border-top-right-radius: 25px;
-
-            border-bottom-left-radius: 25px;
-            border-bottom-right-radius: 25px;
-             padding: 4px;
-            padding-right: 7px;
-
-
-        }
-
-        .QueryBucket{
-
-            background-color: whitesmoke;
-            font-size: 14px;
-            border-bottom: 1px solid;
-            border-right: 1px solid;
-            border-left: 1px solid;
-            border-top: 1px solid;
-
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-
-            background-color:#ffffff;
-            overflow:scroll;
-
-            overflow-x:hidden;
-        }
-
-
-
-        .QueryBucketOverflow{
-            overflow:scroll;
-        }
-
-        .QueryHistory{
-            overflow:scroll;
-            overflow-x:hidden;
-        }
-
-        .CellStatus{
-            font-size: 14pt;
-            font-family: Courier;
-        }
-
-
-        .downloadLink{
-            cursor: pointer;
-            padding: 5px;
-            position: absolute;
-            font-size: 14px;
-
-
-        }
-
-        .URLStatus{
-            padding-top: 0px;
-            border-top: 1px solid;
-            border-color: lightblue;
-
-            font-family: Courier;
-        }
-
-        .BuildQueryTitle {
-            font-size: 16pt;
-            font-family: Courier;
-            padding: 0;
-            margin: 0;
-            background-color: whitesmoke;
-        }
-
-        .BuildQueryTitleFlash{
-            background-color: #ffff00;
-            border-radius: 30px;
-            text-align: center;
-        }
-
-        .QueryTypeTitle{
-            font-size: 10pt;
-            font-family: Courier;
-            vertical-align: middle ;
-            text-align: left;
-        }
-
-        .QueryView{
-            background-color:lightgoldenrodyellow;
-            color:#ffffff;
-            font-size: 14px;
-            border: 1px solid;
-            border-radius: 5px;
-            border-color: darkgray;
-            padding-top: 0px;
-            padding-bottom: 0px;
-            padding-left: 0px;
-            padding-right:0px;
-            cursor: pointer;
-            box-shadow: 0px 0px 0px #FFBF00;
-            height:auto;
-            padding: 1px;
-            word-wrap:break-word;
-
-        }
-
-    .QueryViewHover{
-        background-color: #ffffff;
-        color:#ffffff;
-        font-size: 14px;
-        border: 1px solid;
-        border-radius: 5px;
-        border-color: darkgray;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-        cursor: pointer;
-        box-shadow: 0px 0px 0px #FFBF00;
-        word-wrap:break-word;
-        height:auto;
-        padding: 1px;
-
-    }
-
-    .QueryViewDeactiveHover{
-        background-color: yellow;
-        color:#ffffff;
-        font-size: 14px;
-        border: 1px solid;
-        border-radius: 5px;
-        border-color: darkgray;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-        cursor: pointer;
-        box-shadow: 0px 0px 0px #FFBF00;
-        height:auto;
-        word-wrap:break-word;
-        opacity:0.4;
-        padding: 1px;
-
-    }
-
-        .textWrap{
-            word-wrap:break-word;
-        }
-
-    .TrailQueryView{
-        background-color:#000000;
-        color:#ffffff;
-        font-size: 12px;
-        border: 1px solid;
-    }
-
-        .QueryViewButton{
-
-            float: right;
-            padding-right: 0px;
-            padding-bottom: 0px;
-            padding-top: 0px;
-            padding-left: 0px;
-            bottom:0;
-            font-size: 11px;
-
-
-        }
-
-        .QueryViewButtonRecommend{
-            float: right;
-            padding-right: 0px;
-            padding-bottom: 0px;
-            padding-top: 0px;
-            padding-left: 0px;
-            bottom:0;
-
-        }
-
-    .QueryViewDeactive{
-        background-color:white;
-
-        opacity:0.7;
-
-        font-size: 14px;
-        border: 1px solid;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-        height:auto;
-        border-color: black;
-        border-radius: 5px;
-        cursor: pointer;
-        box-shadow: 0px 0px 0px #888888;
-        padding: 1px;
-
-    }
-
-    .QueryTrail{
-        background-color:#ffffff;
-
-    }
-
-    .QueryViewRow{
-
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-
-        height:auto;
-        width: 100px;
-        word-wrap:break-word;
-
-    }
-
-    .QueryViewTable{
-        table-layout: fixed;
-    }
-
-    .RecommendationDown{
-        background-color: lightgoldenrodyellow;
-        color:white;
-        font-size: 14px;
-        border: 1px solid;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-
-        box-shadow: 3px 3px 3px darkgray;
-        border-radius: 5px;
-        border-color: darkgray;
-        cursor: pointer;
-        height:auto;
-        word-wrap:break-word;
-        padding: 2px;
-    }
-
-    .RecommendationHover{
-        background-color: lightgoldenrodyellow;
-        color:#ffffff;
-        font-size: 14px;
-        border: 1px solid;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-
-        box-shadow: 3px 3px 3px darkgray;
-        border-radius: 5px;
-        border-color: darkgray;
-        cursor: pointer;
-        height:auto;
-        word-wrap:break-word;
-        padding: 2px;
-    }
-
-    .QueryRecommendation{
-        background-color: white;
-        color:#ffffff;
-        font-size: 14px;
-        border: 1px solid;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right:0px;
-
-
-        border-radius: 5px;
-        border-color: #d3d3d3;
-        cursor: pointer;
-        word-wrap:break-word;
-        height:auto;
-
-        box-shadow: 0px 0px 0px palegreen;
-        padding: 2px;
-
-    }
-
-
-
-    .PageNavigation{
-    color: black;
 }
 
-    .QueryRecommenderView{
-       height: 200px;
-      /* overflow-y: scroll;*/
-    }
 
-    .AnnotationQuery{
-     background-color: red;
-    }
+
+
+
+.SiteBack{
+    background-color: #d3d3d3;
+}
+
+.HeaderBack{
+    background-color: #d3d3d3;
+
+}
+
+.HeaderTR{
+    margin: 2px;
+}
+
+.ResultsBack{
+    background-color: #d3d3d3;
+}
+
+.important{
+    background-color:orange;
+
+}
+
+.Status
+{
+    background-color: #d3d3d3;
+    color:black;
+    font-size: 14px
+}
+
+
+
+.navView{
+    background-color: whitesmoke;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 9px;
+    padding-right: 7px;
+
+
+}
+.BucketView{
+
+    color:black;
+    background-color: whitesmoke;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 4px;
+    padding-right: 7px;
+
+
+}
+
+.QueryBucket{
+
+    background-color: whitesmoke;
+    font-size: 14px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    border-top: 1px solid;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    background-color:#ffffff;
+    overflow:scroll;
+
+    overflow-x:hidden;
+}
+
+
+
+.QueryBucketOverflow{
+    overflow:scroll;
+}
+
+.QueryHistory{
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+.CellStatus{
+    font-size: 14pt;
+    font-family: Courier;
+}
+
+
+.downloadLink{
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    font-size: 14px;
+
+
+}
+
+.URLStatus{
+    padding-top: 0px;
+    border-top: 1px solid;
+    border-color: lightblue;
+
+    font-family: Courier;
+}
+
+.BuildQueryTitle {
+    font-size: 16pt;
+    font-family: Courier;
+    padding: 0;
+    margin: 0;
+    background-color: whitesmoke;
+}
+
+.BuildQueryTitleFlash{
+    background-color: #ffff00;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.QueryTypeTitle{
+    font-size: 10pt;
+    font-family: Courier;
+    vertical-align: middle ;
+    text-align: left;
+}
+
+.QueryView{
+    background-color:lightgoldenrodyellow;
+    color:#ffffff;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: darkgray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #FFBF00;
+    height:auto;
+    padding: 1px;
+    word-wrap:break-word;
+
+}
+
+.QueryViewHover{
+    background-color: #ffffff;
+    color:#ffffff;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: darkgray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #FFBF00;
+    word-wrap:break-word;
+    height:auto;
+    padding: 1px;
+
+}
+
+.QueryViewDeactiveHover{
+    background-color: yellow;
+    color:#ffffff;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: darkgray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #FFBF00;
+    height:auto;
+    word-wrap:break-word;
+    opacity:0.4;
+    padding: 1px;
+
+}
+
+.textWrap{
+    word-wrap:break-word;
+}
+
+.TrailQueryView{
+    background-color:#000000;
+    color:#ffffff;
+    font-size: 12px;
+    border: 1px solid;
+}
+
+.QueryViewButton{
+
+    float: right;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    bottom:0;
+    font-size: 11px;
+
+
+}
+
+.QueryViewButtonRecommend{
+    float: right;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    bottom:0;
+
+}
+
+.QueryViewDeactive{
+    background-color:white;
+
+    opacity:0.7;
+
+    font-size: 14px;
+    border: 1px solid;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    height:auto;
+    border-color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #888888;
+    padding: 1px;
+
+}
+
+.QueryTrail{
+    background-color:#ffffff;
+
+}
+
+.QueryViewRow{
+
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+
+    height:auto;
+    width: 100px;
+    word-wrap:break-word;
+
+}
+
+.QueryViewTable{
+    table-layout: fixed;
+}
+
+.RecommendationDown{
+    background-color: lightgoldenrodyellow;
+    color:white;
+    font-size: 14px;
+    border: 1px solid;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+
+    box-shadow: 3px 3px 3px darkgray;
+    border-radius: 5px;
+    border-color: darkgray;
+    cursor: pointer;
+    height:auto;
+    word-wrap:break-word;
+    padding: 2px;
+}
+
+.RecommendationHover{
+    background-color: lightgoldenrodyellow;
+    color:#ffffff;
+    font-size: 14px;
+    border: 1px solid;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+
+    box-shadow: 3px 3px 3px darkgray;
+    border-radius: 5px;
+    border-color: darkgray;
+    cursor: pointer;
+    height:auto;
+    word-wrap:break-word;
+    padding: 2px;
+}
+
+.QueryRecommendation{
+    background-color: white;
+    color:#ffffff;
+    font-size: 14px;
+    border: 1px solid;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+
+
+    border-radius: 5px;
+    border-color: #d3d3d3;
+    cursor: pointer;
+    word-wrap:break-word;
+    height:auto;
+
+    box-shadow: 0px 0px 0px palegreen;
+    padding: 2px;
+
+}
+
+
+
+.PageNavigation{
+    color: black;
+
+}
+
+.QueryRecommenderView{
+    height: 200px;
+    /* overflow-y: scroll;*/
+}
+
+.AnnotationQuery{
+    background-color: red;
+}
 
 
 
@@ -1110,7 +1113,7 @@
 }
 
 
-    html { height: 100%; }
+html { height: 100%; }
 
 .AdvancedSearch{
     color: black;
@@ -1123,14 +1126,14 @@
 
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    float: right;
+    float: left;
     font-size: 15px;
 
 
     text-align: center;
     vertical-align: middle;
 
-    width: 90%;
+    width: 100%;
     height:100%;
 
 
@@ -1139,69 +1142,69 @@
 
 }
 
- .AdvancedSearchText{
-     margin-top: 7px;
-     text-align: center;
-     vertical-align: middle;
- }
+.AdvancedSearchText{
+    margin-top: 7px;
+    text-align: center;
+    vertical-align: middle;
+}
 
- .AdvancedSearchHover{
-     color: black;
-     background-color: whitesmoke;
-     box-shadow: 3px 3px 3px darkgray;
-     border-color: gray;
-     border: 2px solid;
+.AdvancedSearchHover{
+    color: black;
+    background-color: whitesmoke;
+    box-shadow: 3px 3px 3px darkgray;
+    border-color: gray;
+    border: 2px solid;
 
-     border-top-left-radius: 25px;
-     border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 
-     border-bottom-left-radius: 25px;
-     border-bottom-right-radius: 25px;
-     float: right;
-     font-size: 15px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    float: right;
+    font-size: 15px;
 
-     text-align: center;
-     vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
 
-     width: 90%;
+    width: 100%;
     height:100%;
 
-     padding-bottom: 2px;
-     cursor: pointer;
- }
+    padding-bottom: 2px;
+    cursor: pointer;
+}
 
 
- .BottomButtonsHover{
-     font-size: 14px;
+.BottomButtonsHover{
+    font-size: 14px;
 
-     width: 40%;
-
-
-
-     box-shadow: 3px 3px 3px darkgray;
-     background-color: whitesmoke;
-
-     border: 2px solid;
-     border-color: #000000;
-
-     color:#000000;
-     border-top-left-radius: 15px;
-     border-top-right-radius: 15px;
-
-     border-bottom-left-radius: 15px;
-     border-bottom-right-radius: 15px;
-
-     margin-top: 5px;
-     margin: 9px;
-
-     text-align: center;
-     vertical-align: middle;
-     padding: 5px;
-
-     cursor: pointer;
+    width: 40%;
 
 
- }
+
+    box-shadow: 3px 3px 3px darkgray;
+    background-color: whitesmoke;
+
+    border: 2px solid;
+    border-color: #000000;
+
+    color:#000000;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    margin-top: 5px;
+    margin: -1px;
+
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+
+    cursor: pointer;
+
+
+}
 
 
 
@@ -1221,7 +1224,7 @@
     border-bottom-right-radius: 15px;
 
     margin-top: 5px;
-    margin: 10px;
+    margin: 0px;
 
     text-align: center;
     vertical-align: middle;
@@ -1229,44 +1232,44 @@
 
     cursor: pointer;
 }
-    #blanket {
-        background-color : #111;
-        opacity : 0.65;
-        position: fixed;
-        z-index : 9001;
-        top : 0px;
-        left : 0px;
-        width : 100%;
-        height : 100%;
-    }
+#blanket {
+    background-color : #111;
+    opacity : 0.65;
+    position: fixed;
+    z-index : 9001;
+    top : 0px;
+    left : 0px;
+    width : 100%;
+    height : 100%;
+}
 
-    #confirm {
+#confirm {
 
-        position : fixed;
-        background-color : #eee;
-        width : 300px;
-        height : 350px;
-        z-index : 9002;
-        top : 150px;
-        left : 500px;
-        margin: auto;
+    position : fixed;
+    background-color : #eee;
+    width : 300px;
+    height : 350px;
+    z-index : 9002;
+    top : 150px;
+    left : 500px;
+    margin: auto;
 
 
-        padding: 5px;
-    }
+    padding: 5px;
+}
 
-    .AdvancedForm{
+.AdvancedForm{
 
-        border: 5px solid black;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+    border: 5px solid black;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-        text-align: center;
-        vertical-align: middle;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    text-align: center;
+    vertical-align: middle;
 
-    }
+}
 
 .MethodCallLabel{
     background-color: red;
@@ -1287,11 +1290,11 @@
 
 }
 
-    .AdvancedInput{
-        width: 97%;
+.AdvancedInput{
+    width: 97%;
 
-        margin: auto;
-    }
+    margin: auto;
+}
 
 .childAdvancedTable{
     margin: 5px;
@@ -1299,29 +1302,33 @@
 }
 
 
-    .SubmitButtonHover{
-        box-shadow: 3px 3px 3px darkgray;
+.SubmitButtonHover{
+    box-shadow: 3px 3px 3px darkgray;
+    margin: -1px;
+    margin-top: 4px;
 
-        border: 2px solid;
-        border-color: black;
-        background-color: whitesmoke;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+    border: 2px solid;
+    border-color: black;
+    background-color: whitesmoke;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 
-        padding-top: 3px;
-        height: 30px;
-        width: 100px;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 20px;
-        cursor: pointer;
+    padding-top: 3px;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    cursor: pointer;
 
-    }
+}
 
 .SubmitButton{
+    margin: 0px;
+    margin-top: 5px;
     border: 1px solid;
     border-color: black;
     background-color: whitesmoke;
@@ -1366,33 +1373,33 @@
 
 }
 
-    .CloseButtonHover{
-        box-shadow: 3px 3px 3px darkgray;
-        border: 2px solid;
+.CloseButtonHover{
+    box-shadow: 3px 3px 3px darkgray;
+    border: 2px solid;
 
-        border-color: black;
-        background-color: whitesmoke;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+    border-color: black;
+    background-color: whitesmoke;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-        height: 20px;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 15px;
-        cursor: pointer;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    cursor: pointer;
 
-        float:right;
-        padding-left:2px;
-        padding-right:2px;
-        padding-top:4px;
-        width:50px;
-        margin-right:2px;
-        margin-bottom:-2px;
-        margin-left:-1px;
+    float:right;
+    padding-left:2px;
+    padding-right:2px;
+    padding-top:4px;
+    width:50px;
+    margin-right:2px;
+    margin-bottom:-2px;
+    margin-left:-1px;
 
-    }
+}
 
 
 </style>
