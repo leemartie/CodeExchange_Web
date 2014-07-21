@@ -124,7 +124,7 @@ var SplashScreen = {
         });})(cell);
 
 
-//click submit buttom
+//click submit bottom - TODO: need to put clones into function
         (function(cell) {cell.click(function(event){
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
