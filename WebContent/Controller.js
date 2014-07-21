@@ -134,7 +134,7 @@ var Controller = {
 
 
                         $(SetupManager.pound+"projectURL"+editorNumber).attr("title",
-                            "Download the containing project to find dependencies.\nFind this code in file: .."+path);
+                            "Download the GitHub project.\n Note: this code is in file: .."+path);
                         $(SetupManager.pound+"projectURL"+editorNumber).append(projectURL);
 
 

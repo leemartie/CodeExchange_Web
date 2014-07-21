@@ -24,6 +24,9 @@ var SplashScreen = {
         var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         subTable.addClass("SplashInputDiv");
         subTable.attr("width","100%");
+        subTable.attr("cellpadding","0");
+        subTable.attr("cellspacing","0");
+        subTable.attr("border","0");
 
         cellSubTable.append(subTable);
 
@@ -36,7 +39,7 @@ var SplashScreen = {
 
         cell.attr("width","100%");
         cell.attr("align","center");
-        cell.attr("colspan","3");
+        cell.attr("colspan","2");
         //cell.css({"border-bottom": "1px solid", "border-color":"navy"});
         cell.append(title);
 
@@ -54,6 +57,8 @@ var SplashScreen = {
         subTable.append(row);
 
 
+
+
         var sideCellTitle= $(SetupManager.tdOpen+SetupManager.tdClose);
         var title = $("<img src='http://codeexchange.ics.uci.edu/logo.png'></img>");
 
@@ -61,11 +66,27 @@ var SplashScreen = {
         sideCellTitle.append(title);
         row.append(sideCellTitle);
         sideCellTitle.css({"padding-right":"50px"});
-        sideCellTitle.hide();
+        sideCellTitle.attr("width","20%");
+        title.hide();
+
 
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
+//subtable to the right of logo
+
+        var subTableInput = $(SetupManager.tableOpen+SetupManager.tableClose);
+        subTableInput.attr("width","100%");
+        subTableInput.attr("cellpadding","0");
+        subTableInput.attr("cellspacing","0");
+        subTableInput.attr("border","0");
+        cell.append(subTableInput);
+
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        subTableInput.append(row);
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row.append(cell);
+//----------------
 
         var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
 
@@ -76,15 +97,43 @@ var SplashScreen = {
         input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
 
         cell.append(inputDiv);
-        cell.attr("width","80%");
-        cell.css({"padding-right":"50px"});
+        cell.css({"background-color":"white","border-top":"1px solid","border-bottom":"1px solid",
+            "border-left":"1px solid","border-color":"gray"});
+
+        cell.attr("width","50%");
+       // cell.css({"padding-right":"50px"});
         cell.attr("align","center");
 
+//submit
+        var submitInputButton = $(SetupManager.divOpen+SetupManager.divClose);
+        var label = $("<div><text>Submit</text></div>");
+        label.addClass("AdvancedSearchText");
+        submitInputButton.append(label);
+        submitInputButton.addClass("SubmitInputButton");
 
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
+        row.append(cell);
+        cell.attr("width","5%");
+        cell.attr("height","100%");
+        cell.attr("align","left");
+        cell.append(submitInputButton);
+        cell.css({"background-color":"white","border-top":"1px solid","border-left":"1px solid",
+            "border-bottom":"1px solid","margin":"0","border-color":"gray"});
+
+
+        submitInputButton.mouseenter(function(event) {
+            submitInputButton.addClass("SubmitInputButtonHover");
+        });
+
+        submitInputButton.mouseleave(function(event) {
+            submitInputButton.removeClass("SubmitInputButtonHover");
+
+        });
+
+
+//advanced button
         var btn = $(SetupManager.divOpen+SetupManager.divClose);
-
-        // var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/wizard.png"></img>');
-        // btn.append(icon);
         var label = $("<div><text> Advanced Search</text></div>");
         label.addClass("AdvancedSearchText");
         btn.append(label);
@@ -101,20 +150,11 @@ var SplashScreen = {
         });
 
         btn.click(function(event) {
-
             $('<div id="blanket"></div>').
                 appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
-
-            var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn);
-
-
-
+            var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, tableForSite,
+                cellSubTable, subTable, titleRow, sideCellTitle, btn);
             advancedDiv.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
-
-
-
-
-
         });
 
 
@@ -123,32 +163,25 @@ var SplashScreen = {
         row.append(cell);
         cell.attr("width","10%");
         cell.attr("align","left");
-        //cell.css({"border-left":"2px solid","border-color":"darkgray"});
         cell.append(btn);
 
+        cell.css({"background-color":"white","border":"1px solid","border-bottom-right-radius":"25px",
+            "border-top-right-radius":"25px","margin":"0","border-color":"gray"});
 
-        //       var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
+        var paddingCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
-//        inputDiv.append(title);
-//        inputDiv.append(input);
-//        inputDiv.append(btn);
+        row.append(paddingCell);
+        paddingCell.attr("width","20%");
 
-
-
-
-
-
-
-//        cell.append(inputDiv);
-
+//subtext
         var subtext = $("<div><font color='gray'><text>Search over 10 million Java classes in GitHub</text></font></div>");
         subtext.addClass("footerText");
         var row = $(SetupManager.trOpen+SetupManager.trClose);
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        cell.attr("colspan","3");
+        cell.attr("colspan","2");
         row.append(cell);
         cell.append(subtext);
-        subTable.append(cell);
+        subTable.append(row);
 
 //auto complete
         input.autocomplete({
@@ -221,7 +254,7 @@ var SplashScreen = {
                 if(SplashScreen.showing){
                     subTable.addClass("SplashFloatLeft");
                     titleRow.hide();
-                    sideCellTitle.toggle();
+                    title.toggle();
                     btn.height("50%");
                     SetupManager.setupSite();
                     SplashScreen.showing = false;
@@ -270,7 +303,41 @@ var SplashScreen = {
         div.addClass("AdvancedForm");
 
 
-
+//        var autoCompleteStruct = {
+//            source: function( request, response ){
+//                QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
+////                    QueryManager.submitSpellCheck(request, response,queryBox.val());
+//
+//
+//            },
+//            focus: function() {
+//                // prevent value inserted on focus
+//
+//                return false;
+//            },
+//            select: function( event, ui ) {
+//                var terms = null;
+//
+//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec ||
+//                    BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall ) {
+//                    terms = queryBox.val().split(/[\s,]+/);
+//                }else{
+//                    terms = queryBox.val().split(/[\s]+/);
+//                }
+//
+//                // remove the current input
+//                terms.pop();
+//                // add the selected item
+//                terms.push( ui.item.value );
+//
+////LOG IT
+//                UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,  BuildQueryBoxModel.currentQueryType);
+//
+//                queryBox.val( terms.join( " " ) );
+//                return false;
+//            }
+//
+//        };
 
 
         var title = $("<div><font size='2'><b><text>Find classes with:</text></b></font></div>");
@@ -356,6 +423,7 @@ var SplashScreen = {
         importsCell.append(importsInput);
         importsInput.addClass("AdvancedInput");
         importsInput.attr("placeholder","ex: java.io.File");
+//        importsInput.autocomplete(autoCompleteStruct);
 
 //extends
         var extendsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -751,7 +819,7 @@ var SplashScreen = {
                               methodCallParametersInput,methodDecClassInput,methodDecNameInput,methodDecParametersInput,
                               methodDecReturnInput,checkboxDecGeneric,checkboxDecVarArgs){
 
-//checkboxGeneric[0].checked)
+
 
         var listOfQuerires = new Array();
 
@@ -953,16 +1021,24 @@ var SplashScreen = {
 
         methodDecQueryFunction();
 
+        var queryCount = 0;
+
         for(var i = 0; i < listOfQuerires.length; i++){
             var query = listOfQuerires[i];
             if(query.value != "" && query.value != ".()" && query.value != ":.()"){
                 BuildQueryBoxView.addQuery(query);
+                queryCount++;
             }
 
         }
 
+
+
+        if(queryCount> 0) {
+            BuildQueryBoxView.submitQuery();
+        }
+
         listOfQuerires.length = 0;
-        BuildQueryBoxView.submitQuery();
 
 
 
