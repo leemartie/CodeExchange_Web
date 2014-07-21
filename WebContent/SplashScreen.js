@@ -40,19 +40,8 @@ var SplashScreen = {
         cell.attr("width","100%");
         cell.attr("align","center");
         cell.attr("colspan","2");
-        //cell.css({"border-bottom": "1px solid", "border-color":"navy"});
         cell.append(title);
 
-
-//        title.addClass("SplashTitle");
-//        var title = $("<div><text>CodeExchange</text></div>");
-
-
-
-
-//        var subtext = $("<div><text>Let's find some code</text></div>");
-//        subtext.addClass("subtext");
-//        title.append(subtext);
         var row = $(SetupManager.trOpen+SetupManager.trClose);
         subTable.append(row);
 
@@ -73,6 +62,7 @@ var SplashScreen = {
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
+
 //subtable to the right of logo
 
         var subTableInput = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -109,7 +99,7 @@ var SplashScreen = {
         var label = $("<div><text>Submit</text></div>");
         label.addClass("AdvancedSearchText");
         submitInputButton.append(label);
-        submitInputButton.addClass("SubmitInputButton");
+       // submitInputButton.addClass("SubmitInputButton");
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
@@ -118,18 +108,51 @@ var SplashScreen = {
         cell.attr("height","100%");
         cell.attr("align","left");
         cell.append(submitInputButton);
-        cell.css({"background-color":"white","border-top":"1px solid","border-left":"1px solid",
-            "border-bottom":"1px solid","margin":"0","border-color":"gray"});
+
+        cell.addClass("SubmitInputButton");
+
+        (function(cell) {
+            cell.mouseenter(function (event) {
+                cell. addClass("SubmitInputButtonHover");
+            });
+        })(cell);
+
+        (function(cell) {
+        cell.mouseleave(function(event) {
+            cell.removeClass("SubmitInputButtonHover");
+
+        });})(cell);
 
 
-        submitInputButton.mouseenter(function(event) {
-            submitInputButton.addClass("SubmitInputButtonHover");
-        });
+//click submit buttom
+        (function(cell) {cell.click(function(event){
+                input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
+                subtext.hide();
+                tableForSite.animate({
+                    height: '5%'
+                }, 700 );
+                cellSubTable.animate({
 
-        submitInputButton.mouseleave(function(event) {
-            submitInputButton.removeClass("SubmitInputButtonHover");
-
-        });
+                    backgroundColor: '#d3d3d3'
+                }, 700 );
+                if(SplashScreen.showing){
+                    subTable.addClass("SplashFloatLeft");
+                    paddingCell.hide();
+                    titleRow.hide();
+                    title.toggle();
+                    btn.height("50%");
+                    SetupManager.setupSite();
+                    SplashScreen.showing = false;
+                }
+                var query = null;
+                query = new QueryModel(QueryBucketModel.snippetField, input.val());
+                query.displayType = "keywords";
+                query.displayValue = input.val();
+                BuildQueryBoxView.addAndSubmit(query);
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
+                input.val("");
+        });})(cell);
 
 
 //advanced button
@@ -137,23 +160,16 @@ var SplashScreen = {
         var label = $("<div><text> Advanced Search</text></div>");
         label.addClass("AdvancedSearchText");
         btn.append(label);
-        btn.addClass("AdvancedSearch");
+   //     btn.addClass("AdvancedSearch");
 
 
-        btn.mouseenter(function(event) {
-            btn.addClass("AdvancedSearchHover");
-        });
 
-        btn.mouseleave(function(event) {
-            btn.removeClass("AdvancedSearchHover");
-
-        });
 
         btn.click(function(event) {
             $('<div id="blanket"></div>').
                 appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
             var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, tableForSite,
-                cellSubTable, subTable, titleRow, sideCellTitle, btn);
+                cellSubTable, subTable, titleRow, title, btn, paddingCell);
             advancedDiv.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
         });
 
@@ -162,11 +178,22 @@ var SplashScreen = {
 
         row.append(cell);
         cell.attr("width","10%");
+        cell.attr("height","100%");
         cell.attr("align","left");
         cell.append(btn);
+        cell.addClass("AdvancedSearch");
 
-        cell.css({"background-color":"white","border":"1px solid","border-bottom-right-radius":"25px",
-            "border-top-right-radius":"25px","margin":"0","border-color":"gray"});
+        (function(cell) {
+            cell.mouseenter(function (event) {
+                cell. addClass("AdvancedSearchHover");
+            });
+        })(cell);
+
+        (function(cell) {
+            cell.mouseleave(function(event) {
+                cell.removeClass("AdvancedSearchHover");
+
+            });})(cell);
 
         var paddingCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
@@ -253,6 +280,7 @@ var SplashScreen = {
 
                 if(SplashScreen.showing){
                     subTable.addClass("SplashFloatLeft");
+                    paddingCell.hide();
                     titleRow.hide();
                     title.toggle();
                     btn.height("50%");
@@ -295,7 +323,7 @@ var SplashScreen = {
 
     },
 
-    setupAdvanvedSearch: function(input, subtext, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn){
+    setupAdvanvedSearch: function(input, subtext, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
         var div = $(SetupManager.divOpen+SetupManager.divClose);
 
 
@@ -787,6 +815,7 @@ var SplashScreen = {
                 titleRow.hide();
                 sideCellTitle.toggle();
                 btn.height("50%");
+                paddingCell.hide();
                 SetupManager.setupSite();
                 SplashScreen.showing = false;
             }
