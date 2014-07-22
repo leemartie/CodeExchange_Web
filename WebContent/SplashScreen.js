@@ -983,7 +983,7 @@ var SplashScreen = {
                 methodCallValue = methodCallValue + '%2B'
                     + QueryBucketModel.snippetMethodCallDecClass + ':"' + methodCallClassInput.val() + '"';
 
-                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodCallClassInput.val()))){
+                if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(methodCallClassInput.val()))){
                     Controller.setStatus("Please enter only alphanumeric, "+
                         "underscore, period, comma, less than, or greater than characters for class name...");
                     return;
@@ -993,7 +993,7 @@ var SplashScreen = {
                 methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
                     + ':"' +methodCallNameInput.val()+ '"';
 
-                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodCallNameInput.val()))){
+                if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(methodCallNameInput.val()))){
                     Controller.setStatus("Please enter only alphanumeric, "+
                         "underscore, period, comma, less than, or greater than characters for method name...");
                     return;
@@ -1015,7 +1015,7 @@ var SplashScreen = {
                             + ':'+'"'+paramsWithCount[paramIndex]+'"';
                     }
 
-                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(paramsWithCount[paramIndex]))){
+                    if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(paramsWithCount[paramIndex]))){
                         Controller.setStatus("Please enter only alphanumeric, "+
                             "underscore, period, comma, less than, or greater than characters for parameter names...");
                         return;
@@ -1046,7 +1046,7 @@ var SplashScreen = {
                 methodCallValue = methodCallValue + '%2B'
                     + QueryBucketModel.snippetMethodDeclarationReturn + ':"' + methodDecReturnInput.val() + '"';
 
-                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodDecReturnInput.val()))){
+                if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(methodDecReturnInput.val()))){
                     Controller.setStatus("Please enter only alphanumeric, "+
                         "underscore, period, comma, less than, or greater than characters for return type...");
                     return;
@@ -1067,7 +1067,7 @@ var SplashScreen = {
                 methodCallValue = methodCallValue + '%2B'
                     + QueryBucketModel.snippetMethodDeclarationClass + ':"' + methodDecClassInput.val() + '"';
 
-                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodDecClassInput.val()))){
+                if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(methodDecClassInput.val()))){
                     Controller.setStatus("Please enter only alphanumeric, "+
                         "underscore, period, comma, less than, or greater than characters for class name...");
                     return;
@@ -1077,7 +1077,7 @@ var SplashScreen = {
                 methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodDeclarationName
                     + ':"' +methodDecNameInput.val()+ '"';
 
-                if(!(/^[a-zA-Z0-9_.,><]+$/.test(methodDecNameInput.val()))){
+                if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(methodDecNameInput.val()))){
                     Controller.setStatus("Please enter only alphanumeric, "+
                         "underscore, period, comma, less than, or greater than characters for method name...");
                     return;
@@ -1099,7 +1099,7 @@ var SplashScreen = {
                             + ':'+'"'+paramsWithCount[paramIndex]+'"';
                     }
 
-                    if(!(/^[a-zA-Z0-9_.,><]+$/.test(paramsWithCount[paramIndex]))){
+                    if(!(/^[a-zA-Z0-9_.,><\[\]]+$/.test(paramsWithCount[paramIndex]))){
                         Controller.setStatus("Please enter only alphanumeric, "+
                             "underscore, period, comma, less than, or greater than characters for parameter names...");
                         return;
