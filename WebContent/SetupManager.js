@@ -186,79 +186,26 @@ var SetupManager = {
 			
 			var headerRow = $(SetupManager.trOpen+SetupManager.trClose);
 			tableForSite.append(headerRow);
-//			headerRow.addClass("HeaderTR");
-//			headerRow.addClass("HeaderBack");
-			
-			//query box
-			var queryTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-
-			
-			//logo
-			var logo = $(SetupManager.divOpen+SetupManager.divClose);
-			//queryTD.append(logo);
-			var logoName = $('<a href="index.html"><img src="http://codeexchange.ics.uci.edu/logo2.png"/></a>');
-			logo.append(logoName);
-			logo.addClass("Logo");
-
-			
-
-			
-			//--row for status
-			var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-            statusTable.attr("cellpadding","0");
-            statusTable.attr("cellspacing","0");
-            statusTable.attr("border","0");
-			var rowStatus = $(SetupManager.trOpen+SetupManager.trClose);
-			statusTable.append(rowStatus);
-			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(statusTable);
-			
-			
-			//make status div
-			var status = $(SetupManager.tdOpen+SetupManager.tdClose);
-
-			rowStatus.append(status);
-			//set id
-			status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
-			status.attr("valign","top");
-			status.attr("padding-bottom", "0px");
-			status.addClass("Status");
-			status.attr("align","left");
-            status.width("50%");
-
-			//status.addClass("StatusTD");
-			
-			Controller.setStatus("Let's find some code.");
-			
-//			//--row for navigation
-			
-			//make page navigation
-			var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
-
-			//set id
-			pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
-			pageNavigation.attr("valign","top");
-			pageNavigation.attr("align","right");
-			pageNavigation.attr("width","100%");
 
 
-			pageNavigation.addClass("PageNavigation");
-			
-			
-			// append
-            rowStatus.append(pageNavigation);
 
 
-			//result row
-			var resultRow = $(SetupManager.trOpen+SetupManager.trClose);
-			tableForSite.append(resultRow);
 
+            //side filter
+            var filterSideTD = $(SetupManager.tdOpen+SetupManager.tdClose);
+            filterSideTD.attr("rowspan","1");
+            headerRow.append(filterSideTD);
+            filterSideTD.attr("valign", "top");
+            filterSideTD.addClass("FilterSideTD");
+            filterSideTD.append(BuildQueryBoxView.getView());
+            filterSideTD.height("70%");
 			
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			resultRow.append(resultTD);
+            headerRow.append(resultTD);
 			resultTD.addClass("ResultsBack");
             resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID);
-			
+            resultTD.height("70%");
 			
 			
 			//make table
@@ -274,37 +221,47 @@ var SetupManager = {
             resultTD.attr("align","center");
 
             QueryGridView.setup();
-            $(SetupManager.pound+SetupManager.resultsTD_ID).append(QueryGridView.grid);
+            resultTD.append(QueryGridView.grid);
             QueryGridView.grid.hide();
-			//set width
-			$(SetupManager.pound+SetupManager.resultTable_ID).width(screenWidth-SetupManager.sideBuffer);
-			//set height
-			$(SetupManager.pound+SetupManager.resultTable_ID).height(screenHeight/2);
-
+//
 			tableOfResults.addClass("ResultTable");
 			
 			//make cells
 			SetupManager.makeTableCells();
-			
-			
-			//side filter
-			var filterSideTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-			filterSideTD.attr("rowspan","4");
-			
-			headerRow.append(filterSideTD);
 
+            //--row for status
+//            var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+//            statusTable.attr("cellpadding","0");
+//            statusTable.attr("cellspacing","0");
+//            statusTable.attr("border","0");
+            var rowStatus = $(SetupManager.trOpen+SetupManager.trClose);
+            tableForSite.append(rowStatus);
+            //$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(statusTable);
 
-			filterSideTD.attr("valign", "top");
+            //make status div
+            var status = $(SetupManager.tdOpen+SetupManager.tdClose);
+            rowStatus.append(status);
+            //set id
+            status.attr(SetupManager.ID_attr,SetupManager.statusDiv_ID);
+            status.attr("valign","top");
+            status.attr("padding-bottom", "0px");
+            status.addClass("Status");
+            status.attr("align","left");
+            status.width("50%");
+            status.height("10%");
 
-			filterSideTD.addClass("FilterSideTD");
+            Controller.setStatus("Let's find some code.");
 
-            filterSideTD.append(BuildQueryBoxView.getView());
-
-
-         //   filterSideTD.append(QueryTrailNavView.getView());
-
-			
-
+            //make page navigation
+            var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
+            //set id
+            pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
+            pageNavigation.attr("valign","top");
+            pageNavigation.attr("align","right");
+            pageNavigation.attr("width","50%");
+            pageNavigation.addClass("PageNavigation");
+            // append
+            rowStatus.append(pageNavigation);
 
 
 //listener for expand button
@@ -359,20 +316,14 @@ var SetupManager = {
 	        collapsed = !collapsed;
 
 	      });
-			
 
-			// --- add listeners to cell 
-			var screenWidth = jQuery(window).width();
-			var screenHeight = jQuery(window).height();
-			var screenBuffer = screenWidth*(4/5);
-			var screenHeightBuffer = screenHeight*(3/4)-50;
 			
 //resize function called when resize event happens
 			$(window).resize(function() {
-				screenWidth = jQuery(window).width();
-				screenHeight = jQuery(window).height();
+				var screenWidth = jQuery(window).width();
+				var screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth*(4/5);
-				var screenHeightBuffer = screenHeight*(3/4)-50;
+				var screenHeightBuffer = screenHeight*(3/4)-75;
 
                 if(!Controller.isExpanded)
 				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
@@ -400,44 +351,26 @@ var SetupManager = {
 				
 				$('.ResultTable').width(((screenBuffer)));
                 $('.GridCell').height((screenHeightBuffer/5));
-                $('.GridCell').width((screenWidth/5));
+                $('.GridCell').width(((screenBuffer+100)/5));
 
 
                 $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
 				$('.FilterSideTD').width(screenWidth*(1/5));
-                $('.FilterSideTD').height($('.ResultTD').height());
+                $('.FilterSideTD').height(screenHeightBuffer);
 
-                $('.Grid').width(screenWidth - $('.FilterSideTD').width());
-                $('.Grid').height($('.FilterSideTD').height());
-				
+                $('.Grid').width(screenBuffer);
+                $('.Grid').height(screenHeightBuffer);
+
+                ScreenSizes.FilterTD = $('.FilterSideTD').width();
+
+                console.log("[resize] screen width: "+screenWidth);
+                console.log("[resize] filter width: "+ScreenSizes.FilterTD);
+
 				
 			});
 			$(window).trigger('resize');
-			
-//set dimensions of all Cells
-			$('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
-			$('.Result').height((screenHeightBuffer));
-			
-			$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
-			$('.ResultTD').height((screenHeightBuffer));
-			
-			$('.ResultTR').width(((screenBuffer)));
-			$('.ResultTR').height((screenHeightBuffer));
-			
-			$('.ResultTable').width(((screenBuffer)));
-            $('.GridCell').height((screenHeightBuffer/5));
-            $('.GridCell').width((screenWidth/5));
 
-			
-			$('.FilterSideTD').width(screenWidth*(1/5));
-            $('.FilterSideTD').height($('.ResultTD').height());
-
-            var height = $('QueryRecommenderView').height;
-            $('.QueryBucket').height(screenHeightBuffer *(1/4));
-
-            $('.Grid').width(screenWidth - $('.FilterSideTD').width());
-            $('.Grid').height($('.FilterSideTD').height());
 
             var editor = ace.edit('result0');
             editor.setTheme("ace/theme/xcode");

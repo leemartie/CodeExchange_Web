@@ -43,6 +43,7 @@ var SplashScreen = {
         cell.attr("width","100%");
         cell.attr("align","center");
         cell.attr("colspan","2");
+
         cell.append(title);
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
@@ -94,7 +95,8 @@ var SplashScreen = {
 
         cell.append(inputDiv);
         cell.css({"background-color":"white","border-top":"1px solid","border-bottom":"1px solid",
-            "border-left":"1px solid","border-color":"gray"});
+            "border-left":"1px solid","border-color":"gray","border-bottom-left-radius":"25px",
+             "border-top-left-radius":"25px"});
 
         cell.attr("width","50%");
        // cell.css({"padding-right":"50px"});

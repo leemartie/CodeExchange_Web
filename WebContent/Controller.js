@@ -901,7 +901,7 @@ var Controller = {
 
 
 
-
+            $(window).trigger('resize');
 
 
 
@@ -1997,7 +1997,8 @@ var Controller = {
 			 // $(SetupManager.pound+cell).css({position:'relative'});
 	         //turn the other cells off
 	          Controller.toggleCells(cell);
-			  var id = cell;
+
+            var id = cell;
 			  var number = id.charAt(id.length-1);
 			  var result = SetupManager.resultPreArray_ID[number];
 
@@ -2009,16 +2010,17 @@ var Controller = {
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth-$('.FilterSideTD').width()+6;
-				var screenHeightBuffer = Controller.previousHeight+11;
+				var screenBuffer = screenWidth-$('.FilterSideTD').width();
+				var screenHeightBuffer = Controller.previousHeight;
 
-
+                console.log("[expand] screen width: "+screenWidth);
+                console.log("[expand] filter width: "+$('.FilterSideTD').width());
 
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 
 
-		            width:  screenBuffer,
-		            height: screenHeightBuffer,
+		            width:  screenBuffer+6,
+		            height: screenHeightBuffer+11,
 		            left:	'0px',
 		            top:	'0px'
 		          }, 0 );
@@ -2112,9 +2114,12 @@ var Controller = {
 		},
 
     showGrid    : function(){
-        var screenWidth = jQuery(window).width();
-        $('.Grid').width(screenWidth - $('.FilterSideTD').width()-18);
-        $('.Grid').height($('.FilterSideTD').height()+5);
+
+
+
+//        var screenBuffer = screenWidth*(4/5);
+
+
 
         $(SetupManager.pound+SetupManager.resultTable_ID).toggle();
         QueryGridView.grid.toggle();
@@ -2137,7 +2142,14 @@ var Controller = {
 
         }
 
-
+        $(window).trigger('resize');
+        var screenWidth = jQuery(window).width();
+        var screenWidth = jQuery(window).width();
+        var screenHeight = jQuery(window).height();
+        var screenBuffer = screenWidth*(4/5);
+        var screenHeightBuffer = screenHeight*(3/4)-75;
+        $('.Grid').width(screenBuffer+44);
+        $('.Grid').height(screenHeightBuffer+140);
 
     }
 
