@@ -224,6 +224,7 @@ var SetupManager = {
 			status.addClass("Status");
 			status.attr("align","left");
             status.width("50%");
+
 			//status.addClass("StatusTD");
 			
 			Controller.setStatus("Let's find some code.");
@@ -236,14 +237,16 @@ var SetupManager = {
 			//set id
 			pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
 			pageNavigation.attr("valign","top");
-			pageNavigation.attr("align","center");
+			pageNavigation.attr("align","right");
 			pageNavigation.attr("width","100%");
+
 
 			pageNavigation.addClass("PageNavigation");
 			
 			
 			// append
             rowStatus.append(pageNavigation);
+
 
 			//result row
 			var resultRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -254,21 +257,21 @@ var SetupManager = {
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
 			resultRow.append(resultTD);
 			resultTD.addClass("ResultsBack");
-            resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID)
+            resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID);
 			
 			
 			
 			//make table
 			var tableOfResults = $(SetupManager.tableOpen+SetupManager.tableClose);
             tableOfResults.attr("cellpadding","0");
-            tableOfResults.attr("cellspacing","0");
+            tableOfResults.attr("cellspacing","2");
             tableOfResults.attr("border","0");
 			//set id
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site
 			resultTD.append(tableOfResults);
             resultTD.attr("valign","top");
-            resultTD.attr("align","right");
+            resultTD.attr("align","center");
 
             QueryGridView.setup();
             $(SetupManager.pound+SetupManager.resultsTD_ID).append(QueryGridView.grid);
@@ -362,14 +365,14 @@ var SetupManager = {
 			var screenWidth = jQuery(window).width();
 			var screenHeight = jQuery(window).height();
 			var screenBuffer = screenWidth*(4/5);
-			var screenHeightBuffer = screenHeight*(3/4);
+			var screenHeightBuffer = screenHeight*(3/4)-50;
 			
 //resize function called when resize event happens
 			$(window).resize(function() {
 				screenWidth = jQuery(window).width();
 				screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth*(4/5);
-				var screenHeightBuffer = screenHeight*(3/4);
+				var screenHeightBuffer = screenHeight*(3/4)-50;
 
                 if(!Controller.isExpanded)
 				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
@@ -403,9 +406,10 @@ var SetupManager = {
                 $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
 				$('.FilterSideTD').width(screenWidth*(1/5));
-                $('.FilterSideTD').height((screenHeightBuffer));
+                $('.FilterSideTD').height($('.ResultTD').height());
 
                 $('.Grid').width(screenWidth - $('.FilterSideTD').width());
+                $('.Grid').height($('.FilterSideTD').height());
 				
 				
 			});
@@ -427,13 +431,13 @@ var SetupManager = {
 
 			
 			$('.FilterSideTD').width(screenWidth*(1/5));
-            $('.FilterSideTD').height((screenHeightBuffer));
+            $('.FilterSideTD').height($('.ResultTD').height());
 
             var height = $('QueryRecommenderView').height;
             $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
             $('.Grid').width(screenWidth - $('.FilterSideTD').width());
-
+            $('.Grid').height($('.FilterSideTD').height());
 
             var editor = ace.edit('result0');
             editor.setTheme("ace/theme/xcode");
@@ -542,6 +546,7 @@ var SetupManager = {
 				
 				//make td
 				var td = $(SetupManager.tdOpen+SetupManager.tdClose);
+
 
 
 				td.addClass("ResultTD");

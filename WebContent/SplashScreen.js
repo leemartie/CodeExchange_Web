@@ -13,11 +13,14 @@ var SplashScreen = {
         tableForSite.attr("cellpadding","0");
         tableForSite.attr("cellspacing","0");
         tableForSite.attr("border","0");
+        tableForSite.attr("width","100%");
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
         tableForSite.append(row);
         var cellSubTable = $(SetupManager.tdOpen+SetupManager.tdClose);
+        cellSubTable.attr("width","100%");
+
 
         row.append(cellSubTable);
 
@@ -54,7 +57,7 @@ var SplashScreen = {
 
         sideCellTitle.append(title);
         row.append(sideCellTitle);
-        sideCellTitle.css({"padding-right":"50px"});
+        sideCellTitle.css({"padding-right":"20px"});
         sideCellTitle.attr("width","20%");
         title.hide();
 
@@ -62,6 +65,7 @@ var SplashScreen = {
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
+        cell.attr("align","right");
 
 //subtable to the right of logo
 
@@ -70,12 +74,14 @@ var SplashScreen = {
         subTableInput.attr("cellpadding","0");
         subTableInput.attr("cellspacing","0");
         subTableInput.attr("border","0");
+       // subTableInput.css({"background-color":"blue"});
         cell.append(subTableInput);
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
         subTableInput.append(row);
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
+        cell.attr("width","90%");
 //----------------
 
         var inputDiv = $(SetupManager.divOpen+SetupManager.divClose);
@@ -136,11 +142,11 @@ var SplashScreen = {
                     backgroundColor: '#d3d3d3'
                 }, 700 );
                 if(SplashScreen.showing){
-                    subTable.addClass("SplashFloatLeft");
-                    paddingCell.hide();
+                  //  subTable.addClass("SplashFloatLeft");
+                    paddingCell.detach();
                     titleRow.hide();
                     title.toggle();
-                    btn.height("50%");
+
                     SetupManager.setupSite();
                     SplashScreen.showing = false;
                 }
@@ -179,7 +185,7 @@ var SplashScreen = {
         row.append(cell);
         cell.attr("width","10%");
         cell.attr("height","100%");
-        cell.attr("align","left");
+        cell.attr("align","right");
         cell.append(btn);
         cell.addClass("AdvancedSearch");
 

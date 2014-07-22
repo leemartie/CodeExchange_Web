@@ -2010,13 +2010,15 @@ var Controller = {
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
 				var screenBuffer = screenWidth-$('.FilterSideTD').width()+6;
-				var screenHeightBuffer = Controller.previousHeight;
+				var screenHeightBuffer = Controller.previousHeight+11;
+
+
 
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 
 
 		            width:  screenBuffer,
-		           // height: screenHeightBuffer,
+		            height: screenHeightBuffer,
 		            left:	'0px',
 		            top:	'0px'
 		          }, 0 );
@@ -2046,11 +2048,12 @@ var Controller = {
 			  var result = SetupManager.resultPreArray_ID[number];
 
 
+
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 
 
 		            width: Controller.previousWidth,
-		          //  height: Controller.previousHeight,
+		            height: Controller.previousHeight,
 		            left:	Controller.previousX+'px',
 		            top:	Controller.previousY+'px'
 		          }, 0 );
@@ -2109,7 +2112,9 @@ var Controller = {
 		},
 
     showGrid    : function(){
-        $('.Grid').height($('.FilterSideTD').height());
+        var screenWidth = jQuery(window).width();
+        $('.Grid').width(screenWidth - $('.FilterSideTD').width()-18);
+        $('.Grid').height($('.FilterSideTD').height()+5);
 
         $(SetupManager.pound+SetupManager.resultTable_ID).toggle();
         QueryGridView.grid.toggle();
