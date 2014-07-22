@@ -364,8 +364,7 @@ var SetupManager = {
 
                 ScreenSizes.FilterTD = $('.FilterSideTD').width();
 
-                console.log("[resize] screen width: "+screenWidth);
-                console.log("[resize] filter width: "+ScreenSizes.FilterTD);
+
 
 				
 			});

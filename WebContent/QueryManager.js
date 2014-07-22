@@ -78,7 +78,7 @@ var QueryManager = {
 		$.getJSON(url);
 	},
 	
-	submitAutoComplete	:	function(field, request, response){
+	submitAutoComplete	:	function(field, request, response, words){
 		if(Controller.currentStatus != "SEARCHING...")
 			Controller.setStatus("Searching for autocomplete recommendations...");
 		
@@ -90,26 +90,21 @@ var QueryManager = {
 
         if(field == QueryBucketModel.snippetMethodCallCallingClass
             || field == QueryBucketModel.snippetMethodDeclarationClass)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ClassBox).val();
+            QueryManager.completeUserTyped = words;
         else if(field == QueryBucketModel.snippetMethodCallName
             || field == QueryBucketModel.snippetMethodDeclarationName)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.MethodBox).val();
+            QueryManager.completeUserTyped = words;
         else if(field == QueryBucketModel.snippetMethodCallParameters
             || field == QueryBucketModel.snippetMethodDeclarationParameters) {
 
-            var words = $(SetupManager.pound + QueryBucketModel.ParamBox).val();
+          //  var words = $(SetupManager.pound + QueryBucketModel.ParamBox).val();
             words = words.split(/[\s,]+/);
             QueryManager.completeUserTyped = words[words.length-1];
         }
         else if(field == QueryBucketModel.snippetMethodDeclarationReturn)
             QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ReturnBox).val();
-//        else if(SplashScreen.showing){
-//            var words = $(SetupManager.pound + SplashScreen.InputSplashID).val();
-//            words = words.split(/[\s]+/);
-//            QueryManager.completeUserTyped = words[words.length-1];
-//        }
         else{
-            var words = $(SetupManager.pound + SetupManager.queryInput_ID).val();
+         //   var words = $(SetupManager.pound + SetupManager.queryInput_ID).val();
             words = words.split(/[\s]+/);
             QueryManager.completeUserTyped = words[words.length-1];
         }

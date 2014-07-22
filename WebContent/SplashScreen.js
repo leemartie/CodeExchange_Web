@@ -225,7 +225,7 @@ var SplashScreen = {
         input.autocomplete({
             source: function( request, response ){
                 BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetField;
-                QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
+                QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response, input.val());
 
 
             },
@@ -346,41 +346,51 @@ var SplashScreen = {
         div.addClass("AdvancedForm");
 
 
-//        var autoCompleteStruct = {
-//            source: function( request, response ){
-//                QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType, request, response);
-////                    QueryManager.submitSpellCheck(request, response,queryBox.val());
-//
-//
-//            },
-//            focus: function() {
-//                // prevent value inserted on focus
-//
-//                return false;
-//            },
-//            select: function( event, ui ) {
-//                var terms = null;
-//
-//                if(BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDec ||
-//                    BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCall ) {
-//                    terms = queryBox.val().split(/[\s,]+/);
-//                }else{
-//                    terms = queryBox.val().split(/[\s]+/);
-//                }
-//
-//                // remove the current input
-//                terms.pop();
-//                // add the selected item
-//                terms.push( ui.item.value );
-//
-////LOG IT
-//                UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null,  BuildQueryBoxModel.currentQueryType);
-//
-//                queryBox.val( terms.join( " " ) );
-//                return false;
-//            }
-//
-//        };
+        function boxAutoComplete(inputBox) {
+            var autoCompleteStruct = {
+                source: function (request, response) {
+                    QueryManager.submitAutoComplete(BuildQueryBoxModel.currentQueryType,
+                        request, response, inputBox.val());
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function (event, ui) {
+                    var terms = null;
+
+                    if (BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCallParameters ||
+                        BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDeclarationParameters) {
+                        terms = inputBox.val().split(/[\s,]+/);
+                    } else {
+                        terms = inputBox.val().split(/[\s]+/);
+                    }
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+
+
+//LOG IT
+                    UsageLogger.addEvent(UsageLogger.AUTO_COMPLETE_SELECTED, null, BuildQueryBoxModel.currentQueryType);
+
+                    if (BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodCallParameters ||
+                        BuildQueryBoxModel.currentQueryType == QueryBucketModel.snippetMethodDeclarationParameters) {
+                        inputBox.val(terms.join(", "));
+                    } else {
+                        inputBox.val(terms.join(" "));
+                    }
+
+
+                    return false;
+                },
+                open: function(event, ui){
+                    $(".ui-menu").addClass("AdvancedAutoComplete");
+                }
+
+            };
+            return autoCompleteStruct;
+        }
 
 
         var title = $("<div><font size='2'><b><text>Find classes with:</text></b></font></div>");
@@ -444,9 +454,10 @@ var SplashScreen = {
         tableOneInput.addClass("AdvancedSearchTable");
         tableCell1.append(tableOneInput);
 
-        var header = $("<font size='2'><b><th>Properties</th></b></font>");
-        header.attr("align",labelAlign);
+        var header = $("<th><font size='2'>Properties</font></th>");
+        header.attr("align","center");
         header.attr("width","100%");
+        header.attr("colspan","2");
         tableOneInput.append(header);
 
 // imports
@@ -466,7 +477,10 @@ var SplashScreen = {
         importsCell.append(importsInput);
         importsInput.addClass("AdvancedInput");
         importsInput.attr("placeholder","ex: java.io.File");
-//        importsInput.autocomplete(autoCompleteStruct);
+        importsInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetImportsFiled;
+            });
+        importsInput.autocomplete(boxAutoComplete(importsInput));
 
 //extends
         var extendsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -483,7 +497,10 @@ var SplashScreen = {
         extendsCell.attr("align","left");
         extendsInput.addClass("AdvancedInput");
         extendsInput.attr("placeholder","ex: java.util.observable");
-
+        extendsInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.extendsField;
+        });
+        extendsInput.autocomplete(boxAutoComplete(extendsInput));
 
 //implements
         var implementsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -500,6 +517,10 @@ var SplashScreen = {
         implementsCell.attr("align","left");
         implementsInput.addClass("AdvancedInput");
         implementsInput.attr("placeholder","ex: java.util.observer");
+        implementsInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.implementsField;
+        });
+        implementsInput.autocomplete(boxAutoComplete(implementsInput));
 
 //class props
         var propsRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -547,9 +568,11 @@ var SplashScreen = {
         tableWhereInput.addClass("AdvancedSearchTable");
         tableCell5.append(tableWhereInput);
 
-        var header = $("<font size='2'><b><th>Location</th></b></font>");
-        header.attr("align",labelAlign);
+
+        var header = $("<th><font size='2'>Location</font></th>");
+        header.attr("align","center");
         header.attr("width","100%");
+        header.attr("colspan","2");
         tableWhereInput.append(header);
 
         var packageRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -566,6 +589,10 @@ var SplashScreen = {
         packageCell.attr("align","left");
         packageInput.addClass("AdvancedInput");
         packageInput.attr("placeholder","ex: com.selimober.marsrovers");
+        packageInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetPackage;
+        });
+        packageInput.autocomplete(boxAutoComplete(packageInput));
 
         var projectRow = $(SetupManager.trOpen+SetupManager.trClose);
         tableWhereInput.append(projectRow);
@@ -581,14 +608,20 @@ var SplashScreen = {
         projectCell.attr("align","left");
         projectInput.addClass("AdvancedInput");
         projectInput.attr("placeholder","ex: calico");
+        projectInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.projectField;
+        });
+        projectInput.autocomplete(boxAutoComplete(projectInput));
 
 //=======Method Call
         var methodCallTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         methodCallTable.addClass("AdvancedSearchTable");
 
-        var header = $("<font size='2'><b><th>Method Call</th></b></font>");
-        header.attr("align",labelAlign);
+
+        var header = $("<th><font size='2'>Method Call</font></th>");
+        header.attr("align","center");
         header.attr("width","100%");
+        header.attr("colspan","2");
         methodCallTable.append(header);
 //class
 
@@ -605,6 +638,10 @@ var SplashScreen = {
         methodCallClassCell.append(methodCallClassInput);
         methodCallClassInput.attr(SetupManager.placeholder_attr, "ex: java.util.hashmap");
         methodCallClassInput.addClass("AdvancedInput");
+        methodCallClassInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodCallCallingClass;
+        });
+        methodCallClassInput.autocomplete(boxAutoComplete(methodCallClassInput));
 
 //name
         var methodCallNameRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -620,7 +657,10 @@ var SplashScreen = {
         methodCallNameCell.append(methodCallNameInput);
         methodCallNameInput.attr(SetupManager.placeholder_attr, "ex: put");
         methodCallNameInput.addClass("AdvancedInput");
-
+        methodCallNameInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodCallName;
+        });
+        methodCallNameInput.autocomplete(boxAutoComplete(methodCallNameInput));
 
 //parameters
         var methodCallParametersRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -636,6 +676,10 @@ var SplashScreen = {
         methodCallParametersCell.append(methodCallParametersInput);
         methodCallParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
         methodCallParametersInput.addClass("AdvancedInput");
+        methodCallParametersInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodCallParameters;
+        });
+        methodCallParametersInput.autocomplete(boxAutoComplete(methodCallParametersInput));
 
         tableCell2.append(methodCallTable);
 
@@ -644,10 +688,13 @@ var SplashScreen = {
 //=======Method Declaration
         var methodCallTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         methodCallTable.addClass("AdvancedSearchTable");
-        var header = $("<font size='2'><b><th>Method Declaration</th></b></font>");
-        header.attr("align",labelAlign);
+        var header = $("<th><font size='2'>Method Declaration</font></th>");
+        header.attr("align","center");
         header.attr("width","100%");
+        header.attr("colspan","2");
         methodCallTable.append(header);
+
+
 //class
 
         var methodCallClassRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -663,6 +710,10 @@ var SplashScreen = {
         methodCallClassCell.append(methodDecClassInput);
         methodDecClassInput.attr(SetupManager.placeholder_attr, "ex: Bootstrap");
         methodDecClassInput.addClass("AdvancedInput");
+        methodDecClassInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodDeclarationClass;
+        });
+        methodDecClassInput.autocomplete(boxAutoComplete(methodDecClassInput));
 
 //name
         var methodCallNameRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -678,7 +729,10 @@ var SplashScreen = {
         methodCallNameCell.append(methodDecNameInput);
         methodDecNameInput.attr(SetupManager.placeholder_attr, "ex: sort");
         methodDecNameInput.addClass("AdvancedInput");
-
+        methodDecNameInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodDeclarationName;
+        });
+        methodDecNameInput.autocomplete(boxAutoComplete(methodDecNameInput));
 
 //parameters
         var methodCallParametersRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -694,7 +748,10 @@ var SplashScreen = {
         methodCallParametersCell.append(methodDecParametersInput);
         methodDecParametersInput.attr("placeholder","ex: java.lang.String, int[], ...");
         methodDecParametersInput.addClass("AdvancedInput");
-
+        methodDecParametersInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodDeclarationParameters;
+        });
+        methodDecParametersInput.autocomplete(boxAutoComplete(methodDecParametersInput));
 
 //return type
         var returnTypeRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -703,14 +760,17 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         returnTypeRow.append(label);
-        label.append($("<font size='2'><text>Method</text></font>"));
+        label.append($("<font size='2'><text>Return</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         returnTypeRow.append(methodCallNameCell);
         var methodDecReturnInput = $(SetupManager.inputOpen+SetupManager.inputClose);
         methodCallNameCell.append(methodDecReturnInput);
         methodDecReturnInput.attr(SetupManager.placeholder_attr, "ex: java.lang.String");
         methodDecReturnInput.addClass("AdvancedInput");
-
+        methodDecReturnInput.click(function(event){
+            BuildQueryBoxModel.currentQueryType = QueryBucketModel.snippetMethodDeclarationReturn;
+        });
+        methodDecReturnInput.autocomplete(boxAutoComplete(methodDecReturnInput));
 
         var propsRow = $(SetupManager.trOpen+SetupManager.trClose);
         methodCallTable.append(propsRow);
