@@ -261,13 +261,14 @@ var SetupManager = {
 			//make table
 			var tableOfResults = $(SetupManager.tableOpen+SetupManager.tableClose);
             tableOfResults.attr("cellpadding","0");
-            tableOfResults.attr("cellspacing","2");
+            tableOfResults.attr("cellspacing","0");
             tableOfResults.attr("border","0");
 			//set id
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site
 			resultTD.append(tableOfResults);
             resultTD.attr("valign","top");
+            resultTD.attr("align","right");
 
             QueryGridView.setup();
             $(SetupManager.pound+SetupManager.resultsTD_ID).append(QueryGridView.grid);
@@ -305,6 +306,7 @@ var SetupManager = {
 
 //listener for expand button
 			var collapsed = true;
+            $(".Expand").attr("title","Expand Window");
 			$(".Expand").click(function(event) {
         	//use event.currentTarget.id for some resson event.target.id does not work
 			  var id = event.currentTarget.id;
@@ -313,7 +315,9 @@ var SetupManager = {
 	          
 	        if ( collapsed ) {
 		      //expand the cell
-	        	
+              //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","10");
+
+                $(".Expand").attr("title","Collapse Window");
 	        	Controller.expandCell(cellSelected);
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
@@ -329,6 +333,10 @@ var SetupManager = {
                     UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
 	          
 	        } else {
+                $(".Expand").attr("title","Expand Window");
+
+              //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","0");
+
 	        	Controller.collapseCell(cellSelected);	  
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
 
@@ -353,20 +361,20 @@ var SetupManager = {
 			// --- add listeners to cell 
 			var screenWidth = jQuery(window).width();
 			var screenHeight = jQuery(window).height();
-			var screenBuffer = screenWidth*(3/4);
-			var screenHeightBuffer = screenHeight*(3/4)-100;
+			var screenBuffer = screenWidth*(4/5);
+			var screenHeightBuffer = screenHeight*(3/4);
 			
 //resize function called when resize event happens
 			$(window).resize(function() {
 				screenWidth = jQuery(window).width();
 				screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth*(3/4);
-				var screenHeightBuffer = screenHeight*(3/4)-75;
+				var screenBuffer = screenWidth*(4/5);
+				var screenHeightBuffer = screenHeight*(3/4);
 
                 if(!Controller.isExpanded)
-				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells)+30);
+				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
                 else {
-                    $('.Result').width(((screenBuffer) ) + 30);
+                    $('.Result').width(((screenBuffer) ) );
                 }
 
 				$('.Result').height((screenHeightBuffer));
@@ -374,76 +382,57 @@ var SetupManager = {
                 if(!Controller.isExpanded)
 				    $('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
                 else {
-                    $('.ResultTD').width(((screenBuffer) ) + 30);
+                    $('.ResultTD').width(((screenBuffer) ) );
                 }
 
 
-				$('.ResultTD').height((screenHeightBuffer));		
-				//$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
+	    		$('.ResultTD').height((screenHeightBuffer));
 
 
-				    $('.ResultTR').width(((screenBuffer)));
+				$('.ResultTR').width(((screenBuffer)));
 
 
                 $('.ResultTR').height((screenHeightBuffer));
-			//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
-				
+
 				
 				$('.ResultTable').width(((screenBuffer)));
                 $('.GridCell').height((screenHeightBuffer/5));
                 $('.GridCell').width((screenWidth/5));
-               // $('.Grid').height((screenHeightBuffer+135));
-
-				//$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
-
-				
-				
-				//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
 
 
                 $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
-				$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
+				$('.FilterSideTD').width(screenWidth*(1/5));
+                $('.FilterSideTD').height((screenHeightBuffer));
 
-
-                $('.Grid').width(screenWidth - $('.FilterSideTD').width()-33);
+                $('.Grid').width(screenWidth - $('.FilterSideTD').width());
 				
 				
 			});
 			$(window).trigger('resize');
 			
 //set dimensions of all Cells
-			$('.Result').width(((screenBuffer)/SetupManager.numberOfCells)+30);
+			$('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
 			$('.Result').height((screenHeightBuffer));
 			
 			$('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
-			$('.ResultTD').height((screenHeightBuffer));		
-		//	$('.HeaderTD').width((screenWidth/2)-SetupManager.sideBuffer);
-		
+			$('.ResultTD').height((screenHeightBuffer));
 			
 			$('.ResultTR').width(((screenBuffer)));
 			$('.ResultTR').height((screenHeightBuffer));
-		//	$('.HeaderTR').width((screenWidth-screenBuffer)-SetupManager.sideBuffer);
-		
 			
 			$('.ResultTable').width(((screenBuffer)));
             $('.GridCell').height((screenHeightBuffer/5));
             $('.GridCell').width((screenWidth/5));
-           // $('.Grid').height((screenHeightBuffer+135));
 
-		//	$('.HeaderTable').width((screenWidth)-SetupManager.sideBuffer);
-
-//set dimensions of input box			
 			
-			//$(SetupManager.pound+SetupManager.queryInput_ID).width((screenBuffer)-(SetupManager.sideBuffer+186));
-			//$(SetupManager.pound+SetupManager.filterSummaryDiv_ID).width((screenWidth/2)-SetupManager.sideBuffer+30);
-			
-			$('.FilterSideTD').width(((screenBuffer)/(SetupManager.numberOfCells*1.5)));
+			$('.FilterSideTD').width(screenWidth*(1/5));
+            $('.FilterSideTD').height((screenHeightBuffer));
 
             var height = $('QueryRecommenderView').height;
             $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
-            $('.Grid').width(screenWidth - $('.FilterSideTD').width()-33);
+            $('.Grid').width(screenWidth - $('.FilterSideTD').width());
 
 
             var editor = ace.edit('result0');
@@ -553,6 +542,8 @@ var SetupManager = {
 				
 				//make td
 				var td = $(SetupManager.tdOpen+SetupManager.tdClose);
+
+
 				td.addClass("ResultTD");
 				td.attr(SetupManager.ID_attr,tempTdId);
 				$(SetupManager.pound+tempRowId).append(td);
@@ -607,6 +598,7 @@ var SetupManager = {
 				SetupManager.expandBtnArray_ID[i] = expandButton_id;
 				expandButton.attr(SetupManager.ID_attr, SetupManager.expandBtnArray_ID[i]);
 				expandButton.addClass("Expand");
+
 
 
                 var expandButtonDiv = $(SetupManager.divOpen+SetupManager.divClose);

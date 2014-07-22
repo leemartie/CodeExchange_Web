@@ -1629,6 +1629,7 @@ var Controller = {
 			metadiv.append(icon);
 			metadiv.append(projectName);
 
+            metadiv.attr("title","Refine by this project.")
 			$(SetupManager.pound+meta).append(metadiv);
 		},
 
@@ -2008,14 +2009,14 @@ var Controller = {
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth-$('.FilterSideTD').width()-46;
+				var screenBuffer = screenWidth-$('.FilterSideTD').width()+6;
 				var screenHeightBuffer = Controller.previousHeight;
 
 	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
 
 
 		            width:  screenBuffer,
-		            height: screenHeightBuffer,
+		           // height: screenHeightBuffer,
 		            left:	'0px',
 		            top:	'0px'
 		          }, 0 );
@@ -2049,7 +2050,7 @@ var Controller = {
 
 
 		            width: Controller.previousWidth,
-		            height: Controller.previousHeight,
+		          //  height: Controller.previousHeight,
 		            left:	Controller.previousX+'px',
 		            top:	Controller.previousY+'px'
 		          }, 0 );
