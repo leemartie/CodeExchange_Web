@@ -134,6 +134,9 @@ var SplashScreen = {
 
 //click submit bottom - TODO: need to put clones into function
         (function(cell) {cell.click(function(event){
+            if(input.val() == "")
+                return;
+
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
                 tableForSite.animate({
@@ -266,6 +269,10 @@ var SplashScreen = {
 
 //key press
         input.keypress(function(e) {
+
+            if(input.val() == "")
+                return;
+
             if (e.keyCode == '13') {
                 e.preventDefault();
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
@@ -791,6 +798,8 @@ var SplashScreen = {
         });
 
         submitButton.click(function(event){
+
+
                 SplashScreen.addAllAndSubmit(importsInput,extendsInput,implementsInput,checkboxGeneric,checkboxWildCards,
                                           packageInput,projectInput,methodCallClassInput,methodCallNameInput,
                                           methodCallParametersInput,methodDecClassInput,methodDecNameInput,methodDecParametersInput,
