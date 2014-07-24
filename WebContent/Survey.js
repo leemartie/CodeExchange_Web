@@ -9,36 +9,90 @@ var Survey = {
     getView : function(){
 
         var surveyView = $(SetupManager.tableOpen+SetupManager.tableClose);
+        surveyView.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
 
 //ROW 1
 //cell 1
         var row1 = $(SetupManager.trOpen+SetupManager.trClose);
         surveyView.append(row1);
+        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row1.append(subCell);
+        subCell.attr("height","100%");
+        subCell.attr("valign","top");
+
+        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(subRow);
+        subCell.append(subTable);
+
+
         var cell1 = new questionCell("Did you find useful code?",null,"boolean",1);
-        row1.append(cell1);
+        subRow.append(cell1);
+        cell1.attr("height","10%");
+
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var cell9 = new questionCell("Did you find autocomplete useful?",
+            'http://codeexchange.ics.uci.edu/autocomplete.png',"boolean",9,200);
+        cell9.attr("height","90%");
+        subRow.append(cell9);
+        subTable.append(subRow);
+        subTable.attr("height","100%");
+        subTable.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
+
 //cell 2
+
+
+
+
+
+        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row1.append(subCell);
+        subCell.attr("height","100%");
+        subCell.attr("valign","top");
+
+        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(subRow);
+        subCell.append(subTable);
+
 
         var cell2 = new questionCell("Did you find code criticisms useful?",
             'http://codeexchange.ics.uci.edu/critisims.png',"boolean",2,150);
-        row1.append(cell2);
+        subRow.append(cell2);
+        cell2.attr("height","50%");
 
+
+
+//cell 11
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+
+        var cell11 = new questionCell("Did you find keywords useful?",
+            'http://codeexchange.ics.uci.edu/keywords.png',"boolean",11,250);
+        cell11.attr("height","143px");
+        subRow.append(cell11);
+        subTable.append(subRow);
+        subTable.attr("height","100%");
+        subTable.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
 
 //cell 3
         var cell3 = new questionCell("Did you find code properties useful?",
             'http://codeexchange.ics.uci.edu/clickable_properties.png',"boolean",3,250);
         row1.append(cell3);
 
-        surveyView.append(row1);
+
         var cell7 = new questionCell("Did you find history useful?",
             'http://codeexchange.ics.uci.edu/History.png',"boolean",6,350);
         row1.append(cell7);
+
+
+
 
 //ROW 2
 //cell 4
         var row2 = $(SetupManager.trOpen+SetupManager.trClose);
         surveyView.append(row2);
         var cell4 = new questionCell("Did you find recommendations useful?",
-            'http://codeexchange.ics.uci.edu/Recommendations.png',"boolean",4,250);
+            'http://codeexchange.ics.uci.edu/Recommendations.png',"boolean",4,200);
         row2.append(cell4);
 
 
@@ -51,10 +105,26 @@ var Survey = {
             'http://codeexchange.ics.uci.edu/CurrentQuery.png',"boolean",8,200);
         row2.append(cell8);
 
+//cell10
+        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        subTable.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        subTable.append(subRow);
+        subCell.append(subTable);
+        row2.append(subCell);
+
+        var cell10 = new questionCell("Did you find pages useful?",
+            'http://codeexchange.ics.uci.edu/pageNumbers.png',"boolean",5,300);
+        subRow.append(cell10);
+        subTable.append(subRow);
+
 //cell 6
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
         var cell6 = new questionCell("Any other feedback?",
             null,"open",6);
-        row2.append(cell6);
+        subRow.append(cell6);
+        subTable.append(subRow);
 
 
 
@@ -163,7 +233,9 @@ function questionCell(question, imageURL, type, questionNumber, width){
     if(type == "boolean"){
 
         this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        this.cell.append("<p><text>"+question+"</text></p>");
+        var question = $("<p><text><b>"+question+"</b></text></p>");
+        question.css({"background-color":"lightgoldenrodyellow", "border-radius":"25px"});
+        this.cell.append(question);
         this.cell.attr("align","center");
         this.cell.attr("valign","top");
         this.cell.css({"border":"1px solid black", "valign": "top"});
@@ -177,6 +249,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.yesBox.attr("name","boolean"+questionNumber);
         this.yesBox.attr("value","yes");
         this.yesBox.attr("id", "radio1");
+        this.yesLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px"});
 
         this.falseBox = $(SetupManager.inputOpen+SetupManager.inputClose);
         this.falseBoxLabel = $("<text>no</text>");
@@ -186,6 +259,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.falseBox.attr("name","boolean"+questionNumber);
         this.falseBox.attr("value","no");
         this.falseBox.attr("id", "radio2");
+        this.falseBoxLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px"});
 
         this.cell.append($("<p></p>"));
         if(imageURL != null) {
@@ -196,14 +270,16 @@ function questionCell(question, imageURL, type, questionNumber, width){
 
     }else if(type == "open"){
         this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        this.cell.append("<p><text>"+question+"</text></p>");
+        var question = $("<p><text><b>"+question+"</b></text></p>");
+        question.css({"background-color":"lightgoldenrodyellow", "border-radius":"25px"});
+        this.cell.append(question);
         this.cell.attr("align","center");
         this.cell.attr("valign","top");
         this.cell.css({"border":"1px solid black", "valign": "top"});
         this.cell.addClass("Question");
 
         this.textBox = $('<textarea style="width: 350px; font-size:14pt;overflow-y: scroll"/>');
-        this.textBox.css({"height":"330px"});
+        this.textBox.css({"height":"200px"});
         this.cell.append(this.textBox);
 
         this.textBox.attr("type","textbox");
