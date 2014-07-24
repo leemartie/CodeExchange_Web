@@ -166,12 +166,12 @@ var SetupManager = {
 		setupSite	:	function(){
 
 
-			
+
 			screenWidth = jQuery(window).width();
 			screenHeight = jQuery(window).height();
-			
+
 // --- create elements
-			
+
 			var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).append(tableForSite);
 			tableForSite.addClass("HeaderTable");
@@ -183,7 +183,7 @@ var SetupManager = {
 //			tableForSite.addClass("SiteBack");
 			$(SetupManager.pound+SetupManager.entireSiteDiv_ID).addClass("SiteBack");
 			tableForSite.attr(SetupManager.ID_attr,SetupManager.tableHeader_ID);
-			
+
 			var headerRow = $(SetupManager.trOpen+SetupManager.trClose);
 			tableForSite.append(headerRow);
 
@@ -199,15 +199,15 @@ var SetupManager = {
             filterSideTD.addClass("FilterSideTD");
             filterSideTD.append(BuildQueryBoxView.getView());
             filterSideTD.height("70%");
-			
+
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
             headerRow.append(resultTD);
 			resultTD.addClass("ResultsBack");
             resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID);
             resultTD.height("70%");
-			
-			
+
+
 			//make table
 			var tableOfResults = $(SetupManager.tableOpen+SetupManager.tableClose);
             tableOfResults.attr("cellpadding","0");
@@ -225,7 +225,7 @@ var SetupManager = {
             QueryGridView.grid.hide();
 //
 			tableOfResults.addClass("ResultTable");
-			
+
 			//make cells
 			SetupManager.makeTableCells();
 
@@ -264,6 +264,29 @@ var SetupManager = {
             rowStatus.append(pageNavigation);
 
 
+//
+            var surveyRow = $(SetupManager.trOpen+SetupManager.trClose);
+            tableForSite.append(surveyRow);
+            var surveyCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            surveyRow.append(surveyCell);
+
+//bring up the survey if cell is clicked
+            surveyCell.click(function(event) {
+                $('<div id="blanket"></div>').
+                    appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+                var survey = Survey.getView();
+                survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+            });
+
+
+            var divSurvey = $(SetupManager.divOpen+SetupManager.divClose);
+            divSurvey.append("<text>Help science and us improve code search.</text>");
+            divSurvey.addClass("SurveyLabel");
+            surveyCell.append(divSurvey);
+            surveyCell.attr("width","100%");
+            surveyCell.attr("align","center");
+            surveyCell.attr("colspan","2");
+
 //listener for expand button
 			var collapsed = true;
             $(".Expand").attr("title","Expand Window");
@@ -272,7 +295,7 @@ var SetupManager = {
 			  var id = event.currentTarget.id;
 			  var number = id.charAt(id.length-1);
 	          var cellSelected = Controller.getExpandBtnToCell(number);
-	          
+
 	        if ( collapsed ) {
 		      //expand the cell
               //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","10");
@@ -291,13 +314,13 @@ var SetupManager = {
                     UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
                 else if (number == 2)
                     UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
-	          
+
 	        } else {
                 $(".Expand").attr("title","Expand Window");
 
               //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","0");
 
-	        	Controller.collapseCell(cellSelected);	  
+	        	Controller.collapseCell(cellSelected);
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
 
 	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
@@ -317,7 +340,7 @@ var SetupManager = {
 
 	      });
 
-			
+
 //resize function called when resize event happens
 			$(window).resize(function() {
 				var screenWidth = jQuery(window).width();
@@ -348,7 +371,7 @@ var SetupManager = {
 
                 $('.ResultTR').height((screenHeightBuffer));
 
-				
+
 				$('.ResultTable').width(((screenBuffer)));
                 $('.GridCell').height((screenHeightBuffer/5));
                 $('.GridCell').width(((screenBuffer+100)/5));
@@ -366,7 +389,7 @@ var SetupManager = {
 
 
 
-				
+
 			});
 			$(window).trigger('resize');
 

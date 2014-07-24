@@ -40,13 +40,27 @@ var QueryTrailNavView = {
         });
         createNewQueryButton.click(function(event) {
 
-            QueryBucketModel.removeAll();
-            QueryBucketView.update();
-            Controller.clearAllCode();
-            Controller.setStatus("Let's find some code");
-            $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
+            //no need for a new session if the current query is empty
+            if(QueryBucketModel.stackOfQueries.length != 0) {
+                QueryBucketModel.removeAll();
+                QueryBucketView.update();
+                Controller.clearAllCode();
+                Controller.setStatus("Let's find some code");
+                $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
 //LOG IT
-        UsageLogger.addEvent(UsageLogger.NEW_QUERY_BUTTON_CLICKED,null);
+                UsageLogger.addEvent(UsageLogger.NEW_QUERY_BUTTON_CLICKED, null);
+            }
+
+
+
+            if(Controller.gridOn){
+                Controller.showGrid();
+                gridButton.empty();
+                gridButton.append("<text>show code results</text>");
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
+
+            }
 
        });
 
@@ -75,10 +89,12 @@ var QueryTrailNavView = {
 
             gridButton.empty();
             if(Controller.gridOn){
+
                 gridButton.append("<text>show code results</text>");
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
             }else{
+
                 gridButton.append("<text>show search history</text>");
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_OFF,null);

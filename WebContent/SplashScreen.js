@@ -112,7 +112,7 @@ var SplashScreen = {
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
         row.append(cell);
-        cell.attr("width","5%");
+        cell.attr("width","9%");
         cell.attr("height","100%");
         cell.attr("align","left");
         cell.append(submitInputButton);
@@ -171,8 +171,6 @@ var SplashScreen = {
         var label = $("<div><text> Advanced Search</text></div>");
         label.addClass("AdvancedSearchText");
         btn.append(label);
-   //     btn.addClass("AdvancedSearch");
-
 
 
 
@@ -188,7 +186,7 @@ var SplashScreen = {
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
         row.append(cell);
-        cell.attr("width","10%");
+        cell.attr("width","9%");
         cell.attr("height","100%");
         cell.attr("align","right");
         cell.append(btn);

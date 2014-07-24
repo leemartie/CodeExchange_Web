@@ -14,10 +14,10 @@ var QueryGridView = {
         QueryGridView.grid.attr("id","grid");
 
         var index = 0;
-        for(var i = 0; i <5; i++){
+        for(var i = 0; i <=5; i++){
             var row = $(SetupManager.trOpen+SetupManager.trClose);
 
-            for(var j = 0; j<5; j++){
+            for(var j = 0; j<=5; j++){
                 var cell= $(SetupManager.tdOpen+SetupManager.tdClose);
                 cell.attr("id","GridCell"+index);
 //                  cell.width('26%');
@@ -27,7 +27,7 @@ var QueryGridView = {
                 cell.click(function(event){
                     if(QueryGridView.added != true) {
                         var id = this.id;
-                        var number = id.substring(id.length - 1);
+                        var number = (QueryGridModel.history.length) - id.substring(id.length - 1);
                         for (var i = 0; i < QueryGridModel.history[number].length; i++) {
 //only add here so we don't send in each individualy... we want to send in bulk
                             BuildQueryBoxView.addQuery(QueryGridModel.history[number][i]);

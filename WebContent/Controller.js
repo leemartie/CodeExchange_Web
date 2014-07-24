@@ -1610,7 +1610,7 @@ var Controller = {
 		 */
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/project.png"></img>');
+			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/github.png"></img>');
 			var projectName = $('<div><u><font size="2">'+name+'</font></u></div>');
 
             projectName.click(function(event){

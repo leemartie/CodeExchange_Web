@@ -12,6 +12,8 @@ var URLQueryCreator = {
             var childQuery = QueryManager.currentChildQuery;
 			var start = QueryManager.currentStart;
 
+
+
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
 				+ query
 				+ '&start=' + start
@@ -60,7 +62,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows='+6+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+3+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 

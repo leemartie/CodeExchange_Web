@@ -27,6 +27,8 @@ var QueryManager = {
     humanLanguageOfComments:	"",
     currentFQquery :    "",
 
+    numFound : 0,
+
 	/**
 	 * 
 	 * @param query
@@ -183,8 +185,6 @@ var QueryManager = {
 	 */
 	makeNavigation : function(numberOfResults, numberOfCells) {
 		var numberOfLinks = Math.ceil(numberOfResults / numberOfCells);
-		// clear links
-		// $(SetupManager.pound+SetupManager.pageNavigationDiv_ID).empty();
 
 		QueryManager.maxPages = numberOfLinks;
 
@@ -232,8 +232,7 @@ var QueryManager = {
 								QueryManager.moveCount = 0;
 								for ( var i = 0; (QueryManager.highestPage + QueryManager.moveCount+1) < QueryManager.maxPages
 										&& i <= (numberOfLinks-1); i++) {
-									
-									
+
 									QueryManager.moveCount++;
 									
 									$(SetupManager.pound + QueryManager.linkArray[i])
@@ -242,23 +241,16 @@ var QueryManager = {
 															+ " ");
 									
 									QueryManager.linkArrayData[i] = QueryManager.highestPage + QueryManager.moveCount;
-									
-									
-									
+
 								}
 
-								
 								QueryManager.lowestPage = QueryManager.highestPage+1;
 								QueryManager.highestPage = QueryManager.highestPage
 										+ QueryManager.moveCount;
-								
-								
 
 							}
-							
 							QueryManager.movePagesDisplayed(QueryManager.lowestPage, numberOfCells);
 							$(SetupManager.pound+"link0").addClass("HighLightLink");
-							
 
 						});
 
@@ -603,7 +595,7 @@ function on_nextData(data) {
 	// lets clear all the displayed results
 	Controller.clearAllCode();
 
-
+    var total = 'Found ' + data.response.numFound + ' results';
 	// let's populate the table with the results
 	$.each(docs,
 			function(i, item) {
@@ -644,8 +636,8 @@ function on_nextData(data) {
 	// now highlight the code
 
 
-	
-	Controller.setStatus("DONE - Getting next page");
+
+	Controller.setStatus("DONE");
 	clearInterval(SetupManager.rotateStatusVar);
 
     facetCompleteCallBack(data);
@@ -805,7 +797,9 @@ function on_data(data) {
 //LOG IT
     UsageLogger.addEvent(UsageLogger.RESULTS_FOUND,null,total);
 
-	QueryManager.makeNavigation(data.response.numFound, SetupManager.numberOfCells);
+    QueryManager.numFound = data.response.numFound;
+
+	QueryManager.makeNavigation(QueryManager.numFound, SetupManager.numberOfCells);
 	
 	clearInterval(SetupManager.rotateStatusVar);
 
