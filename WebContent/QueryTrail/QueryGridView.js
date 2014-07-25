@@ -14,20 +14,32 @@ var QueryGridView = {
         QueryGridView.grid.attr("id","grid");
 
         var index = 0;
-        for(var i = 0; i <=5; i++){
+        for(var i = 0; i <=4; i++){
             var row = $(SetupManager.trOpen+SetupManager.trClose);
 
-            for(var j = 0; j<=5; j++){
+            for(var j = 0; j<=4; j++){
                 var cell= $(SetupManager.tdOpen+SetupManager.tdClose);
                 cell.attr("id","GridCell"+index);
 //                  cell.width('26%');
 //                   cell.height('26%');
                 row.append(cell);
 
+
+                (function(cell){
                 cell.click(function(event){
                     if(QueryGridView.added != true) {
-                        var id = this.id;
-                        var number = (QueryGridModel.history.length) - id.substring(id.length - 1);
+                        var id = cell.attr("id");
+                        var number =  QueryGridModel.history.length - parseInt(id.substring(8));
+
+                        //clear old query out
+                        if(QueryBucketModel.stackOfQueries.length > 0) {
+                            QueryBucketModel.removeAll();
+                            QueryBucketView.update();
+                            Controller.clearAllCode();
+                            Controller.setStatus("Let's find some code");
+                            $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
+                        }
+
                         for (var i = 0; i < QueryGridModel.history[number].length; i++) {
 //only add here so we don't send in each individualy... we want to send in bulk
                             BuildQueryBoxView.addQuery(QueryGridModel.history[number][i]);
@@ -41,9 +53,31 @@ var QueryGridView = {
                     $(SetupManager.pound+"gridButton").empty();
                     $(SetupManager.pound+"gridButton").append("<text>show query history</text>");
                     Controller.showGrid();
+
+                    cell.removeClass("GridCellHover");
+                    cell.addClass("GridCell");
                 });
 
+
+                })(cell);
+
             cell.addClass("GridCell");
+
+                (function(cell) {
+                    cell.mouseenter(function (event) {
+                        cell.removeClass("GridCell");
+                        cell.addClass("GridCellHover");
+                    });
+                })(cell);
+
+                (function(cell) {
+                cell.mouseleave( function(event){
+                    cell.removeClass("GridCellHover");
+                    cell.addClass("GridCell");
+
+                });
+                })(cell);
+
                 index++;
             }
 
@@ -161,11 +195,11 @@ var QueryGridView = {
             var cellCount = 1;
             for (var i = QueryGridModel.history.length-1; i >= 0 ; i--) {
                 var stack = QueryGridModel.history[i];
-                var cellID = (cellCount) % QueryGridView.size;
+                var cellID = (cellCount);// % QueryGridView.size;
                 cellCount++;
                 lastCell = cellID + 1;
 
-                if (lastCell == 17)
+                if (lastCell == 25)
                     lastCell = 0;
 
                 $(SetupManager.pound + "GridCell" + (cellID)).empty();

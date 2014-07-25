@@ -244,7 +244,7 @@ var Survey = {
                 var question = Survey.questionCells[i].question;
                 var answer = Survey.questionCells[i].answer;
 
-                    result = result + "&question="+question +"&answer="+answer;
+                    result = result + "&question"+i+"="+question +"&answer"+i+"="+answer;
 
             }
 
@@ -254,14 +254,19 @@ var Survey = {
                 "&timeStamp="+timeStamp+
                 "&callback=?&json.wrf=displayCode";
 
+
+
             $.getJSON(url).fail(function(data, textStatus, jqXHR) {
-                //alert(data.status);
+                alert(data.status);
 
             }).success(function(data, textStatus, jqXHR ) {
                 $.each(data, function(index, element) {
-                    //     alert(data.status);
+                    alert(data.status);
                 });
             });
+
+            $("#blanket").remove();
+            $("#confirm").remove();
         });
 
 //div
@@ -300,7 +305,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.cell.append(question);
         this.cell.attr("align","center");
         this.cell.attr("valign","top");
-        this.cell.css({"border":"1px solid black", "valign": "top"});
+        this.cell.css({"border":"2px solid black", "valign": "top"});
         this.cell.addClass("Question");
 
         this.yesBox = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -349,7 +354,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.cell.append(question);
         this.cell.attr("align","center");
         this.cell.attr("valign","top");
-        this.cell.css({"border":"1px solid black", "valign": "top"});
+        this.cell.css({"border":"2px solid black", "valign": "top"});
         this.cell.addClass("Question");
 
         this.textBox = $('<textarea style="width: 350px; font-size:14pt;overflow-y: scroll"/>');
