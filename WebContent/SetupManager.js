@@ -281,7 +281,7 @@ var SetupManager = {
 
             var divSurvey = $(SetupManager.divOpen+SetupManager.divClose);
             divSurvey.append("<img height='15' width='auto' style='margin-right: 5px;' src='http://codeexchange.ics.uci.edu/science.png'></img>" +
-                "<text>Help science and us improve code search.</text>");
+                "<text>Help us improve code search.</text>");
             divSurvey.addClass("SurveyLabel");
             surveyCell.append(divSurvey);
             surveyCell.attr("width","100%");

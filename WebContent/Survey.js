@@ -317,6 +317,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.yesBox.attr("value","yes");
         this.yesBox.attr("id", "radio1");
         this.yesBox.attr("height", "50");
+        this.yesBox.css({"cursor":"pointer"});
         this.yesLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px"});
         var is = this;
         this.yesBox.click(function(event){
@@ -333,6 +334,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.falseBox.attr("name","boolean"+questionNumber);
         this.falseBox.attr("value","no");
         this.falseBox.attr("id", "radio2");
+        this.falseBox.css({"cursor":"pointer"});
         this.falseBoxLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px"});
         this.falseBox.click(function(event){
             is.yesLabel.removeClass("BoxSelected");
