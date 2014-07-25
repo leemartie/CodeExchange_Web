@@ -58,7 +58,7 @@ var SplashScreen = {
 
         sideCellTitle.append(title);
         row.append(sideCellTitle);
-        sideCellTitle.css({"padding-right":"20px"});
+        sideCellTitle.css({"padding-right":"20px", "padding-bottom":"5px"});
         sideCellTitle.attr("width","20%");
         title.hide();
 
@@ -139,6 +139,7 @@ var SplashScreen = {
 
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
+                footerCell2.hide();
                 tableForSite.animate({
                     height: '5%'
                 }, 700 );
@@ -177,7 +178,7 @@ var SplashScreen = {
         btn.click(function(event) {
             $('<div id="blanket"></div>').
                 appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
-            var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, tableForSite,
+            var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, footerCell2, tableForSite,
                 cellSubTable, subTable, titleRow, title, btn, paddingCell);
             advancedDiv.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
         });
@@ -218,6 +219,30 @@ var SplashScreen = {
         row.append(cell);
         cell.append(subtext);
         subTable.append(row);
+
+//`````````````
+        var footerRow = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(footerRow);
+        var footerCell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        footerRow.append(footerCell2);
+        footerCell2.attr("colspan","2");
+
+        var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
+        divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px; vertical-align:text-bottom;'" +
+            " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
+            "<text>Introduction Letter</text>");
+        divDisclaimer.addClass("SurveyLabel");
+        footerCell2.click(function(event) {
+            $('<div id="blanket"></div>').
+                appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+            var survey = Survey.getLetter();
+            survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+        });
+        footerCell2.append(divDisclaimer);
+        footerCell2.attr("width","100%");
+        footerCell2.attr("align","center");
+        footerCell2.attr("valign","bottom");
+        footerCell2.css({"padding":"5"});
 
 //auto complete
         input.autocomplete({
@@ -275,7 +300,7 @@ var SplashScreen = {
                 e.preventDefault();
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
-
+                footerCell2.hide();
                 tableForSite.animate({
                     height: '5%'
 
@@ -336,7 +361,7 @@ var SplashScreen = {
 
     },
 
-    setupAdvanvedSearch: function(input, subtext, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
+    setupAdvanvedSearch: function(input, subtext, footerCell2, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
         var div = $(SetupManager.divOpen+SetupManager.divClose);
 
 
@@ -869,7 +894,7 @@ var SplashScreen = {
 
             input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
             subtext.hide();
-
+            footerCell2.hide();
             tableForSite.animate({
                 height: '5%'
 

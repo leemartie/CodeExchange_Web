@@ -267,27 +267,58 @@ var SetupManager = {
 //
             var surveyRow = $(SetupManager.trOpen+SetupManager.trClose);
             tableForSite.append(surveyRow);
+
+
             var surveyCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             surveyRow.append(surveyCell);
 
+            var footerTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+                    surveyCell.append(footerTable);
+                    surveyCell.width("100%");
+                    surveyCell.attr("colspan","2");
+            var footerRow = $(SetupManager.trOpen+SetupManager.trClose);
+                    footerTable.append(footerRow);
+            var footerCell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
+                    footerRow.append(footerCell1);
+
+
+
 //bring up the survey if cell is clicked
-            surveyCell.click(function(event) {
+            footerCell1.click(function(event) {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
                 var survey = Survey.getView();
                 survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
             });
-
-
             var divSurvey = $(SetupManager.divOpen+SetupManager.divClose);
-            divSurvey.append("<img height='15' width='auto' style='margin-right: 5px;' src='http://codeexchange.ics.uci.edu/science.png'></img>" +
+            divSurvey.append("<img height='15' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
+                " src='http://codeexchange.ics.uci.edu/science.png'></img>" +
                 "<text>Help us improve code search.</text>");
             divSurvey.addClass("SurveyLabel");
-            surveyCell.append(divSurvey);
-            surveyCell.attr("width","100%");
-            surveyCell.attr("align","center");
-            surveyCell.css({"padding":"5"});
-            surveyCell.attr("colspan","2");
+            footerCell1.append(divSurvey);
+            footerCell1.attr("width","50%");
+            footerCell1.attr("align","right");
+            footerCell1.css({"padding":"5"});
+
+//disclaimer
+            var footerCell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            footerRow.append(footerCell2);
+
+            var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
+            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
+                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
+                    "<text>Introduction Letter</text>");
+            divDisclaimer.addClass("SurveyLabel");
+            footerCell2.click(function(event) {
+                $('<div id="blanket"></div>').
+                    appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+                var survey = Survey.getLetter();
+                survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+            });
+            footerCell2.append(divDisclaimer);
+            footerCell2.attr("width","50%");
+            footerCell2.attr("align","left");
+            footerCell2.css({"padding":"5"});
 
 //listener for expand button
 			var collapsed = true;

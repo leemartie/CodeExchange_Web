@@ -35,6 +35,62 @@ var Survey = {
     return date.join("/") + " " + time.join(":") + " " + suffix;
 },
 
+    getLetter : function(){
+        var div = $(SetupManager.divOpen+SetupManager.divClose);
+        div.attr("id","confirm");
+        div.css({"background-color":"white"});
+        div.append("<img width='' height='auto' src='http://codeexchange.ics.uci.edu/IntroLetter.png'></img>");
+
+        div.css({
+            "position" : "fixed",
+
+            "width" : "1000",
+            "overflow": "hidden",
+            "height": "auto",
+            "z-index" : "9002",
+            "top" : "50px",
+            "left" : (($(document).width() - 1000) / 2)});
+
+        div.addClass("Survey");
+
+        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+        table.attr("width","100%");
+        var row = $(SetupManager.trOpen+SetupManager.trClose);
+        table.append(row);
+        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        cell.attr("width","100%");
+        cell.attr("align","center");
+        row.append(cell);
+
+        div.append(table);
+
+
+        var close = $('<div id="Okay"></div>');
+        cell.append(close);
+        close.addClass("SubmitButton");
+        close.append($("<text>Okay</text>"));
+
+
+        close.on("click",function(){
+            $("#blanket").remove();
+            $("#confirm").remove();
+
+        });
+
+        close.mouseenter(function(event){
+            close.removeClass("SubmitButton");
+            close.addClass("SubmitButtonHover");
+        });
+
+        close.mouseleave( function(event){
+            close.removeClass("SubmitButtonHover");
+            close.addClass("SubmitButton");
+
+        });
+
+        return div;
+    },
+
 
     getView : function(){
 
