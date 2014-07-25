@@ -5,6 +5,36 @@ var Survey = {
 
     questionCells : new Array(),
 
+    timeStamp: function() {
+    // Create a date object with the current time
+    var now = new Date();
+
+    // Create an array with the current month, day and time
+    var date = [ now.getMonth() + 1, now.getDate(), now.getFullYear() ];
+
+    // Create an array with the current hour, minute and second
+    var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+
+    // Determine AM or PM suffix based on the hour
+    var suffix = ( time[0] < 12 ) ? "AM" : "PM";
+
+    // Convert hour from military time
+    time[0] = ( time[0] < 12 ) ? time[0] : time[0] - 12;
+
+    // If hour is 0, set it to 12
+    time[0] = time[0] || 12;
+
+    // If seconds and minutes are less than 10, add a zero
+    for (var i = 1; i < 3; i++) {
+        if (time[i] < 10) {
+            time[i] = "0" + time[i];
+        }
+    }
+
+    // Return the formatted string
+    return date.join("/") + " " + time.join(":") + " " + suffix;
+},
+
 
     getView : function(){
 
@@ -208,17 +238,30 @@ var Survey = {
 
         submitButton.click(function(event){
             var result = "";
+            var timeStamp = Survey.timeStamp();
+
             for(var i = 0; i < Survey.questionCells.length; i++){
                 var question = Survey.questionCells[i].question;
                 var answer = Survey.questionCells[i].answer;
 
-                if(i == 0)
-                    result = result + question +"\t"+answer;
-                else
-                    result = "\n"+result + question +"\t"+answer;
+                    result = result + "&question="+question +"&answer="+answer;
+
             }
 
-            alert(result);
+            var id = Client.id;
+            var url = "http://codeexchange.ics.uci.edu/survey.php?id="+id+
+                result+
+                "&timeStamp="+timeStamp+
+                "&callback=?&json.wrf=displayCode";
+
+            $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+                //alert(data.status);
+
+            }).success(function(data, textStatus, jqXHR ) {
+                $.each(data, function(index, element) {
+                    //     alert(data.status);
+                });
+            });
         });
 
 //div
@@ -328,6 +371,8 @@ function questionCell(question, imageURL, type, questionNumber, width){
 
 
     }
+
+
 
 
 }
