@@ -5,7 +5,7 @@ var BuildQueryBoxView = {
 		
 		getView:	function(){
 			var view = $(SetupManager.tableOpen+SetupManager.tableClose);
-            //view.attr("cellpadding","5");
+            view.attr("height","100%");
 
 
             //make title
@@ -19,7 +19,7 @@ var BuildQueryBoxView = {
             var addCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             titleRow.append(addCell);
 
-            var label = $("<div></div><text>Enter Query</text></div>");
+            var label = $("<div><text>Enter Query</text></div>");
 
             label.addClass("BuildQueryTitle");
             titleCell.append(label);
@@ -559,10 +559,13 @@ var BuildQueryBoxView = {
 
             currentQuery.append(queryBucketRowInParentTable);
 
-            var rowCell = $(SetupManager.trOpen+SetupManager.tdOpen+SetupManager.tdClose+SetupManager.trClose);
-            rowCell.append(currentQuery);
+            var row = $(SetupManager.trOpen+SetupManager.trClose);
+            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            cell.attr("height","20%");
+            row.append(cell)
+            cell.append(currentQuery);
 
-            view.append(rowCell);
+            view.append(row);
 
             var recommendationsTable = $(SetupManager.tableOpen+SetupManager.tableClose);
             //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
@@ -579,33 +582,51 @@ var BuildQueryBoxView = {
             titleCell.attr("align", "center");
             recommendationsTable.append(titleRow);
 
+
+
             //query Recommendations
             var recommendRow =$(SetupManager.trOpen+SetupManager.trClose);
             var recommendCell = $(SetupManager.tdOpen+SetupManager.tdClose);
             recommendRow.append(recommendCell);
             recommendCell.append(QueryRecommenderView.getView());
-            recommendCell.addClass("recommendCell");
+
             recommendationsTable.append(recommendRow);
 
-            var rowCell = $(SetupManager.trOpen+SetupManager.tdOpen+SetupManager.tdClose+SetupManager.trClose);
-            rowCell.append(recommendationsTable);
-            view.append(rowCell);
+            var titleRow = $(SetupManager.trOpen+SetupManager.trClose);
+            var titleCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            titleCell.attr("height","60%");
+            titleCell.attr("valign","top");
+            titleCell.addClass("recommendCell");
+            titleRow.append(titleCell);
+            titleCell.append(recommendationsTable);
+            view.append(titleRow);
 
 
    //buttons
+            var viewRow =$(SetupManager.trOpen+SetupManager.trClose);
+            var viewCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            viewRow.append(viewCell);
+            viewCell.attr("height","20%");
+            viewCell.attr("valign","bottom");
+
+
             var buttonTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-            //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
+            buttonTable.attr("height","100%");
             buttonTable.addClass("BucketView");
             var buttonRow =$(SetupManager.trOpen+SetupManager.trClose);
+            buttonTable.append(buttonRow);
             var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
             buttonRow.append(buttonCell);
             buttonCell.append(QueryTrailNavView.getView());
 
-            buttonTable.append(buttonRow);
+            buttonCell.attr("valign","bottom");
+            buttonCell.attr("height","100%");
 
-            var buttonCell = $(SetupManager.trOpen+SetupManager.tdOpen+SetupManager.tdClose+SetupManager.trClose);
-            buttonCell.append(buttonTable);
-            view.append(buttonCell);
+            viewCell.append(buttonTable);
+
+
+            view.append(viewRow);
 
             truebox.click(function(){
                 //access value of changed radio group with $(this).val()

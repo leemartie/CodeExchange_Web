@@ -2020,7 +2020,7 @@ var Controller = {
 
 
 		            width:  screenBuffer+6,
-		            height: screenHeightBuffer+11,
+		            height: screenHeightBuffer,
 		            left:	'0px',
 		            top:	'0px'
 		          }, 0 );
