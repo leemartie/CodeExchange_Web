@@ -86,10 +86,98 @@ var QueryGridView = {
             QueryGridView.grid.append(row);
         }
 
+        QueryGridView.restoreCookies();
+
         return QueryGridView.grid;
     },
+
+   restoreCookies : function(){
+       var ca = document.cookie.split(';');
+
+       for(var i = 0; i<= 25; i++) {
+           var name = "search"+i + "=";
+           for (var j = 0; j < ca.length; j++) {
+               var entireQuery = ca[j].trim();
+
+               if (entireQuery.indexOf(name) == 0) {
+                   var queries = entireQuery.substring(name.length, entireQuery.length).split('!!@@$$~~');
+                   var cookieStack = new Array();
+
+                   for(var g = 0; g < queries.length; g++){
+                       var type = null;
+                       var value = null;
+                       var valueIndex = null;
+                       var stackIndex = null;
+                       var displayType = null;
+                       var displayValue = null;
+                       var active = null;
+                       var score = null;
+                       var rangeQuery = null;
+                       var refinements = queries[g].split('!!@@$$');
+
+                       for(var k = 0; k<refinements.length;k++) {
+                           switch (k) {
+                               case 0:
+                                   type = refinements[k];
+                                   break;
+                               case 1:
+                                   value = refinements[k];
+                                   break;
+                               case 2:
+                                   valueIndex = refinements[k];
+                                   break;
+                               case 3:
+                                   stackIndex = refinements[k];
+                                   break;
+                               case 4:
+                                   displayType = refinements[k];
+                                   break;
+                               case 5:
+                                   displayValue = refinements[k];
+                                   break;
+                               case 6:
+                                   active = refinements[k];
+                                   break;
+                               case 7:
+                                   score = refinements[k];
+                                   break;
+                               case 8:
+                                   rangeQuery = refinements[k];
+                                   break;
+                               default:
+                                   break;
+                           }//switch
+
+
+                       }//for k
+
+                       if(value != null) {
+                           var query = new QueryModel(type, value);
+                           query.valueIndex = valueIndex;
+                           query.stackIndex = stackIndex;
+                           query.displayType = displayType;
+                           query.displayValue = displayValue;
+                           query.active = active;
+                           query.score = score;
+                           query.rangeQuery = rangeQuery;
+
+                           cookieStack.push(query);
+                       }
+                   }//for g
+
+                   QueryGridModel.history.push(cookieStack.slice(0));
+               }//if
+           }//for j
+       }//for i
+
+
+       if(QueryGridModel.history.length > 0)
+        QueryGridView.update();
+   },
+
 //UPDATE
     update : function(){
+
 
         var htmlEscapes = {
             '&': '&amp;',

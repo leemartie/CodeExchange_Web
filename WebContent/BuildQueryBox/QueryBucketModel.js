@@ -160,6 +160,38 @@ var QueryBucketModel = {
         return false;
     },
 
+
+    storeCookie : function() {
+//        var expiration_date = new Date();
+//        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+
+
+        for (var i = 0; i < QueryGridModel.history.length; i++) {
+            var query = "";
+            for (var j = 0; j < QueryGridModel.history[i].length; j++) {
+
+                var type = QueryGridModel.history[i][j].type;
+                var value = QueryGridModel.history[i][j].value;
+                var valueIndex = QueryGridModel.history[i][j].valueIndex;
+                var stackIndex = QueryGridModel.history[i][j].stackIndex;
+                var displayType = QueryGridModel.history[i][j].displayType;
+                var displayValue = QueryGridModel.history[i][j].displayValue;
+                var active = QueryGridModel.history[i][j].active;
+                var score = QueryGridModel.history[i][j].score;
+                var rangeQuery = QueryGridModel.history[i][j].rangeQuery;
+
+                query = query + type + "!!@@$$" + value + "!!@@$$" + valueIndex + "!!@@$$" + stackIndex + "!!@@$$"
+                    + displayType + "!!@@$$" + displayValue + "!!@@$$" + active + "!!@@$$" + score + "!!@@$$" + rangeQuery+"!!@@$$~~";
+
+            }
+
+            document.cookie = "search"+i+"=" + query+"";
+        }
+
+    },
+
+
+
     removeAll   :   function() {
         //add to history first
         for(var i = 0; i < QueryBucketModel.stackOfQueries.length; i++){
@@ -168,6 +200,7 @@ var QueryBucketModel = {
 
         }
         QueryGridModel.history.push(QueryBucketModel.stackOfQueries.slice(0));
+        QueryBucketModel.storeCookie();
 
         for (var i = 0; i < QueryBucketModel.listOfKeys.length; i++) {
             var key = QueryBucketModel.listOfKeys[i];
