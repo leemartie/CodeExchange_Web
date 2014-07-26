@@ -90,6 +90,9 @@ var QueryBucketModel = {
 
         if(Controller.gridOn)
             QueryGridView.update();
+
+        QueryBucketModel.storeCurrentQuery();
+
     },
 
     activateQuery: function(type, index, stackIndex){
@@ -160,10 +163,36 @@ var QueryBucketModel = {
         return false;
     },
 
+    storeCurrentQuery: function(){
+        var expiration_date = new Date();
+        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+
+        var query = "";
+        for (var j = 0; j < QueryBucketModel.stackOfQueries.length; j++) {
+
+            var type = QueryBucketModel.stackOfQueries[j].type;
+            var value = QueryBucketModel.stackOfQueries[j].value;
+            var valueIndex = QueryBucketModel.stackOfQueries[j].valueIndex;
+            var stackIndex = QueryBucketModel.stackOfQueries[j].stackIndex;
+            var displayType = QueryBucketModel.stackOfQueries[j].displayType;
+            var displayValue = QueryBucketModel.stackOfQueries[j].displayValue;
+            var active = QueryBucketModel.stackOfQueries[j].active;
+            var score = QueryBucketModel.stackOfQueries[j].score;
+            var rangeQuery = QueryBucketModel.stackOfQueries[j].rangeQuery;
+
+            query = query + type + "!!@@$$" + value + "!!@@$$" + valueIndex + "!!@@$$" + stackIndex + "!!@@$$"
+                + displayType + "!!@@$$" + displayValue + "!!@@$$" + active + "!!@@$$" + score + "!!@@$$" + rangeQuery+"!!@@$$~~";
+
+        }
+
+        var indexID = QueryGridModel.history.length;
+        document.cookie = "search"+indexID+"=" + query+""+";expires=" + expiration_date.toGMTString();
+    },
+
 
     storeCookie : function() {
-//        var expiration_date = new Date();
-//        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+        var expiration_date = new Date();
+        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
 
 
         for (var i = 0; i < QueryGridModel.history.length; i++) {
@@ -185,7 +214,7 @@ var QueryBucketModel = {
 
             }
 
-            document.cookie = "search"+i+"=" + query+"";
+            document.cookie = "search"+i+"=" + query+""+";expires=" + expiration_date.toGMTString();
         }
 
     },
