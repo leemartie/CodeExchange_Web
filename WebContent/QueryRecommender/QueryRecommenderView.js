@@ -64,6 +64,9 @@ var QueryRecommenderView = {
                 cell.addClass("RecommendationDown");
 
                 BuildQueryBoxView.addAndSubmit(query)
+
+                if(Controller.gridOn)
+                    Controller.showGrid();
 //LOG IT
                 UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Recommendation),query);
 

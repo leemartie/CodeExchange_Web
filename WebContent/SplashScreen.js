@@ -42,6 +42,7 @@ var SplashScreen = {
 
         cell.attr("width","100%");
         cell.attr("align","center");
+        cell.css({"padding-bottom":"5px"});
         cell.attr("colspan","2");
 
         cell.append(title);
@@ -211,7 +212,7 @@ var SplashScreen = {
         paddingCell.attr("width","20%");
 
 //subtext
-        var subtext = $("<div><font color='gray'><text>Search over 10 million Java classes in GitHub</text></font></div>");
+        var subtext = $("<div><font color='#2c4961'><text>Search over 10 million Java classes in GitHub</text></font></div>");
         subtext.addClass("footerText");
         var row = $(SetupManager.trOpen+SetupManager.trClose);
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -228,9 +229,10 @@ var SplashScreen = {
         footerCell2.attr("colspan","2");
 
         var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
-        divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px; vertical-align:text-bottom;'" +
-            " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
-            "<text>Introduction Letter</text>");
+//        divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px; vertical-align:text-bottom;'" +
+//            " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
+//            "<text>Introduction Letter</text>");
+        divDisclaimer.append("<text>Introduction Letter</text>");
         divDisclaimer.addClass("SurveyLabel");
         footerCell2.click(function(event) {
             $('<div id="blanket"></div>').
@@ -368,6 +370,8 @@ var SplashScreen = {
         div.attr("id","confirm");
         div.addClass("AdvancedForm");
 
+        var fontSize = '3';
+
 
         function boxAutoComplete(inputBox) {
             var autoCompleteStruct = {
@@ -416,7 +420,7 @@ var SplashScreen = {
         }
 
 
-        var title = $("<div><font size='2'><b><text>Find classes with:</text></b></font></div>");
+        var title = $("<div><font size='3'><b><text>Find classes with:</text></b></font></div>");
 
 
         div.append(title);
@@ -477,7 +481,7 @@ var SplashScreen = {
         tableOneInput.addClass("AdvancedSearchTable");
         tableCell1.append(tableOneInput);
 
-        var header = $("<th><font size='2'>Properties</font></th>");
+        var header = $("<th><font size="+fontSize+">Properties</font></th>");
         header.attr("align","center");
         header.attr("width","100%");
         header.attr("colspan","2");
@@ -490,7 +494,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         importsRow.append(label);
-        label.append($("<font size='2'><text>Imports</text></font>"));
+        label.append($("<font size="+fontSize+"'><text>Imports</text></font>"));
         var importsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         importsRow.append(importsCell);
 
@@ -512,7 +516,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         extendsRow.append(label);
-        label.append($("<font size='2'><text>Extends</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Extends</text></font>"));
         var extendsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         extendsRow.append(extendsCell);
         var extendsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -532,7 +536,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         implementsRow.append(label);
-        label.append($("<font size='2'><text>Implements</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Implements</text></font>"));
         var implementsCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         implementsRow.append(implementsCell);
         var implementsInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -554,7 +558,7 @@ var SplashScreen = {
         cell1.attr("width",labelWidth);
         propsRow.append(cell1);
         var checkboxGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
-        var checkboxLabelGeneric = $("<font size='2'><text >generic</text></font>");
+        var checkboxLabelGeneric = $("<font size="+fontSize+"><text >Generic</text></font>");
 
         checkboxGeneric.attr("type","checkbox");
         checkboxGeneric.attr("value","generic");
@@ -575,7 +579,7 @@ var SplashScreen = {
         propsRow.append(cell2);
         var checkboxWildCards = $(SetupManager.inputOpen+SetupManager.inputClose);
 
-        var checkboxLabelVarArgs = $("<font size='2'><text >has wildcards</text></font>");
+        var checkboxLabelVarArgs = $("<font size="+fontSize+"><text >Has wildcards</text></font>");
 
         checkboxWildCards.attr("type","checkbox");
         checkboxWildCards.attr("value","varArgs");
@@ -592,7 +596,7 @@ var SplashScreen = {
         tableCell5.append(tableWhereInput);
 
 
-        var header = $("<th><font size='2'>Location</font></th>");
+        var header = $("<th><font size="+fontSize+">Location</font></th>");
         header.attr("align","center");
         header.attr("width","100%");
         header.attr("colspan","2");
@@ -604,7 +608,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         packageRow.append(label);
-        label.append($("<font size='2'><text>Package</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Package</text></font>"));
         var packageCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         packageRow.append(packageCell);
         var packageInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -623,7 +627,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         projectRow.append(label);
-        label.append($("<font size='2'><text>Project</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Project</text></font>"));
         var projectCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         projectRow.append(projectCell);
         var projectInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -641,7 +645,7 @@ var SplashScreen = {
         methodCallTable.addClass("AdvancedSearchTable");
 
 
-        var header = $("<th><font size='2'>Method Call</font></th>");
+        var header = $("<th><font size="+fontSize+">Method Call</font></th>");
         header.attr("align","center");
         header.attr("width","100%");
         header.attr("colspan","2");
@@ -654,7 +658,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallClassRow.append(label);
-        label.append($("<font size='2'><text>Class</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Class</text></font>"));
         var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallClassRow.append(methodCallClassCell);
         var methodCallClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -673,7 +677,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallNameRow.append(label);
-        label.append($("<font size='2'><text>Method</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallNameRow.append(methodCallNameCell);
         var methodCallNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -692,7 +696,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallParametersRow.append(label);
-        label.append($("<font size='2'><text>Parameters</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Parameters</text></font>"));
         var methodCallParametersCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallParametersRow.append(methodCallParametersCell);
         var methodCallParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -711,7 +715,7 @@ var SplashScreen = {
 //=======Method Declaration
         var methodCallTable = $(SetupManager.tableOpen+SetupManager.tableClose);
         methodCallTable.addClass("AdvancedSearchTable");
-        var header = $("<th><font size='2'>Method Declaration</font></th>");
+        var header = $("<th><font size="+fontSize+">Method Declaration</font></th>");
         header.attr("align","center");
         header.attr("width","100%");
         header.attr("colspan","2");
@@ -726,7 +730,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallClassRow.append(label);
-        label.append($("<font size='2'><text>Class</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Class</text></font>"));
         var methodCallClassCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallClassRow.append(methodCallClassCell);
         var methodDecClassInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -745,7 +749,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallNameRow.append(label);
-        label.append($("<font size='2'><text>Method</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Method</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallNameRow.append(methodCallNameCell);
         var methodDecNameInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -764,7 +768,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         methodCallParametersRow.append(label);
-        label.append($("<font size='2'><text>Parameters</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Parameters</text></font>"));
         var methodCallParametersCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         methodCallParametersRow.append(methodCallParametersCell);
         var methodDecParametersInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -783,7 +787,7 @@ var SplashScreen = {
         label.attr("align",labelAlign);
         label.attr("width",labelWidth);
         returnTypeRow.append(label);
-        label.append($("<font size='2'><text>Return</text></font>"));
+        label.append($("<font size="+fontSize+"><text>Return</text></font>"));
         var methodCallNameCell = $(SetupManager.tdOpen+SetupManager.tdClose);
         returnTypeRow.append(methodCallNameCell);
         var methodDecReturnInput = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -803,7 +807,7 @@ var SplashScreen = {
         cell1.attr("width",labelWidth);
         propsRow.append(cell1);
         var checkboxDecGeneric = $(SetupManager.inputOpen+SetupManager.inputClose);
-        var checkboxLabelGeneric = $("<font size='2'><text >generic</text></font>");
+        var checkboxLabelGeneric = $("<font size="+fontSize+"><text >Generic</text></font>");
 
         checkboxDecGeneric.attr("type","checkbox");
         checkboxDecGeneric.attr("value","generic");
@@ -824,7 +828,7 @@ var SplashScreen = {
         propsRow.append(cell2);
         var checkboxDecVarArgs = $(SetupManager.inputOpen+SetupManager.inputClose);
 
-        var checkboxLabelVarArgs = $("<font size='2'><text >variable args</text></font>");
+        var checkboxLabelVarArgs = $("<font size="+fontSize+"><text >Variable args</text></font>");
 
         checkboxDecVarArgs.attr("type","checkbox");
         checkboxDecVarArgs.attr("value","varArgs");
@@ -930,12 +934,12 @@ var SplashScreen = {
         div.css({
             "position" : "fixed",
             "background-color" : "#d3d3d3",
-            "width" : "600px",
+            "width" : "800px",
             "overflow": "hidden",
             "height": "auto",
             "z-index" : "9002",
             "top" : "150px",
-            "left" : (($(document).width() - 600) / 2)});
+            "left" : (($(document).width() - 800) / 2)});
 
         return div;
     }

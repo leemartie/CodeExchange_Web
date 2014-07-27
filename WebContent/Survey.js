@@ -39,17 +39,17 @@ var Survey = {
         var div = $(SetupManager.divOpen+SetupManager.divClose);
         div.attr("id","confirm");
         div.css({"background-color":"white"});
-        div.append("<img width='' height='auto' src='http://codeexchange.ics.uci.edu/IntroLetter.png'></img>");
+        div.append("<img width='800' height='auto' src='http://codeexchange.ics.uci.edu/IntroLetter.png'></img>");
 
         div.css({
             "position" : "fixed",
 
-            "width" : "1000",
+            "width" : "800",
             "overflow": "hidden",
             "height": "auto",
             "z-index" : "9002",
-            "top" : "50px",
-            "left" : (($(document).width() - 1000) / 2)});
+            "top" : "150px",
+            "left" : (($(document).width() - 800) / 2)});
 
         div.addClass("Survey");
 
@@ -65,10 +65,10 @@ var Survey = {
         div.append(table);
 
 
-        var close = $('<div id="Okay"></div>');
+        var close = $('<div id="Close"></div>');
         cell.append(close);
         close.addClass("SubmitButton");
-        close.append($("<text>Okay</text>"));
+        close.append($("<text>Close</text>"));
 
 
         close.on("click",function(){
