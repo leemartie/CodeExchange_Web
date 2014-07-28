@@ -174,18 +174,20 @@ var SplashScreen = {
         label.addClass("AdvancedSearchText");
         btn.append(label);
 
-
-
-        btn.click(function(event) {
-            $('<div id="blanket"></div>').
-                appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
-            var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, footerCell2, tableForSite,
-                cellSubTable, subTable, titleRow, title, btn, paddingCell);
-            advancedDiv.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
-        });
-
-
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+
+        (function(cell) {
+            cell.click(function (event) {
+                $('<div id="blanket"></div>').
+                    appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
+                var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, footerCell2, tableForSite,
+                    cellSubTable, subTable, titleRow, title, btn, paddingCell);
+                advancedDiv.appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
+            });
+        })(cell);
+
+
+
 
         row.append(cell);
         cell.attr("width","9%");
