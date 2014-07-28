@@ -88,7 +88,8 @@ var Controller = {
                     editor.getSession().setValue("");
 
                     $(SetupManager.pound+"cellStatus"+editorNumber).empty();
-                    var text = $("<text>"+"Oops... this code has been moved or deleted."+"</text>");
+                    var text = $("<text>"+"Oops... this code has been moved or deleted from GitHub." +
+                        "            We will remove this link soon!"+"</text>");
                     text.addClass("CellStatus");
                     $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
@@ -102,23 +103,22 @@ var Controller = {
                         var text = $("<text>"+""+"</text>");
                         $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
+//project URL
+
                         $(SetupManager.pound+"projectURL"+editorNumber).empty();
+
+
 
                         var currentURL = Controller.currentURLs[editorNumber];
                         var versionIndex = currentURL.indexOf(version);
 
 
                         var path = currentURL.substring(versionIndex+version.length);
-
                         var urlToProject = Controller.projectURLs[editorNumber]
                             +'/archive/'+Controller.versions[editorNumber]+'.zip';
-
-
-                        var projectURL = $('<div><text></text>' +
+                        var projectURL = $('<div>' +
                             '<img  src="http://codeexchange.ics.uci.edu/zip.png"></img></div>');
-
                         projectURL.addClass("downloadLink");
-
                         projectURL.click(function(e) {
 
  //LOG IT
@@ -131,14 +131,67 @@ var Controller = {
 
                         });
 
+                        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+                        var row = $(SetupManager.trOpen+SetupManager.trClose);
+                        table.append(row);
+                        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                        row.append(cell);
+                        cell.attr("width","7%");
+                        cell.append(projectURL);
 
 
-                        $(SetupManager.pound+"projectURL"+editorNumber).attr("title",
-                            "Download the GitHub project.\n Note: this code is in file: .."+path);
-                        $(SetupManager.pound+"projectURL"+editorNumber).append(projectURL);
+                        cell.attr("title",
+                            "Download the GitHub project.\nNote: this code is in file: .."+path);
+                        $(SetupManager.pound+"projectURL"+editorNumber).append(table);
 
 
-                        var code = element;
+
+
+ //-----------------------end project
+
+
+                        var currentURL = Controller.currentURLs[editorNumber];
+
+
+                        var javaURL = $('<div>' +
+                            '<img  src="http://codeexchange.ics.uci.edu/java.png"></img></div>');
+                        javaURL.addClass("downloadLink");
+
+                        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                        cell.attr("align","left");
+                        row.append(cell);
+                        //cell.append(javaURL);
+                        cell.attr("title",
+                                "Download the Java file");
+
+                        javaURL.click(function(e) {
+
+                            //LOG IT
+                            UsageLogger.addEvent(UsageLogger.DOWNLOAD_FILE,null,currentURL);
+
+//have to set this time out so there is enough time for the log post to go through
+                            setTimeout(function() {
+
+
+                                var url = "http://codeexchange.ics.uci.edu/downloadPage.php?url="+currentURL+"&callback=?&json.wrf=nothing";
+
+                                $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+
+                                    alert(textStatus);
+
+                                }).success(function(data, textStatus, jqXHR ) {
+
+                                });
+
+                            }, 250);
+
+                        });
+
+
+//---------------------
+
+
+                            var code = element;
 
                         var editor = ace.edit(codeNode);
                         editor.getSession().setValue(code);
@@ -1610,10 +1663,29 @@ var Controller = {
 		 */
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-			var icon  = $('<img width=20 height=20 src="http://codeexchange.ics.uci.edu/github.png"></img>');
-			var projectName = $('<div><u><font size="2">'+name+'</font></u></div>');
 
-            projectName.click(function(event){
+            var table = $(SetupManager.tableOpen+SetupManager.tableClose)
+            var row = $(SetupManager.trOpen+SetupManager.trClose);
+            table.append(row);
+            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            row.append(cell);
+
+			var projectName = $('<div style="font-size: 12px;"><font color="black"><center>'
+                +"Refine by class project</center></font>"+
+                "</div>");
+            cell.append(projectName);
+
+            var row = $(SetupManager.trOpen+SetupManager.trClose);
+            table.append(row);
+
+            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            row.append(cell);
+
+            var cellName = $("<div style='font-size: 12px;'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
+            cell.append(cellName);
+
+
+            table.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);
                 query.displayType = "project";
                 query.displayValue = name;
@@ -1622,14 +1694,28 @@ var Controller = {
                 UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
             });
 
+            table.mouseenter(function(){
+
+                table.addClass("RefineButtonHover");
+
+
+            })
+
+            table.mouseleave(function(){
+
+                table.removeClass("RefineButtonHover");
+
+
+            })
+
 
 			metadiv.addClass("MetaBorder");
-            projectName.addClass("MetaBorder");
-            projectName.addClass("MetaQuery");
-			metadiv.append(icon);
-			metadiv.append(projectName);
+            table.addClass("MetaBorder");
+            table.addClass("MetaQuery");
 
-            metadiv.attr("title","Refine by this project.")
+			metadiv.append(table);
+
+
 			$(SetupManager.pound+meta).append(metadiv);
 		},
 

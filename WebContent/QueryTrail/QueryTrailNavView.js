@@ -40,6 +40,11 @@ var QueryTrailNavView = {
         });
         createNewQueryButton.click(function(event) {
 
+            $(SetupManager.pound+"cellStatus"+0).empty();
+            $(SetupManager.pound+"cellStatus"+1).empty();
+            $(SetupManager.pound+"cellStatus"+2).empty();
+
+
             //no need for a new session if the current query is empty
             if(QueryBucketModel.stackOfQueries.length != 0) {
                 QueryBucketModel.removeAll();

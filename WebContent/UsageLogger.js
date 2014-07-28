@@ -50,6 +50,8 @@ var UsageLogger = {
 //DOWNLOAD PROJECT CLICK
     DOWNLOAD_PROJECT                    : "DOWNLOAD_PROJECT",
 
+    DOWNLOAD_FILE                       : "DOWNLOAD_FILE",
+
 //CELL WINDOW
     WINDOW_EXPAND_CELL1                 : "WINDOW_EXPAND_CELL1",
     WINDOW_EXPAND_CELL2                 : "WINDOW_EXPAND_CELL2",

@@ -305,9 +305,11 @@ var SetupManager = {
             footerRow.append(footerCell2);
 
             var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
-            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
-                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
-                    "<text>Introduction Letter</text>");
+//            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
+//                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
+//                    "<text>Introduction Letter</text>");
+
+            divDisclaimer.append("<text>Introduction Letter</text>");
             divDisclaimer.addClass("SurveyLabel");
             footerCell2.click(function(event) {
                 $('<div id="blanket"></div>').
