@@ -6,6 +6,7 @@ var QueryGridView = {
      grid : $(SetupManager.tableOpen+SetupManager.tableClose),
      added : false,
      size: 25,
+     close: false,
 
 
     setup : function(){
@@ -27,7 +28,7 @@ var QueryGridView = {
 
                 (function(cell){
                 cell.click(function(event){
-                    if(QueryGridView.added != true) {
+                    if(QueryGridView.added != true && QueryGridView.close != true) {
                         var id = cell.attr("id");
                         var number =  QueryGridModel.history.length - parseInt(id.substring(8));
 
@@ -56,6 +57,7 @@ var QueryGridView = {
 
                     }else{
                         QueryGridView.added = false;
+                        QueryGridView.close = false;
                     }
 
                 });
@@ -115,6 +117,8 @@ var QueryGridView = {
                        var rangeQuery = null;
                        var refinements = queries[g].split('!!@@$$');
 
+
+
                        for(var k = 0; k<refinements.length;k++) {
                            switch (k) {
                                case 0:
@@ -151,7 +155,7 @@ var QueryGridView = {
 
                        }//for k
 
-                       if(value != null) {
+                       if(value != null && refinements[0] != "deleted") {
                            var query = new QueryModel(type, value);
                            query.valueIndex = valueIndex;
                            query.stackIndex = stackIndex;
@@ -165,7 +169,8 @@ var QueryGridView = {
                        }
                    }//for g
 
-                   QueryGridModel.history.push(cookieStack.slice(0));
+                   if(cookieStack.length >  0)
+                    QueryGridModel.history.push(cookieStack.slice(0));
                }//if
            }//for j
        }//for i
@@ -209,12 +214,27 @@ var QueryGridView = {
         table.height("100%");
         table.addClass("QueryViewTable");
 
-        table.append($("<tr><th>search number: "+( QueryGridModel.history.length+1)+"</th></tr>"));
+        var header = $("<tr><th width='100%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+            "search number: "+( QueryGridModel.history.length+1)+"</th></tr>");
+        table.append(header);
+
+//        var Xcell = $(SetupManager.tdOpen+SetupManager.tdClose);
+//        header.append(Xcell);
+//        Xcell.append("<img width='15px' height=auto src='http://codeexchange.ics.uci.edu/close.png'></img>");
+//        Xcell.attr("align","right");
+//        Xcell.attr("width","6%");
+
+
+
+
+
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         cell.height("100%");
         row.append(cell);
+        cell.attr("colspan","2");
+
 
         table.append(row);
 
@@ -222,6 +242,7 @@ var QueryGridView = {
             var query = QueryBucketModel.stackOfQueries[i];
             var row = $(SetupManager.trOpen+SetupManager.trClose);
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            cell.attr("colspan","2");
             cell.width("100%");
             row.append(cell);
             cell.attr("valign","bottom");
@@ -305,19 +326,45 @@ var QueryGridView = {
 
                 var table = $(SetupManager.tableOpen + SetupManager.tableClose);
                 table.addClass("QueryViewTable");
-                table.append($("<tr><th>search number: " + (i+1) + "</th></tr>"));
+
+                var header = $("<tr><th width='100%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                    "search number: "+(i+1)+"</th></tr>");
+                table.append(header);
+
+                var Xcell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                header.append(Xcell);
+                Xcell.append("<img width='15px' height=auto src='http://codeexchange.ics.uci.edu/close.png'></img>");
+                Xcell.attr("align","right");
+                Xcell.attr("width","6%");
+
+
+
+
                 table.height("100%");
                 var row = $(SetupManager.trOpen + SetupManager.trClose);
                 var cell = $(SetupManager.tdOpen + SetupManager.tdClose);
                 cell.height("100%");
                 row.append(cell);
-
+                cell.attr("colspan","2");
 
                 table.append(row);
+
+                (function(Xcell,i,queryCell){
+                    Xcell.click(function(event){
+                        console.log("number: "+i);
+                        QueryGridModel.history.splice(i,1);
+                        QueryGridView.close = true;
+                        table.empty();
+                        document.cookie = "search"+(i)+"=deleted";
+                        QueryGridView.update();
+                    });
+
+                })(Xcell,i,table);
 
                 for (var j = 0; j < stack.length; j++) {
                     var row = $(SetupManager.trOpen + SetupManager.trClose);
                     var cell = $(SetupManager.tdOpen + SetupManager.tdClose);
+                    cell.attr("colspan","2");
                     var cellDiv = $(SetupManager.divOpen + SetupManager.divClose);
                     row.append(cell);
                     var query = stack[j];
