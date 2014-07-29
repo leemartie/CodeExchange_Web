@@ -100,7 +100,7 @@ var Controller = {
                 }).success(function(data, textStatus, jqXHR ) {
                     $.each(data, function(index, element) {
 
-                        $("#"+SetupManager.expandBtnArray_ID[editorNumber]).show();
+
 
                         $(SetupManager.pound+"cellStatus"+editorNumber).empty();
                         var text = $("<text>"+""+"</text>");
@@ -120,8 +120,14 @@ var Controller = {
                         var urlToProject = Controller.projectURLs[editorNumber]
                             +'/archive/'+Controller.versions[editorNumber]+'.zip';
                         var projectURL = $('<div>' +
-                            '<img  src="http://codeexchange.ics.uci.edu/zip.png"></img></div>');
-                        projectURL.addClass("downloadLink");
+                            '<center><img  src="http://codeexchange.ics.uci.edu/zip.png"></img></center></div>');
+                      //  projectURL.addClass("downloadLink");
+
+
+
+
+
+
                         projectURL.click(function(e) {
 
  //LOG IT
@@ -135,14 +141,29 @@ var Controller = {
                         });
 
                         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-                        table.attr("height","100%")
+                        table.attr("height","8%")
                         var row = $(SetupManager.trOpen+SetupManager.trClose);
                         table.append(row);
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                        cell.addClass("downloadLink");
                         row.append(cell);
                         cell.attr("width","7%");
                         cell.attr("height","100%");
                         cell.append(projectURL);
+
+                        (function(cell){
+                        cell.mouseenter(function(e){
+                            cell.removeClass("downloadLink");
+                            cell.addClass("downloadLinkHover");
+
+                        });
+
+                        cell.mouseleave(function(e){
+                            cell.removeClass("downloadLinkHover");
+                            cell.addClass("downloadLink");
+                        });
+
+                        })(cell);
 
 
                         cell.attr("title",
@@ -159,20 +180,35 @@ var Controller = {
 
 
                         var javaURL = $('<div>' +
-                            '<img  height="28" width="auto" style="vertical-align:text-bottom;" ' +
-                        'src="http://codeexchange.ics.uci.edu/java.png"></img></div>');
+                            '<center><img  height="28" width="auto" style="vertical-align:text-bottom;" ' +
+                        'src="http://codeexchange.ics.uci.edu/java.png"></img></center></div>');
 
-                        javaURL.addClass("downloadLink");
+                        //javaURL.addClass("downloadLink");
 
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         cell.attr("align","left");
                         cell.attr("valign","bottom");
-                        cell.css({"padding-top":"5px"});
-                        cell.attr("height","100%");
+                        //cell.css({"padding-top":"5px"});
+                        //cell.attr("height","100%");
+                        cell.attr("width","7%");
                         row.append(cell);
                         cell.append(javaURL);
                         cell.attr("title",
                                 "Download the Java file");
+                        cell.addClass("downloadLink");
+                        (function(cell){
+                            cell.mouseenter(function(e){
+                                cell.removeClass("downloadLink");
+                                cell.addClass("downloadLinkHover");
+
+                            });
+
+                            cell.mouseleave(function(e){
+                                cell.removeClass("downloadLinkHover");
+                                cell.addClass("downloadLink");
+                            });
+
+                        })(cell);
 
                         javaURL.click(function(e) {
 
@@ -196,6 +232,14 @@ var Controller = {
                            window.URL.revokeObjectURL(url);
 
                         });
+
+                        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                        cell.attr("align","left");
+                        cell.addClass("downloadLink");
+                        row.append(cell);
+
+                        cell.append($("#"+SetupManager.expandBtnArray_ID[editorNumber]));
+                        $("#"+SetupManager.expandBtnArray_ID[editorNumber]).show();
 
 
 //---------------------version
@@ -1255,6 +1299,19 @@ var Controller = {
 
 
             var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
+            icon.addClass("Arrow");
+        (function(icon){
+            icon.mouseenter(function(e){
+                icon.removeClass("Arrow");
+                icon.addClass("ArrowHover");
+
+            });
+            icon.mouseleave(function(e){
+                icon.removeClass("ArrowHover");
+                icon.addClass("Arrow");
+            });
+        })(icon);
+
             icon.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"[* TO "+(complexity-1)+"]");
                 query.displayType = "complexity";
@@ -1266,6 +1323,7 @@ var Controller = {
             });
 
             icon.addClass("MetaQuery");
+
         icon.mouseover(function(event){
             icon.attr("title","decrease branch complexity to be less than this code's complexity (decrease for loops, if statments, try/catch, etc...)");
         });
@@ -1283,6 +1341,18 @@ var Controller = {
             td3.attr("align","center");
 
             var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
+        icon2.addClass("Arrow");
+        (function(icon){
+            icon.mouseenter(function(e){
+                icon.removeClass("Arrow");
+                icon.addClass("ArrowHover");
+
+            });
+            icon.mouseleave(function(e){
+                icon.removeClass("ArrowHover");
+                icon.addClass("Arrow");
+            });
+        })(icon2);
             icon2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.complexityField,"["+(complexity+1)+" TO *]");
                 query.displayType = "complexity";
@@ -1344,6 +1414,18 @@ var Controller = {
 
 
         var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
+        icon.addClass("Arrow");
+        (function(icon){
+            icon.mouseenter(function(e){
+                icon.removeClass("Arrow");
+                icon.addClass("ArrowHover");
+
+            });
+            icon.mouseleave(function(e){
+                icon.removeClass("ArrowHover");
+                icon.addClass("Arrow");
+            });
+        })(icon);
         icon.click(function(event){
             var query = new QueryModel(QueryBucketModel.importCountField,"[* TO "+(importCount-1)+"]");
             query.displayType = "import count";
@@ -1373,6 +1455,18 @@ var Controller = {
         td3.attr("align","center");
 
         var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
+        icon2.addClass("Arrow");
+        (function(icon){
+            icon.mouseenter(function(e){
+                icon.removeClass("Arrow");
+                icon.addClass("ArrowHover");
+
+            });
+            icon.mouseleave(function(e){
+                icon.removeClass("ArrowHover");
+                icon.addClass("Arrow");
+            });
+        })(icon2);
         icon2.click(function(event){
             var query = new QueryModel(QueryBucketModel.importCountField,"["+(importCount+1)+" TO *]");
             query.displayType = "import count";
@@ -1434,6 +1528,18 @@ var Controller = {
 
 
             var icon  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/downArrow.png"></img>');
+        icon.addClass("Arrow");
+        (function(icon){
+            icon.mouseenter(function(e){
+                icon.removeClass("Arrow");
+                icon.addClass("ArrowHover");
+
+            });
+            icon.mouseleave(function(e){
+                icon.removeClass("ArrowHover");
+                icon.addClass("Arrow");
+            });
+        })(icon);
             icon.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"[* TO "+(size-1)+"]");
                 query.displayType = "size";
@@ -1467,6 +1573,18 @@ var Controller = {
 
 
             var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
+        icon2.addClass("Arrow");
+        (function(icon){
+            icon.mouseenter(function(e){
+                icon.removeClass("Arrow");
+                icon.addClass("ArrowHover");
+
+            });
+            icon.mouseleave(function(e){
+                icon.removeClass("ArrowHover");
+                icon.addClass("Arrow");
+            });
+        })(icon2);
             icon2.click(function(event){
                 var query = new QueryModel(QueryBucketModel.sizeField,"["+(size+1)+" TO *]");
                 query.displayType = "size";

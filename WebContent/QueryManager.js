@@ -595,6 +595,10 @@ function on_nextData(data) {
 	// lets clear all the displayed results
 	Controller.clearAllCode();
 
+    $("#"+SetupManager.expandBtnArray_ID[0]).hide();
+    $("#"+SetupManager.expandBtnArray_ID[1]).hide();
+    $("#"+SetupManager.expandBtnArray_ID[2]).hide();
+
     var total = 'Found ' + data.response.numFound + ' results';
 	// let's populate the table with the results
 	$.each(docs,
@@ -731,7 +735,9 @@ function on_data(data) {
 	var total = 'Found ' + data.response.numFound + ' results';
 
 	QueryManager.totalResuls = data.response.numFound;
-
+    $("#"+SetupManager.expandBtnArray_ID[0]).hide();
+    $("#"+SetupManager.expandBtnArray_ID[1]).hide();
+    $("#"+SetupManager.expandBtnArray_ID[2]).hide();
 	// alert("found"+docs.length);
 
 	// lets clear all the displayed results

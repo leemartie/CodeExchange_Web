@@ -337,7 +337,7 @@ var Survey = {
             "overflow": "hidden",
             "height": "auto",
             "z-index" : "9002",
-            "top" : "50px",
+            "top" : "0px",
             "left" : (($(document).width() - 1200) / 2)});
 
         div.addClass("Survey");

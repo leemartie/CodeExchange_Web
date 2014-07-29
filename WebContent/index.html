@@ -749,13 +749,45 @@ td {
     font-family: Courier;
 }
 
+.Arrow{
+    cursor: pointer;
+
+    align: center;
+    font-size: 14px;
+}
+.ArrowHover{
+    cursor: pointer;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+
+    box-shadow: 3px 3px 3px gray;
+}
 
 .downloadLink{
     cursor: pointer;
-    padding: 5px;
-    position: absolute;
+    padding-top: 5px;
+    align: center;
     font-size: 14px;
 
+
+}
+
+.downloadLinkHover{
+    cursor: pointer;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    padding-top: 5px;
+    box-shadow: 3px 3px 3px gray;
 
 }
 
@@ -1049,6 +1081,10 @@ td {
 
 }
 
+input:focus{
+    outline: 0;
+}
+
 .SplashInputDiv{
     background-color: #d3d3d3;
     color:#ffffff;
@@ -1251,6 +1287,7 @@ html { height: 100%; }
     font-size: 14px;
 
     width: 40%;
+    height: 20%;
 
 
 
@@ -1446,7 +1483,7 @@ html { height: 100%; }
 
 .ExpandButtonHover{
     box-shadow: 3px 3px 3px darkgray;
-    margin: -6px;
+    margin: 0px;
     border: 1px solid;
     border-color: black;
     background-color: whitesmoke;
@@ -1466,7 +1503,7 @@ html { height: 100%; }
 }
 
 .ExpandButton{
-    margin: -5px;
+    margin: 0px;
 
     border: 1px solid;
     border-color: black;

@@ -91,6 +91,9 @@ var SplashScreen = {
         var input = $(SetupManager.inputOpen+SetupManager.inputClose);
         inputDiv.append(input);
         input.addClass("SplashInput");
+
+
+
         input.attr(SetupManager.placeholder_attr, "Type keywords and hit Enter");
         input.attr(SetupManager.ID_attr,SetupManager.queryInput_ID);
 
