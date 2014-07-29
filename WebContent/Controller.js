@@ -95,9 +95,12 @@ var Controller = {
 
                     $(SetupManager.pound+"projectURL"+editorNumber).empty();
 
+                    $("#"+SetupManager.expandBtnArray_ID[editorNumber]).hide();
+
                 }).success(function(data, textStatus, jqXHR ) {
                     $.each(data, function(index, element) {
 
+                        $("#"+SetupManager.expandBtnArray_ID[editorNumber]).show();
 
                         $(SetupManager.pound+"cellStatus"+editorNumber).empty();
                         var text = $("<text>"+""+"</text>");
@@ -132,11 +135,13 @@ var Controller = {
                         });
 
                         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+                        table.attr("height","100%")
                         var row = $(SetupManager.trOpen+SetupManager.trClose);
                         table.append(row);
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         row.append(cell);
                         cell.attr("width","7%");
+                        cell.attr("height","100%");
                         cell.append(projectURL);
 
 
@@ -154,11 +159,16 @@ var Controller = {
 
 
                         var javaURL = $('<div>' +
-                            '<img  src="http://codeexchange.ics.uci.edu/java.png"></img></div>');
+                            '<img  height="28" width="auto" style="vertical-align:text-bottom;" ' +
+                        'src="http://codeexchange.ics.uci.edu/java.png"></img></div>');
+
                         javaURL.addClass("downloadLink");
 
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         cell.attr("align","left");
+                        cell.attr("valign","bottom");
+                        cell.css({"padding-top":"5px"});
+                        cell.attr("height","100%");
                         row.append(cell);
                         cell.append(javaURL);
                         cell.attr("title",
@@ -188,7 +198,19 @@ var Controller = {
                         });
 
 
-//---------------------
+//---------------------version
+//
+//                        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+//                        cell.attr("align","left");
+//                        var textVersion = $("<div><text>version: <font color='#8b0000'>"+version+"</text></font></div>");
+//                        textVersion.css({"padding-left":"0px"});
+//
+//                        cell.append(textVersion);
+//                        cell.attr("width","8px");
+//                        row.append(cell);
+
+
+//-----------------
 
 
                             var code = element;
@@ -1663,19 +1685,23 @@ var Controller = {
 		 */
 		setProjectName	:	function(meta, name, projectURL){
 			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-
+            metadiv.addClass("ProjectRefinement");
             var table = $(SetupManager.tableOpen+SetupManager.tableClose)
             var row = $(SetupManager.trOpen+SetupManager.trClose);
+            row.addClass("ProjectRefinement");
+
             table.append(row);
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
             row.append(cell);
 
 			var projectName = $('<div style="font-size: 12px;"><font color="black"><center>'
-                +"Refine by class project</center></font>"+
+                +"Refine by project</center></font>"+
                 "</div>");
             cell.append(projectName);
 
             var row = $(SetupManager.trOpen+SetupManager.trClose);
+            row.addClass("ProjectRefinement");
+
             table.append(row);
 
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -1716,6 +1742,7 @@ var Controller = {
 			metadiv.append(table);
 
 
+            metadiv.attr("title","Refine current query by this code's project.")
 			$(SetupManager.pound+meta).append(metadiv);
 		},
 

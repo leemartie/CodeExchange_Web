@@ -273,9 +273,12 @@ var SetupManager = {
             surveyRow.append(surveyCell);
 
             var footerTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+            footerTable.css({"border":"0px solid black","width":"27%"});
+
                     surveyCell.append(footerTable);
-                    surveyCell.width("100%");
+                    //surveyCell.width("100%");
                     surveyCell.attr("colspan","2");
+                     surveyCell.attr("align","center");
             var footerRow = $(SetupManager.trOpen+SetupManager.trClose);
                     footerTable.append(footerRow);
             var footerCell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -297,7 +300,7 @@ var SetupManager = {
             divSurvey.addClass("SurveyLabel");
             footerCell1.append(divSurvey);
             footerCell1.attr("width","50%");
-            footerCell1.attr("align","right");
+            footerCell1.attr("align","center");
             footerCell1.css({"padding":"5"});
 
 //disclaimer
@@ -319,13 +322,16 @@ var SetupManager = {
             });
             footerCell2.append(divDisclaimer);
             footerCell2.attr("width","50%");
-            footerCell2.attr("align","left");
+            footerCell2.attr("align","center");
             footerCell2.css({"padding":"5"});
 
 //listener for expand button
 			var collapsed = true;
             $(".Expand").attr("title","Expand Window");
 			$(".Expand").click(function(event) {
+                $(".Expand").removeClass("ExpandButtonHover");
+                $(".Expand").addClass("ExpandButton");
+
         	//use event.currentTarget.id for some resson event.target.id does not work
 			  var id = event.currentTarget.id;
 			  var number = id.charAt(id.length-1);
@@ -587,18 +593,41 @@ var SetupManager = {
 				$(SetupManager.pound+SetupManager.cellDivArray_ID[i]).append(resultOptions);
 				
 				//make expand button for result options
-				var expandButton	 = $(SetupManager.buttonOpen+SetupManager.buttonClose);
-                expandButton.button();
+				var expandButton	 = $(SetupManager.divOpen+SetupManager.divClose);
+                expandButton.addClass("ExpandButton");
 				var expandButton_id	="expandBtn"+i;
 				SetupManager.expandBtnArray_ID[i] = expandButton_id;
 				expandButton.attr(SetupManager.ID_attr, SetupManager.expandBtnArray_ID[i]);
 				expandButton.addClass("Expand");
-
+                expandButton.hide();
 
 
                 var expandButtonDiv = $(SetupManager.divOpen+SetupManager.divClose);
                 expandButtonDiv.addClass("ExpandButtonDiv");
                 expandButtonDiv.append(expandButton);
+
+
+                (function(expandButton)
+                {
+                    expandButton.mouseenter(function (event) {
+                        expandButton.removeClass("ExpandButton");
+                        expandButton.addClass("ExpandButtonHover");
+                    });
+
+                    expandButton.mouseleave(function (event) {
+                        expandButton.removeClass("ExpandButtonHover");
+                        expandButton.addClass("ExpandButton");
+
+                    });
+                })(expandButton);
+
+
+
+
+
+
+
+
 //project
                 var projectURLCell = $("<div>"+"</div>");
                 projectURLCell.attr("id","projectURL"+i);
