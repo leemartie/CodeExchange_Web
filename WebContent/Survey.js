@@ -313,7 +313,7 @@ var Survey = {
 
 
             $.getJSON(url).fail(function(data, textStatus, jqXHR) {
-                alert(data.status);
+
 
             }).success(function(data, textStatus, jqXHR ) {
                 $.each(data, function(index, element) {

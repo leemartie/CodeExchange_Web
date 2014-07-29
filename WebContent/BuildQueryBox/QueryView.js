@@ -124,6 +124,9 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        (function(type, active, index, stackIndex){ so.cell.click(function(event) {
            //button.empty();
 
+           if(Controller.gridOn)
+            Controller.showGrid();
+
            if(active == true){
                active = false;
                QueryBucketModel.deactivateQuery(type, index,  stackIndex);

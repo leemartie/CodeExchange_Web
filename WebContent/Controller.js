@@ -86,7 +86,7 @@ var Controller = {
 
                     var editor = ace.edit(codeNode);
                     editor.getSession().setValue("");
-
+//-----------get next page?
                     $(SetupManager.pound+"cellStatus"+editorNumber).empty();
                     var text = $("<text>"+"Oops... this code has been moved or deleted from GitHub." +
                         "            We will remove this link soon!"+"</text>");
@@ -160,7 +160,7 @@ var Controller = {
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         cell.attr("align","left");
                         row.append(cell);
-                        //cell.append(javaURL);
+                        cell.append(javaURL);
                         cell.attr("title",
                                 "Download the Java file");
 
@@ -169,21 +169,21 @@ var Controller = {
                             //LOG IT
                             UsageLogger.addEvent(UsageLogger.DOWNLOAD_FILE,null,currentURL);
 
-//have to set this time out so there is enough time for the log post to go through
-                            setTimeout(function() {
+                            var blob = new Blob([element], {type: "text/plain;charset=utf-8"});
+
+                            var javaNames = currentURL.split("/");
+                            var fileName = javaNames[javaNames.length - 1];
+                            var url = window.URL.createObjectURL(blob);
 
 
-                                var url = "http://codeexchange.ics.uci.edu/downloadPage.php?url="+currentURL+"&callback=?&json.wrf=nothing";
+                            var a = document.createElement("a");
+                            document.body.appendChild(a);
+                            a.style = "display: none";
 
-                                $.getJSON(url).fail(function(data, textStatus, jqXHR) {
-
-                                    alert(textStatus);
-
-                                }).success(function(data, textStatus, jqXHR ) {
-
-                                });
-
-                            }, 250);
+                           a.href = url;
+                           a.download = fileName;
+                           a.click();
+                           window.URL.revokeObjectURL(url);
 
                         });
 
