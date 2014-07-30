@@ -26,6 +26,7 @@ var QueryManager = {
     hasComments	: 	false,
     humanLanguageOfComments:	"",
     currentFQquery :    "",
+    IDsSeen : new Array(),
 
 
     numFound : 0,
@@ -795,17 +796,13 @@ function on_data(data) {
             }).success(function (data, textStatus, jqXHR) {
                 $.each(data, function (index, element) {
                     if (successCount < 3) {
-                        //we are leaking into the next page so need to increase page offset
-                        if(i >= 3){
-                            QueryManager.missOffset++;
-                        }
+
                     var code = element;
 
                     var resultLength = SetupManager.resultPreArray_ID.length;
                     var metaLength = SetupManager.metaDivArray_ID.length;
 
                     var url = String(item.snippet_address);
-
 
                     var expandedChildren = data.expanded;
 

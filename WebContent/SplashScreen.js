@@ -965,24 +965,32 @@ var SplashScreen = {
             var query = new QueryModel(QueryBucketModel.snippetImportsFiled, importsInput.val());
             query.displayType = "imports"
             query.displayValue = importsInput.val();
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
         if(extendsInput != null || extendsInput != ""){
             var query = new QueryModel(QueryBucketModel.extendsField, extendsInput.val());
             query.displayType = "extends"
             query.displayValue = extendsInput.val();
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
         if(implementsInput != null || implementsInput != ""){
             var query = new QueryModel(QueryBucketModel.implementsField, implementsInput.val());
             query.displayType = "implements"
             query.displayValue = implementsInput.val();
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
         if(checkboxGeneric[0].checked){
             var query = new QueryModel(QueryBucketModel.snippetClassGeneric, checkboxGeneric[0].checked+"");
             query.displayType = "is generic"
             query.displayValue = checkboxGeneric[0].checked;
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
 
@@ -990,12 +998,16 @@ var SplashScreen = {
             var query = new QueryModel(QueryBucketModel.snippetClassWildCard, checkboxWildCards[0].checked+"");
             query.displayType = "has wildcards"
             query.displayValue = checkboxWildCards[0].checked;
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
         if(packageInput != null || packageInput != ""){
             var query = new QueryModel(QueryBucketModel.snippetPackage, packageInput.val());
             query.displayType = "package"
             query.displayValue = packageInput.val();
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
 //projectInput
@@ -1003,6 +1015,8 @@ var SplashScreen = {
             var query = new QueryModel(QueryBucketModel.projectField, projectInput.val());
             query.displayType = "project"
             query.displayValue = projectInput.val();
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
         }
 
@@ -1060,7 +1074,8 @@ var SplashScreen = {
             query = new QueryModel(QueryBucketModel.snippetMethodCall, methodCallValue);
             query.displayType = "has method call";
             query.displayValue = methodCallClassInput.val()+"."+methodCallNameInput.val()+"("+methodCallParametersInput.val()+")";
-
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query)
 
         };
@@ -1153,6 +1168,8 @@ var SplashScreen = {
                 query.displayValue = "[var args]" + query.displayValue;
             }
 
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Builder),query);
             listOfQuerires.push(query);
             //methodDecClassInput,methodDecNameInput,methodDecParametersInput,methodDecReturnInput,checkboxDecGeneric,checkboxDecVarArgs
         }
