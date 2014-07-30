@@ -274,12 +274,14 @@ var SetupManager = {
 
             var footerTable = $(SetupManager.tableOpen+SetupManager.tableClose);
             footerTable.css({"border":"0px solid black","width":"30%"});
-
+            footerTable.attr("cellpadding","0");
+            footerTable.attr("cellspacing","0");
+            footerTable.attr("border","0");
                     surveyCell.append(footerTable);
                     //surveyCell.width("100%");
                     surveyCell.attr("colspan","2");
                      surveyCell.attr("align","center");
-            surveyCell.css({"padding-left":"70px"});
+           // surveyCell.css({"padding-left":"10px"});
             var footerRow = $(SetupManager.trOpen+SetupManager.trClose);
                     footerTable.append(footerRow);
             var footerCell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -301,9 +303,9 @@ var SetupManager = {
             divSurvey.addClass("SurveyLabel");
             footerCell1.append(divSurvey);
             footerCell1.attr("width","50%");
-            footerCell1.attr("align","center");
+            footerCell1.attr("align","right");
             footerCell1.attr("valign","bottom");
-            footerCell1.css({"padding":"5"});
+
 
 //disclaimer
 
@@ -311,11 +313,11 @@ var SetupManager = {
             footerRow.append(footerCell2);
 
             var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
-            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
-                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
-                    "<text>Introduction letter</text>");
+//            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
+//                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
+//                    "<text>Introduction Letter</text>");
 
-           // divDisclaimer.append("<text>Introduction letter</text>");
+            divDisclaimer.append("<text>&nbsp;&nbsp;&mdash;&nbsp;&nbsp;Introduction letter</text>");
             divDisclaimer.addClass("LetterLabel");
             footerCell2.click(function(event) {
                 $('<div id="blanket"></div>').
@@ -326,7 +328,7 @@ var SetupManager = {
             footerCell2.append(divDisclaimer);
             footerCell2.attr("width","50%");
             footerCell2.attr("align","left");
-            footerCell2.css({"padding":"5"});
+
 
 //listener for expand button
 			var collapsed = true;
