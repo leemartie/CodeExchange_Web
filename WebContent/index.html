@@ -60,6 +60,19 @@
 
 <script>
 
+
+    //Check if the current URL contains '#'
+    if(document.URL.indexOf("#")==-1)
+    {
+        // Set the URL to whatever it was plus "#".
+        url = document.URL+"#";
+        location = "#";
+
+        //Reload the page
+        location.reload(true);
+
+    }
+
     $(document).ready(on_ready);
 
 
@@ -534,8 +547,8 @@ td.Logo{
 
 
 
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+    border-top: 0px solid;
+    border-bottom: 0px solid;
     border-color: lightblue;
 
 }
@@ -571,6 +584,7 @@ div.Filter{
 
 td.FilterSideTD{
 
+    height: auto;
 
     border: 1px solid;
     border-color: black;
@@ -794,9 +808,13 @@ td {
 
 }
 
+.deleteCellHover{
+    box-shadow: 3px 3px 3px gray;
+}
+
 .URLStatus{
     padding-top: 0px;
-    border-top: 1px solid;
+    border-top: 0px solid;
     border-color: lightblue;
 
 

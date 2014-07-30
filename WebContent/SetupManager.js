@@ -198,7 +198,7 @@ var SetupManager = {
             filterSideTD.attr("valign", "top");
             filterSideTD.addClass("FilterSideTD");
             filterSideTD.append(BuildQueryBoxView.getView());
-            filterSideTD.height("70%");
+           // filterSideTD.height("70%");
 
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -317,7 +317,7 @@ var SetupManager = {
 //                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
 //                    "<text>Introduction Letter</text>");
 
-            divDisclaimer.append("<text>&nbsp;&nbsp;&mdash;&nbsp;&nbsp;Introduction letter</text>");
+            divDisclaimer.append("<text>&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;Introduction letter</text>");
             divDisclaimer.addClass("LetterLabel");
             footerCell2.click(function(event) {
                 $('<div id="blanket"></div>').

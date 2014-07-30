@@ -359,6 +359,20 @@ var QueryGridView = {
                         QueryGridView.update();
                     });
 
+
+                     Xcell.mouseenter(function (event) {
+
+                        Xcell.addClass("deleteCellHover");
+                     });
+
+                    Xcell.mouseleave(function (event) {
+                        Xcell.removeClass("deleteCellHover");
+
+                    });
+
+                    Xcell.attr("title","Delete this query from history.")
+
+
                 })(Xcell,i,table);
 
                 for (var j = 0; j < stack.length; j++) {
