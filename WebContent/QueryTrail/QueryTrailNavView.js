@@ -12,7 +12,7 @@ var QueryTrailNavView = {
         navTable.addClass("navView");
         navTable.css({"border":"0px solid black"});
         navTable.attr("width","100%");
-        navTable.attr("height","1px");
+        navTable.attr("height","50%");
         navTable.attr("cellpadding","2");
         navTable.attr("cellspacing","0");
 
