@@ -735,7 +735,7 @@ var Controller = {
                                 // alert(docPos.row +" "+docPos.column);
 
                                 if(target.classList.contains("classFound")){
-                                    toolTip = "Class found by CodeExchange";
+                                    toolTip = "Class found";
                                     target.setAttribute("title",toolTip);
 //LOG IT
                                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_CLASS_FOUND,null);
@@ -744,7 +744,7 @@ var Controller = {
 
 
                                 if(target.classList.contains("import")){
-                                    toolTip = "*Refine current query for code importing this*";
+                                    toolTip = "Refine current query for code importing this";
                                     target.setAttribute("title",toolTip);
 //LOG IT
                                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_IMPORTS,null);
@@ -752,7 +752,7 @@ var Controller = {
                                 }
 
                                 else if(target.classList.contains("extends")){
-                                    toolTip = "*Refine current query for code extending this*";
+                                    toolTip = "Refine current query for code extending this";
                                     target.setAttribute("title",toolTip);
 //LOG IT
                                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_EXTENDS,null);
@@ -760,7 +760,7 @@ var Controller = {
                                 }
 
                                 else if(target.classList.contains("implements")){
-                                    toolTip = "*Refine current query for code implementing this*";
+                                    toolTip = "Refine current query for code implementing this";
                                     target.setAttribute("title",toolTip);
 //LOG IT
                                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_IMPLEMENTS,null);
@@ -768,7 +768,7 @@ var Controller = {
                                 }
 
                                 else if(target.classList.contains("package")){
-                                    toolTip = "*Refine current query for code in this package*";
+                                    toolTip = "Refine current query for code in this package";
                                     target.setAttribute("title",toolTip);
 //LOG IT
                                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_PACKAGE,null);
@@ -791,7 +791,7 @@ var Controller = {
 
                                         toolTip = Controller.createToolTip(dec, calling, name, params);
                                     }else if(target.classList.contains("tipDec")){
-                                        toolTip = "*Refine current query for similar method declarations*"
+                                        toolTip = "Refine current query for similar method declarations"
                                     }
 
 //LOG IT
@@ -837,7 +837,7 @@ var Controller = {
 
                                         toolTip = Controller.createToolTip(dec,calling,name,params);
                                         }else if(target.classList.contains("tipDec")){
-                                            toolTip = "*Refine current query for similar method declarations*"
+                                            toolTip = "Refine current query for similar method declarations"
                                         }
 //LOG IT
                                         UsageLogger.addEvent(UsageLogger.TOOL_TIP_METHOD_DECLARATION,null);
@@ -1053,7 +1053,7 @@ var Controller = {
      * @returns {string}
      */
     createToolTip : function (declaringClass, callingClass, methodName, params){
-        var toolTip =      "*Refine current query for similar method calls*\n";
+        var toolTip =      "Refine current query for similar method calls\n";
 
         toolTip = toolTip + "\n---------------------------INFO---------------------------\n"
 
