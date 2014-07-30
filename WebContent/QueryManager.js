@@ -26,7 +26,7 @@ var QueryManager = {
     hasComments	: 	false,
     humanLanguageOfComments:	"",
     currentFQquery :    "",
-    missOffset : 0,
+
 
     numFound : 0,
 
@@ -173,7 +173,8 @@ var QueryManager = {
 	 * @returns
 	 */
 	movePagesDisplayed	:	function(pageNumber, numberOfCells){
-		QueryManager.currentStart = (pageNumber * numberOfCells)+QueryManager.missOffset;
+
+		QueryManager.currentStart = (pageNumber * numberOfCells);
 		QueryManager.nextResult();
 	},
 	
@@ -250,6 +251,7 @@ var QueryManager = {
 										+ QueryManager.moveCount;
 
 							}
+
 							QueryManager.movePagesDisplayed(QueryManager.lowestPage, numberOfCells);
 							$(SetupManager.pound+"link0").addClass("HighLightLink");
 
@@ -295,7 +297,7 @@ var QueryManager = {
 									$(page).addClass(
 											"HighLightLink");
 
-								
+
 									QueryManager.movePagesDisplayed(QueryManager.linkArrayData[i], numberOfCells);
 								});
 
@@ -351,7 +353,7 @@ var QueryManager = {
 								
 
 							}
-							
+
 							QueryManager.movePagesDisplayed(QueryManager.lowestPage, numberOfCells);
 							$(SetupManager.pound+"link0").addClass("HighLightLink");
 							
@@ -629,6 +631,8 @@ function on_nextData(data) {
                 }).success(function (data, textStatus, jqXHR) {
                     $.each(data, function (index, element) {
                         if (successCount < 3) {
+                            //we are leaking into the next page so need to increase page offset
+
                             var code = element;
 
                             var resultLength = SetupManager.resultPreArray_ID.length;
@@ -791,7 +795,10 @@ function on_data(data) {
             }).success(function (data, textStatus, jqXHR) {
                 $.each(data, function (index, element) {
                     if (successCount < 3) {
-
+                        //we are leaking into the next page so need to increase page offset
+                        if(i >= 3){
+                            QueryManager.missOffset++;
+                        }
                     var code = element;
 
                     var resultLength = SetupManager.resultPreArray_ID.length;
@@ -826,7 +833,7 @@ function on_data(data) {
 
         }//function
     );
-	
+
 	// update status
 	Controller.setStatus("DONE - " + total);
 //LOG IT
