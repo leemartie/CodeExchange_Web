@@ -600,6 +600,7 @@ function retry(data){
  */
 function on_nextData(data) {
 	var docs = data.response.docs;
+    var expandedChildren = data.expanded;
 	// lets clear all the displayed results
 	Controller.clearAllCode();
 
@@ -642,7 +643,7 @@ function on_nextData(data) {
                             var url = String(item.snippet_address);
 
 
-                            var expandedChildren = data.expanded;
+
 
                             Controller.setCodeFromURL(successCount, SetupManager.resultPreArray_ID[successCount],
                                 url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
@@ -771,6 +772,9 @@ function on_data(data) {
         .append($("#"+SetupManager.expandBtnArray_ID[2]));
     $(SetupManager.pound+"projectURL"+2).empty();
 	var docs = data.response.docs;
+
+    var expandedChildren = data.expanded;
+
 	var total = 'Found ' + data.response.numFound + ' results';
 
 	QueryManager.totalResuls = data.response.numFound;
@@ -804,7 +808,7 @@ function on_data(data) {
 
                     var url = String(item.snippet_address);
 
-                    var expandedChildren = data.expanded;
+
 
                     Controller.setCodeFromURL(successCount, SetupManager.resultPreArray_ID[successCount],
                         url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,

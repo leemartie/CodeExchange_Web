@@ -706,7 +706,8 @@ var Controller = {
                             //method call
                             if (target.classList.contains("tip") || target.classList.contains("tipDec")
                                 || target.classList.contains("import") || target.classList.contains("extends")
-                                || target.classList.contains("implements") || target.classList.contains("package")) {
+                                || target.classList.contains("implements") || target.classList.contains("package")
+                                || target.classList.contains("classFound")) {
 
 
 //getting around multiple events propagating up
@@ -732,6 +733,14 @@ var Controller = {
                                 var docPos = editor.session.screenToDocumentPosition(screenPos.row, screenPos.column);
 
                                 // alert(docPos.row +" "+docPos.column);
+
+                                if(target.classList.contains("classFound")){
+                                    toolTip = "Class found by CodeExchange";
+                                    target.setAttribute("title",toolTip);
+//LOG IT
+                                    UsageLogger.addEvent(UsageLogger.TOOL_TIP_CLASS_FOUND,null);
+                                    return;
+                                }
 
 
                                 if(target.classList.contains("import")){
@@ -845,7 +854,8 @@ var Controller = {
                                     || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_EXTENDS
                                     || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_IMPLEMENTS
                                     || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_IMPORTS
-                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_PACKAGE) {
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_PACKAGE
+                                    || UsageLogger.LastEventType == UsageLogger.TOOL_TIP_CLASS_FOUND) {
                                     UsageLogger.LastEventType = "";
                                 }
                             }
@@ -1332,7 +1342,8 @@ var Controller = {
             icon.addClass("MetaQuery");
 
         icon.mouseover(function(event){
-            icon.attr("title","decrease branch complexity to be less than this code's complexity (decrease for loops, if statments, try/catch, etc...)");
+            icon.attr("title","Refine current query for code with less branch complexity than this code" +
+                " (branch complexity is for loops, if statements, try/catch, etc...)");
         });
 
             var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1376,7 +1387,8 @@ var Controller = {
             icon2.addClass("MetaQuery");
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase branch complexity to be more than this code's complexity (increase for loops, if statments, try/catch, etc...)");
+            icon2.attr("title","Refine current query for code with more branch complexity than this code" +
+                " (branch complexity is for loops, if statements, try/catch, etc...)");
         });
 
 
@@ -1446,7 +1458,7 @@ var Controller = {
         icon.addClass("MetaQuery");
 
         icon.mouseover(function(event){
-            icon.attr("title","decrease imports to be less than this code's imports");
+            icon.attr("title","Refine current query for code with less imports than this code");
         });
 
         var tr2 = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1490,7 +1502,7 @@ var Controller = {
         icon2.addClass("MetaQuery");
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase imports to be more than this code's imports");
+            icon2.attr("title","Refine current query for code with more imports than this code");
         });
 
 
@@ -1560,7 +1572,7 @@ var Controller = {
             });
 
         icon.mouseover(function(event){
-           icon.attr("title","decrease length to be less than this code's size (number of characters)");
+           icon.attr("title","Refine current query for code smaller than this code (size is number of characters)");
         });
 
 
@@ -1605,7 +1617,7 @@ var Controller = {
             });
 
         icon2.mouseover(function(event){
-            icon2.attr("title","increase length to be more than this code's size (number of characters)");
+            icon2.attr("title","Refine current query for code larger than this code (size is number of characters)");
         });
 
 

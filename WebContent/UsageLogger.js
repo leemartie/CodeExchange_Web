@@ -46,6 +46,7 @@ var UsageLogger = {
     TOOL_TIP_IMPORTS                    : "TOOL_TIP_IMPORTS",
     TOOL_TIP_IMPLEMENTS                 : "TOOL_TIP_IMPLEMENTS",
     TOOL_TIP_DOWNLOAD_PROJECT           : "TOOL_TIP_DOWNLOAD_PROJECT",
+    TOOL_TIP_CLASS_FOUND                : "TOOL_TIP_CLASS_FOUND",
 
 //DOWNLOAD PROJECT CLICK
     DOWNLOAD_PROJECT                    : "DOWNLOAD_PROJECT",
@@ -198,6 +199,12 @@ var UsageLogger = {
     },
 
     addEvent: function(eventType, query, optionalValue){
+
+        //don't want to log lots of hovering.
+        if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_CLASS_FOUND &&
+            eventType == UsageLogger.TOOL_TIP_CLASS_FOUND){
+            return;
+        }
 
 //don't want to log lots of hovering.
         if(UsageLogger.LastEventType == UsageLogger.TOOL_TIP_METHOD_CALL &&
