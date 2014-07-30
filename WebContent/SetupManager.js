@@ -433,7 +433,7 @@ var SetupManager = {
 
                 ScreenSizes.FilterTD = $('.FilterSideTD').width();
 
-
+                $('.BottomButtons').height("100%");
 
 
 			});

@@ -10,20 +10,30 @@ var QueryTrailNavView = {
         var navigationRow = $(SetupManager.trOpen+SetupManager.trClose);
         navTable.append(navigationRow);
         navTable.addClass("navView");
-        navTable.attr("cellpadding","5px");
+        navTable.css({"border":"0px solid black"});
+        navTable.attr("width","100%");
+        navTable.attr("height","1px");
+        navTable.attr("cellpadding","2");
+        navTable.attr("cellspacing","0");
+
+
 
 
         var centerCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        centerCell.attr("align","right");
-        var createNewQueryButton = $(SetupManager.divOpen+"new search" +
+        centerCell.attr("align","center");
+        var createNewQueryButton = $("<div style='display: table;'>"+"<div style='height:100%; " +
+            "display: table-cell; vertical-align: middle; border: 0px solid black;'>new search</div>" +
             SetupManager.divClose);
-        createNewQueryButton.css({    "padding-top": "13px", "padding-bottom": "13px"});
+     //   createNewQueryButton.css({    "padding-top": "14px", "padding-bottom": "14px"});
         //createNewQueryButton.button();
         createNewQueryButton.addClass("BottomButtons");
 
         centerCell.attr("width","50%");
+        centerCell.attr("height","40px");
+
+
         createNewQueryButton.width("90%");
-        createNewQueryButton.height("99%");
+        createNewQueryButton.height("50px");
         createNewQueryButton.attr("disabled", false);
 
 
@@ -70,8 +80,13 @@ var QueryTrailNavView = {
 
             if(Controller.gridOn){
                 Controller.showGrid();
-                gridButton.empty();
-                gridButton.append("<text>show code results</text>");
+                var innerDiv = $("<div style='height:100%; " +
+                    "display: table-cell; align: center; vertical-align: middle; border: 0px solid black;'></div>");
+                innerDiv.append(text);
+                var gridButton =  $("<div style='display: table;'>"+
+                    SetupManager.divClose);
+                gridButton.append(innerDiv);
+
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
 
@@ -82,35 +97,54 @@ var QueryTrailNavView = {
         centerCell.append(createNewQueryButton);
         navigationRow.append(centerCell);
 
-        var gridRow = $(SetupManager.trOpen+SetupManager.trClose);
-        navTable.append(gridRow);
+//        var gridRow = $(SetupManager.trOpen+SetupManager.trClose);
+//        navTable.append(gridRow);
         var gridCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
-        gridCell.attr("align","left");
-        gridCell.attr("width","90%");
+        gridCell.attr("align","center");
+        gridCell.attr("width","50%");
+        gridCell.attr("height","40px");
         var gridButton = $(SetupManager.divOpen+SetupManager.divClose);
         gridButton.attr(SetupManager.ID_attr,"gridButton");
+       // gridButton.css({    "padding-top": "13px", "padding-bottom": "13px"});
+        var text = $("<text>show search history</text>");
 
-        gridButton.append("<text>show search history</text>");
+        var innerDiv = $("<div style='height:100%; " +
+            "display: table-cell; align: center; vertical-align: middle; border: 0px solid black;'></div>");
+        innerDiv.append(text);
+        var gridButton =  $("<div style='display: table;'>"+
+            SetupManager.divClose);
+        gridButton.append(innerDiv);
+
+
+
+
 
         //gridButton.button();
 
         gridButton.width("90%");
-        gridButton.height("99%");
+        gridButton.height("50px");
         gridButton.addClass("BottomButtons");
 
         gridButton.click(function(event) {
             Controller.showGrid();
 
-            gridButton.empty();
+            innerDiv.empty();
             if(Controller.gridOn){
 
-                gridButton.append("<text>show code results</text>");
+                var text = $("<text>show code results</text>");
+                innerDiv.append(text);
+
+
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
             }else{
 
-                gridButton.append("<text>show search history</text>");
+
+
+                var text = $("<text>show search history</text>");
+                innerDiv.append(text);
+
                 //LOG IT
                 UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_OFF,null);
             }
@@ -118,7 +152,7 @@ var QueryTrailNavView = {
         });
 
         gridCell.append(gridButton);
-       // navigationRow.append(gridCell);
+
         navigationRow.append(gridCell);
 
         gridButton.mouseenter(function(event) {
