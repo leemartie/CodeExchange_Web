@@ -238,7 +238,7 @@ var SplashScreen = {
 //            " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
 //            "<text>Introduction Letter</text>");
         divDisclaimer.append("<text>Introduction Letter</text>");
-        divDisclaimer.addClass("SurveyLabel");
+        divDisclaimer.addClass("LetterLabel");
         footerCell2.click(function(event) {
             $('<div id="blanket"></div>').
                 appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);

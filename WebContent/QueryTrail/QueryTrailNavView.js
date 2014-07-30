@@ -43,9 +43,17 @@ var QueryTrailNavView = {
             $(SetupManager.pound+"cellStatus"+0).empty();
             $(SetupManager.pound+"cellStatus"+1).empty();
             $(SetupManager.pound+"cellStatus"+2).empty();
-            $("#"+SetupManager.expandBtnArray_ID[0]).hide();
-            $("#"+SetupManager.expandBtnArray_ID[1]).hide();
-            $("#"+SetupManager.expandBtnArray_ID[2]).hide();
+
+            $(SetupManager.pound+"backgroundSave")
+                .append($("#"+SetupManager.expandBtnArray_ID[0]));
+            $(SetupManager.pound+"projectURL"+0).empty();
+            $(SetupManager.pound+"backgroundSave")
+                .append($("#"+SetupManager.expandBtnArray_ID[1]));
+            $(SetupManager.pound+"projectURL"+1).empty();
+            $(SetupManager.pound+"backgroundSave")
+                .append($("#"+SetupManager.expandBtnArray_ID[2]));
+            $(SetupManager.pound+"projectURL"+2).empty();
+
 
             //no need for a new session if the current query is empty
             if(QueryBucketModel.stackOfQueries.length != 0) {

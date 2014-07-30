@@ -26,6 +26,7 @@ var QueryManager = {
     hasComments	: 	false,
     humanLanguageOfComments:	"",
     currentFQquery :    "",
+    missOffset : 0,
 
     numFound : 0,
 
@@ -104,7 +105,7 @@ var QueryManager = {
             QueryManager.completeUserTyped = words[words.length-1];
         }
         else if(field == QueryBucketModel.snippetMethodDeclarationReturn)
-            QueryManager.completeUserTyped = $(SetupManager.pound+QueryBucketModel.ReturnBox).val();
+            QueryManager.completeUserTyped = words;
         else{
          //   var words = $(SetupManager.pound + SetupManager.queryInput_ID).val();
             words = words.split(/[\s]+/);
@@ -172,7 +173,7 @@ var QueryManager = {
 	 * @returns
 	 */
 	movePagesDisplayed	:	function(pageNumber, numberOfCells){
-		QueryManager.currentStart = (pageNumber * numberOfCells);
+		QueryManager.currentStart = (pageNumber * numberOfCells)+QueryManager.missOffset;
 		QueryManager.nextResult();
 	},
 	
@@ -584,6 +585,10 @@ function facetCompleteCallBack(data){
     QueryRecommenderView.update();
 };
 
+function retry(data){
+    var docs = data.response.docs;
+
+}
 
 /**
  * Used to get next result
@@ -595,49 +600,70 @@ function on_nextData(data) {
 	// lets clear all the displayed results
 	Controller.clearAllCode();
 
-    $("#"+SetupManager.expandBtnArray_ID[0]).hide();
-    $("#"+SetupManager.expandBtnArray_ID[1]).hide();
-    $("#"+SetupManager.expandBtnArray_ID[2]).hide();
+    $(SetupManager.pound+"backgroundSave")
+        .append($("#"+SetupManager.expandBtnArray_ID[0]));
+    $(SetupManager.pound+"projectURL"+0).empty();
+    $(SetupManager.pound+"backgroundSave")
+        .append($("#"+SetupManager.expandBtnArray_ID[1]));
+    $(SetupManager.pound+"projectURL"+1).empty();
+    $(SetupManager.pound+"backgroundSave")
+        .append($("#"+SetupManager.expandBtnArray_ID[2]));
+    $(SetupManager.pound+"projectURL"+2).empty();
 
     var total = 'Found ' + data.response.numFound + ' results';
 	// let's populate the table with the results
-	$.each(docs,
-			function(i, item) {
-				var resultLength = SetupManager.resultPreArray_ID.length;
-				var metaLength = SetupManager.metaDivArray_ID.length;
-				if (i < resultLength && i < metaLength) {
-
-				//	var versions = item.snippet_all_versions;
-				//	var correctVersion = versions[0];
-				//	var wrongVersion = item.snippet_this_version;
-					
-					var url = String(item.snippet_address);
-					//var correctURL = url.replace(wrongVersion,correctVersion);
 
 
-                    var expandedChildren = data.expanded;
+    var successCount = 0;
+    $.each(docs,
+        function(i, item) {
 
-                    Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
-                        url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
-                        expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
-                        item.snippet_project_address, item.snippet_this_version);
+            if(successCount < 3){
 
-					//Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
-                    Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
-                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
-                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[i],item.snippet_imports_count);
-                  //  Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
 
-//                    if(item.snippet_granularity == "Class")
-//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
-//                    else
-//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
-				}
-				
+                var codeURL = String(item.snippet_address);
 
-			});
-	// now highlight the code
+                var url = "http://codeexchange.ics.uci.edu/getPage.php?url=" + codeURL + "&callback=?&json.wrf=displayCode";
+                $.getJSON(url).fail(function (data, textStatus, jqXHR) {
+
+                }).success(function (data, textStatus, jqXHR) {
+                    $.each(data, function (index, element) {
+                        if (successCount < 3) {
+                            var code = element;
+
+                            var resultLength = SetupManager.resultPreArray_ID.length;
+                            var metaLength = SetupManager.metaDivArray_ID.length;
+
+                            var url = String(item.snippet_address);
+
+
+                            var expandedChildren = data.expanded;
+
+                            Controller.setCodeFromURL(successCount, SetupManager.resultPreArray_ID[successCount],
+                                url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
+                                expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
+                                item.snippet_project_address, item.snippet_this_version, code);
+
+                            Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
+                            Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
+                            Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
+                            Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
+
+
+
+
+                            successCount++;
+                        }
+
+                    });//each
+
+                });//success
+
+            }
+
+        }//function
+    );
+
 
 
 
@@ -730,73 +756,76 @@ return true;
 // call back function when we get json
 function on_data(data) {
 	// alert("[on_data]");
-
+    $(SetupManager.pound+"backgroundSave")
+        .append($("#"+SetupManager.expandBtnArray_ID[0]));
+    $(SetupManager.pound+"projectURL"+0).empty();
+    $(SetupManager.pound+"backgroundSave")
+        .append($("#"+SetupManager.expandBtnArray_ID[1]));
+    $(SetupManager.pound+"projectURL"+1).empty();
+    $(SetupManager.pound+"backgroundSave")
+        .append($("#"+SetupManager.expandBtnArray_ID[2]));
+    $(SetupManager.pound+"projectURL"+2).empty();
 	var docs = data.response.docs;
 	var total = 'Found ' + data.response.numFound + ' results';
 
 	QueryManager.totalResuls = data.response.numFound;
-    $("#"+SetupManager.expandBtnArray_ID[0]).hide();
-    $("#"+SetupManager.expandBtnArray_ID[1]).hide();
-    $("#"+SetupManager.expandBtnArray_ID[2]).hide();
+
 	// alert("found"+docs.length);
 
 	// lets clear all the displayed results
 	Controller.clearAllCode();
-	
-	// let's populate the table with the results
-	$.each(docs,
-			function(i, item) {
-				var resultLength = SetupManager.resultPreArray_ID.length;
-				var metaLength = SetupManager.metaDivArray_ID.length;
-				if (i < resultLength && i < metaLength) {
-				//	getMetaData(item.snippet_version_author, item.snippet_project_name, SetupManager.metaDivArray_ID[i],i);
-
-					
-				//	var versions = item.snippet_all_versions;
-				//	var correctVersion = versions[0];
-				//	var wrongVersion = item.snippet_this_version;
-					
-					var url = String(item.snippet_address);
-				//	var correctURL = url.replace(wrongVersion,correctVersion);
 
 
+    var successCount = 0;
+    $.each(docs,
+        function(i, item) {
+
+            if(successCount < 3){
 
 
+            var codeURL = String(item.snippet_address);
+
+            var url = "http://codeexchange.ics.uci.edu/getPage.php?url=" + codeURL + "&callback=?&json.wrf=displayCode";
+            $.getJSON(url).fail(function (data, textStatus, jqXHR) {
+
+            }).success(function (data, textStatus, jqXHR) {
+                $.each(data, function (index, element) {
+                    if (successCount < 3) {
+
+                    var code = element;
+
+                    var resultLength = SetupManager.resultPreArray_ID.length;
+                    var metaLength = SetupManager.metaDivArray_ID.length;
+
+                    var url = String(item.snippet_address);
 
 
                     var expandedChildren = data.expanded;
 
-
-
-                    Controller.setCodeFromURL(i,SetupManager.resultPreArray_ID[i],
+                    Controller.setCodeFromURL(successCount, SetupManager.resultPreArray_ID[successCount],
                         url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
                         expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
-                        item.snippet_project_address, item.snippet_this_version);
-					
-				//	Controller.setAuthorName(SetupManager.metaDivArray_ID[i], item.snippet_author_name);
-					Controller.setProjectName(SetupManager.metaDivArray_ID[i],item.snippet_project_name, item.snippet_project_id);
-	//				Controller.setCodeChurn(SetupManager.metaDivArray_ID[i],item.snippet_changed_code_churn);
-                    Controller.setSizeReformulation(SetupManager.metaDivArray_ID[i],item.snippet_size);
-                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
-                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[i],item.snippet_imports_count);
-                  //  Controller.setFunctionCountReformulation(SetupManager.metaDivArray_ID[i],item.snippet_number_of_functions);
+                        item.snippet_project_address, item.snippet_this_version, code);
 
-                    //Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
-//                    if(item.snippet_granularity == "Class")
-//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_class_sum);
-//                    else
-//                        Controller.setCodeComplexity(SetupManager.metaDivArray_ID[i],item.snippet_path_complexity_method);
+                    Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
+                    Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
+                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
+                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
 
 
 
 
+                        successCount++;
+                    }
 
+                });//each
 
+            });//success
 
+        }
 
-                }
-
-			});
+        }//function
+    );
 	
 	// update status
 	Controller.setStatus("DONE - " + total);

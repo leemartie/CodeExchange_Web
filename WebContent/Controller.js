@@ -65,7 +65,7 @@ var Controller = {
 		},
 
 		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID, extendsResult,
-            implementsResult, projectURL, version){
+            implementsResult, projectURL, version, code){
 
             $(SetupManager.pound+"cellStatus"+editorNumber).empty();
             var text = $("<text>"+"downloading..."+"</text>");
@@ -81,24 +81,30 @@ var Controller = {
             Controller.projectURLs[editorNumber] = projectURL;
             Controller.versions[editorNumber] = version;
 
-            (function(codeNode, editorNumber, classStart, expanded, extendsResult, implementsResult, projectURL, version){
-                $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+            (function(codeNode, editorNumber, classStart, expanded, extendsResult, implementsResult, projectURL, version, code){
+               // $.getJSON(url).fail(function(data, textStatus, jqXHR) {
+//
+//                    var editor = ace.edit(codeNode);
+//                    editor.getSession().setValue("");
+////-----------get next page?
+//                    $(SetupManager.pound+"cellStatus"+editorNumber).empty();
+//                    var text = $("<text>"+"Oops... this code has been moved or deleted from GitHub." +
+//                        "            Getting another result..."+"</text>");
+//                    text.addClass("CellStatus");
+//                    $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
+//
+//                    $(SetupManager.pound+"backgroundSave")
+//                        .append($("#"+SetupManager.expandBtnArray_ID[editorNumber]));
+//                    $(SetupManager.pound+"projectURL"+editorNumber).empty();
 
-                    var editor = ace.edit(codeNode);
-                    editor.getSession().setValue("");
-//-----------get next page?
-                    $(SetupManager.pound+"cellStatus"+editorNumber).empty();
-                    var text = $("<text>"+"Oops... this code has been moved or deleted from GitHub." +
-                        "            We will remove this link soon!"+"</text>");
-                    text.addClass("CellStatus");
-                    $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
-                    $(SetupManager.pound+"projectURL"+editorNumber).empty();
+                    //attempt to get one that is not missing
+//                    var url = URLQueryCreator.getQueryURL('retry');
+//                    $.getJSON(url);
 
-                    $("#"+SetupManager.expandBtnArray_ID[editorNumber]).hide();
 
-                }).success(function(data, textStatus, jqXHR ) {
-                    $.each(data, function(index, element) {
+                //}).success(function(data, textStatus, jqXHR ) {
+               //     $.each(data, function(index, element) {
 
 
 
@@ -107,7 +113,8 @@ var Controller = {
                         $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
 
 //project URL
-
+                        $(SetupManager.pound+"backgroundSave")
+                            .append($("#"+SetupManager.expandBtnArray_ID[editorNumber]));
                         $(SetupManager.pound+"projectURL"+editorNumber).empty();
 
 
@@ -141,7 +148,7 @@ var Controller = {
                         });
 
                         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-                        table.attr("height","8%")
+
                         var row = $(SetupManager.trOpen+SetupManager.trClose);
                         table.append(row);
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -149,6 +156,7 @@ var Controller = {
                         row.append(cell);
                         cell.attr("width","7%");
                         cell.attr("height","100%");
+                        cell.attr("valign","bottom");
                         cell.append(projectURL);
 
                         (function(cell){
@@ -236,10 +244,9 @@ var Controller = {
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         cell.attr("align","left");
                         cell.addClass("downloadLink");
+                        cell.attr("valign","bottom");
                         row.append(cell);
-
                         cell.append($("#"+SetupManager.expandBtnArray_ID[editorNumber]));
-                        $("#"+SetupManager.expandBtnArray_ID[editorNumber]).show();
 
 
 //---------------------version
@@ -257,7 +264,7 @@ var Controller = {
 //-----------------
 
 
-                            var code = element;
+                    //        var code = element;
 
                         var editor = ace.edit(codeNode);
                         editor.getSession().setValue(code);
@@ -1007,13 +1014,13 @@ var Controller = {
 
 
 
-                    });
-                }); // end of sucess function
+                   // });
+               // }); // end of sucess function
 
 
 
 
-            })(codeNode, editorNumber,classStart,expanded, extendsResult, implementsResult, projectURL, version);
+            })(codeNode, editorNumber,classStart,expanded, extendsResult, implementsResult, projectURL, version, code);
 
 
 
@@ -1250,7 +1257,7 @@ var Controller = {
 
 		        //  $(SetupManager.pound+SetupManager.resultPreArray_ID[i]).empty();
 		          $(SetupManager.pound+SetupManager.metaDivArray_ID[i]).empty();
-                $(SetupManager.pound+"projectURL"+i).empty();
+               // $(SetupManager.pound+"projectURL"+i).empty();
 			}
 		},
 

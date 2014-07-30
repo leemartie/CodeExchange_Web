@@ -62,7 +62,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows='+3+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+6+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 

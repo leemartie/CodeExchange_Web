@@ -140,13 +140,13 @@ var QueryGridView = {
                                    displayValue = refinements[k];
                                    break;
                                case 6:
-                                   active = refinements[k];
+                                   active = Boolean(refinements[k]);
                                    break;
                                case 7:
                                    score = refinements[k];
                                    break;
                                case 8:
-                                   rangeQuery = refinements[k];
+                                   rangeQuery = Boolean(refinements[k]);
                                    break;
                                default:
                                    break;

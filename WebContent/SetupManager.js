@@ -273,12 +273,13 @@ var SetupManager = {
             surveyRow.append(surveyCell);
 
             var footerTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-            footerTable.css({"border":"0px solid black","width":"27%"});
+            footerTable.css({"border":"0px solid black","width":"30%"});
 
                     surveyCell.append(footerTable);
                     //surveyCell.width("100%");
                     surveyCell.attr("colspan","2");
                      surveyCell.attr("align","center");
+            surveyCell.css({"padding-left":"70px"});
             var footerRow = $(SetupManager.trOpen+SetupManager.trClose);
                     footerTable.append(footerRow);
             var footerCell1 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -294,26 +295,28 @@ var SetupManager = {
                 survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
             });
             var divSurvey = $(SetupManager.divOpen+SetupManager.divClose);
-            divSurvey.append("<img height='15' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
+            divSurvey.append("<img height='15' width='auto' style='margin-right: 10px;vertical-align:text-bottom;'" +
                 " src='http://codeexchange.ics.uci.edu/science.png'></img>" +
                 "<text>Help us improve code search.</text>");
             divSurvey.addClass("SurveyLabel");
             footerCell1.append(divSurvey);
             footerCell1.attr("width","50%");
             footerCell1.attr("align","center");
+            footerCell1.attr("valign","bottom");
             footerCell1.css({"padding":"5"});
 
 //disclaimer
+
             var footerCell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
             footerRow.append(footerCell2);
 
             var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
-//            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
-//                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
-//                    "<text>Introduction Letter</text>");
+            divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px;vertical-align:text-bottom;'" +
+                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
+                    "<text>Introduction letter</text>");
 
-            divDisclaimer.append("<text>Introduction Letter</text>");
-            divDisclaimer.addClass("SurveyLabel");
+           // divDisclaimer.append("<text>Introduction letter</text>");
+            divDisclaimer.addClass("LetterLabel");
             footerCell2.click(function(event) {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
@@ -322,7 +325,7 @@ var SetupManager = {
             });
             footerCell2.append(divDisclaimer);
             footerCell2.attr("width","50%");
-            footerCell2.attr("align","center");
+            footerCell2.attr("align","left");
             footerCell2.css({"padding":"5"});
 
 //listener for expand button
@@ -599,7 +602,6 @@ var SetupManager = {
 				SetupManager.expandBtnArray_ID[i] = expandButton_id;
 				expandButton.attr(SetupManager.ID_attr, SetupManager.expandBtnArray_ID[i]);
 				expandButton.addClass("Expand");
-                expandButton.hide();
 
 
                 var expandButtonDiv = $(SetupManager.divOpen+SetupManager.divClose);
@@ -640,10 +642,15 @@ var SetupManager = {
                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_DOWNLOAD_PROJECT,null,null);
                 });
 
+                var backgroundSave = $("<div>"+"</div>");
+                $(SetupManager.pound+resultOptions_id).append(backgroundSave);
+                backgroundSave.attr("id","backgroundSave");
+               backgroundSave.hide();
+                $(SetupManager.pound+"backgroundSave").append(expandButtonDiv);
 
 
-				//add to result options
-				$(SetupManager.pound+resultOptions_id).append(expandButtonDiv);
+
+
 				//button attributes
 				$(SetupManager.pound+SetupManager.expandBtnArray_ID[i]).text("").
 					append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
