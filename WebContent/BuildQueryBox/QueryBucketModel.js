@@ -217,6 +217,8 @@ var QueryBucketModel = {
             document.cookie = "search"+i+"=" + query+""+";expires=" + expiration_date.toGMTString();
         }
 
+            document.cookie = "length="+QueryGridModel.history.length+";expires=" + expiration_date.toGMTString();
+
     },
 
 

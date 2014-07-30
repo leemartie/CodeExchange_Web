@@ -96,7 +96,19 @@ var QueryGridView = {
    restoreCookies : function(){
        var ca = document.cookie.split(';');
 
-       for(var i = 0; i<= 25; i++) {
+       var length = 25;
+       var lengthName = "length=";
+
+       //can keep up with number of queries now
+       for (var j = 0; j < ca.length; j++) {
+           var section = ca[j].trim();
+
+           if (section.indexOf(lengthName) == 0) {
+               length = parseInt(section.substring(lengthName.length, section.length));
+           }
+       }
+
+       for(var i = 0; i<= length; i++) {
            var name = "search"+i + "=";
            for (var j = 0; j < ca.length; j++) {
                var entireQuery = ca[j].trim();
@@ -314,6 +326,10 @@ var QueryGridView = {
         if(QueryGridModel.history != null) {
             var cellCount = 1;
             for (var i = QueryGridModel.history.length-1; i >= 0 ; i--) {
+
+
+
+
                 var stack = QueryGridModel.history[i];
                 var cellID = (cellCount);// % QueryGridView.size;
                 cellCount++;
@@ -351,12 +367,14 @@ var QueryGridView = {
 
                 (function(Xcell,i,queryCell){
                     Xcell.click(function(event){
-                        console.log("number: "+i);
+
                         QueryGridModel.history.splice(i,1);
                         QueryGridView.close = true;
                         table.empty();
                         document.cookie = "search"+(i)+"=deleted";
                         QueryGridView.update();
+//LOG IT
+                        UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_DELETE, query,i);
                     });
 
 
