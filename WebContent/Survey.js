@@ -36,10 +36,14 @@ var Survey = {
 },
 
     getLetter : function(){
-        var div = $(SetupManager.divOpen+SetupManager.divClose);
+        var div = $("<div style='display: table; height100%; width:100%;' ></div>");
+        var row =$("<div style='display: table-row; width:100%;'></div>");
+        div.append(row);
         div.attr("id","confirm");
         div.css({"background-color":"white"});
-        div.append("<img width='800' height='auto' src='http://codeexchange.ics.uci.edu/IntroLetter.png'></img>");
+        var cell = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
+        row.append(cell)
+        cell.append("<img width='800' height='auto' src='http://codeexchange.ics.uci.edu/IntroLetter.png'></img>");
 
         div.css({
             "position" : "fixed",
@@ -53,19 +57,24 @@ var Survey = {
 
         div.addClass("Survey");
 
-        var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-        table.attr("width","100%");
-        var row = $(SetupManager.trOpen+SetupManager.trClose);
-        table.append(row);
-        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        cell.attr("width","100%");
-        cell.attr("align","center");
+
+
+//        var caption = $("<div style='display: table-caption; caption-side:bottom; width:100%;'></div>");
+
+
+        var row =$("<div style='display: table-row; width:100%;'></div>");
+     //   caption.append(row);
+
+        div.append(row);
+        var cell = $("<div style='display: table-cell; text-align: center; height:100%; width:100%;'></div>");
+//        cell.attr("width","100%");
+//        cell.attr("align","center");
         row.append(cell);
 
-        div.append(table);
 
 
-        var close = $('<div id="Close"></div>');
+
+        var close = $('<div style="margin-left: auto;margin-right: auto" id="Close"></div>');
         cell.append(close);
         close.addClass("SubmitButton");
         close.append($("<text>Close</text>"));
@@ -96,21 +105,21 @@ var Survey = {
         //clear it out!!
         Survey.questionCells.length = 0;
 
-        var surveyView = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var surveyView = $("<div style='display: table; height:45%; width:100%'></div>");
         surveyView.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
         surveyView.attr("height","100%");
 
 //ROW 1
 //cell 1
-        var row1 = $(SetupManager.trOpen+SetupManager.trClose);
+        var row1 = $("<div style='display: table-row;'></div>");
         surveyView.append(row1);
-        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        var subCell = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
         row1.append(subCell);
         subCell.attr("height","100%");
         subCell.attr("valign","top");
 
-        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subTable = $("<div style='display: table; height:100%; width:100%'></div>");
+        var subRow = $("<div style='display: table-row;'></div>");
         subTable.append(subRow);
         subCell.append(subTable);
 
@@ -120,7 +129,7 @@ var Survey = {
         cell1.cell.attr("height","10%");
         Survey.questionCells.push(cell1);
 
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subRow = $("<div style='display: table-row;'></div>");
         var cell9 = new questionCell("Did you find autocomplete useful?",
             'http://codeexchange.ics.uci.edu/autocomplete.png',"boolean",9,200);
         cell9.cell.attr("height","90%");
@@ -137,13 +146,13 @@ var Survey = {
 
 
 
-        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        var subCell = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
         row1.append(subCell);
         subCell.attr("height","100%");
         subCell.attr("valign","top");
 
-        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subTable = $("<div style='display: table; height:100%; width:100%'></div>");
+        var subRow = $("<div style='display: table-row;'></div>");
         subTable.append(subRow);
         subCell.append(subTable);
 
@@ -156,7 +165,7 @@ var Survey = {
 
 
 //cell 11
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subRow = $("<div style='display: table-row;'></div>");
 
         var cell11 = new questionCell("Did you find keywords useful?",
             'http://codeexchange.ics.uci.edu/keywords.png',"boolean",11,300);
@@ -172,14 +181,14 @@ var Survey = {
         row1.append(cell3.cell);
         Survey.questionCells.push(cell3);
 
-        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var subTable = $("<div style='display: table; height:100%; width:100%'></div>");
         subTable.attr("height","100%");
         subTable.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
 
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subRow = $("<div style='display: table-row;'></div>");
         subTable.append(subRow);
 
-        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        var subCell = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
         row1.append(subCell);
         subCell.attr("height","100%");
 
@@ -191,7 +200,7 @@ var Survey = {
         cell7.cell.attr("height","100%");
         Survey.questionCells.push(cell7);
 
-        var subRow13 = $(SetupManager.trOpen+SetupManager.trClose);
+        var subRow13 = $("<div style='display: table-row;'></div>");
         subTable.append(subRow13);
         var cell13 = new questionCell("Did you find refining by project useful?",
             'http://codeexchange.ics.uci.edu/refine_by_project.png',"boolean",13,150);
@@ -203,7 +212,7 @@ var Survey = {
 
 //ROW 2
 //cell 4
-        var row2 = $(SetupManager.trOpen+SetupManager.trClose);
+        var row2 = $("<div style='display: table-row;'></div>");
         surveyView.append(row2);
         var cell4 = new questionCell("Did you find recommendations useful?",
             'http://codeexchange.ics.uci.edu/Recommendations.png',"boolean",4,200);
@@ -222,10 +231,10 @@ var Survey = {
         Survey.questionCells.push(cell8);
 
 //cell10
-        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var subTable = $("<div style='display: table; height:100%; width:100%'></div>");
         subTable.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
-        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        var subRow = $("<div style='display: table-row;'></div>");
+        var subCell = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
         subTable.append(subRow);
         subCell.append(subTable);
         row2.append(subCell);
@@ -236,7 +245,7 @@ var Survey = {
         subTable.append(subRow);
         Survey.questionCells.push(cell10);
 //cell 6
-        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var subRow = $("<div style='display: table-row;'></div>");
         var cell6 = new questionCell("Any other feedback?",
             null,"open",6);
         subRow.append(cell6.cell);
@@ -250,22 +259,23 @@ var Survey = {
 //cancel
 
 
-
-        var row3 = $(SetupManager.trOpen+SetupManager.trClose);
-        surveyView.append(row3);
-        var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        buttonCell.attr("colspan","4");
+        var caption = $("<div style='display: table-caption; caption-side:bottom; '></div>");
+        var row3 = $("<div style='display: table-row;'></div>");
+        caption.append(row3);
+        surveyView.append(caption);
+        var buttonCell = $("<div style='display: table-cell;width: 100%'></div>");
+       // buttonCell.attr("colspan","4");
         row3.append(buttonCell);
 
-        var tempTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        var tempTable = $("<div style='display: table; height:100%; width:100%; border-spacing: 5px;'></div>");
         buttonCell.append(tempTable);
 
-        var row3 = $(SetupManager.trOpen+SetupManager.trClose);
+        var row3 = $("<div style='display: table-row;'></div>");
         tempTable.append(row3);
 
-        var cellCancel = $(SetupManager.tdOpen+SetupManager.tdClose);
-        cellCancel.attr("width","50%");
-        cellCancel.attr("align","center");
+        var cellCancel = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
+       // cellCancel.attr("width","100%");
+       // cellCancel.attr("align","center");
 
         row3.append(cellCancel);
 
@@ -294,9 +304,9 @@ var Survey = {
 
 
 //go button
-        var cellGo = $(SetupManager.tdOpen+SetupManager.tdClose);
-        cellGo.attr("width","50%");
-        cellGo.attr("align","center");
+        var cellGo = $("<div style='display: table-cell;height:100%; width:100%;'></div>");
+        //cellGo.attr("width","100%");
+       // cellGo.attr("align","center");
         row3.append(cellGo);
 
         var submitButton = $(SetupManager.divOpen+SetupManager.divClose);
@@ -304,7 +314,7 @@ var Survey = {
         cellGo.append(submitButton);
         submitButton.addClass("SubmitButton");
 
-        surveyView.attr("align","center");
+        //surveyView.attr("align","center");
 
         submitButton.mouseenter(function(event){
             submitButton.removeClass("SubmitButton");
@@ -346,9 +356,11 @@ var Survey = {
 
             }).success(function(data, textStatus, jqXHR ) {
                 $.each(data, function(index, element) {
-                    //alert(data.status);
+
                 });
             });
+
+            alert("Successfully submitted! Thanks!");
 
             $("#blanket").remove();
             $("#confirm").remove();
@@ -363,8 +375,8 @@ var Survey = {
             "position" : "fixed",
             "background-color" : "#d3d3d3",
             "width" : "1200",
-            "overflow": "hidden",
-            "height": "auto",
+            "overflow": "auto",
+            "height": "850",
             "z-index" : "9002",
             "top" : "0px",
             "left" : (($(document).width() - 1200) / 2)});
@@ -385,7 +397,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
 
     if(type == "boolean"){
 
-        this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        this.cell = $("<div style='display: table-cell'>"+SetupManager.divClose);
         var question = $("<p><text><b>"+question+"</b></text></p>");
         question.css({"background-color":"lightgoldenrodyellow", "border-radius":"25px"});
         this.cell.append(question);
@@ -450,7 +462,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
 
 
     }else if(type == "open"){
-        this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        this.cell = $("<div style='display: table-cell'>"+SetupManager.divClose);
         var question = $("<p><text><b>"+question+"</b></text></p>");
         question.css({"background-color":"lightgoldenrodyellow", "border-radius":"25px"});
         this.cell.append(question);

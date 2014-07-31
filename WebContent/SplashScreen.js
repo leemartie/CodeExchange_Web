@@ -9,7 +9,7 @@ var SplashScreen = {
     getSplash : function(){
 
         var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
-        tableForSite.attr("height","40%");
+        tableForSite.attr("height","50%");
         tableForSite.attr("cellpadding","0");
         tableForSite.attr("cellspacing","0");
         tableForSite.attr("border","0");
@@ -42,7 +42,8 @@ var SplashScreen = {
 
         cell.attr("width","100%");
         cell.attr("align","center");
-        cell.css({"padding-bottom":"5px"});
+        cell.css({"padding-bottom":"30px"});
+
         cell.attr("colspan","2");
 
         cell.append(title);
@@ -144,6 +145,7 @@ var SplashScreen = {
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
                 footerCell2.hide();
+                footerCell3.hide();
                 tableForSite.animate({
                     height: '5%'
                 }, 700 );
@@ -183,7 +185,7 @@ var SplashScreen = {
             cell.click(function (event) {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
-                var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, footerCell2, tableForSite,
+                var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, footerCell2, footerCell3, tableForSite,
                     cellSubTable, subTable, titleRow, title, btn, paddingCell);
                 advancedDiv.appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
             });
@@ -234,11 +236,9 @@ var SplashScreen = {
         footerCell2.attr("colspan","2");
 
         var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
-//        divDisclaimer.append("<img height='20' width='auto' style='margin-right: 5px; vertical-align:text-bottom;'" +
-//            " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
-//            "<text>Introduction Letter</text>");
-        divDisclaimer.append("<text>Introduction Letter</text>");
         divDisclaimer.addClass("LetterLabel");
+        divDisclaimer.append("<text style='font-size: 14px;'>Introduction Letter</text>");
+
         footerCell2.click(function(event) {
             $('<div id="blanket"></div>').
                 appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
@@ -250,6 +250,23 @@ var SplashScreen = {
         footerCell2.attr("align","center");
         footerCell2.attr("valign","bottom");
         footerCell2.css({"padding":"5"});
+
+
+        var footerRow3 = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(footerRow3);
+        var footerCell3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        footerRow3.append(footerCell3);
+        footerCell3.attr("colspan","2");
+
+        var divDisclaimer = $(SetupManager.divOpen+SetupManager.divClose);
+        divDisclaimer.append("<text style='color:gray;font-size: 12px;'>Browsers Supported: Firefox 26.0+ and Google Chrome 31.0.1650.63+</text>");
+
+
+        footerCell3.append(divDisclaimer);
+        footerCell3.attr("width","100%");
+        footerCell3.attr("align","center");
+        footerCell3.attr("valign","bottom");
+        footerCell3.css({"padding":"50"});
 
 //auto complete
         input.autocomplete({
@@ -368,7 +385,7 @@ var SplashScreen = {
 
     },
 
-    setupAdvanvedSearch: function(input, subtext, footerCell2, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
+    setupAdvanvedSearch: function(input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
         var div = $(SetupManager.divOpen+SetupManager.divClose);
 
 
@@ -904,6 +921,7 @@ var SplashScreen = {
             input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
             subtext.hide();
             footerCell2.hide();
+            footerCell3.hide();
             tableForSite.animate({
                 height: '5%'
 

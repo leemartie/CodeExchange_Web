@@ -1825,44 +1825,45 @@ var Controller = {
 		 * FUNCTION
 		 */
 		setProjectName	:	function(meta, name, projectURL){
-			var metadiv = $("<div style='display: table-cell;style='height:100%; " +
-                "vertical-align: middle; padding-right: 5; border 0'>"
-
+			var metadiv = $("<div style='display: table-cell; vertical-align: top; align: right; float:right; height:100%; padding-right: 5px;'>"
                 +SetupManager.divClose);
-           // metadiv.addClass("ProjectRefinement");
-            var table = $(SetupManager.tableOpen+SetupManager.tableClose)
-            table.attr("cellpadding","0");
-            table.attr("cellspacing","0");
-            table.attr("border","0");
-            table.attr("height","100%");
-            var row = $(SetupManager.trOpen+SetupManager.trClose);
+           metadiv.addClass("ProjectRefinement");
+            var table = $("<div style='display: table; vertical-align: middle; align: center;border-spacing:0'></div>");
+//            table.attr("cellpadding","0");
+//            table.attr("cellspacing","0");
+//            table.attr("border","0");
+//            table.attr("height","100%");
+//            table.attr("height","50%");
+            var row =$("<div style='display: table-row;'></div>");
             row.addClass("ProjectRefinement");
 
             table.append(row);
-            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            var cell = $("<div style='display: table-cell;'></div>");
             row.append(cell);
 
-			var projectName = $('<div style="font-size: 11px;"><font color="black"><center>'
+			var projectName = $('<div style="font-size: 11px; vertical-align: top;align: center;"><font color="black"><center>'
                 +"Refine by project</center></font>"+
                 "</div>");
+            projectName.addClass("ProjectRefinement");
             cell.append(projectName);
+            cell.addClass("ProjectRefinement");
 
-            var row = $(SetupManager.trOpen+SetupManager.trClose);
+            var row = $("<div style='display: table-row;'></div>");
             row.addClass("ProjectRefinement");
 
             table.append(row);
 
-            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            var cell = $("<div style='display: table-cell; border-spacing:0;'></div>");
             row.append(cell);
-
-            var cellName = $("<div style='font-size: 11px;'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
+            cell.addClass("ProjectRefinement");
+            var cellName = $("<div style='font-size: 11px; vertical-align: top;align: center; width:100px'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
             cell.append(cellName);
 
-            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-            cell.attr("height","100%");
-            var row = $(SetupManager.trOpen+SetupManager.trClose);
-            row.append(cell);
-            table.append(row);
+//            var cell = $("<div style='display: table-cell; border-spacing:0;'></div>");
+//            cell.attr("height","100%");
+//            var row = $("<div style='display: table-row;'></div>");
+//            row.append(cell);
+//            table.append(row);
 
             table.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);

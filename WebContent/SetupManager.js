@@ -391,8 +391,8 @@ var SetupManager = {
 			$(window).resize(function() {
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth*(4/5);
-				var screenHeightBuffer = screenHeight*(3/4)-75;
+				var screenBuffer = screenWidth*(4/5)-15;
+				var screenHeightBuffer = screenHeight*(3/4)-90;
 
                 if(!Controller.isExpanded)
 				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
