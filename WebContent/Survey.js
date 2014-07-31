@@ -93,9 +93,12 @@ var Survey = {
 
 
     getView : function(){
+        //clear it out!!
+        Survey.questionCells.length = 0;
 
         var surveyView = $(SetupManager.tableOpen+SetupManager.tableClose);
         surveyView.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
+        surveyView.attr("height","100%");
 
 //ROW 1
 //cell 1
@@ -156,8 +159,8 @@ var Survey = {
         var subRow = $(SetupManager.trOpen+SetupManager.trClose);
 
         var cell11 = new questionCell("Did you find keywords useful?",
-            'http://codeexchange.ics.uci.edu/keywords.png',"boolean",11,250);
-        cell11.cell.attr("height","143px");
+            'http://codeexchange.ics.uci.edu/keywords.png',"boolean",11,300);
+        cell11.cell.attr("height","100%");
         subRow.append(cell11.cell);
         subTable.append(subRow);
         subTable.attr("height","100%");
@@ -169,10 +172,32 @@ var Survey = {
         row1.append(cell3.cell);
         Survey.questionCells.push(cell3);
 
+        var subTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+        subTable.attr("height","100%");
+        subTable.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
+
+        var subRow = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(subRow);
+
+        var subCell = $(SetupManager.tdOpen+SetupManager.tdClose);
+        row1.append(subCell);
+        subCell.attr("height","100%");
+
+        subCell.append(subTable);
+
         var cell7 = new questionCell("Did you find history useful?",
             'http://codeexchange.ics.uci.edu/History.png',"boolean",6,350);
-        row1.append(cell7.cell);
+        subRow.append(cell7.cell);
+        cell7.cell.attr("height","100%");
         Survey.questionCells.push(cell7);
+
+        var subRow13 = $(SetupManager.trOpen+SetupManager.trClose);
+        subTable.append(subRow13);
+        var cell13 = new questionCell("Did you find refining by project useful?",
+            'http://codeexchange.ics.uci.edu/refine_by_project.png',"boolean",13,150);
+        cell13.cell.attr("height","100%");
+        subRow13.append(cell13.cell);
+        Survey.questionCells.push(cell13);
 
 
 
@@ -299,8 +324,12 @@ var Survey = {
             for(var i = 0; i < Survey.questionCells.length; i++){
                 var question = Survey.questionCells[i].question;
                 var answer = Survey.questionCells[i].answer;
+                var type = Survey.questionCells[i].type;
 
+                if(type == "boolean")
                     result = result + "&question"+i+"="+question +"&answer"+i+"="+answer;
+                else if(type == "open")
+                    result = result + "&question"+i+"="+question +"&answer"+i+"="+Survey.questionCells[i].textBox.val();
 
             }
 
@@ -317,7 +346,7 @@ var Survey = {
 
             }).success(function(data, textStatus, jqXHR ) {
                 $.each(data, function(index, element) {
-                    alert(data.status);
+                    //alert(data.status);
                 });
             });
 
@@ -352,6 +381,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
     this.question = question;
     this.answer = null;
     this.cell = null;
+    this.type = type;
 
     if(type == "boolean"){
 
@@ -374,12 +404,18 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.yesBox.attr("id", "radio1");
         this.yesBox.attr("height", "50");
         this.yesBox.css({"cursor":"pointer"});
-        this.yesLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px"});
+        this.yesLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px","cursor":"pointer"});
         var is = this;
         this.yesBox.click(function(event){
                 is.yesLabel.addClass("BoxSelected");
                 is.falseBoxLabel.removeClass("BoxSelected");
                 is.answer = "yes";
+        });
+
+        this.yesLabel.click(function(event){
+            is.yesLabel.addClass("BoxSelected");
+            is.falseBoxLabel.removeClass("BoxSelected");
+            is.answer = "yes";
         });
 
         this.falseBox = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -391,8 +427,14 @@ function questionCell(question, imageURL, type, questionNumber, width){
         this.falseBox.attr("value","no");
         this.falseBox.attr("id", "radio2");
         this.falseBox.css({"cursor":"pointer"});
-        this.falseBoxLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px"});
+        this.falseBoxLabel.css({"background-color":"lightblue", "border-radius":"25px", "padding":"5px","cursor":"pointer"});
         this.falseBox.click(function(event){
+            is.yesLabel.removeClass("BoxSelected");
+            is.falseBoxLabel.addClass("BoxSelected");
+            is.answer = "no";
+        });
+
+        this.falseBoxLabel.click(function(event){
             is.yesLabel.removeClass("BoxSelected");
             is.falseBoxLabel.addClass("BoxSelected");
             is.answer = "no";
