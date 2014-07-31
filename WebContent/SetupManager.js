@@ -565,7 +565,7 @@ var SetupManager = {
 				$(SetupManager.pound+tempTdId).append(cell);
 				
 				//make meta data for cell
-				var metaData = $(SetupManager.divOpen+SetupManager.divClose);
+				var metaData = $("<div style='display: table;width: 100%;height:100%;'>"+SetupManager.divClose);
 				var meta_id = "meta"+i;
 				SetupManager.metaDivArray_ID[i] = meta_id;
 				metaData.attr(SetupManager.ID_attr,SetupManager.metaDivArray_ID[i]);

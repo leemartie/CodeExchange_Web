@@ -943,7 +943,7 @@ var SplashScreen = {
             "overflow": "hidden",
             "height": "auto",
             "z-index" : "9002",
-            "top" : "150px",
+            "top" : "0px",
             "left" : (($(document).width() - 800) / 2)});
 
         return div;

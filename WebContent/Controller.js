@@ -1410,8 +1410,9 @@ var Controller = {
             table.width("10%");
             table.height("10%");
 
-
-            $(SetupManager.pound+meta).append(table);
+          var metaDiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+        metaDiv.append(table);
+            $(SetupManager.pound+meta).append(metaDiv);
         },
 
     /**
@@ -1524,8 +1525,9 @@ var Controller = {
         table.width("10%");
         table.height("10%");
 
-
-        $(SetupManager.pound+meta).append(table);
+        var metaDiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+        metaDiv.append(table);
+        $(SetupManager.pound+meta).append(metaDiv);
     },
 
     /**
@@ -1644,7 +1646,9 @@ var Controller = {
             table.width("10%");
             table.height("10%");
 
-            $(SetupManager.pound+meta).append(table);
+        var metaDiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+        metaDiv.append(table);
+            $(SetupManager.pound+meta).append(metaDiv);
 
 
         },
@@ -1759,7 +1763,7 @@ var Controller = {
 		},
 
        setCodeComplexity : function(meta, complexity){
-           var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
+           var metadiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
            //var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
            var level = "low";
 
@@ -1821,9 +1825,16 @@ var Controller = {
 		 * FUNCTION
 		 */
 		setProjectName	:	function(meta, name, projectURL){
-			var metadiv = $(SetupManager.divOpen+SetupManager.divClose);
-            metadiv.addClass("ProjectRefinement");
+			var metadiv = $("<div style='display: table-cell;style='height:100%; " +
+                "vertical-align: middle; padding-right: 5; border 0'>"
+
+                +SetupManager.divClose);
+           // metadiv.addClass("ProjectRefinement");
             var table = $(SetupManager.tableOpen+SetupManager.tableClose)
+            table.attr("cellpadding","0");
+            table.attr("cellspacing","0");
+            table.attr("border","0");
+            table.attr("height","100%");
             var row = $(SetupManager.trOpen+SetupManager.trClose);
             row.addClass("ProjectRefinement");
 
@@ -1831,7 +1842,7 @@ var Controller = {
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
             row.append(cell);
 
-			var projectName = $('<div style="font-size: 12px;"><font color="black"><center>'
+			var projectName = $('<div style="font-size: 11px;"><font color="black"><center>'
                 +"Refine by project</center></font>"+
                 "</div>");
             cell.append(projectName);
@@ -1844,9 +1855,14 @@ var Controller = {
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
             row.append(cell);
 
-            var cellName = $("<div style='font-size: 12px;'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
+            var cellName = $("<div style='font-size: 11px;'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
             cell.append(cellName);
 
+            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            cell.attr("height","100%");
+            var row = $(SetupManager.trOpen+SetupManager.trClose);
+            row.append(cell);
+            table.append(row);
 
             table.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);
@@ -1872,9 +1888,10 @@ var Controller = {
             })
 
 
-			metadiv.addClass("MetaBorder");
-            table.addClass("MetaBorder");
-            table.addClass("MetaQuery");
+			//metadiv.addClass("MetaBorder");
+            //table.addClass("MetaBorder");
+            //table.addClass("MetaQuery");
+            table.addClass("MetaGroupBorder");
 
 			metadiv.append(table);
 

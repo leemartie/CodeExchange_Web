@@ -650,10 +650,10 @@ function on_nextData(data) {
                                 expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
                                 item.snippet_project_address, item.snippet_this_version, code);
 
-                            Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
                             Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                             Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
                             Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
+                            Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
 
 
 
@@ -815,10 +815,10 @@ function on_data(data) {
                         expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
                         item.snippet_project_address, item.snippet_this_version, code);
 
-                    Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
                     Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
+                    Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
 
 
 

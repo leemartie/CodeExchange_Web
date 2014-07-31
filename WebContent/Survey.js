@@ -48,7 +48,7 @@ var Survey = {
             "overflow": "hidden",
             "height": "auto",
             "z-index" : "9002",
-            "top" : "150px",
+            "top" : "0px",
             "left" : (($(document).width() - 800) / 2)});
 
         div.addClass("Survey");
@@ -416,6 +416,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
             is.yesLabel.addClass("BoxSelected");
             is.falseBoxLabel.removeClass("BoxSelected");
             is.answer = "yes";
+            is.yesBox.prop('checked', true);
         });
 
         this.falseBox = $(SetupManager.inputOpen+SetupManager.inputClose);
@@ -438,6 +439,7 @@ function questionCell(question, imageURL, type, questionNumber, width){
             is.yesLabel.removeClass("BoxSelected");
             is.falseBoxLabel.addClass("BoxSelected");
             is.answer = "no";
+            is.falseBox.prop('checked', true);
         });
 
         this.cell.append($("<p></p>"));
