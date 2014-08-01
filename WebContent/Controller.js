@@ -1814,7 +1814,7 @@ var Controller = {
 		 * FUNCTION
 		 */
 		setAvatar	:	function(meta, avatar){
-			$(SetupManager.pound+meta).empty();
+
 			var image = $('<img class="MetaDatum" src="'+avatar+'"  width="40" height="40" >'+'</img>');
 			$(SetupManager.pound+meta).append(image);
 			image.addClass("MetaBorder");

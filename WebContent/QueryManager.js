@@ -650,6 +650,8 @@ function on_nextData(data) {
                                 expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
                                 item.snippet_project_address, item.snippet_this_version, code);
 
+                            $("#"+SetupManager.metaDivArray_ID[successCount]).empty();
+
                             Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                             Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
                             Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
@@ -814,6 +816,8 @@ function on_data(data) {
                         url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
                         expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
                         item.snippet_project_address, item.snippet_this_version, code);
+
+                        $("#"+SetupManager.metaDivArray_ID[successCount]).empty();
 
                     Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                     Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
