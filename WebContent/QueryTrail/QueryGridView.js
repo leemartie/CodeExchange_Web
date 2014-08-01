@@ -94,27 +94,17 @@ var QueryGridView = {
     },
 
    restoreCookies : function(){
-       var ca = document.cookie.split(';');
 
-       var length = 25;
-       var lengthName = "length=";
+       var length = localStorage.getItem("length");
 
-       //can keep up with number of queries now
-       for (var j = 0; j < ca.length; j++) {
-           var section = ca[j].trim();
-
-           if (section.indexOf(lengthName) == 0) {
-               length = parseInt(section.substring(lengthName.length, section.length));
-           }
-       }
 
        for(var i = 0; i<= length; i++) {
-           var name = "search"+i + "=";
-           for (var j = 0; j < ca.length; j++) {
-               var entireQuery = ca[j].trim();
 
-               if (entireQuery.indexOf(name) == 0) {
-                   var queries = entireQuery.substring(name.length, entireQuery.length).split('!!@@$$~~');
+            var queryString = localStorage.getItem("search"+i);
+             if(queryString == null)
+                continue;
+
+                   var queries = queryString.split('!!@@$$~~');
                    var cookieStack = new Array();
 
                    for(var g = 0; g < queries.length; g++){
@@ -183,8 +173,8 @@ var QueryGridView = {
 
                    if(cookieStack.length >  0)
                     QueryGridModel.history.push(cookieStack.slice(0));
-               }//if
-           }//for j
+
+
        }//for i
 
 
@@ -371,7 +361,8 @@ var QueryGridView = {
                         QueryGridModel.history.splice(i,1);
                         QueryGridView.close = true;
                         table.empty();
-                        document.cookie = "search"+(i)+"=deleted";
+
+                        localStorage.removeItem("search"+i);
                         QueryGridView.update();
 //LOG IT
                         UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_CELL_DELETE, query,i);

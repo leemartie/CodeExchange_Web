@@ -188,7 +188,7 @@ var Controller = {
 
 
                         var javaURL = $('<div>' +
-                            '<center><img  height="28" width="auto" style="vertical-align:text-bottom;" ' +
+                            '<center><img  height="28" width="auto" style="padding-bottom: 1px;" ' +
                         'src="http://codeexchange.ics.uci.edu/java.png"></img></center></div>');
 
                         //javaURL.addClass("downloadLink");
@@ -223,7 +223,7 @@ var Controller = {
                             //LOG IT
                             UsageLogger.addEvent(UsageLogger.DOWNLOAD_FILE,null,currentURL);
 
-                            var blob = new Blob([element], {type: "text/plain;charset=utf-8"});
+                            var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
 
                             var javaNames = currentURL.split("/");
                             var fileName = javaNames[javaNames.length - 1];
@@ -2414,10 +2414,10 @@ var Controller = {
         var screenWidth = jQuery(window).width();
         var screenWidth = jQuery(window).width();
         var screenHeight = jQuery(window).height();
-        var screenBuffer = screenWidth*(4/5);
-        var screenHeightBuffer = screenHeight*(3/4)-75;
+        var screenBuffer = screenWidth*(4/5)-15;
+        var screenHeightBuffer = screenHeight*(3/4)-90;
         $('.Grid').width(screenBuffer+44);
-        $('.Grid').height(screenHeightBuffer+140);
+        $('.Grid').height(screenHeightBuffer+150);
 
     }
 

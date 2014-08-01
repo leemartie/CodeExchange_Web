@@ -27,6 +27,7 @@ var QueryManager = {
     humanLanguageOfComments:	"",
     currentFQquery :    "",
     IDsSeen : new Array(),
+    StoredCookies : new Array(),
 
 
     numFound : 0,
@@ -64,14 +65,13 @@ var QueryManager = {
 
 
 
-
 		var url = URLQueryCreator.getQueryURL('on_data');
 
 		$.getJSON(url);
-		
-		
-		
+
+
 	},
+
 	
 	submitSpellCheck	:	function(request,response,val){
 		var url = 'http://grok.ics.uci.edu:8983/solr/CodeExchangeIndex/spell?q=(snippet_code:'+val+')'+

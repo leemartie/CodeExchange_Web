@@ -325,6 +325,7 @@ var SplashScreen = {
                 input.attr(SetupManager.placeholder_attr, "Type additional keywords and hit Enter");
                 subtext.hide();
                 footerCell2.hide();
+                footerCell3.hide();
                 tableForSite.animate({
                     height: '5%'
 

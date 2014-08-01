@@ -186,13 +186,13 @@ var QueryBucketModel = {
         }
 
         var indexID = QueryGridModel.history.length;
-        document.cookie = "search"+indexID+"=" + query+""+";expires=" + expiration_date.toGMTString();
+
+        localStorage.setItem("search"+indexID, query);
     },
 
 
     storeCookie : function() {
-        var expiration_date = new Date();
-        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+
 
 
         for (var i = 0; i < QueryGridModel.history.length; i++) {
@@ -214,10 +214,13 @@ var QueryBucketModel = {
 
             }
 
-            document.cookie = "search"+i+"=" + query+""+";expires=" + expiration_date.toGMTString();
+            localStorage.setItem("search"+i, query);
+
+
         }
 
-            document.cookie = "length="+QueryGridModel.history.length+";expires=" + expiration_date.toGMTString();
+         localStorage.setItem("length", QueryGridModel.history.length);
+
 
     },
 
