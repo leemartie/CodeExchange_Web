@@ -381,6 +381,8 @@ var Critize = {
         var cellName = $("<div style='font-size: 11px; text-align: center; vertical-align:top; width:100px'><font color='#8b0000'><center>"+projectName+"</center></font>"+"</div>");
         cell.append(cellName);
 
+        cell.attr("title","Refine current query by this code's project.");
+
 
 
         (function(littleTable){
