@@ -200,7 +200,7 @@ var Controller = {
                         //cell.attr("height","100%");
                         cell.attr("width","7%");
                         row.append(cell);
-                        cell.append(javaURL);
+                       // cell.append(javaURL);
                         cell.attr("title",
                                 "Download the Java file");
                         cell.addClass("downloadLink");
@@ -218,28 +218,47 @@ var Controller = {
 
                         })(cell);
 
-                        javaURL.click(function(e) {
+                var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
 
-                            //LOG IT
-                            UsageLogger.addEvent(UsageLogger.DOWNLOAD_FILE,null,currentURL);
-
-                            var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
-
-                            var javaNames = currentURL.split("/");
-                            var fileName = javaNames[javaNames.length - 1];
-                            var url = window.URL.createObjectURL(blob);
+                var javaNames = currentURL.split("/");
+                var fileName = javaNames[javaNames.length - 1];
+                var url = window.URL.createObjectURL(blob);
 
 
-                            var a = document.createElement("a");
-                            document.body.appendChild(a);
-                            a.style = "display: none";
+                var a = $('<a href="'+url+'" download="'+fileName+'"></a>');
 
-                           a.href = url;
-                           a.download = fileName;
-                           a.click();
-                           window.URL.revokeObjectURL(url);
+                a.attr(SetupManager.ID_attr,"download"+fileName);
+                a.append(javaURL);
+                cell.append(a);
 
-                        });
+//                        javaURL.click(function(e) {
+//
+//                            //LOG IT
+//                            UsageLogger.addEvent(UsageLogger.DOWNLOAD_FILE,null,currentURL);
+//
+//                            var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
+//
+//                            var javaNames = currentURL.split("/");
+//                            var fileName = javaNames[javaNames.length - 1];
+//                            var url = window.URL.createObjectURL(blob);
+//
+//
+//                            var a = $("<a style = 'display: none' href='"+url+" download='"+fileName+"'></a>");//document.createElement("a");
+//                            a.attr(SetupManager.ID_attr,"download"+fileName);
+//
+//                           // document.body.appendChild(a);
+//                            $('#'+SetupManager.entireSiteDiv_ID).append(a);
+//                           // a.style = "display: none";
+//
+//                       //    a.href = url;
+//                        //   a.download = fileName;
+//
+//                            a.trigger('click');//click();
+//
+//                         //   a.click();
+//                         //  window.URL.revokeObjectURL(url);
+//
+//                        });
 
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         cell.attr("align","left");
@@ -2409,7 +2428,7 @@ var Controller = {
         var screenBuffer = screenWidth*(4/5)-15;
         var screenHeightBuffer = screenHeight*(3/4)-90;
         $('.Grid').width(screenBuffer+44);
-        $('.Grid').height(screenHeightBuffer+150);
+        $('.Grid').height(screenHeightBuffer+160);
 
     }
 

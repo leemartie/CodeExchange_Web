@@ -13,7 +13,7 @@ var Critize = {
 
         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
         table.attr("cellpadding","0");
-        table.attr("cellspacing","0");
+        table.attr("cellspacing","1");
         table.attr("border","0px solid black");
         table.attr("width","100%");
 
@@ -24,7 +24,7 @@ var Critize = {
         table.append(row);
         cell.attr("align","center");
         cell.attr("colspan","3");
-        var label = $("<text style=''>Refine by Critique</text>");
+        var label = $("<text style='padding-bottom: '>Refine by Critique</text>");
         cell.append(label);
 
         //blank header for 100% empty cell
@@ -41,7 +41,7 @@ var Critize = {
         cell.append(projectNameTitle);
         cell.attr("align","center");
         cell.addClass("ProjectRefinement");
-
+        cell.css({"padding-right":"20px"});
 
 
         var row = $(SetupManager.trOpen+SetupManager.trClose);
@@ -352,30 +352,27 @@ var Critize = {
 
 
 //PROJECT
-        var littleTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-        littleTable.attr("height","100%");
+
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         cell.attr("width","100%");
-
         row.append(cell);
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        cell.attr("height","100%");
-
-        cell.append(littleTable);
         row.append(cell);
+        cell.css({"padding-right":"20px"});
 
-
-        var littleRow = $(SetupManager.trOpen+SetupManager.trClose);
-        littleTable.append(littleRow);
-
-        littleRow.addClass("ProjectRefinement");
-
-
-
-        var cell =$("<td></td>");
+        var littleTable = $(SetupManager.tableOpen+SetupManager.tableClose);
+//        littleTable.attr("height","100%");
+//        cell.append(littleTable);
+//        var littleRow = $(SetupManager.trOpen+SetupManager.trClose);
+//        littleTable.append(littleRow);
+//
+//
+//
+//
+//        var cell =$("<td></td>");
         cell.attr("align","center");
         cell.attr("valign","top");
-        littleRow.append(cell);
+     //   littleRow.append(cell);
         cell.addClass("ProjectRefinement");
         cell.attr("align","center");
         var cellName = $("<div style='font-size: 11px; text-align: center; vertical-align:top; width:100px'><font color='#8b0000'><center>"+projectName+"</center></font>"+"</div>");
@@ -405,13 +402,13 @@ var Critize = {
 
             })
 
-        })(cell);
+        })(cellName);
 
-        var row =  $(SetupManager.trOpen+SetupManager.trClose);
-        littleTable.append(row);
-        var cell =$("<td></td>");
-        cell.attr("height","100%");
-        row.append(cell);
+//        var littleRow =  $(SetupManager.trOpen+SetupManager.trClose);
+//        littleTable.append(littleRow);
+//        var cell =$("<td></td>");
+//        cell.attr("height","100%");
+//        littleRow.append(cell);
 
 
         return table;
