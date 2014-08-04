@@ -651,11 +651,16 @@ function on_nextData(data) {
                                 item.snippet_project_address, item.snippet_this_version, code);
 
                             $("#"+SetupManager.metaDivArray_ID[successCount]).empty();
+//                        var header = $("<div style='display: table-caption; caption-side:top;padding: 2px;text-align: left'>Refine by Critique</div>");
+//                        $("#"+SetupManager.metaDivArray_ID[successCount]).append(header);
 
-                            Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
-                            Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
-                            Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
-                            Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
+                            //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
+                            Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
+                                item.snippet_path_complexity_class_sum,item.snippet_imports_count,item.snippet_project_name, item.snippet_project_id);
+
+//                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
+//                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
+         //                   Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
 
 
 
@@ -818,11 +823,16 @@ function on_data(data) {
                         item.snippet_project_address, item.snippet_this_version, code);
 
                         $("#"+SetupManager.metaDivArray_ID[successCount]).empty();
+//                        var header = $("<div style='display: table-caption; caption-side:top;padding: 2px;text-align: left'>Refine by Critique</div>");
+//                        $("#"+SetupManager.metaDivArray_ID[successCount]).append(header);
 
-                    Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
-                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
-                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
-                    Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
+ //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
+                        Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
+                            item.snippet_path_complexity_class_sum,item.snippet_imports_count, item.snippet_project_name, item.snippet_project_id);
+
+//                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
+//                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
+        //            Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
 
 
 

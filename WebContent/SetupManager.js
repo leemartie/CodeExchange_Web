@@ -200,6 +200,8 @@ var SetupManager = {
             filterSideTD.append(BuildQueryBoxView.getView());
            // filterSideTD.height("70%");
 
+
+
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
             headerRow.append(resultTD);
@@ -565,7 +567,7 @@ var SetupManager = {
 				$(SetupManager.pound+tempTdId).append(cell);
 				
 				//make meta data for cell
-				var metaData = $("<div style='display: table;width: 100%;height:100%;'>"+SetupManager.divClose);
+				var metaData = $("<div style='display: table; width: 100%; border-spacing: 0;padding-top:5px'>"+SetupManager.divClose);
 				var meta_id = "meta"+i;
 				SetupManager.metaDivArray_ID[i] = meta_id;
 				metaData.attr(SetupManager.ID_attr,SetupManager.metaDivArray_ID[i]);
@@ -575,6 +577,8 @@ var SetupManager = {
 				
 				$(SetupManager.pound+SetupManager.cellDivArray_ID[i]).append($(SetupManager.newLine));
 				
+
+
 
 
 				var resultData = $(SetupManager.divOpen+SetupManager.divClose);

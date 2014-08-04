@@ -1297,6 +1297,15 @@ var Controller = {
 			return $(SetupManager.pound+SetupManager.queryInput_ID).val();
 		},
 
+    setCritics: function(meta, size, complexity, imports, projectName, projectURL){
+
+        var table = Critize.getView(size, complexity,imports, projectName, projectURL);
+
+        var metaDiv =  $("<div style='display: table-cell;width:100%;'>"+SetupManager.divClose);
+        metaDiv.append(table);
+        $(SetupManager.pound+meta).append(table);
+    },
+
     /**
      * COMPLEXITY
      * @param meta
@@ -1392,11 +1401,11 @@ var Controller = {
         });
 
 
-            td1.append(icon2);
+       //     td1.append(icon2);
 
             td2.append("<text><font size='2'>complexity</font> <font color='#8b0000'>" +complexity+"</font></text>");
 
-            td3.append(icon);
+     //       td3.append(icon);
 
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -1410,7 +1419,7 @@ var Controller = {
             table.width("10%");
             table.height("10%");
 
-          var metaDiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+          var metaDiv =  $("<div style='display: table-cell;height:100%;'>"+SetupManager.divClose);
         metaDiv.append(table);
             $(SetupManager.pound+meta).append(metaDiv);
         },
@@ -1468,13 +1477,14 @@ var Controller = {
         tr2.append(td2);
         td2.attr("align","center");
 
+
         var tr3 = $(SetupManager.trOpen+SetupManager.trClose);
         tableIncreaseDecrease.append(tr3);
         var td3 = $(SetupManager.tdOpen+SetupManager.tdClose);
         tr3.append(td3);
         td3.attr("align","center");
 
-        var icon2  = $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
+        var icon2  =  $('<img width=15 height=15 src="http://codeexchange.ics.uci.edu/upArrow.png"></img>');
         icon2.addClass("Arrow");
         (function(icon){
             icon.mouseenter(function(e){
@@ -1507,14 +1517,15 @@ var Controller = {
         });
 
 
-        td1.append(icon2);
+     //   td1.append(icon2);
 
         td2.append("<text><font size='2'>imports</font> <font color='#8b0000'>" +importCount+"</font></text>");
 
-        td3.append(icon);
+    //    td3.append(icon);
 
 
         var table = $(SetupManager.tableOpen+SetupManager.tableClose);
+
         var row = $(SetupManager.trOpen+SetupManager.trClose);
         table.append(row);
         var td = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -1525,7 +1536,7 @@ var Controller = {
         table.width("10%");
         table.height("10%");
 
-        var metaDiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+        var metaDiv =  $("<div style='display: table-cell; padding: 0px; height:100%;'>"+SetupManager.divClose);
         metaDiv.append(table);
         $(SetupManager.pound+meta).append(metaDiv);
     },
@@ -1629,11 +1640,11 @@ var Controller = {
 
 
 
-            td1.append(icon2);
+         //   td1.append(icon2);
 
         td2.append("<text><font size='2'>size</font> <font color='#8b0000'>" +size+"</font></text>");
 
-            td3.append(icon);
+        //    td3.append(icon);
 
             var table = $(SetupManager.tableOpen+SetupManager.tableClose);
             var row = $(SetupManager.trOpen+SetupManager.trClose);
@@ -1646,7 +1657,7 @@ var Controller = {
             table.width("10%");
             table.height("10%");
 
-        var metaDiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+        var metaDiv =  $("<div style='display: table-cell; padding: 0px;height:100%;'>"+SetupManager.divClose);
         metaDiv.append(table);
             $(SetupManager.pound+meta).append(metaDiv);
 
@@ -1763,7 +1774,7 @@ var Controller = {
 		},
 
        setCodeComplexity : function(meta, complexity){
-           var metadiv =  $("<div style='display: table-cell;'>"+SetupManager.divClose);
+           var metadiv =  $("<div style='display: table-cell; padding: 0px;'>"+SetupManager.divClose);
            //var icon  = $('<span class="ui-icon ui-icon-folder-collapsed" style="display:inline-block"></span>');
            var level = "low";
 
@@ -1825,15 +1836,13 @@ var Controller = {
 		 * FUNCTION
 		 */
 		setProjectName	:	function(meta, name, projectURL){
-			var metadiv = $("<div style='display: table-cell; vertical-align: top; align: right; float:right; height:100%; padding-right: 5px;'>"
+			var metadiv = $("<div style='display: table-cell;" +
+                " align: right; float:right; height:100%; padding-right: 5px; border 1px solid;'>"
                 +SetupManager.divClose);
            metadiv.addClass("ProjectRefinement");
             var table = $("<div style='display: table; vertical-align: middle; align: center;border-spacing:0'></div>");
-//            table.attr("cellpadding","0");
-//            table.attr("cellspacing","0");
-//            table.attr("border","0");
-//            table.attr("height","100%");
-//            table.attr("height","50%");
+            table.attr("height","10%");
+            table.attr("width","10%");
             var row =$("<div style='display: table-row;'></div>");
             row.addClass("ProjectRefinement");
 
@@ -1841,7 +1850,7 @@ var Controller = {
             var cell = $("<div style='display: table-cell;'></div>");
             row.append(cell);
 
-			var projectName = $('<div style="font-size: 11px; vertical-align: top;align: center;"><font color="black"><center>'
+			var projectName = $('<div style="font-size: 11px; align: center;"><font color="black"><center>'
                 +"Refine by project</center></font>"+
                 "</div>");
             projectName.addClass("ProjectRefinement");
@@ -1856,14 +1865,8 @@ var Controller = {
             var cell = $("<div style='display: table-cell; border-spacing:0;'></div>");
             row.append(cell);
             cell.addClass("ProjectRefinement");
-            var cellName = $("<div style='font-size: 11px; vertical-align: top;align: center; width:100px'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
+            var cellName = $("<div style='font-size: 11px; align: center; width:100px'><font color='#8b0000'><center>"+name+"</center></font>"+"</div>");
             cell.append(cellName);
-
-//            var cell = $("<div style='display: table-cell; border-spacing:0;'></div>");
-//            cell.attr("height","100%");
-//            var row = $("<div style='display: table-row;'></div>");
-//            row.append(cell);
-//            table.append(row);
 
             table.click(function(event){
                 var query = new QueryModel(QueryBucketModel.projectField,name);
@@ -1875,29 +1878,18 @@ var Controller = {
             });
 
             table.mouseenter(function(){
-
                 table.addClass("RefineButtonHover");
-
-
             })
 
             table.mouseleave(function(){
-
                 table.removeClass("RefineButtonHover");
-
 
             })
 
-
-			//metadiv.addClass("MetaBorder");
-            //table.addClass("MetaBorder");
-            //table.addClass("MetaQuery");
             table.addClass("MetaGroupBorder");
 
 			metadiv.append(table);
-
-
-            metadiv.attr("title","Refine current query by this code's project.")
+         metadiv.attr("title","Refine current query by this code's project.")
 			$(SetupManager.pound+meta).append(metadiv);
 		},
 

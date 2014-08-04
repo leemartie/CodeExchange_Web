@@ -22,7 +22,7 @@
 <script type="text/javascript" src="jquery-migrate-1.2.1.js"></script>
 <script type="text/javascript" src="jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 
-
+<script type="text/javascript" src="Critize.js"></script>
 <script type="text/javascript" src="ScreenSizes.js"></script>
 <script type="text/javascript" src="SplashScreen.js"></script>
 <script type="text/javascript" src="Client.js"></script>
@@ -367,7 +367,7 @@
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
-    height: 60px;
+
 
 
 
@@ -755,14 +755,132 @@ td {
     font-family: Courier;
 }
 
+.callout {
+    border: 1px solid black;
+    position: relative;
+    margin: 0px 0;
+    padding: 0px 0px;
+    background-color: #ffffff;
+    /* easy rounded corners for modern browsers */
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+}
+
+.callout .notchUpInner {
+    position: absolute;
+    top: -9px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff;
+
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+    /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+
+}
+
+.callout .notchUp {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid black;
+
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+    /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+
+}
+
+.callout .notchDownInner {
+    position: absolute;
+    bottom: -9px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #ffffff;
+
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+    /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+}
+
+.callout .notchDown {
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    margin: 0;
+    border-top: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+
+    padding: 0;
+    width: 0;
+    height: 0;
+    /* ie6 height fix */
+    font-size: 0;
+    line-height: 0;
+    /* ie6 transparent fix */
+    _border-right-color: pink;
+    _border-left-color: pink;
+    _filter: chroma(color=pink);
+}
+
+
 .Arrow{
     cursor: pointer;
+    border: 0px solid black;
 
-    align: center;
-    font-size: 14px;
+
+
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+    text-align: center;
+    vertical-align: middle;
+
 }
 .ArrowHover{
     cursor: pointer;
+    border: 0px solid black;
+    background-color: white;
 
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -1439,6 +1557,7 @@ html { height: 100%; }
 .RefineButtonHover{
     box-shadow: 3px 3px 3px darkgray;
 
+    margin: -1;
 
     border: 0px solid;
     border-color: black;
@@ -1450,8 +1569,7 @@ html { height: 100%; }
     border-bottom-right-radius: 15px;
 
 
-    text-align: center;
-    vertical-align: middle;
+
 
     cursor: pointer;
 
