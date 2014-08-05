@@ -24,7 +24,7 @@ var Critize = {
         table.append(row);
         cell.attr("align","center");
         cell.attr("colspan","3");
-        var label = $("<text style='padding-bottom: '>Refine by Critique</text>");
+        var label = $("<text style='padding-bottom: '>Refine by critique</text>");
         cell.append(label);
 
         //blank header for 100% empty cell

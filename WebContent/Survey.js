@@ -157,7 +157,7 @@ var Survey = {
         subCell.append(subTable);
 
 
-        var cell2 = new questionCell("Did you find code criticisms useful?",
+        var cell2 = new questionCell("Did you find code critiques useful?",
             'http://codeexchange.ics.uci.edu/critisims.png',"boolean",2,150);
         subRow.append(cell2.cell);
         cell2.cell.attr("height","50%");
