@@ -275,11 +275,13 @@ var SetupManager = {
             surveyRow.append(surveyCell);
 
             var footerTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-            footerTable.css({"border":"0px solid black","width":"30%"});
+            footerTable.css({"border":"0px solid black","width":"600px"});
             footerTable.attr("cellpadding","0");
             footerTable.attr("cellspacing","0");
-            footerTable.attr("border","0");
-                    surveyCell.append(footerTable);
+
+            var divCenter = $("<div style='margin:auto;'</div>");
+            divCenter.append(footerTable);
+                    surveyCell.append(divCenter);
                     //surveyCell.width("100%");
                     surveyCell.attr("colspan","2");
                      surveyCell.attr("align","center");
@@ -304,12 +306,19 @@ var SetupManager = {
                 "<text>Help us improve code search.</text>");
             divSurvey.addClass("SurveyLabel");
             footerCell1.append(divSurvey);
-            footerCell1.attr("width","50%");
-            footerCell1.attr("align","right");
+           // footerCell1.attr("width","40%");
+            footerCell1.attr("align","center");
             footerCell1.attr("valign","bottom");
 
 
 //disclaimer
+
+            var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
+            footerCellDASH.append("<text>&mdash;</text>");
+            footerCellDASH.attr("align","center");
+            footerCellDASH.addClass("LetterLabel");
+
+            footerRow.append(footerCellDASH);
 
             var footerCell2 = $(SetupManager.tdOpen+SetupManager.tdClose);
             footerRow.append(footerCell2);
@@ -319,7 +328,7 @@ var SetupManager = {
 //                    " src='http://codeexchange.ics.uci.edu/letter.png'></img>" +
 //                    "<text>Introduction Letter</text>");
 
-            divDisclaimer.append("<text>&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;Introduction letter</text>");
+            divDisclaimer.append("<text>Introduction letter</text>");
             divDisclaimer.addClass("LetterLabel");
             footerCell2.click(function(event) {
                 $('<div id="blanket"></div>').
@@ -328,8 +337,32 @@ var SetupManager = {
                 survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
             });
             footerCell2.append(divDisclaimer);
-            footerCell2.attr("width","50%");
-            footerCell2.attr("align","left");
+          //  footerCell2.attr("width","30%");
+            footerCell2.attr("align","center");
+
+//examples page
+
+            var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
+            footerCellDASH.append("<text>&mdash;</text>");
+            footerCellDASH.attr("align","center");
+            footerCellDASH.addClass("LetterLabel");
+            footerRow.append(footerCellDASH);
+
+            var footerCell3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            footerRow.append(footerCell3);
+
+            var divExamples = $(SetupManager.divOpen+SetupManager.divClose);
+
+            divExamples.append("<text>Example searches</text>");
+            divExamples.addClass("LetterLabel");
+
+            footerCell3.click(function(event) {
+                window.location = "http://codeexchange.ics.uci.edu/examples.html";
+            });
+
+            footerCell3.append(divExamples);
+          //  footerCell3.attr("width","30%");
+            footerCell3.attr("align","center");
 
 
 //listener for expand button
