@@ -236,10 +236,12 @@ var SplashScreen = {
         footerCell2.attr("colspan","2");
 
         var divDisclaimer = $("<div style='display:table;>'"+SetupManager.divClose);
-        divDisclaimer.addClass("LetterLabel");
-        divDisclaimer.append("<text style='font-size: 14px;padding-left: 5px;padding-right: 5px;'>Introduction Letter</text>");
 
-        divDisclaimer.click(function(event) {
+        var text = $("<text style='font-size: 14px;padding-left: 5px;padding-right: 5px;'>Introduction Letter</text>");
+        text.addClass("LetterLabel");
+        divDisclaimer.append(text);
+
+        text.click(function(event) {
             $('<div id="blanket"></div>').
                 appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
             var survey = Survey.getLetter();
@@ -256,7 +258,7 @@ var SplashScreen = {
         var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
         footerCellDASH.append("<div style='display: table-cell;padding-left: 5px;padding-right: 5px;'><text>&mdash;</text></div>");
         footerCellDASH.attr("align","center");
-        footerCellDASH.addClass("LetterLabel");
+        footerCellDASH.addClass("Spacer");
         divDisclaimer.append(footerCellDASH);
 
         var footerCell4 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -265,7 +267,7 @@ var SplashScreen = {
         divExamples.append("<div style='display: table-cell;padding-left: 5px;padding-right: 5px;'><text>Example searches</text></div>");
         divExamples.addClass("LetterLabel");
         divExamples.click(function(event) {
-            window.location = "http://codeexchange.ics.uci.edu/examples.html";
+            window.open("http://codeexchange.ics.uci.edu/examples.html","_blank");
         });
         divDisclaimer.append(divExamples);
         footerCell4.attr("align","center");

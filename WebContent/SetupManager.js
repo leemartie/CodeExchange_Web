@@ -300,23 +300,32 @@ var SetupManager = {
                 var survey = Survey.getView();
                 survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
             });
-            var divSurvey = $(SetupManager.divOpen+SetupManager.divClose);
-            divSurvey.append("<img height='15' width='auto' style='margin-right: 10px;vertical-align:text-bottom;'" +
-                " src='http://codeexchange.ics.uci.edu/science.png'></img>" +
+
+            var divTable = $("<div style='display:table;'></div>")
+
+            var divImage = $("<div style='display:table-cell;width: 20px;'>"+SetupManager.divClose);
+            divImage.append($("<img height='15' width='auto' style=';'" +
+                " src='http://codeexchange.ics.uci.edu/science.png'></img>"));
+
+            var divSurvey = $("<div style='display:table-cell'>"+SetupManager.divClose);
+
+            divSurvey.append(
                 "<text>Help us improve code search.</text>");
             divSurvey.addClass("SurveyLabel");
-            footerCell1.append(divSurvey);
+            divTable.append(divImage);
+            divTable.append(divSurvey);
+            footerCell1.append(divTable);
            // footerCell1.attr("width","40%");
             footerCell1.attr("align","center");
-            footerCell1.attr("valign","bottom");
+          //  footerCell1.attr("valign","bottom");
 
 
 //disclaimer
 
             var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
-            footerCellDASH.append("<text>&mdash;</text>");
+            footerCellDASH.append("<text>&mdash;&nbsp;&nbsp;</text>");
             footerCellDASH.attr("align","center");
-            footerCellDASH.addClass("LetterLabel");
+            footerCellDASH.addClass("Spacer");
 
             footerRow.append(footerCellDASH);
 
@@ -343,9 +352,9 @@ var SetupManager = {
 //examples page
 
             var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
-            footerCellDASH.append("<text>&mdash;</text>");
+            footerCellDASH.append("<text>&nbsp;&mdash;&nbsp;&nbsp;</text>");
             footerCellDASH.attr("align","center");
-            footerCellDASH.addClass("LetterLabel");
+            footerCellDASH.addClass("Spacer");
             footerRow.append(footerCellDASH);
 
             var footerCell3 = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -357,7 +366,7 @@ var SetupManager = {
             divExamples.addClass("LetterLabel");
 
             footerCell3.click(function(event) {
-                window.location = "http://codeexchange.ics.uci.edu/examples.html";
+                window.open("http://codeexchange.ics.uci.edu/examples.html","_blank");
             });
 
             footerCell3.append(divExamples);
