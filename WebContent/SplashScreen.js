@@ -237,7 +237,7 @@ var SplashScreen = {
 
         var divDisclaimer = $("<div style='display:table;>'"+SetupManager.divClose);
 
-        var text = $("<text style='font-size: 14px;padding-left: 5px;padding-right: 5px;'>Introduction Letter</text>");
+        var text = $("<text style='font-size: 14px;padding-left: 5px;padding-right: 5px;'>Introduction letter</text>");
         text.addClass("LetterLabel");
         divDisclaimer.append(text);
 
@@ -271,6 +271,10 @@ var SplashScreen = {
         });
         divDisclaimer.append(divExamples);
         footerCell4.attr("align","center");
+
+//        var facebook = $('<a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">'+
+//        'Share on Facebook</a>');
+//        footerCell4.append(facebook);
 
 
         var footerRow3 = $(SetupManager.trOpen+SetupManager.trClose);

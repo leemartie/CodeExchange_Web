@@ -11,13 +11,16 @@ var SmartQueryCreator = {
 			
 			
 			query = SmartQueryCreator.escapeSpecialCharacters(query);
-			queryArray = query.split(/\s+/);
+			queryArray = query.trim().split(/\s+/);
 	
 			for(var i = 0; i<queryArray.length; i++){
+                if(queryArray[i] == " " || queryArray[i] == "")
+                    continue;
+
 				if(i == 0){
-					tempQuery = encodeURIComponent(queryArray[i]);
+					tempQuery = encodeURIComponent(queryArray[i].trim());
 				}else{
-					tempQuery = tempQuery + " AND " +encodeURIComponent(queryArray[i]);
+					tempQuery = tempQuery + " AND " +encodeURIComponent(queryArray[i].trim());
 				}
 				
 			}
