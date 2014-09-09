@@ -801,6 +801,8 @@ function on_data(data) {
 
             var codeURL = String(item.snippet_address);
 
+            //console.log(codeURL);
+
             var url = "http://codeexchange.ics.uci.edu/getPage.php?url=" + codeURL + "&callback=?&json.wrf=displayCode";
             $.getJSON(url).fail(function (data, textStatus, jqXHR) {
 

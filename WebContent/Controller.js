@@ -76,6 +76,7 @@ var Controller = {
 
 
             var classStart = start;
+           // console.log("class start: "+classStart);
 
             Controller.currentURLs[editorNumber] = codeURL;
             Controller.projectURLs[editorNumber] = projectURL;
@@ -512,8 +513,8 @@ var Controller = {
 //                          regExp: true
 //                      });
 
-
-
+                        var backup = false;
+                         var backupAmount = 0;
 
                         var cumLength = [];
                         var cnt = editor.session.getLength();
@@ -537,9 +538,12 @@ var Controller = {
                         var newRow = rowOfClass;
 
 
-                        if((characters.indexOf("/*") > -1)){
 
-                            for(var k = 0; k<newLines.length; k++){
+                        if((characters.indexOf("/*") > -1) ||
+                            (characters.indexOf("*") > -1) ||
+                            (characters.indexOf("@") > -1)){
+
+                            for(var k = rowOfClass; k<newLines.length; k++){
                                 characters = newLines[newRow];
 
                                 if(!(characters.indexOf("*") > -1) && !(characters.indexOf("@") > -1)
@@ -551,11 +555,23 @@ var Controller = {
                                 }else{
                                     newRow++;
                                 }
+
+
+                            }
+
+                        }else{
+                            while(characters.trim().toLowerCase().indexOf("class") == -1){
+                                newRow = newRow -1;
+                                characters = newLines[newRow];
+                                backup = true;
+                                backupAmount++;
                             }
 
                         }
 
 
+                        characters = newLines[newRow];
+                        //console.log("Row: "+newRow+" line: "+characters);
                         var markerID = editor.session.addMarker(new aceRange(newRow, 0,
                             newRow, 1000), "classFound","background");
 
@@ -616,6 +632,8 @@ var Controller = {
                                     var rowNumber = Controller.getRow(cumLength, parseInt(start), 0, cumLength.length);
 
 
+
+
                                     var columnNumber = parseInt(start) - cumLength[rowNumber];
 
                                     var end = endSplit[1];
@@ -628,9 +646,27 @@ var Controller = {
 
                                     if(endSplit[0].indexOf("method") > -1){
                                         CSSclass = "decChild";
+                                            while(newLines[rowNumber] != null && newLines[rowNumber].trim()
+                                                .indexOf(
+                                                childrenDocs[id_index].snippet_method_dec_name) == -1){
+                                                rowNumber = rowNumber -1;
+                                                columnNumber = 0;
+                                                endColumnNumber = 1000;
+                                                console.log("ROW "+rowNumber+" " +newLines[rowNumber]);
+                                            }
                                     }else{
                                         CSSclass = "child";
+                                        while(newLines[rowNumber] != null && newLines[rowNumber].trim()
+                                            .indexOf(
+                                            childrenDocs[id_index].snippet_method_invocation_name) == -1){
+                                            rowNumber = rowNumber -1;
+                                            columnNumber = 0;
+                                            endColumnNumber = 1000;
+                                            console.log("ROW "+rowNumber+" " +newLines[rowNumber]);
+                                        }
+
                                     }
+
 
 
 
@@ -1247,6 +1283,7 @@ var Controller = {
 
         if(lengthStart + 1 === lengthEnd)
             return lengthStart;
+
 
      if(newLineArray[middle] < startPosition){
            return Controller.getRow(newLineArray, startPosition, middle, lengthEnd);

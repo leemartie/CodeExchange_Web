@@ -112,6 +112,7 @@ var QueryTrailNavView = {
         var innerDiv = $("<div style='height:100%; " +
             "display: table-cell; align: center; vertical-align: middle; border: 0px solid black;'></div>");
         innerDiv.append(text);
+        innerDiv.attr(SetupManager.ID_attr,"gridButton");
         var gridButton =  $("<div style='display: table;'>"+
             SetupManager.divClose);
         gridButton.append(innerDiv);
