@@ -1,6 +1,3 @@
-/**
- * Created by lee on 6/23/14.
- */
 function Event(eventId, eventType, query) {
 
     this.eventId = eventId;

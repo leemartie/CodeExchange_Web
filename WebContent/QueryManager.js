@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 var QueryManager = {
 	lowestPage : 0,
 	highestPage : 0,
@@ -466,43 +479,43 @@ function facetCompleteCallBack(data){
 
 
 
-//    var projects = data.facet_counts.facet_fields.snippet_project_id;
+    var projects = data.facet_counts.facet_fields.snippet_project_name;
 
-//    for(i = 0; i<projects.length; i = i+2){
-//        if(i >= 6)
-//            continue;
-//
-//        var projectName = projects[i];
-//
-//
-//        if(projectName == "")
-//            continue;
-//
-//        var query1 = new QueryModel("snippet_project_id", projectName);
-//        query1.displayType = "project";
-//        query1.displayValue = projectName.substring(projectName.lastIndexOf("/")+1,projectName.length);
-//        query1.score = projects[i+1];
-//        QueryRecommenderModel.addRecommendedQuery(query1);
-//    }
+    for(i = 0; i<projects.length; i = i+2){
+        if(i >= 6)
+            continue;
 
-//    var authors = data.facet_counts.facet_fields.snippet_version_author;
-//
-//    for(i = 0; i<projects.length; i = i+2){
-//        if(i >= 6)
-//            continue;
-//
-//        var authorName = authors[i];
-//
-//
-//        if(authorName == "")
-//            continue;
-//
-//        var query1 = new QueryModel(QueryBucketModel.authorFiled, authorName);
-//        query1.displayType = "author";
-//        query1.displayValue = authorName;
-//        query1.score = authors[i+1];
-//        QueryRecommenderModel.addRecommendedQuery(query1);
-//    }
+        var projectName = projects[i];
+
+
+        if(projectName == "")
+            continue;
+
+        var query1 = new QueryModel(QueryBucketModel.projectField, '"'+projectName+'"');
+        query1.displayType = "project";
+        query1.displayValue = projectName.substring(projectName.lastIndexOf("/")+1,projectName.length);
+        query1.score = projects[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query1);
+    }
+
+    var authors = data.facet_counts.facet_fields.snippet_author_name;
+
+    for(var i = 0; i<authors.length; i = i+2){
+        if(i >= 6)
+            continue;
+
+        var authorName = authors[i];
+
+
+        if(authorName == "")
+            continue;
+
+        var query1 = new QueryModel(QueryBucketModel.authorFiled, '"'+authorName+'"');
+        query1.displayType = "author";
+        query1.displayValue = authorName;
+        query1.score = authors[i+1];
+        QueryRecommenderModel.addRecommendedQuery(query1);
+    }
 
 
 
@@ -656,7 +669,10 @@ function on_nextData(data) {
 
                             //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                             Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
-                                item.snippet_path_complexity_class_sum,item.snippet_imports_count,item.snippet_project_name, item.snippet_project_id);
+                                item.snippet_path_complexity_class_sum,item.snippet_imports_count,
+                                item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
+                                item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
+                                item.snippet_changed_code_churn);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
@@ -778,7 +794,13 @@ function on_data(data) {
     $(SetupManager.pound+"backgroundSave")
         .append($("#"+SetupManager.expandBtnArray_ID[2]));
     $(SetupManager.pound+"projectURL"+2).empty();
-	var docs = data.response.docs;
+
+    var docs = data.response.docs;
+
+//    for(var i = 0; i<data.grouped.snippet_code.groups.length; i++){
+//        docs.push(data.grouped.snippet_code.groups[i].doclist.docs[0]);
+//    }
+
 
     var expandedChildren = data.expanded;
 
@@ -830,7 +852,10 @@ function on_data(data) {
 
  //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                         Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
-                            item.snippet_path_complexity_class_sum,item.snippet_imports_count, item.snippet_project_name, item.snippet_project_id);
+                            item.snippet_path_complexity_class_sum,item.snippet_imports_count,
+                            item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
+                            item.snippet_imports, item.snippet_variable_names_delimited, item.snippet_author_avatar,
+                            item.snippet_changed_code_churn);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);

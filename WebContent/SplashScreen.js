@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 /**
  * Created by lee on 7/14/14.
  */
@@ -271,6 +284,42 @@ var SplashScreen = {
         });
         divDisclaimer.append(divExamples);
         footerCell4.attr("align","center");
+
+        //blog page
+        var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
+        footerCellDASH.append("<div style='display: table-cell;padding-left: 5px;padding-right: 5px;'><text>&mdash;</text></div>");
+        footerCellDASH.attr("align","center");
+        footerCellDASH.addClass("Spacer");
+        divDisclaimer.append(footerCellDASH);
+
+        var footerCell4 = $(SetupManager.tdOpen+SetupManager.tdClose);
+        //footerRow.append(footerCell4);
+        var divExamples = $(SetupManager.divOpen+SetupManager.divClose);
+        divExamples.append("<div style='display: table-cell;padding-left: 5px;padding-right: 5px;'><text>The blog</text></div>");
+        divExamples.addClass("LetterLabel");
+        divExamples.click(function(event) {
+            window.open("http://codeexchange-blog.ics.uci.edu","_blank");
+        });
+        divDisclaimer.append(divExamples);
+        footerCell4.attr("align","center");
+        ///----------------
+
+//        var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
+//        footerCellDASH.append("<div style='display: table-cell;padding-left: 5px;padding-right: 5px;'><text>&mdash;</text></div>");
+//        footerCellDASH.attr("align","center");
+//        footerCellDASH.addClass("Spacer");
+//        divDisclaimer.append(footerCellDASH);
+//
+//        var footerCell4 = $(SetupManager.tdOpen+SetupManager.tdClose);
+//        //footerRow.append(footerCell4);
+//        var divExamples = $(SetupManager.divOpen+SetupManager.divClose);
+//        divExamples.append("<div style='display: table-cell;padding-left: 5px;padding-right: 5px;'><text>Example searches</text></div>");
+//        divExamples.addClass("LetterLabel");
+//        divExamples.click(function(event) {
+//            window.open("http://codeexchange.ics.uci.edu/examples.html","_blank");
+//        });
+//        divDisclaimer.append(divExamples);
+//        footerCell4.attr("align","center");
 
 //        var facebook = $('<a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">'+
 //        'Share on Facebook</a>');

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 
 /**
  * Controls the initial setup and keeps all the ids
@@ -275,7 +288,7 @@ var SetupManager = {
             surveyRow.append(surveyCell);
 
             var footerTable = $(SetupManager.tableOpen+SetupManager.tableClose);
-            footerTable.css({"border":"0px solid black","width":"600px"});
+            footerTable.css({"border":"0px solid black","width":"700px"});
             footerTable.attr("cellpadding","0");
             footerTable.attr("cellspacing","0");
 
@@ -372,6 +385,30 @@ var SetupManager = {
             footerCell3.append(divExamples);
           //  footerCell3.attr("width","30%");
             footerCell3.attr("align","center");
+
+//blog page
+            var footerCellDASH = $(SetupManager.tdOpen+SetupManager.tdClose);
+            footerCellDASH.append("<text>&nbsp;&mdash;&nbsp;&nbsp;</text>");
+            footerCellDASH.attr("align","center");
+            footerCellDASH.addClass("Spacer");
+            footerRow.append(footerCellDASH);
+
+            var footerCell3 = $(SetupManager.tdOpen+SetupManager.tdClose);
+            footerRow.append(footerCell3);
+
+            var divExamples = $(SetupManager.divOpen+SetupManager.divClose);
+
+            divExamples.append("<text>The blog</text>");
+            divExamples.addClass("LetterLabel");
+
+            footerCell3.click(function(event) {
+                window.open("http://codeexchange-blog.ics.uci.edu","_blank");
+            });
+
+            footerCell3.append(divExamples);
+            //  footerCell3.attr("width","30%");
+            footerCell3.attr("align","center");
+
 
 
 //listener for expand button

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 var URLQueryCreator = {
 		server : 'codeexchange.ics.uci.edu',
 		
@@ -25,7 +38,8 @@ var URLQueryCreator = {
                 + 'snippet_size snippet_variable_names_delimited snippet_method_invocation_arg_types_place '
                 + 'snippet_method_invocation_declaring_class snippet_method_invocation_name '
                 + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements '
-                + 'snippet_package snippet_project_address snippet_this_version score'
+                + 'snippet_package snippet_project_address snippet_this_version snippet_imports snippet_author_avatar '
+                + 'snippet_changed_code_churn score'
 				+ '&facet=true'
 
 //                + '&group.facet=true'
@@ -47,6 +61,8 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_method_invocation_name'
                 + '&facet.mincount=1'
 				+ '&facet.limit=25'
+//                + '&group=true'
+//                + '&group.field=snippet_code'
                 + '&expand=true'
                 + '&expand.rows=5000'
                 + '&expand.field=expand_id'

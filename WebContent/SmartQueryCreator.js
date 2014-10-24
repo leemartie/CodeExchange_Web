@@ -1,6 +1,11 @@
+/**
+ * Should not break up white space by ANd if the query is in quotes.
+ *
+ * @type {{makeSmartQuery: makeSmartQuery, escapeSpecialCharacters: escapeSpecialCharacters, escapeDots: escapeDots, highlight: highlight}}
+ */
 var SmartQueryCreator = {
 		
-		makeSmartQuery	:	function(query){
+		makeSmartQuery	:	function(query,ORtoggle){
 			
 			var tempQuery = "";
 			
@@ -8,8 +13,12 @@ var SmartQueryCreator = {
 				tempQuery = "*";
 				return tempQuery;
 			}
-			
-			
+
+            //it is a quoted query
+			if(query.charAt(0) == '"'){
+                return query;
+            }
+
 			query = SmartQueryCreator.escapeSpecialCharacters(query);
 			queryArray = query.trim().split(/\s+/);
 	
@@ -19,7 +28,10 @@ var SmartQueryCreator = {
 
 				if(i == 0){
 					tempQuery = encodeURIComponent(queryArray[i].trim());
-				}else{
+				}else if(ORtoggle){
+                    tempQuery = tempQuery + " OR " +encodeURIComponent(queryArray[i].trim());
+                }
+                else{
 					tempQuery = tempQuery + " AND " +encodeURIComponent(queryArray[i].trim());
 				}
 				

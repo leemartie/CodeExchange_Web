@@ -1,6 +1,16 @@
-/**
- * Created by lee on 4/7/14.
- */
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 var QueryBucketModel = {
 
     /*represents the current bucket of queries*/
@@ -9,6 +19,10 @@ var QueryBucketModel = {
     listOfActiveQueries  :   new Array(),
     //this is just current stack of all queries in the order they are given
     stackOfQueries       :   new Array()/*QueryModel*/,
+
+    MORE_LIKE_THIS             :   "MORE_LIKE_THIS",
+    MORE_LIKE_THIS_VARIABLES   :   "MORE_LIKE_THIS_VARIABLES",
+
     snippetField         :   "snippet_code",
     extendsField         :   "snippet_extends",
     implementsField      :   "snippet_implements",
@@ -43,6 +57,9 @@ var QueryBucketModel = {
     snippetMethodCallDecClass   :   "snippet_method_invocation_declaring_class",
 
     snippetPackage              :   "snippet_package",
+
+
+    snippetCodeChurn            : "snippet_changed_code_churn",
 
 
     snippetClassGeneric             :   "snippet_is_generic",
@@ -108,9 +125,24 @@ var QueryBucketModel = {
         QueryBucketModel.listOfActiveQueries[type][index] = false;
         QueryBucketModel.stackOfQueries[stackIndex].active = false;
 
+
 //LOG IT
 
         UsageLogger.addEvent(UsageLogger.DEACTIVATE_QUERY,QueryBucketModel.stackOfQueries[stackIndex]);
+    },
+
+    /**
+     * Edit Query
+     *
+     * @param type
+     * @param index
+     * @param stackIndex
+     * @param value
+     */
+    editQuery: function(type, index, stackIndex, value){
+        QueryBucketModel.listOfQueries[type][index] = value;
+        QueryBucketModel.stackOfQueries[stackIndex].value = value;
+        QueryBucketModel.stackOfQueries[stackIndex].displayValue = value;
     },
 
     removeQuery :   function(index){
@@ -330,6 +362,10 @@ var QueryBucketModel = {
 
                         if(key == QueryBucketModel.snippetMethodCall || key == QueryBucketModel.snippetMethodDec)
                             field = '((_query_:{!parent which=parent:true}';
+                        else if(key == QueryBucketModel.MORE_LIKE_THIS)
+                            field = QueryBucketModel.snippetImportsFiled+":(";
+                        else if(key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES)
+                            field = QueryBucketModel.snippetField+":(";
                         else
                             field = key+":(";
 
@@ -340,11 +376,18 @@ var QueryBucketModel = {
                             if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
                                 && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
                                 && key != QueryBucketModel.snippetMethodDec && key != QueryBucketModel.importCountField
-                                && key != QueryBucketModel.functionCountField)
-                                field = field + SmartQueryCreator.makeSmartQuery(valueList[j]);
+                                && key != QueryBucketModel.functionCountField && key != QueryBucketModel.MORE_LIKE_THIS
+                                && key != QueryBucketModel.MORE_LIKE_THIS_VARIABLES
+                                && key != QueryBucketModel.snippetCodeChurn){
+
+                                field = field + SmartQueryCreator.makeSmartQuery(valueList[j],false);
+                            }
                             else if (key == QueryBucketModel.snippetMethodCall
                                     || key == QueryBucketModel.snippetMethodDec){
                                 field = field + valueList[j]+')';
+                            }
+                            else if(key == QueryBucketModel.MORE_LIKE_THIS || key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES){
+                                field = field + SmartQueryCreator.makeSmartQuery(valueList[j],true);
                             }
                             else
                                 field = field + valueList[j];
@@ -354,11 +397,18 @@ var QueryBucketModel = {
                         if(key != QueryBucketModel.lastUpdatedField && key != QueryBucketModel.sizeField
                             && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
                             && key != QueryBucketModel.snippetMethodDec && key != QueryBucketModel.importCountField
-                            && key != QueryBucketModel.functionCountField)
-                            field = field + " AND "+SmartQueryCreator.makeSmartQuery(valueList[j]);
+                            && key != QueryBucketModel.functionCountField && key != QueryBucketModel.MORE_LIKE_THIS
+                            && key != QueryBucketModel.MORE_LIKE_THIS_VARIABLES
+                            && key != QueryBucketModel.snippetCodeChurn) {
+
+                            field = field + " AND " + SmartQueryCreator.makeSmartQuery(valueList[j], false);
+                        }
                         else if (key == QueryBucketModel.snippetMethodCall
                                 || key == QueryBucketModel.snippetMethodDec){
                             field = field + 'AND (_query_:{!parent which=parent:true}'+valueList[j]+')';
+                        }
+                        else if(key == QueryBucketModel.MORE_LIKE_THIS || key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES){
+                            field = field + " OR " +SmartQueryCreator.makeSmartQuery(valueList[j],true);
                         }
                         else
                             field = field + " AND "+valueList[j];

@@ -1,13 +1,24 @@
-/**
- * @author lee
- */
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 	//called when the page is completely loaded
     var Client = {
         id: null
     }
 
 	function on_ready() {
-		
+        //RecommendationManager.addInput();
+        //RecommendationManager.populateLandscape("raspberry AND pi",1);
 		//alert("[on_ready]");
 
         var id = getCookie("id");

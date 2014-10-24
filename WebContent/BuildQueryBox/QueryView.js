@@ -1,6 +1,16 @@
-/**
- * Created by lee on 4/7/14.
- */
+/*******************************************************************************
+ * Copyright (c) {2014} {Software Design and Collaboration Laboratory (SDCL)
+ *				, University of California, Irvine}.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    {Software Design and Collaboration Laboratory (SDCL)
+ *	, University of California, Irvine}
+ *			- initial API and implementation and/or initial documentation
+ *******************************************************************************/
 
 function QueryView(displayType, type, value, index, stackIndex, active, displayValue){
 
@@ -13,6 +23,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
     this.displayValue = displayValue;
     this.row = $(SetupManager.trOpen+SetupManager.trClose);
     this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+    this.cellEdit = $(SetupManager.tdOpen+SetupManager.tdClose);
 
    this.getView = function() {
 
@@ -25,6 +36,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 //         displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
 
        this.row.append(this.cell);
+       //this.row.append(this.cellEdit);
        table.append(this.row);
 
        if(displayValue instanceof Array){
@@ -62,9 +74,12 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        var label = $('<text><font color="#8b0000">['+displayType+']</font> <font color="black"><code>'+escape(displayValue)+'</code></font></text>');
 
 
+        var pencilImage = $(SetupManager.divOpen+
+            '<img width="10" height="10" src="http://codeexchange.ics.uci.edu/close.png"/>'+SetupManager.divClose);
+       this.cellEdit.append(pencilImage);
 
        this.cell.append(label);
-       this.cell.width("100%");
+       this.cell.width("97%");
        this.row.height("100%");
 
        this.row.addClass("QueryViewRow");
