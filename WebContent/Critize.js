@@ -16,7 +16,7 @@ var Critize = {
 
 
     getView: function(size, complexity, imports, projectName,
-                      projectURL, author, listOfImports, listOfNames, avatar, codeChurn){
+                      projectURL, author, listOfImports, listOfNames, avatar, codeChurn, className){
 
 
         var width = 15;
@@ -593,6 +593,7 @@ var Critize = {
 
                 var importString = "";
                 var variableString = "";
+                var complexString = "";
 
                 if(listOfImports != null) {
                     for (i = 0; i < listOfImports.length; i++) {
@@ -608,13 +609,18 @@ var Critize = {
                         else
                             importString = importString + " " + listOfImports[i];
 
+
+
                     }
 
-                    var query = new QueryModel(QueryBucketModel.MORE_LIKE_THIS, importString);
+                    importString = QueryBucketModel.snippetImportsFiled+
+                        ":("+SmartQueryCreator.makeSmartQuery(importString,true)+")";
 
-                    query.displayType = "LIKE THIS";
-                    query.displayValue = importString;
-                    BuildQueryBoxView.addQuery(query);
+ //                   var query = new QueryModel(QueryBucketModel.MORE_LIKE_THIS, importString);
+
+//                    query.displayType = "LIKE THIS";
+//                    query.displayValue = importString;
+//                    BuildQueryBoxView.addQuery(query);
                 }
 
                 if(listOfNames != null) {
@@ -631,15 +637,42 @@ var Critize = {
                             variableString = variableString + " " + listOfNames[i];
                     }
 
-                    var query = new QueryModel(QueryBucketModel.MORE_LIKE_THIS_VARIABLES, variableString);
+                    variableString = QueryBucketModel.snippet_variable_names_delimited+
+                        ":("+SmartQueryCreator.makeSmartQuery(variableString,true)+")";
 
+//                    var query = new QueryModel(QueryBucketModel.MORE_LIKE_THIS_VARIABLES, variableString);
+//
+//                    query.displayType = "LIKE THIS";
+//                    query.displayValue = variableString;
+//                    BuildQueryBoxView.addQuery(query);
+                }
+
+                var complexString = QueryBucketModel.complexityField+":["+(complexity-1)+" TO "+(complexity+1)+"]";
+
+                if(importString != "") {
+                    var queryString = "";
+                    if(variableString != "")
+                        queryString = "(" + importString + " AND " + variableString + " AND " + complexString + ")";
+                    else
+                        queryString = "(" + importString + " AND " + complexString + ")";
+
+                    var query = new QueryModel(QueryBucketModel.MORE_LIKE_THIS, queryString);
                     query.displayType = "LIKE THIS";
-                    query.displayValue = variableString;
+                    query.displayValue = String("");
                     BuildQueryBoxView.addQuery(query);
                 }
 
-                //item.snippet_variable_names_delimited
+                var classNameString = QueryBucketModel.classNameField+":("+className+")";
+                var queryString = "";
+                if(variableString != "")
+                    queryString = "(" + classNameString + " AND " + variableString + " AND " + complexString + ")";
+                else
+                    queryString = "(" + classNameString + " AND " + complexString + ")";
 
+                query = new QueryModel(QueryBucketModel.MORE_LIKE_THIS,queryString);
+                query.displayType = "LIKE THIS";
+                query.displayValue = String("");
+                BuildQueryBoxView.addQuery(query);
 
                 BuildQueryBoxView.submitQuery();
 

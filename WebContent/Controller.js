@@ -1362,9 +1362,11 @@ var Controller = {
 			return $(SetupManager.pound+SetupManager.queryInput_ID).val();
 		},
 
-    setCritics: function(meta, size, complexity, imports, projectName, projectURL, author, listOfImports, listOfNames, avatar, codeChurn){
+    setCritics: function(meta, size, complexity, imports, projectName, projectURL, author, listOfImports,
+                         listOfNames, avatar, codeChurn, className){
 
-        var table = Critize.getView(size, complexity,imports, projectName, projectURL, author, listOfImports, listOfNames, avatar, codeChurn);
+        var table = Critize.getView(size, complexity,imports, projectName, projectURL, author, listOfImports,
+            listOfNames, avatar, codeChurn,className);
 
         var metaDiv =  $("<div style='display: table-cell;width:100%;'>"+SetupManager.divClose);
         metaDiv.append(table);

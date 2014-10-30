@@ -15,7 +15,7 @@ var SmartQueryCreator = {
 			}
 
             //it is a quoted query
-			if(query.charAt(0) == '"'){
+			if(!(query instanceof Array) && query.charAt(0) == '"'){
                 return query;
             }
 

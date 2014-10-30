@@ -22,7 +22,9 @@ var QueryBucketModel = {
 
     MORE_LIKE_THIS             :   "MORE_LIKE_THIS",
     MORE_LIKE_THIS_VARIABLES   :   "MORE_LIKE_THIS_VARIABLES",
+    MORE_LIKE_THIS_COMPLEX      : "MORE_LIKE_THIS_COMPLEX",
 
+    classNameField       :   "snippet_class_name_delimited",
     snippetField         :   "snippet_code",
     extendsField         :   "snippet_extends",
     implementsField      :   "snippet_implements",
@@ -363,9 +365,11 @@ var QueryBucketModel = {
                         if(key == QueryBucketModel.snippetMethodCall || key == QueryBucketModel.snippetMethodDec)
                             field = '((_query_:{!parent which=parent:true}';
                         else if(key == QueryBucketModel.MORE_LIKE_THIS)
-                            field = QueryBucketModel.snippetImportsFiled+":(";
+                            field = field;
                         else if(key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES)
-                            field = QueryBucketModel.snippetField+":(";
+                            field = field;
+                        else if(key == QueryBucketModel.MORE_LIKE_THIS_COMPLEX)
+                            field = field;
                         else
                             field = key+":(";
 
@@ -377,7 +381,7 @@ var QueryBucketModel = {
                                 && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
                                 && key != QueryBucketModel.snippetMethodDec && key != QueryBucketModel.importCountField
                                 && key != QueryBucketModel.functionCountField && key != QueryBucketModel.MORE_LIKE_THIS
-                                && key != QueryBucketModel.MORE_LIKE_THIS_VARIABLES
+                                && key != QueryBucketModel.MORE_LIKE_THIS_VARIABLES && key != QueryBucketModel.MORE_LIKE_THIS_COMPLEX
                                 && key != QueryBucketModel.snippetCodeChurn){
 
                                 field = field + SmartQueryCreator.makeSmartQuery(valueList[j],false);
@@ -386,8 +390,10 @@ var QueryBucketModel = {
                                     || key == QueryBucketModel.snippetMethodDec){
                                 field = field + valueList[j]+')';
                             }
-                            else if(key == QueryBucketModel.MORE_LIKE_THIS || key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES){
-                                field = field + SmartQueryCreator.makeSmartQuery(valueList[j],true);
+                            else if(key == QueryBucketModel.MORE_LIKE_THIS ||
+                                key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES ||
+                                key == QueryBucketModel.MORE_LIKE_THIS_COMPLEX){
+                                field = field + valueList[j];
                             }
                             else
                                 field = field + valueList[j];
@@ -398,7 +404,7 @@ var QueryBucketModel = {
                             && key != QueryBucketModel.complexityField && key != QueryBucketModel.snippetMethodCall
                             && key != QueryBucketModel.snippetMethodDec && key != QueryBucketModel.importCountField
                             && key != QueryBucketModel.functionCountField && key != QueryBucketModel.MORE_LIKE_THIS
-                            && key != QueryBucketModel.MORE_LIKE_THIS_VARIABLES
+                            && key != QueryBucketModel.MORE_LIKE_THIS_VARIABLES && key != QueryBucketModel.MORE_LIKE_THIS_COMPLEX
                             && key != QueryBucketModel.snippetCodeChurn) {
 
                             field = field + " AND " + SmartQueryCreator.makeSmartQuery(valueList[j], false);
@@ -407,8 +413,10 @@ var QueryBucketModel = {
                                 || key == QueryBucketModel.snippetMethodDec){
                             field = field + 'AND (_query_:{!parent which=parent:true}'+valueList[j]+')';
                         }
-                        else if(key == QueryBucketModel.MORE_LIKE_THIS || key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES){
-                            field = field + " OR " +SmartQueryCreator.makeSmartQuery(valueList[j],true);
+                        else if(key == QueryBucketModel.MORE_LIKE_THIS ||
+                            key == QueryBucketModel.MORE_LIKE_THIS_VARIABLES ||
+                            key == QueryBucketModel.MORE_LIKE_THIS_COMPLEX){
+                            field = field + " OR " +valueList[j];
                         }
                         else
                             field = field + " AND "+valueList[j];
@@ -421,7 +429,7 @@ var QueryBucketModel = {
 
 
             //close it up if added something
-            if(field != ""){
+            if(field != "" && key != QueryBucketModel.MORE_LIKE_THIS){
                 field = field+")";
             }
 

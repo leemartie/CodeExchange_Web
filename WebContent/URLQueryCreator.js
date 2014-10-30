@@ -28,7 +28,7 @@ var URLQueryCreator = {
 
 
 			var url = 'http://'+URLQueryCreator.server+':'+URLQueryCreator.port+'/solr/'+URLQueryCreator.collection+'/select/?q='
-				+ query
+				+ query+" AND parent:true"
 				+ '&start=' + start
 				+ '&fl=id snippet_author_name snippet_project_name '
 				+ 'snippet_all_versions snippet_address snippet_address_lower_bound '
@@ -39,7 +39,7 @@ var URLQueryCreator = {
                 + 'snippet_method_invocation_declaring_class snippet_method_invocation_name '
                 + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements '
                 + 'snippet_package snippet_project_address snippet_this_version snippet_imports snippet_author_avatar '
-                + 'snippet_changed_code_churn score'
+                + 'snippet_changed_code_churn snippet_class_name_delimited score'
 				+ '&facet=true'
 
 //                + '&group.facet=true'
@@ -78,7 +78,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows='+6+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+10+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 

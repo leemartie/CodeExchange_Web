@@ -672,7 +672,7 @@ function on_nextData(data) {
                                 item.snippet_path_complexity_class_sum,item.snippet_imports_count,
                                 item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
                                 item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                                item.snippet_changed_code_churn);
+                                item.snippet_changed_code_churn, item.snippet_class_name_delimited);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
@@ -854,8 +854,8 @@ function on_data(data) {
                         Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
                             item.snippet_path_complexity_class_sum,item.snippet_imports_count,
                             item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
-                            item.snippet_imports, item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                            item.snippet_changed_code_churn);
+                            item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
+                            item.snippet_changed_code_churn, item.snippet_class_name_delimited);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
