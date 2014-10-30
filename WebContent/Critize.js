@@ -575,10 +575,19 @@ var Critize = {
         cell.attr("valign","middle");
         //cell.addClass("ProjectRefinement");
 
+        var label = $('<div style="display: table-cell;"><img  width = '+"auto"+' height='+"15"+' src="http://codeexchange.ics.uci.edu/electric6.png"></img></div>');
+
+
         var cellName = $("<div style='font-size: 11px; text-align: center; vertical-align:middle; " +
-            "height:100%;width:100%;'>" +
+            "height:100%;width:100%;display: table-cell;'>" +
             "<font color='black'><center>"+"More code like this!"+"</center></font>"+"</div>");
-        cell.append(cellName);
+
+        var rowLabel = $('<div style="display: table-row;"></div>');
+        rowLabel.append(cellName);
+        rowLabel.append(label);
+
+
+        cell.append(rowLabel);
 
         cell.attr("title","Find code similar to this");
 
@@ -689,7 +698,7 @@ var Critize = {
 
             })
 
-        })(cellName);
+        })(cell);
 
         var cell =$(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
