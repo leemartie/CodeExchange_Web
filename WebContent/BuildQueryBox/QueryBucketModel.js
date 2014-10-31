@@ -30,6 +30,7 @@ var QueryBucketModel = {
     implementsField      :   "snippet_implements",
     authorFiled          :   "snippet_author_name",
     projectField         :   "snippet_project_name",
+    projectOwnerField    :   "snippet_project_owner",
     returnTypeField      :   "snippet_return_type",
     recursiveField       :   "snippet_method_dec_is_recursive",
     varargsField         :   "snippet_method_dec_is_var_args",

@@ -39,7 +39,8 @@ var URLQueryCreator = {
                 + 'snippet_method_invocation_declaring_class snippet_method_invocation_name '
                 + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements '
                 + 'snippet_package snippet_project_address snippet_this_version snippet_imports snippet_author_avatar '
-                + 'snippet_changed_code_churn snippet_class_name_delimited score'
+                + 'snippet_changed_code_churn snippet_class_name_delimited snippet_number_of_insertions snippet_number_of_deletions '
+                + 'snippet_project_owner score'
 				+ '&facet=true'
 
 //                + '&group.facet=true'
@@ -60,7 +61,7 @@ var URLQueryCreator = {
                 + '&facet.field=snippet_variable_names_delimited'
                 + '&facet.field=snippet_method_invocation_name'
                 + '&facet.mincount=1'
-				+ '&facet.limit=25'
+				+ '&facet.limit=100'
 //                + '&group=true'
 //                + '&group.field=snippet_code'
                 + '&expand=true'
@@ -78,7 +79,7 @@ var URLQueryCreator = {
 			
 			
 			
-				url = url + '&rows='+6+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
+				url = url + '&rows='+12+'&indent=on&wt=json&callback=?&json.wrf='+callbackFunctionName;
 	
 				
 

@@ -435,7 +435,7 @@ function facetCompleteCallBack(data){
 
     //data.facet_counts.facet_fields.snippet_class_name_delimited;
 
-    var keywordMax = 12;
+    var keywordMax = 200;
 
     var wordsSuggested = "";
 
@@ -482,7 +482,7 @@ function facetCompleteCallBack(data){
     var projects = data.facet_counts.facet_fields.snippet_project_name;
 
     for(i = 0; i<projects.length; i = i+2){
-        if(i >= 6)
+        if(i >= 200)
             continue;
 
         var projectName = projects[i];
@@ -501,7 +501,7 @@ function facetCompleteCallBack(data){
     var authors = data.facet_counts.facet_fields.snippet_author_name;
 
     for(var i = 0; i<authors.length; i = i+2){
-        if(i >= 6)
+        if(i >= 200)
             continue;
 
         var authorName = authors[i];
@@ -520,7 +520,7 @@ function facetCompleteCallBack(data){
 
 
     var snippet_imports = data.facet_counts.facet_fields.snippet_imports;
-    keywordMax = 6;
+    keywordMax = 200;
 
     for(i = 0; i<snippet_imports.length; i = i+2) {
         if(i >= keywordMax)
@@ -548,7 +548,7 @@ function facetCompleteCallBack(data){
     }
 
     var extendsRecommend = data.facet_counts.facet_fields.snippet_extends;
-    keywordMax = 6;
+    keywordMax = 200;
     for(i = 0; i<extendsRecommend.length; i = i+2) {
         if(i >= keywordMax)
             continue;
@@ -575,7 +575,7 @@ function facetCompleteCallBack(data){
     }
 
     var implementsRecommend = data.facet_counts.facet_fields.snippet_implements;
-    keywordMax = 6;
+    keywordMax = 200;
     for(i = 0; i<implementsRecommend.length; i = i+2) {
         if(i >= keywordMax)
             continue;
@@ -667,12 +667,13 @@ function on_nextData(data) {
 //                        var header = $("<div style='display: table-caption; caption-side:top;padding: 2px;text-align: left'>Refine by Critique</div>");
 //                        $("#"+SetupManager.metaDivArray_ID[successCount]).append(header);
 
+
                             //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
                             Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
                                 item.snippet_path_complexity_class_sum,item.snippet_imports_count,
                                 item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
                                 item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                                item.snippet_changed_code_churn, item.snippet_class_name_delimited);
+                                item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
@@ -851,11 +852,12 @@ function on_data(data) {
 //                        $("#"+SetupManager.metaDivArray_ID[successCount]).append(header);
 
  //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
+
                         Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
                             item.snippet_path_complexity_class_sum,item.snippet_imports_count,
                             item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
                             item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                            item.snippet_changed_code_churn, item.snippet_class_name_delimited);
+                            item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);

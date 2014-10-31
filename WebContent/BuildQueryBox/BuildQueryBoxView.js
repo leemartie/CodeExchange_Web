@@ -88,7 +88,7 @@ var BuildQueryBoxView = {
             var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
             var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
             titleRow.append(titleCell);
-            var label = $("<text>Recommendations</text>");
+            var label = $("<text>Result Index</text>");
             label.addClass("BuildQueryTitle");
             // titleCell.append($("<hr>"));
             titleCell.append(label);

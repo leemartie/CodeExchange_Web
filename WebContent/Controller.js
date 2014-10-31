@@ -1363,10 +1363,10 @@ var Controller = {
 		},
 
     setCritics: function(meta, size, complexity, imports, projectName, projectURL, author, listOfImports,
-                         listOfNames, avatar, codeChurn, className){
+                         listOfNames, avatar, codeChurn, className, owner){
 
         var table = Critize.getView(size, complexity,imports, projectName, projectURL, author, listOfImports,
-            listOfNames, avatar, codeChurn,className);
+            listOfNames, avatar, codeChurn,className, owner);
 
         var metaDiv =  $("<div style='display: table-cell;width:100%;'>"+SetupManager.divClose);
         metaDiv.append(table);

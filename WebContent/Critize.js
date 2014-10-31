@@ -16,7 +16,7 @@ var Critize = {
 
 
     getView: function(size, complexity, imports, projectName,
-                      projectURL, author, listOfImports, listOfNames, avatar, codeChurn, className){
+                      projectURL, author, listOfImports, listOfNames, avatar, codeChurn, className, owner){
 
 
         var width = 15;
@@ -68,11 +68,21 @@ var Critize = {
         cell.attr("align","center");
         //cell.attr("width","100%");
         cell.addClass("ProjectRefinement");
-        cell.css({"padding-right":"20px"});
+        //cell.css({"padding-right":"20px"});
 
 ///
 
-
+        var cell =$(SetupManager.tdOpen+SetupManager.tdClose);
+        row.append(cell);
+        var projectNameTitle = $("<text style=''>"
+            +"owner"+
+            "</text>");
+        projectNameTitle.addClass("ProjectRefinement");
+        cell.append(projectNameTitle);
+        cell.attr("align","center");
+        //cell.attr("width","100%");
+        cell.addClass("ProjectRefinement");
+        cell.css({"padding-right":"20px"});
 //========== 2nd row
 
 //row for all critics
@@ -526,7 +536,7 @@ var Critize = {
 
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
-        cell.css({"padding-right":"20px"});
+       // cell.css({"padding-right":"20px"});
 
 
         cell.attr("align","center");
@@ -559,6 +569,60 @@ var Critize = {
             })
 
         })(cellName);
+
+
+// PROJECT OWNER
+        get_github_id_for(owner, row, littleTable,function(username, id,row, littleTable) {
+
+
+
+
+            var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+            row.append(cell);
+            cell.css({"padding-right":"20px"});
+
+
+            cell.attr("align","center");
+            cell.attr("valign","top");
+            cell.addClass("Refinement");
+
+            var pic = "https://avatars3.githubusercontent.com/u/"+id;
+            var cellName = $("<div style='font-size: 11px; text-align: center; " +
+                "vertical-align:top; width:75px'><img width='35px' height='auto' src="+pic+"></img>" +
+                "<font color='#8b0000'><center>"+username+"</center></font>"+"</div>");
+            cell.append(cellName);
+
+            cell.attr("title","Refine current query by this code's project owner.");
+
+            (function(littleTable){
+
+                littleTable.click(function(event){
+                    var query = new QueryModel(QueryBucketModel.projectOwnerField, '"'+username+'"');
+                    query.displayType = "project owner";
+                    query.displayValue = username;
+                    BuildQueryBoxView.addAndSubmit(query);
+//LOG IT
+                    UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
+                });
+
+                littleTable.mouseenter(function(){
+                    littleTable.addClass("RefineButtonHover");
+                })
+
+                littleTable.mouseleave(function(){
+                    littleTable.removeClass("RefineButtonHover");
+
+                })
+
+
+
+            })(cellName);
+
+
+
+
+        });
+
 
 // MORE LIKE THIS
 
@@ -709,4 +773,18 @@ var Critize = {
         return table;
     }
 
+
+
+}
+
+function get_github_id_for (username, row, littleTable,callback) {
+
+    $.getJSON('https://api.github.com/users/' + username + "?callback=?", {},
+        function(json){
+            var id = json["data"]["id"]
+            if (id) {
+                callback(username, id,row, littleTable)
+            }
+            return false
+        });
 }

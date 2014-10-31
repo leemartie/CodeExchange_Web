@@ -34,16 +34,71 @@ var QueryRecommenderView = {
     update  :   function(){
         QueryRecommenderView.view.empty();
 
+        var colCount = 0;
+        var queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
+        var oldType = null;
+        var addedHeader = false;
+        var divScroll;
+        var table;
+        var tableRow;
         for(var i = 0; i < QueryRecommenderModel.recommendedQueries.length; i++){
-            var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
 
+
+
+            //type
             var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-
             var displayType  = QueryRecommenderModel.recommendedQueries[i].displayType;
-            var value = QueryRecommenderModel.recommendedQueries[i].value;
             var type = QueryRecommenderModel.recommendedQueries[i].type;
-            var displayValue = QueryRecommenderModel.recommendedQueries[i].displayValue;
             var score = QueryRecommenderModel.recommendedQueries[i].score;
+
+            if(oldType != type){
+                queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
+                var header = $(SetupManager.tdOpen+SetupManager.tdClose);
+                header.attr("colspan","2");
+                var label = $('<text><font color="black">'+displayType+'</font></text>');
+                header.append(label);
+                queryBucketRow.append(header);
+                oldType = type;
+
+                QueryRecommenderView.view.append(queryBucketRow);
+
+                queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
+
+                divScroll = $('<div style="overflow-y: auto; overflow-x: hidden; height:75px; width:100%"></div>');
+                table = $(SetupManager.tableOpen+SetupManager.tableClose);
+                table.css({"table-layout": "fixed"})
+                tableRow = $(SetupManager.trOpen+SetupManager.trClose);
+                divScroll.append(table);
+                table.append(tableRow);
+                var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                cell.append(divScroll);
+                cell.attr("colspan","2");
+                queryBucketRow.append(cell);
+                QueryRecommenderView.view.append(queryBucketRow);
+                addedHeader = true;
+            }
+
+          //  if((colCount%2==0 && !addedHeader) || addedHeader) {
+                tableRow = $(SetupManager.trOpen+SetupManager.trClose);
+                table.append(tableRow);
+//                queryBucketRow.append("<td>"+divScroll+"</td>");
+//                QueryRecommenderView.view.append(queryBucketRow);
+                addedHeader = false;
+                colCount = 0;
+         //   }
+
+
+
+
+
+
+
+
+
+            var value = QueryRecommenderModel.recommendedQueries[i].value;
+
+            var displayValue = QueryRecommenderModel.recommendedQueries[i].displayValue;
+
 
 //            if(displayValue != null && displayValue.length > 30)
 //                displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
@@ -56,7 +111,7 @@ var QueryRecommenderView = {
             displayType = displayType.replace(/</gi,"&lt;");
             displayType = displayType.replace(/</gi,"&gt;");
 
-            var label = $('<text><font color="#8b0000">['+displayType+'] </font><font color="black">'+displayValue+'</font></text>');
+            var label = $('<text><font color="gray">'+score+'&nbsp;-&nbsp;</font><font color="#8b0000">'+displayValue+'</font></text>');
 
 //            var button = $(SetupManager.buttonOpen+SetupManager.buttonClose);
 //            button.addClass("QueryViewButtonRecommend");
@@ -66,7 +121,7 @@ var QueryRecommenderView = {
 //            button.height("15px");
 
 
-            queryBucketCell.attr("title","click to add recommendation");
+            queryBucketCell.attr("title","click to add to current query");
 
 //
             (function(query, cell){queryBucketCell.click(function(){
@@ -101,18 +156,17 @@ var QueryRecommenderView = {
             })})(QueryRecommenderModel.recommendedQueries[i],queryBucketCell);
 
 
-
-
-
             queryBucketCell.append(label);
     //        var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
     //        buttonCell.append(button);
 
             queryBucketCell.addClass("QueryRecommendation");
-            queryBucketRow.append(queryBucketCell);
+            tableRow.append(queryBucketCell);
+            colCount++;
            // queryBucketRow.append(buttonCell);
 
-            QueryRecommenderView.view.append(queryBucketRow);
+
+
         }
     }
 
