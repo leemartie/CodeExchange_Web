@@ -64,7 +64,7 @@ var QueryRecommenderView = {
 
                 queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
 
-                divScroll = $('<div style="overflow-y: auto; overflow-x: hidden; height:75px; width:100%"></div>');
+                divScroll = $('<div style="overflow-y: auto; overflow-x: hidden; height:50px; width:100%"></div>');
                 table = $(SetupManager.tableOpen+SetupManager.tableClose);
                 table.css({"table-layout": "fixed"})
                 tableRow = $(SetupManager.trOpen+SetupManager.trClose);

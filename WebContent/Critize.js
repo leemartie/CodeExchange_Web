@@ -572,7 +572,7 @@ var Critize = {
 
 
 // PROJECT OWNER
-        get_github_id_for(owner, row, littleTable,function(username, id,row, littleTable) {
+        get_owner_avatar(owner, row, littleTable,function(username, url,row, littleTable, type) {
 
 
 
@@ -586,11 +586,13 @@ var Critize = {
             cell.attr("valign","top");
             cell.addClass("Refinement");
 
-            var pic = "https://avatars3.githubusercontent.com/u/"+id;
+            var pic = url;
             var cellName = $("<div style='font-size: 11px; text-align: center; " +
                 "vertical-align:top; width:75px'><img width='35px' height='auto' src="+pic+"></img>" +
-                "<font color='#8b0000'><center>"+username+"</center></font>"+"</div>");
+                "<font color='#8b0000'><center>"+username+"</center></font>"+
+                "<font color='black'><center>"+type+"</center></font>"+"</div>");
             cell.append(cellName);
+            cell.css({"word-wrap":"break-word"});
 
             cell.attr("title","Refine current query by this code's project owner.");
 
@@ -631,7 +633,7 @@ var Critize = {
         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
         table.append(row);
-        cell.attr("colspan","7");
+        cell.attr("colspan","8");
 
         cell.css({"border":"1px solid black","border-radius":"25px","background-color":"whitesmoke"});
 
@@ -777,13 +779,14 @@ var Critize = {
 
 }
 
-function get_github_id_for (username, row, littleTable,callback) {
+function get_owner_avatar (username, row, littleTable,callback) {
 
-    $.getJSON('https://api.github.com/users/' + username + "?callback=?", {},
+    $.getJSON('http://codeexchange.ics.uci.edu/getAvatar.php?owner='+username+"&callback=?", {},
         function(json){
-            var id = json["data"]["id"]
-            if (id) {
-                callback(username, id,row, littleTable)
+            var url = json["url"];
+            var type = json["type"];
+            if (url) {
+                callback(username, url ,row, littleTable, type)
             }
             return false
         });
