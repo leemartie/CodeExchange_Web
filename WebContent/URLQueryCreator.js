@@ -40,7 +40,7 @@ var URLQueryCreator = {
                 + 'snippet_method_invocation_calling_class snippet_method_dec_name snippet_extends snippet_implements '
                 + 'snippet_package snippet_project_address snippet_this_version snippet_imports snippet_author_avatar '
                 + 'snippet_changed_code_churn snippet_class_name_delimited snippet_number_of_insertions snippet_number_of_deletions '
-                + 'snippet_project_owner score'
+                + 'snippet_method_invocation_arg_values snippet_project_owner snippet_method_invocation_arg_values score'
 				+ '&facet=true'
 
 //                + '&group.facet=true'
@@ -68,7 +68,8 @@ var URLQueryCreator = {
                 + '&expand.rows=5000'
                 + '&expand.field=expand_id'
                 + '&expand.q=*:*'//+childQuery;  // could also query by those that met the children query
-
+                + '&sort=div(snippet_path_complexity_class_sum, product(max(snippet_size,1), max(snippet_imports_count,1) ) ) desc';
+            
 			for(var i = 0; i < FilterManager.filters.length;i++){
 				filter = FilterManager.filters[i];
 				

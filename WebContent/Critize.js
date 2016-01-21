@@ -16,7 +16,7 @@ var Critize = {
 
 
     getView: function(size, complexity, imports, projectName,
-                      projectURL, author, listOfImports, listOfNames, avatar, codeChurn, className, owner){
+                      projectURL, author, listOfImports, listOfNames, avatar, codeChurn, className, owner, resultNumber){
 
 
         var width = 15;
@@ -655,16 +655,38 @@ var Critize = {
 
         cell.append(rowLabel);
 
-        cell.attr("title","Find code similar to this");
+        cell.attr("title","Find alternatives to this");
 
-        (function(littleTable){
+        (function(littleTable, resultNumber){
+
+
+
+
 
             littleTable.click(function(event){
+                QueryBucketModel.removeAll();
+
+                var methodCalls = null;
+                if(resultNumber == 0){
+                    methodCalls = PageModel.codeResult1.methodCalls;
+                }else if(resultNumber == 1){
+                    methodCalls = PageModel.codeResult2.methodCalls;
+                }else if(resultNumber == 2){
+                    methodCalls = PageModel.codeResult3.methodCalls;
+                }
+
+                for(var i = 0; i < methodCalls.length; i++){
+                    var methodCall = methodCalls[i];
+                    if(methodCall.argumentValues != null && methodCall.argumentValues.length > 0) {
+                        var query = Critize.createNotValuesForCall(methodCall);
+                        BuildQueryBoxView.addQuery(query);
+                    }
+                }
 
 //                if(listOfImports == null && listOfNames  == null)
 //                    return;
 
-                QueryBucketModel.removeAll();
+
 
                 var importString = "";
                 var variableString = "";
@@ -764,7 +786,7 @@ var Critize = {
 
             })
 
-        })(cell);
+        })(cell, resultNumber);
 
         var cell =$(SetupManager.tdOpen+SetupManager.tdClose);
         row.append(cell);
@@ -773,7 +795,66 @@ var Critize = {
 
 
         return table;
+    },
+
+    createNotValuesForCall: function(methodCallModel) {
+
+    var methodCallValue = '';
+//    if(methodCallModel.callingClass != null) {
+//        methodCallValue = methodCallValue + '%2B'
+//            + QueryBucketModel.snippetMethodCallDecClass + ':"' + methodCallModel.callingClass + '"';
+//    }else{
+//        //callingClass = "";
+//    }
+//    if(methodCallModel.name != null) {
+//        methodCallValue = methodCallValue + '%2B' + QueryBucketModel.snippetMethodCallName
+//            + ':"' +methodCallModel.name+ '"';
+//       // + ':"' +name+ '"';
+//    }else{
+//     //   name = "";
+//    }
+
+    var formatedValues = "";
+    var valueQuery = "";
+
+    if(methodCallModel.argumentValues != null) {
+
+
+
+        for(var valueIndex = 0; valueIndex < methodCallModel.argumentValues.length; valueIndex++){
+            var valueString = methodCallModel.argumentValues[valueIndex];//.substring(0,methodCallModel.argumentValues[paramIndex].length-2);
+
+            if(valueIndex == 0)
+                formatedValues = valueString;
+            else{
+                formatedValues = formatedValues+","+valueString
+            }
+
+            if(valueQuery == ""){
+                valueQuery = '%2B' + QueryBucketModel.snippetMethodCallValues
+                    + ':'+'"'+SmartQueryCreator.makeSmartQuery(methodCallModel.argumentValues[valueIndex])+'"';
+            }else{
+                valueQuery = valueQuery +  '%2B' + QueryBucketModel.snippetMethodCallValues
+                    + ':'+'"'+SmartQueryCreator.makeSmartQuery(methodCallModel.argumentValues[valueIndex])+'"';
+            }
+
+        }
+
+        methodCallValue = methodCallValue + valueQuery+'';
+    }else{
+        params = "";
     }
+        //methodCallValue = "!"+methodCallValue;
+
+    query = new QueryModel(QueryBucketModel.snippetMethodCall, methodCallValue);
+    query.displayType = "DOES NOT has methodCall values";
+    query.displayValue = methodCallModel.callingClass+"."+methodCallModel.name+"("+formatedValues+")";
+
+
+    return query;
+//LOG IT
+    //UsageLogger.addEvent(UsageLogger.convertQueryToEventType(query, UsageLogger.Query_Code_Prop),query);
+}
 
 
 

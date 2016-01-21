@@ -41,6 +41,19 @@ var SmartQueryCreator = {
 			
 		},
 
+
+    moreLikeThisQuery : function(){
+        var query = "";
+
+
+
+
+
+
+
+        return query;
+    },
+
 		escapeSpecialCharacters: function(value) {
 
 

@@ -58,20 +58,7 @@ var Controller = {
         LAST_EVENT_TIME_UP     :"",
         LAST_EVENT_TIME_MOVE     :"",
 
-		/**
-		 * Sets the code text of an html element
-		 * It expects that codeNode will be either result0,result1,result2,or result3
-		 *
-		 * @param codeNode
-		 * @param codeText
-		 * @returns
-		 */
-		setCode	:	function(codeNode,codeText){
 
-			var result = new CodeResult(codeText);
-			$(SetupManager.pound+codeNode).append(result.getJQueryObject());
-
-		},
 
 		setCodeFromURL: function(editorNumber, codeNode, codeURL, start, end,invocations, expanded, codeID, extendsResult,
             implementsResult, projectURL, version, code){
@@ -116,11 +103,27 @@ var Controller = {
                 //}).success(function(data, textStatus, jqXHR ) {
                //     $.each(data, function(index, element) {
 
+                var codeResultModel = new CodeResultModel();
+                if(editorNumber == 0)
+                    PageModel.codeResult1 = codeResultModel;
+                else if(editorNumber == 1)
+                    PageModel.codeResult2 = codeResultModel;
+                else if(editorNumber == 2)
+                    PageModel.codeResult3 = codeResultModel;
+
+                //MODEL: setting code
+                codeResultModel.code = code;
+
+
 
 
                         $(SetupManager.pound+"cellStatus"+editorNumber).empty();
                         var text = $("<text>"+""+"</text>");
                         $(SetupManager.pound+"cellStatus"+editorNumber).append(text);
+
+
+
+
 
 //project URL
                         $(SetupManager.pound+"backgroundSave")
@@ -727,6 +730,28 @@ var Controller = {
                                         childrenDocs[id_index].snippet_method_dec_name;
 
                                     localMarkers.push(markerID);
+
+                                    //MODEL: add child dec or call
+                                    //dec
+                                    if(childrenDocs[id_index].snippet_method_dec_name != null){
+                                        var methodDecModel = new MethodDecModel();
+                                        methodDecModel.name =
+                                            childrenDocs[id_index].snippet_method_dec_name;
+                                        codeResultModel.methodDecs.push(methodDecModel);
+                                    }else{
+                                        var methodCallModel = new MethodCallModel();
+                                        methodCallModel.argumentTypes =
+                                            childrenDocs[id_index].snippet_method_invocation_arg_types_place;
+                                        methodCallModel.name =
+                                            childrenDocs[id_index].snippet_method_invocation_name;
+                                        methodCallModel.callingClass =
+                                            childrenDocs[id_index].snippet_method_invocation_calling_class;
+                                        methodCallModel.declaringClass =
+                                            childrenDocs[id_index].snippet_method_invocation_declaring_class;
+                                        methodCallModel.argumentValues =
+                                            childrenDocs[id_index].snippet_method_invocation_arg_values;
+                                        codeResultModel.methodCalls.push(methodCallModel);
+                                    }
 
 
 
@@ -1363,10 +1388,10 @@ var Controller = {
 		},
 
     setCritics: function(meta, size, complexity, imports, projectName, projectURL, author, listOfImports,
-                         listOfNames, avatar, codeChurn, className, owner){
+                         listOfNames, avatar, codeChurn, className, owner, resultNumber){
 
         var table = Critize.getView(size, complexity,imports, projectName, projectURL, author, listOfImports,
-            listOfNames, avatar, codeChurn,className, owner);
+            listOfNames, avatar, codeChurn,className, owner,resultNumber);
 
         var metaDiv =  $("<div style='display: table-cell;width:100%;'>"+SetupManager.divClose);
         metaDiv.append(table);

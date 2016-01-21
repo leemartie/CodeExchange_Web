@@ -673,12 +673,52 @@ function on_nextData(data) {
                                 item.snippet_path_complexity_class_sum,item.snippet_imports_count,
                                 item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
                                 item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                                item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner);
+                                item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner,
+                                successCount);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
          //                   Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
-
+                            if(successCount == 0){
+                                PageModel.codeResult1.complexity = item.snippet_path_complexity_class_sum;
+                                PageModel.codeResult1.size = item.snippet_size;
+                                PageModel.codeResult1.numberOfImports = item.snippet_imports_count;
+                                PageModel.codeResult1.projectName = item.snippet_project_name;
+                                PageModel.codeResult1.projectId = item.snippet_project_id;
+                                PageModel.codeResult1.author = item.snippet_author_name;
+                                PageModel.codeResult1.imports = item.snippet_imports;
+                                PageModel.codeResult1.variableNames = item.snippet_variable_names_delimited;
+                                PageModel.codeResult1.avatar = item.snippet_author_avatar;
+                                PageModel.codeResult1.churn = item.snippet_changed_code_churn;
+                                PageModel.codeResult1.name = item.snippet_class_name_delimited;
+                                PageModel.codeResult1.owner = item.snippet_project_owner;
+                            }else if(successCount == 1){
+                                PageModel.codeResult2.complexity = item.snippet_path_complexity_class_sum;
+                                PageModel.codeResult2.size = item.snippet_size;
+                                PageModel.codeResult2.numberOfImports = item.snippet_imports_count;
+                                PageModel.codeResult2.projectName = item.snippet_project_name;
+                                PageModel.codeResult2.projectId = item.snippet_project_id;
+                                PageModel.codeResult2.author = item.snippet_author_name;
+                                PageModel.codeResult2.imports = item.snippet_imports;
+                                PageModel.codeResult2.variableNames = item.snippet_variable_names_delimited;
+                                PageModel.codeResult2.avatar = item.snippet_author_avatar;
+                                PageModel.codeResult2.churn = item.snippet_changed_code_churn;
+                                PageModel.codeResult2.name = item.snippet_class_name_delimited;
+                                PageModel.codeResult2.owner = item.snippet_project_owner;
+                            }else if(successCount == 2){
+                                PageModel.codeResult3.complexity = item.snippet_path_complexity_class_sum;
+                                PageModel.codeResult3.size = item.snippet_size;
+                                PageModel.codeResult3.numberOfImports = item.snippet_imports_count;
+                                PageModel.codeResult3.projectName = item.snippet_project_name;
+                                PageModel.codeResult3.projectId = item.snippet_project_id;
+                                PageModel.codeResult3.author = item.snippet_author_name;
+                                PageModel.codeResult3.imports = item.snippet_imports;
+                                PageModel.codeResult3.variableNames = item.snippet_variable_names_delimited;
+                                PageModel.codeResult3.avatar = item.snippet_author_avatar;
+                                PageModel.codeResult3.churn = item.snippet_changed_code_churn;
+                                PageModel.codeResult3.name = item.snippet_class_name_delimited;
+                                PageModel.codeResult3.owner = item.snippet_project_owner;
+                            }
 
 
 
@@ -857,7 +897,49 @@ function on_data(data) {
                             item.snippet_path_complexity_class_sum,item.snippet_imports_count,
                             item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
                             item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                            item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner);
+                            item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner,
+                            successCount);
+
+                        if(successCount == 0){
+                            PageModel.codeResult1.complexity = item.snippet_path_complexity_class_sum;
+                            PageModel.codeResult1.size = item.snippet_size;
+                            PageModel.codeResult1.numberOfImports = item.snippet_imports_count;
+                            PageModel.codeResult1.projectName = item.snippet_project_name;
+                            PageModel.codeResult1.projectId = item.snippet_project_id;
+                            PageModel.codeResult1.author = item.snippet_author_name;
+                            PageModel.codeResult1.imports = item.snippet_imports;
+                            PageModel.codeResult1.variableNames = item.snippet_variable_names_delimited;
+                            PageModel.codeResult1.avatar = item.snippet_author_avatar;
+                            PageModel.codeResult1.churn = item.snippet_changed_code_churn;
+                            PageModel.codeResult1.name = item.snippet_class_name_delimited;
+                            PageModel.codeResult1.owner = item.snippet_project_owner;
+                        }else if(successCount == 1){
+                            PageModel.codeResult2.complexity = item.snippet_path_complexity_class_sum;
+                            PageModel.codeResult2.size = item.snippet_size;
+                            PageModel.codeResult2.numberOfImports = item.snippet_imports_count;
+                            PageModel.codeResult2.projectName = item.snippet_project_name;
+                            PageModel.codeResult2.projectId = item.snippet_project_id;
+                            PageModel.codeResult2.author = item.snippet_author_name;
+                            PageModel.codeResult2.imports = item.snippet_imports;
+                            PageModel.codeResult2.variableNames = item.snippet_variable_names_delimited;
+                            PageModel.codeResult2.avatar = item.snippet_author_avatar;
+                            PageModel.codeResult2.churn = item.snippet_changed_code_churn;
+                            PageModel.codeResult2.name = item.snippet_class_name_delimited;
+                            PageModel.codeResult2.owner = item.snippet_project_owner;
+                        }else if(successCount == 2){
+                            PageModel.codeResult3.complexity = item.snippet_path_complexity_class_sum;
+                            PageModel.codeResult3.size = item.snippet_size;
+                            PageModel.codeResult3.numberOfImports = item.snippet_imports_count;
+                            PageModel.codeResult3.projectName = item.snippet_project_name;
+                            PageModel.codeResult3.projectId = item.snippet_project_id;
+                            PageModel.codeResult3.author = item.snippet_author_name;
+                            PageModel.codeResult3.imports = item.snippet_imports;
+                            PageModel.codeResult3.variableNames = item.snippet_variable_names_delimited;
+                            PageModel.codeResult3.avatar = item.snippet_author_avatar;
+                            PageModel.codeResult3.churn = item.snippet_changed_code_churn;
+                            PageModel.codeResult3.name = item.snippet_class_name_delimited;
+                            PageModel.codeResult3.owner = item.snippet_project_owner;
+                        }
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
