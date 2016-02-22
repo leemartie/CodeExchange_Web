@@ -45,7 +45,7 @@ var Survey = {
         var cell = $("<div style='display: table-cell; height:100%; width:100%;'></div>");
         row.append(cell)
         cell.append("<img width='800' height='auto' src='http://codeexchange.ics.uci.edu/IntroLetter.png'></img>");
-
+        cell.append($("<a class='boxclose'>x</a>"));
         div.css({
             "position" : "fixed",
 
@@ -109,6 +109,14 @@ var Survey = {
         var surveyView = $("<div style='display: table; height:45%; width:100%'></div>");
         surveyView.css({"margin":"0", "border":"0", "border-spacing":"0", "padding":"0"});
         surveyView.attr("height","100%");
+
+        var closeButton = $("<a class='boxclose'>x</a>");
+        surveyView.append(closeButton);
+        closeButton.on("click",function(){
+            $("#blanket").remove();
+            $("#confirm").remove();
+
+        });
 
 //ROW 1
 //cell 1
@@ -331,12 +339,16 @@ var Survey = {
         submitButton.click(function(event){
             var result = "";
             var timeStamp = Survey.timeStamp();
+            var hasResponse = "";
 
             for(var i = 0; i < Survey.questionCells.length; i++){
                 var question = Survey.questionCells[i].question;
                 var answer = Survey.questionCells[i].answer;
                 var type = Survey.questionCells[i].type;
 
+                if(answer != null) {
+                    hasResponse = "true";
+                }
                 if(type == "boolean")
                     result = result + "&question"+i+"="+question +"&answer"+i+"="+answer;
                 else if(type == "open")
@@ -351,20 +363,25 @@ var Survey = {
                 "&callback=?&json.wrf=displayCode";
 
 
+            if(Boolean(hasResponse)) {
+                $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
-            $.getJSON(url).fail(function(data, textStatus, jqXHR) {
 
+                }).success(function(data, textStatus, jqXHR ) {
+                    $.each(data, function(index, element) {
 
-            }).success(function(data, textStatus, jqXHR ) {
-                $.each(data, function(index, element) {
-
+                    });
                 });
-            });
 
-            alert("Successfully submitted! Thanks!");
+                alert("Successfully submitted! Thanks!");
 
-            $("#blanket").remove();
-            $("#confirm").remove();
+                $("#blanket").remove();
+                $("#confirm").remove();
+            } else {
+                alert("Sorry! You must answer at least one question to submit.");
+            }
+
+
         });
 
 //div
@@ -375,9 +392,9 @@ var Survey = {
         div.css({
             "position" : "fixed",
             "background-color" : "#d3d3d3",
-            "width" : "1200",
+            "width" : "90%",
             "overflow": "auto",
-            "height": "850",
+            "height": "90%",
             "z-index" : "9002",
             "top" : "0px",
             "left" : (($(document).width() - 1200) / 2)});
