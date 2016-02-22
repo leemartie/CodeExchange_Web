@@ -244,21 +244,6 @@ var SetupManager = {
 			//make cells
 			SetupManager.makeTableCells();
 
-            //make page navigation
-            var tableOfPageNavigation = $(SetupManager.tableOpen+SetupManager.tableClose);
-            var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
-            //set id
-            pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
-            pageNavigation.attr("valign","top");
-            pageNavigation.attr("align","right");
-            pageNavigation.attr("width","50%");
-            pageNavigation.addClass("PageNavigation");
-            // append
-            resultTD.append(tableOfPageNavigation);
-            var pageNavigationRow = $(SetupManager.trOpen+SetupManager.trClose);
-            tableOfPageNavigation.append(pageNavigationRow);
-            pageNavigationRow.append(pageNavigation);
-
             //--row for status
 //            var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
 //            statusTable.attr("cellpadding","0");
@@ -281,6 +266,17 @@ var SetupManager = {
             status.height("10%");
 
             Controller.setStatus("Let's find some code.");
+
+            //make page navigation
+            var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
+            //set id
+            pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
+            pageNavigation.attr("valign","top");
+            pageNavigation.attr("align","right");
+            pageNavigation.attr("width","50%");
+            pageNavigation.addClass("PageNavigation");
+            // append
+            rowStatus.append(pageNavigation);
 
 
 //
