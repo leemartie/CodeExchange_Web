@@ -167,8 +167,7 @@ var Controller = {
                         var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                         cell.addClass("downloadLink");
                         row.append(cell);
-                        cell.attr("width","7%");
-                        cell.attr("height","100%");
+                        cell.attr("width","35px");
                         cell.attr("valign","bottom");
                         cell.append(projectURL);
 
@@ -211,7 +210,7 @@ var Controller = {
                         cell.attr("valign","bottom");
                         //cell.css({"padding-top":"5px"});
                         //cell.attr("height","100%");
-                        cell.attr("width","7%");
+                        cell.attr("width","35px");
                         row.append(cell);
                        // cell.append(javaURL);
                         cell.attr("title",
@@ -243,6 +242,43 @@ var Controller = {
                 a.attr(SetupManager.ID_attr,"download"+fileName);
                 a.append(javaURL);
                 cell.append(a);
+
+//--------------GitHub Link
+                //TODO: change image src link once the GitHub logo is added to the CodeExchange server directory
+                var gitHubIcon = $('<div>' +
+                    '<center><img  height="35px" width="35px"' +
+                    'src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"></img></center></div>');
+
+                var githubFileURL = Controller.projectURLs[editorNumber].concat("/blob/",
+                    currentURL.substring(currentURL.indexOf(version)));
+                var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+                cell.attr("align","left");
+                cell.attr("valign","bottom");
+                cell.attr("width","35px");
+
+                row.append(cell);
+                cell.attr("title",
+                    "View this file in GitHub");
+                cell.addClass("downloadLink");
+                (function(cell){
+                    cell.mouseenter(function(e){
+                        cell.removeClass("downloadLink");
+                        cell.addClass("downloadLinkHover");
+
+                    });
+
+                    cell.mouseleave(function(e){
+                        cell.removeClass("downloadLinkHover");
+                        cell.addClass("downloadLink");
+                    });
+
+                })(cell);
+
+                var a = $('<a href="'+ githubFileURL  +'" target="_blank"></a>');
+                a.append(gitHubIcon);
+                cell.append(a);
+
+//--------------End of GitHub Link
 
 //                        javaURL.click(function(e) {
 //
