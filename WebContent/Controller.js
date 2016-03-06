@@ -247,7 +247,7 @@ var Controller = {
                 //TODO: change image src link once the GitHub logo is added to the CodeExchange server directory
                 var gitHubIcon = $('<div>' +
                     '<center><img  height="35px" width="35px"' +
-                    'src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"></img></center></div>');
+                    'src="http://codeexchange.ics.uci.edu/GitHub-Mark.png"></img></center></div>');
 
                 var githubFileURL = Controller.projectURLs[editorNumber].concat("/blob/",
                     currentURL.substring(currentURL.indexOf(version)));
