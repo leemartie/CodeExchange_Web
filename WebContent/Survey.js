@@ -114,7 +114,7 @@ var Survey = {
         surveyView.append(closeButton);
         closeButton.on("click",function(){
             $("#blanket").remove();
-            $("#confirm").remove();
+            $("#confirm").fadeOut(function() {$(this).remove();});
 
         });
 
@@ -296,7 +296,7 @@ var Survey = {
         surveyView.attr("align","center");
         close.on("click",function(){
             $("#blanket").remove();
-            $("#confirm").remove();
+            $("#confirm").fadeOut(function() {$(this).remove();});
 
         });
 

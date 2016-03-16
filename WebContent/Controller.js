@@ -244,7 +244,6 @@ var Controller = {
                 cell.append(a);
 
 //--------------GitHub Link
-                //TODO: change image src link once the GitHub logo is added to the CodeExchange server directory
                 var gitHubIcon = $('<div>' +
                     '<center><img  height="35px" width="35px"' +
                     'src="http://codeexchange.ics.uci.edu/GitHub-Mark.png"></img></center></div>');
@@ -315,6 +314,43 @@ var Controller = {
                         cell.attr("valign","bottom");
                         row.append(cell);
                         cell.append($("#"+SetupManager.expandBtnArray_ID[editorNumber]));
+
+//---------------------Like button
+
+                        var likeButtonDiv = $(SetupManager.divOpen+SetupManager.divClose);
+                        likeButtonDiv.addClass("LikeButton");
+                        var likeIcon = $(SetupManager.image);
+                        likeIcon.attr("src", "like.png");
+                        likeIcon.attr("width", "35px");
+                        likeIcon.attr("height", "35px");
+                        likeButtonDiv.append(likeIcon);
+                        cell.append(likeButtonDiv);
+
+                var isLiked = false;
+                likeIcon.on("click", function() {
+                    isLiked = !isLiked;
+                    if(isLiked) {
+                        likeIcon.attr("src", "http://codeexchange.ics.uci.edu/liked.png")
+                    } else {
+                        likeIcon.attr("src", "http://codeexchange.ics.uci.edu/like.png")
+                    }
+                });
+                 (function (element) {
+                    element.mouseenter(function () {
+                        if(!isLiked) {
+                            element.attr("src", "http://codeexchange.ics.uci.edu/liked.png")
+                        }
+
+                    });
+
+                    element.mouseleave(function () {
+                        if(!isLiked) {
+                            element.attr("src", "http://codeexchange.ics.uci.edu/like.png")
+                        }
+                    });
+
+
+                })(likeIcon);
 
 
 //---------------------version

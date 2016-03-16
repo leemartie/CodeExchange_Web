@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script type="text/javascript" src="jquery-1.10.2.js"></script>
+<script>
+    var authCode = getAuthCode(window.location.href);
+    window.opener.getGithubToken(authCode);
+    window.close();
+    function getAuthCode(url) {
+        var error = url.match(/[&\?]error=([^&]+)/);
+        if (error) {
+            throw 'Error getting authorization code: ' + error[1];
+        }
+        return url.match(/[&\?]code=([\w\/\-]+)/)[1];
+    }
+</script>
+</body>
+</html>
