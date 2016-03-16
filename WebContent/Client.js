@@ -21,7 +21,7 @@
         //RecommendationManager.populateLandscape("raspberry AND pi",1);
 		//alert("[on_ready]");
 
-        var id = getCookie("id");
+        var id = CookieUtil.getCookie("id");
 
         if (id != undefined && id != "undefined" && id != "") {
             Client.id = id;
@@ -41,23 +41,6 @@
 
 	}
 
-    function setCookie(id) {
-        // Build the expiration date string:
-        var expiration_date = new Date();
-        expiration_date.setFullYear(expiration_date.getFullYear() + 1);
-        document.cookie = "id=" + id+"; expires=" + expiration_date.toGMTString();
-    }
-
-    function getCookie(cname) {
-      var name = cname + "=";
-      var ca = document.cookie.split(';');
-      for(var i=0; i<ca.length; i++) {
-            var c = ca[i].trim();
-          if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-      }
-     return "";
-    }
-
     function getClientId(){
         var url = "http://codeexchange.ics.uci.edu/logger.php"+"?callback=?&json.wrf=displayCode";
 
@@ -67,7 +50,10 @@
         }).success(function(data, textStatus, jqXHR ) {
 
             Client.id = data.id;
-            setCookie(Client.id);
+            var expiration_date = new Date();
+            expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+            CookieUtil.setCookie("id", Client.id, expiration_date.toGMTString());
+
 //LOG IT
             UsageLogger.addEvent(UsageLogger.SESSION_START,null);
         });

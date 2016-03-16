@@ -152,7 +152,12 @@ var SetupManager = {
 		listClose		:	"</ul>",
 		listItemOpen	:	"<li>",
 		listItemClose	:	"</li>",
-		
+        sectionOpen     :   "<section>",
+        sectionClose    :   "</section>",
+        formOpen        :   "<form>",
+        formClose       :   "</form>",
+        image           :   "<img/>",
+
 		//attributes
 		ID_attr				:	"id",
 		width_attr			:	"width",
@@ -315,7 +320,7 @@ var SetupManager = {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
                 var survey = Survey.getView();
-                survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+                survey.hide().appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID).fadeIn();
             });
 
             var divTable = $("<div style='display:table;'></div>")
@@ -360,7 +365,7 @@ var SetupManager = {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
                 var survey = Survey.getLetter();
-                survey.appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID);
+                survey.hide().appendTo(SetupManager.pound+SetupManager.entireSiteDiv_ID).fadeIn();
             });
             footerCell2.append(divDisclaimer);
           //  footerCell2.attr("width","30%");

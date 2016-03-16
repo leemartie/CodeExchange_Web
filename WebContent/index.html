@@ -58,20 +58,30 @@
 <script type="text/javascript" src="jQueryRotate.js"></script>
 <script type="text/javascript" src="ace-builds/src-noconflict/ace.js" charset="utf-8"></script>
 <script type="text/javascript" src="ace-builds/src-noconflict/token_tooltip.js"></script>
+<script type="text/javascript" src="CookieUtil.js"></script>
 <script type="text/javascript" src="UsageLogger.js"></script>
 <script type="text/javascript" src="Event.js"></script>
 <script type="text/javascript" src="Survey.js"></script>
+<script type="text/javascript" src="SignIn.js"></script>
 <script type="text/javascript" src="log4javascript.js"></script>
 <script type="text/javascript" src="Node.js"></script>
 <script type="text/javascript" src="RecommendationManager.js"></script>
 <script type="text/javascript" src="WheelLandscape.js"></script>
+<script type="text/javascript" src="fb_all.js"></script>
 
 <script>
 
 
     $(document).ready(on_ready);
 
-
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '532518973576246', // App ID
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
+    };
 
 </script>
 
@@ -1682,6 +1692,14 @@ html { height: 100%; }
 
 }
 
+.LikeButton{
+    height: 30px;
+    width: 35px;
+    cursor: pointer;
+    float: right;
+    margin-right: 7px;
+}
+
 .CloseButton{
     border: 1px solid;
     border-color: black;
@@ -1810,6 +1828,151 @@ a.boxclose:hover{
 
 .BoxSelected{
     border: 3px dashed;
+}
+
+.navBar {
+    overflow: hidden;
+    height: 50px;
+}
+
+.navBar ul li {
+    display: inline-block;
+    list-style-type: none;
+    float: right;
+}
+
+.navBar > ul > li > .signin {
+    width: 150px;
+    height: 80px;
+    text-decoration: none;
+    background-color: #35586C;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.navBar > ul > li > .signin:hover {
+    width: 150px;
+    height: 80px;
+    text-decoration: none;
+    background-color: #25485C;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#welcome {
+        font-size: 16px;
+        margin: 10px;
+    }
+
+.popupContainer{
+    position:absolute;
+    width:330px;
+    height: auto;
+    left:38%;
+    top:80px;
+    background: #F4F4F2;
+    z-index : 9002;
+    font-size: 16px;
+}
+
+.btn {padding:10px 20px; background: #E4E4E2;}
+.btn_red {background: #ED6347; color: #FFF;}
+
+.btn:hover {background: #D4D4D2;}
+.btn_red:hover {background: #C12B05;}
+
+a.btn {color:#666; text-align: center; text-decoration: none;}
+a.btn_red {color: #FFF;}
+
+.one_half {width:50%; display: block; float:left;}
+.one_half.last {width:45%; margin-left:5%;}
+
+/* Popup Styles*/
+.popupHeader {font-size:16px; text-transform: uppercase;}
+.popupHeader {background:#F4F4F2; position:relative; padding:10px 20px; border-bottom:1px solid #DDD; font-weight:bold;}
+.popupHeader #signin_close {position: absolute; right: 0; top:0; padding:10px 15px; background:#F4F4F2; cursor: pointer; color:#aaa; font-size:16px;}
+.popupHeader #signin_close:hover {position: absolute; right: 0; top:0; padding:10px 15px; background:#E4E4E2; cursor: pointer; color:#aaa; font-size:16px;}
+.popupBody {padding:20px;}
+
+
+/* Social Login Form */
+.social_login {}
+.social_login .social_box {display:block; clear:both; padding:10px; margin-bottom: 10px; background: #F4F4F2; overflow: hidden;}
+.social_login .icon {display:block; width:10px; padding:5px 10px; margin-right: 10px; float:left; color:#FFF; font-size:16px; text-align: center;}
+.social_login .fb .icon {background:#3B5998;}
+.social_login .github .icon {background:#FFFFFF;}
+.social_login .icon_title {display:block; padding:5px 0; float:left; font-weight: bold; font-size: 16px; color:#777;}
+.social_login .social_box:hover {background: #E4E4E2;}
+
+.centeredText {text-align: center; margin: 20px 0; clear: both; overflow: hidden; text-transform: uppercase;}
+
+.action_btns {clear:both; overflow: hidden; font-size: 16px;}
+.action_btns a {display: block;}
+
+/* User Login Form */
+.user_login {display: none;}
+.user_login label {display: block; margin-bottom:5px;}
+.user_login input[type="text"], .user_login input[type="email"], .user_login input[type="password"] {display: block; width:90%; padding: 10px; border:1px solid #DDD; color:#666;}
+.user_login input[type="checkbox"] {float:left; margin-right:5px;}
+.user_login input[type="checkbox"]+label {float:left;}
+
+.user_login .checkbox {margin-bottom: 10px; clear: both; overflow: hidden;}
+.forgot_password {display:block; margin: 20px 0 10px; clear: both; overflow: hidden; text-decoration: none; color:#ED6347;}
+
+/* User Register Form */
+.user_register {display: none;}
+.user_register label {display: block; margin-bottom:5px;}
+.user_register input[type="text"], .user_register input[type="email"], .user_register input[type="password"] {display: block; width:90%; padding: 10px; border:1px solid #DDD; color:#666;}
+.user_register input[type="checkbox"] {float:left; margin-right:5px;}
+.user_register input[type="checkbox"]+label {float:left;}
+
+.user_register .checkbox {margin-bottom: 10px; clear: both; overflow: hidden;}
+
+.githubButton {
+    width: 200px;
+    height: 50px;
+    padding: 8px 8px 8px 50px;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 16px;
+    background: #000000 url("http://codeexchange.ics.uci.edu/githubicon.png");
+    background-repeat: no-repeat;
+    outline: none;
+}
+.facebookButton {
+    width: 200px;
+    height: 50px;
+    padding: 8px 8px 8px 44px;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 16px;
+    background: #3b5998 url("http://codeexchange.ics.uci.edu/facebookicon.png");
+    background-size: 25px 25px;
+    background-position: 6px 10px;
+    background-repeat: no-repeat;
+    outline: none;
+}
+
+.loginAvatar {
+    position: absolute;
+    border-radius: 25px;
+    top: 1px;
 }
 
 

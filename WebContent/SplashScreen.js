@@ -28,6 +28,60 @@ var SplashScreen = {
         tableForSite.attr("border","0");
         tableForSite.attr("width","100%");
 
+        var navRow = $(SetupManager.trOpen+SetupManager.trClose);
+        var navBar = $(SetupManager.divOpen+SetupManager.divClose);
+        navBar.addClass("navBar");
+        var navList = $(SetupManager.listOpen+SetupManager.listClose);
+        var signOutLi = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+        var signOutLink = $('<a id="signout_trigger" class="signin">Sign Out</a>');
+        signOutLink.on("click", function() {
+            CookieUtil.deleteCookie("authData");
+            window.location.reload();
+        });
+
+        signOutLi.append(signOutLink);
+
+        var signInLi = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+        var signInLink = $('<a id="signin_trigger" class="signin">Sign in</a>');
+        signInLink.on("click", function() {
+            $('<div id="blanket"></div>').appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
+            var signinPopup = SignIn.getSigninPopup();
+            signinPopup.hide().appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID).fadeIn();
+        });
+
+        signInLi.append(signInLink);
+        var welcomeLi = $(SetupManager.listItemOpen+SetupManager.listItemClose);
+        var welcomeMessage = $('<text id="welcome" style="margin: 10px;"></text>');
+        welcomeLi.append(welcomeMessage);
+
+        var profilePicLi = $(SetupManager.listItemOpen + SetupManager.listItemClose);
+        var profilePicture = $(SetupManager.image);
+        profilePicture.attr("width", "50");
+        profilePicture.attr("height", "50");
+        profilePicture.attr("src", "");
+        profilePicture.attr("style", "display:none;");
+        profilePicture.addClass("loginAvatar");
+        profilePicLi.append(profilePicture);
+        var authDataString = CookieUtil.getCookie("authData")
+        if(authDataString || authDataString.length > 0) {
+            var authData = JSON.parse(authDataString);
+            if(authData.type === "facebook") {
+                getFBUserInfo(authData.token);
+            } else if(authData.type === "github") {
+                getGithubUserInfo(authData.token);
+            }
+            navList.append(signOutLi);
+            navList.append(welcomeLi);
+            navList.append(profilePicLi);
+        } else {
+            welcomeMessage.text("Welcome, Guest");
+            navList.append(signInLi);
+            navList.append(welcomeLi);
+        }
+        navBar.append(navList);
+        navRow.append(navBar);
+        tableForSite.append(navRow);
+
         var row = $(SetupManager.trOpen+SetupManager.trClose);
 
         tableForSite.append(row);
@@ -198,9 +252,9 @@ var SplashScreen = {
             cell.click(function (event) {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
-                var advancedDiv = SplashScreen.setupAdvanvedSearch(input, subtext, footerCell2, footerCell3, tableForSite,
+                var advancedDiv = SplashScreen.setupAdvancedSearch(input, subtext, footerCell2, footerCell3, tableForSite,
                     cellSubTable, subTable, titleRow, title, btn, paddingCell);
-                advancedDiv.appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
+                advancedDiv.hide().appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID).fadeIn();
             });
         })(cell);
 
@@ -460,7 +514,7 @@ var SplashScreen = {
 
     },
 
-    setupAdvanvedSearch: function(input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
+    setupAdvancedSearch: function(input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
         var div = $(SetupManager.divOpen+SetupManager.divClose);
 
 
@@ -947,7 +1001,9 @@ var SplashScreen = {
         tableCell6.attr("align","center");
         close.on("click",function(){
             $("#blanket").remove();
-            $("#confirm").remove();
+            $("#confirm").fadeOut(function () {
+                $(this).remove();
+            });
 
         });
 
@@ -1295,3 +1351,40 @@ var SplashScreen = {
 
 }
 
+function getFBUserInfo(access_token) {
+    var fbApiUrl = "/me?fields=first_name,id,gender,email,picture,link";
+    if (!(access_token == null) || !(access_token === '')) {
+        fbApiUrl += "&access_token=" + access_token;
+    }
+
+    FB.api(fbApiUrl, function (response) {
+        if(response.error == null) {
+            $('#welcome').text("Welcome, " + response.first_name);
+            $('#welcome').show();
+            $(".loginAvatar").attr("src", response.picture.data.url);
+            $(".loginAvatar").css("right", ( $('#welcome').text().length * parseInt($('#welcome').css('font-size')) + 50) + "px");
+            $(".loginAvatar").show();
+        } else {
+            alert("Sorry you have been logged out. Please login again");
+            CookieUtil.deleteCookie("authData");
+            window.location.reload();
+        }
+
+    });
+}
+
+function getGithubUserInfo(access_token) {
+    var githubApiUrl = "https://api.github.com/user?access_token=" + access_token;
+    $.getJSON(githubApiUrl).success(function (data) {
+        var name = data.name
+        if (!name || 0 === name.length) {
+          name = data.login;
+        }
+        $('#welcome').text("Welcome, " + name);
+        $('#welcome').show();
+        $(".loginAvatar").attr("src", data.avatar_url);
+        $(".loginAvatar").css("right", ( $('#welcome').text().length * parseInt($('#welcome').css('font-size')) + 20) + "px");
+        $(".loginAvatar").show();
+
+    });
+}
