@@ -51,7 +51,7 @@ var SplashScreen = {
 
         signInLi.append(signInLink);
         var welcomeLi = $(SetupManager.listItemOpen+SetupManager.listItemClose);
-        var welcomeMessage = $('<text id="welcome" style="margin: 10px;"></text>');
+        var welcomeMessage = $('<text id="welcome"></text>');
         welcomeLi.append(welcomeMessage);
 
         var profilePicLi = $(SetupManager.listItemOpen + SetupManager.listItemClose);
@@ -1362,7 +1362,6 @@ function getFBUserInfo(access_token) {
             $('#welcome').text("Welcome, " + response.first_name);
             $('#welcome').show();
             $(".loginAvatar").attr("src", response.picture.data.url);
-            $(".loginAvatar").css("right", ( $('#welcome').text().length * parseInt($('#welcome').css('font-size')) + 50) + "px");
             $(".loginAvatar").show();
         } else {
             alert("Sorry you have been logged out. Please login again");
@@ -1383,7 +1382,6 @@ function getGithubUserInfo(access_token) {
         $('#welcome').text("Welcome, " + name);
         $('#welcome').show();
         $(".loginAvatar").attr("src", data.avatar_url);
-        $(".loginAvatar").css("right", ( $('#welcome').text().length * parseInt($('#welcome').css('font-size')) + 20) + "px");
         $(".loginAvatar").show();
 
     });
