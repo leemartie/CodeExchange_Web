@@ -213,6 +213,8 @@ var SplashScreen = {
                 subtext.hide();
                 footerCell2.hide();
                 footerCell3.hide();
+                navRow.hide();
+
                 tableForSite.animate({
                     height: '5%'
                 }, 700 );
@@ -253,7 +255,7 @@ var SplashScreen = {
                 $('<div id="blanket"></div>').
                     appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
                 var advancedDiv = SplashScreen.setupAdvancedSearch(input, subtext, footerCell2, footerCell3, tableForSite,
-                    cellSubTable, subTable, titleRow, title, btn, paddingCell);
+                    cellSubTable, subTable, titleRow, title, btn, paddingCell, navRow);
                 advancedDiv.hide().appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID).fadeIn();
             });
         })(cell);
@@ -454,6 +456,7 @@ var SplashScreen = {
                 subtext.hide();
                 footerCell2.hide();
                 footerCell3.hide();
+                navRow.hide();
                 tableForSite.animate({
                     height: '5%'
 
@@ -514,7 +517,7 @@ var SplashScreen = {
 
     },
 
-    setupAdvancedSearch: function(input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell){
+    setupAdvancedSearch: function(input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell, navRow){
         var div = $(SetupManager.divOpen+SetupManager.divClose);
 
 
@@ -1053,6 +1056,7 @@ var SplashScreen = {
             subtext.hide();
             footerCell2.hide();
             footerCell3.hide();
+            navRow.hide();
             tableForSite.animate({
                 height: '5%'
 
@@ -1352,7 +1356,7 @@ var SplashScreen = {
 }
 
 function getFBUserInfo(access_token) {
-    var fbApiUrl = "/me?fields=first_name,id,gender,email,picture,link";
+    var fbApiUrl = "/me?fields=first_name,id,gender,email,picture.type(large),link";
     if (!(access_token == null) || !(access_token === '')) {
         fbApiUrl += "&access_token=" + access_token;
     }
