@@ -34,7 +34,7 @@ var Critize = {
         row.append(cell);
         table.append(row);
         cell.attr("align","center");
-        cell.attr("colspan","4");
+        cell.attr("colspan","3");
         var label = $("<text style='padding-bottom: '>critique</text>");
         cell.append(label);
 
@@ -77,7 +77,7 @@ var Critize = {
         cell.attr("align","center");
         //cell.attr("width","100%");
         cell.addClass("ProjectRefinement");
-        cell.css({"padding-right":"20px"});
+        cell.css({"padding-right":"10px"});
 //========== 2nd row
 
 //row for all critics
@@ -138,7 +138,6 @@ var Critize = {
         TD_LABEL.append($("<text>size"+"<br><text style='color:#8b0000'>"+size+"</text>"+"</text>"));
         TD_LABEL.attr("align","center");
         TD_LABEL.attr("width","100%");
-        TD_LABEL.css({"padding-left":"5px","padding-right":"5px"});
 
 
         var littleRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -236,7 +235,6 @@ var Critize = {
         TD_LABEL.append($("<text>complexity"+"<br><text style='color:#8b0000'>"+complexity+"</text>"+"</text>"));
         TD_LABEL.attr("align","center");
         TD_LABEL.attr("width","100%");
-        TD_LABEL.css({"padding-left":"5px","padding-right":"5px"});
 
 
         var littleRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -337,7 +335,6 @@ var Critize = {
         TD_LABEL.append($("<text>imports"+"<br><text style='color:#8b0000'>"+imports+"</text>"+"</text>"));
         TD_LABEL.attr("align","center");
         TD_LABEL.attr("width","100%");
-        TD_LABEL.css({"padding-left":"5px","padding-right":"5px"});
 
 
         var littleRow = $(SetupManager.trOpen+SetupManager.trClose);
@@ -378,10 +375,6 @@ var Critize = {
 
         })(label);
         
-//spacer
-        var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        cell.attr("width","100%");
-        row.append(cell);
 //PROJECT
 
 
@@ -395,7 +388,7 @@ var Critize = {
 
         cell.addClass("ProjectRefinement");
 
-        var cellName = $("<div style='font-size: 11px; text-align: center; vertical-align:top; width:100px'>" +
+        var cellName = $("<div style='font-size: 11px; text-align: center; vertical-align:top; width:75px'>" +
             "<font color='#8b0000'><center>"+projectName+"</center></font>"+"</div>");
         cell.append(cellName);
 
@@ -437,7 +430,7 @@ var Critize = {
         cell.attr("valign","top");
         cell.addClass("Refinement");
         var cellName = $("<div style='font-size: 11px; text-align: center; " +
-            "vertical-align:top; width:75px'><img width='35px' height='auto' src="+avatar+"/><font color='#8b0000'><center>"+author+"</center></font>"+"</div>");
+            "vertical-align:top; width:64px'><img width='35px' height='auto' src="+avatar+"/><font color='#8b0000'><center>"+author+"</center></font>"+"</div>");
         cell.append(cellName);
 
         cell.attr("title","Refine current query by this code's author.");
@@ -473,7 +466,7 @@ var Critize = {
 
             var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
             row.append(cell);
-            cell.css({"padding-right":"20px"});
+            cell.css({"padding-right":"10px"});
 
 
             cell.attr("align","center");
@@ -482,7 +475,7 @@ var Critize = {
 
             var pic = url;
             var cellName = $("<div style='font-size: 11px; text-align: center; " +
-                "vertical-align:top; width:75px'><img width='35px' height='auto' src="+pic+"></img>" +
+                "vertical-align:top; width:64px'><img width='35px' height='auto' src="+pic+"></img>" +
                 "<font color='#8b0000'><center>"+username+"</center></font>"+
                 "<font color='black'><center>"+type+"</center></font>"+"</div>");
             cell.append(cellName);
