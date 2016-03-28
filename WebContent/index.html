@@ -1841,7 +1841,7 @@ a.boxclose:hover{
     float: right;
 }
 
-.navBar > ul > li > .signin {
+.signin {
     width: 150px;
     height: 80px;
     text-decoration: none;
@@ -1853,12 +1853,12 @@ a.boxclose:hover{
     text-decoration: none;
     font-weight: bold;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-left: 10px;
     font-size: 16px;
     cursor: pointer;
 }
 
-.navBar > ul > li > .signin:hover {
+.signin:hover {
     width: 150px;
     height: 80px;
     text-decoration: none;
@@ -1870,7 +1870,7 @@ a.boxclose:hover{
     text-decoration: none;
     font-weight: bold;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-left: 10px;
     font-size: 16px;
     cursor: pointer;
 }
@@ -1975,6 +1975,63 @@ a.btn_red {color: #FFF;}
     border-radius: 25px;
     top: 1px;
 }
+
+.dropdown-menu:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid #FFFFFF;
+    top: -5%;
+    left: 90%;
+}
+
+.dropdown-menu {
+    visibility: hidden;
+    padding: 0;
+    color: #35586C;
+    font-size: medium;
+    width: 300px;
+    position: relative;
+    margin-top: 10px;
+    position: absolute;
+    right: 34%;
+    z-index: 9001;
+    border: 5px solid rgba(0, 0, 0, .15);
+}
+
+.dropdown-menu:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 17px solid rgba(0, 0, 0, .15);
+    top: -8%;
+    left: 90%;
+    z-index: -10;
+}
+
+.dropdown-menu .menuContainer {
+    display: block;
+    padding: 12px;
+    border-bottom: 1px solid #dedede;
+    box-shadow: 0 0 0 0;
+    background: #dedede;
+}
+
+.dropdown-menu .menuContainer .infoContainer {
+    position:relative;
+    bottom:13px;
+}
+
+.open {
+    visibility: visible;
+}
+
 
 
 </style>

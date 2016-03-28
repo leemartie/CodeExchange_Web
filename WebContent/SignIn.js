@@ -160,6 +160,59 @@ var SignIn = {
         section.append(userLoginDiv);
         div.append(section);
         return div;
+    },
+
+    getAccountPopup: function (imageSource, name, email) {
+        var dropDownMenu = $(SetupManager.divOpen + SetupManager.divClose);
+        dropDownMenu.addClass("dropdown-menu");
+        var menuContainer = $(SetupManager.divOpen + SetupManager.divClose);
+        menuContainer.addClass("menuContainer");
+        var imageContainer = $(SetupManager.divOpen + SetupManager.divClose);
+        imageContainer.addClass("imageContainer");
+        var image = $(SetupManager.image);
+        image.attr("style", "margin-bottom:5px;");
+        image.attr("src", imageSource);
+        image.attr("height", "96px");
+        image.attr("width", "96px");
+        imageContainer.append(image);
+        menuContainer.append(imageContainer);
+        var infoContainer = $(SetupManager.divOpen + SetupManager.divClose);
+        infoContainer.addClass("infoContainer");
+        infoContainer.append($(SetupManager.newLine + '<b>' + name + '</b>'));
+        if (email != null && email.length > 0) {
+            infoContainer.append($('<br/>' + email + '<br/><br/>'));
+        } else {
+            infoContainer.append($(SetupManager.newLine + SetupManager.newLine + SetupManager.newLine));
+        }
+        var signOutLink = $('<a id="signout_trigger" class="signin">Sign Out</a>');
+        signOutLink.on("click", function () {
+            CookieUtil.deleteCookie("authData");
+            window.location.reload();
+        });
+        infoContainer.append(signOutLink);
+        menuContainer.append(infoContainer);
+        dropDownMenu.append(menuContainer);
+        return dropDownMenu;
+    },
+
+    getProfilePicture: function (imageSource) {
+        var profilePicture = $(SetupManager.image);
+        profilePicture.attr("src", imageSource);
+        profilePicture.attr("style", "margin-bottom:5px;border-radius:50%");
+        profilePicture.attr("height", "48px");
+        profilePicture.attr("width", "48px");
+        profilePicture.on("click", function () {
+            var $this = $(this);
+            if ($('.dropdown-menu').hasClass('open')) {
+                $('.dropdown-menu').removeClass('open');
+                $('.dropdown-menu').fadeOut("fast");
+            }
+            else {
+                $('.dropdown-menu').addClass('open');
+                $('.dropdown-menu').fadeIn("fast");
+            }
+        });
+        return profilePicture;
     }
 }
 

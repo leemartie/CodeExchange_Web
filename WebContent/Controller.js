@@ -320,7 +320,7 @@ var Controller = {
                         var likeButtonDiv = $(SetupManager.divOpen+SetupManager.divClose);
                         likeButtonDiv.addClass("LikeButton");
                         var likeIcon = $(SetupManager.image);
-                        likeIcon.attr("src", "like.png");
+                        likeIcon.attr("src", "http://codeexchange.ics.uci.edu/like.png");
                         likeIcon.attr("width", "35px");
                         likeIcon.attr("height", "35px");
                         likeButtonDiv.append(likeIcon);
