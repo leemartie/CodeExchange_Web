@@ -245,6 +245,7 @@ var SplashScreen = {
                     //  subTable.addClass("SplashFloatLeft");
                     paddingCell.detach();
                     titleRow.hide();
+                    queryPartsRow.toggle();
                     title.toggle();
                     navRow.hide();
 
@@ -400,6 +401,16 @@ var SplashScreen = {
 //        'Share on Facebook</a>');
 //        footerCell4.append(facebook);
 
+        var queryPartsRow = $(SetupManager.trOpen + SetupManager.trClose);
+        subTable.append(queryPartsRow);
+        queryPartsRow.attr("style", "display:none;");
+        queryPartsRow.append($(SetupManager.tdOpen + SetupManager.tdClose));
+        var currentQuery = $(SetupManager.tdOpen + SetupManager.tdClose);
+        currentQuery.addClass("BuildQueryTitle")
+        currentQuery.attr("width", "65%");
+        currentQuery.append("<text>Current Query</text>");
+        queryPartsRow.append(currentQuery);
+        queryPartsRow.append($(SetupManager.tdOpen + SetupManager.tdClose));
 
         var footerRow3 = $(SetupManager.trOpen + SetupManager.trClose);
         subTable.append(footerRow3);
@@ -495,6 +506,7 @@ var SplashScreen = {
                     navRow.hide();
                     titleRow.hide();
                     title.toggle();
+                    queryPartsRow.toggle();
                     accountTD.show();
                     btn.height("50%");
                     SetupManager.setupSite();
@@ -1085,6 +1097,7 @@ var SplashScreen = {
                 sideCellTitle.toggle();
                 btn.height("50%");
                 paddingCell.hide();
+                queryPartsRow.toggle();
                 SetupManager.setupSite();
                 SplashScreen.showing = false;
             }
