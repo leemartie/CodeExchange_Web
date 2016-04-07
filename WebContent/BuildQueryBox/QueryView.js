@@ -105,7 +105,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        var so = this;
 
-       so.cell.attr("title","click to activate or deactivate");
+       so.cell.attr("title","Click to activate or deactivate");
 
 //
        (function(){so.cell.mouseenter(function(){

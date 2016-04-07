@@ -121,7 +121,7 @@ var QueryRecommenderView = {
 //            button.height("15px");
 
 
-            queryBucketCell.attr("title","click to add to current query");
+            queryBucketCell.attr("title","Click to add to current query");
 
 //
             (function(query, cell){queryBucketCell.click(function(){
