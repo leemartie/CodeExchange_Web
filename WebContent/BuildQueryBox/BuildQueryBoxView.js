@@ -16,70 +16,7 @@ var BuildQueryBoxView = {
 		getView:	function() {
             var view = $(SetupManager.tableOpen + SetupManager.tableClose);
             view.attr("height", "100%");
-
-
-            //make title
-            var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
-            var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-
-
-            titleRow.append(titleCell);
-
-            var addCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            titleRow.append(addCell);
-
-            var label = $("<div><text>Enter Query</text></div>");
-
-            label.addClass("BuildQueryTitle");
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-
-
-            //view.append(queryTypeRow);
-
-            //view.append(queryRow);
-
-
-            var currentQuery = $(SetupManager.tableOpen + SetupManager.tableClose);
-            //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
-            currentQuery.addClass("BucketView");
-
-            //title for bucket
-            var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
-
-
-            var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            titleRow.append(titleCell);
-            var label = $("<text>Current Query</text>");
-            label.addClass("BuildQueryTitle");
-            // titleCell.append($("<hr>"));
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-            currentQuery.append(titleRow);
-
-            //row for query bucket
-            var queryBucketCellInParentTable = $(SetupManager.tdOpen + SetupManager.tdClose);
-
-            queryBucketCellInParentTable.append(QueryBucketView.getView());
-            queryBucketCellInParentTable.attr("valign", "bottom");
-            var queryBucketRowInParentTable = $(SetupManager.trOpen + SetupManager.trClose);
-            queryBucketRowInParentTable.append(queryBucketCellInParentTable);
-
-            currentQuery.append(queryBucketRowInParentTable);
-
-            var row = $(SetupManager.trOpen + SetupManager.trClose);
-            var cell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            cell.attr("height", "20%");
-            row.append(cell)
-            cell.append(currentQuery);
-
-            view.append(row);
-
-        //    critize
-//            var criticRow = $(SetupManager.trOpen + SetupManager.trClose);
-//            criticRow.append(Critize.getView());
-//            view.append(criticRow);
-
+            
             var recommendationsTable = $(SetupManager.tableOpen + SetupManager.tableClose);
             //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
             recommendationsTable.addClass("BucketView");

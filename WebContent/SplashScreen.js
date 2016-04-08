@@ -116,8 +116,8 @@ var SplashScreen = {
 
         cell.append(title);
 
-        var row = $(SetupManager.trOpen + SetupManager.trClose);
-        subTable.append(row);
+        var queryInputRow = $(SetupManager.trOpen + SetupManager.trClose);
+        subTable.append(queryInputRow);
 
 
         var sideCellTitle = $(SetupManager.tdOpen + SetupManager.tdClose);
@@ -125,14 +125,14 @@ var SplashScreen = {
 
 
         sideCellTitle.append(title);
-        row.append(sideCellTitle);
+        queryInputRow.append(sideCellTitle);
         sideCellTitle.css({"padding-right": "20px", "padding-bottom": "5px"});
         sideCellTitle.attr("width", "20%");
         title.hide();
 
 
         var cell = $(SetupManager.tdOpen + SetupManager.tdClose);
-        row.append(cell);
+        queryInputRow.append(cell);
         cell.attr("align", "right");
         cell.attr("width", "65%");
 
@@ -152,7 +152,7 @@ var SplashScreen = {
         accountTD.attr("width", "10%")
         accountTD.attr("align", "center");
         accountTD.attr("style", "display:none");
-        row.append(accountTD);
+        queryInputRow.append(accountTD);
 
 //subtable to the right of logo
 
@@ -405,12 +405,7 @@ var SplashScreen = {
         subTable.append(queryPartsRow);
         queryPartsRow.attr("style", "display:none;");
         queryPartsRow.append($(SetupManager.tdOpen + SetupManager.tdClose));
-        var currentQuery = $(SetupManager.tdOpen + SetupManager.tdClose);
-        currentQuery.addClass("BuildQueryTitle")
-        currentQuery.attr("width", "65%");
-        currentQuery.append("<text>Current Query</text>");
-        queryPartsRow.append(currentQuery);
-        queryPartsRow.append($(SetupManager.tdOpen + SetupManager.tdClose));
+        queryPartsRow.append(QueryBucketView.getView);
 
         var footerRow3 = $(SetupManager.trOpen + SetupManager.trClose);
         subTable.append(footerRow3);

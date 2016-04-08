@@ -15,44 +15,24 @@
 var QueryBucketView = {
 
     queryViews  : new Array() /*QueryView*/,
-    queryBucket :  $(SetupManager.tableOpen+SetupManager.tableClose),
-
-    /**
-     * returns a table
-     * @returns {*|jQuery|HTMLElement}
-     */
-    getView :   function(){
-
-        var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
-        var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-       // queryBucketCell.append($("<text>totalQuery</text>"));
-        queryBucketCell.attr("height","100%");
-        queryBucketRow.append(queryBucketCell);
-        QueryBucketView.queryBucket.append(queryBucketRow);
-
-      ///  QueryBucketView.queryBucket.addClass("QueryBucket");
-
-        var div = $('<div class="QueryBucket">'+'</div>');
-        div.append(QueryBucketView.queryBucket);
-
-
-        return div;
-
+    queryBucket: $(SetupManager.divOpen+SetupManager.divClose),
+    
+    getView : function() {
+        var currentQueryContainer = $(SetupManager.tdOpen + SetupManager.tdClose);
+        var bucketMaxWidth = jQuery(window).width() * 0.7;
+        currentQueryContainer.attr("colspan", "2");
+        currentQueryContainer.attr("style", "max-width: " + bucketMaxWidth +"px; padding-bottom: 1em;");
+        QueryBucketView.queryBucket.addClass("QueryBucket");
+        currentQueryContainer.append(QueryBucketView.queryBucket);
+        return currentQueryContainer;
     },
 
     update  :   function(){
-
+        
         QueryBucketView.queryBucket.empty();
 
-        var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
-        var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        queryBucketCell.attr("height","100%");
-        queryBucketRow.append(queryBucketCell);
-
-        QueryBucketView.queryBucket.append(queryBucketRow);
-
         for(var i = QueryBucketModel.stackOfQueries.length-1; i >= 0; i--){
-            var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
+
 
             var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
@@ -65,25 +45,16 @@ var QueryBucketView = {
 
             var queryView = new QueryView(displayType,type,value, valueIndex, i,active, displayValue);
 
-            queryBucketCell.append(queryView.getView());
-
-            queryBucketRow.append(queryBucketCell);
-
-            queryBucketRow.addClass("QueryViewRow");
-            queryBucketCell.addClass("QueryViewRow");
-
-
-
+            QueryBucketView.queryBucket.append(queryView.getView());
+            
             if(!active){
                 queryView.setDeactive()
             }else{
                 queryView.setActive();
             }
 
-            QueryBucketView.queryBucket.append(queryBucketRow);
+
         }
-
-
     }
 
 
