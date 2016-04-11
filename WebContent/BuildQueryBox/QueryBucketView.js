@@ -22,7 +22,7 @@ var QueryBucketView = {
         var bucketMaxWidth = jQuery(window).width() * 0.7;
         currentQueryContainer.attr("colspan", "2");
         currentQueryContainer.attr("style", "max-width: " + bucketMaxWidth +"px; padding-bottom: 1em;");
-        QueryBucketView.queryBucket.addClass("QueryBucket");
+        QueryBucketView.queryBucket.addClass("CurrentQueryBucket");
         currentQueryContainer.append(QueryBucketView.queryBucket);
         return currentQueryContainer;
     },
