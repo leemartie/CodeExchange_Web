@@ -404,7 +404,6 @@ var SplashScreen = {
         var queryPartsRow = $(SetupManager.trOpen + SetupManager.trClose);
         subTable.append(queryPartsRow);
         queryPartsRow.attr("style", "display:none;");
-        queryPartsRow.append($(SetupManager.tdOpen + SetupManager.tdClose));
         queryPartsRow.append(QueryBucketView.getView);
 
         var footerRow3 = $(SetupManager.trOpen + SetupManager.trClose);

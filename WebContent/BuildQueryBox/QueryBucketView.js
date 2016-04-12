@@ -19,11 +19,23 @@ var QueryBucketView = {
     
     getView : function() {
         var currentQueryContainer = $(SetupManager.tdOpen + SetupManager.tdClose);
+        var currentQueryTable = $(SetupManager.tableOpen + SetupManager.tableClose);
+        currentQueryTable.attr("style", "border-spacing:0");
+        var currentQueryTableRow = $(SetupManager.trOpen + SetupManager.trClose);
+        var currentQueryTD = $(SetupManager.tdOpen + SetupManager.tdClose);
+        var currentQueryLabelTD = $(SetupManager.tdOpen + SetupManager.tdClose);
+        currentQueryLabelTD.addClass("CurrentQueryTitle");
+        currentQueryLabelTD.text("Current Query");
+        currentQueryLabelTD.attr("style", "width:15%;");
         var bucketMaxWidth = jQuery(window).width() * 0.7;
-        currentQueryContainer.attr("colspan", "2");
+        currentQueryContainer.attr("colspan", "3");
         currentQueryContainer.attr("style", "max-width: " + bucketMaxWidth +"px; padding-bottom: 1em;");
         QueryBucketView.queryBucket.addClass("CurrentQueryBucket");
-        currentQueryContainer.append(QueryBucketView.queryBucket);
+        currentQueryTD.append(QueryBucketView.queryBucket);
+        currentQueryTableRow.append(currentQueryLabelTD);
+        currentQueryTableRow.append(currentQueryTD);
+        currentQueryTable.append(currentQueryTableRow);
+        currentQueryContainer.append(currentQueryTable);
         return currentQueryContainer;
     },
 
