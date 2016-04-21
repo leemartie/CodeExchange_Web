@@ -121,14 +121,19 @@ var SplashScreen = {
 
 
         var sideCellTitle = $(SetupManager.tdOpen + SetupManager.tdClose);
-        var title = $("<img src='http://codeexchange.ics.uci.edu/logo.png'></img>");
+        var sideCellImageTD = $(SetupManager.tdOpen + SetupManager.tdClose);
 
-
-        sideCellTitle.append(title);
+        
+        var title = $("<img src='CodeWhale.png'/>");
+        sideCellImageTD.append(title);
+        sideCellImageTD.addClass("CodeWhaleLogo");
+        sideCellImageTD.hide();
+        queryInputRow.append(sideCellImageTD);
+        
         queryInputRow.append(sideCellTitle);
         sideCellTitle.css({"padding-right": "20px", "padding-bottom": "5px"});
         sideCellTitle.attr("width", "20%");
-        title.hide();
+
 
 
         var cell = $(SetupManager.tdOpen + SetupManager.tdClose);
@@ -188,10 +193,14 @@ var SplashScreen = {
             "border-top-left-radius": "25px"
         });
 
-        cell.attr("width", "50%");
+        cell.attr("width", "40%");
         // cell.css({"padding-right":"50px"});
         cell.attr("align", "center");
 
+//currentQueryParts
+        var queryPartsCell = QueryBucketView.getView();
+        queryPartsCell.hide();
+        row.append(queryPartsCell);
 //submit
         var submitInputButton = $(SetupManager.divOpen + SetupManager.divClose);
         var label = $("<div><text>Submit</text></div>");
@@ -233,6 +242,7 @@ var SplashScreen = {
                 subtext.hide();
                 footerCell2.hide();
                 footerCell3.hide();
+                sideCellTitle.hide();
 
                 tableForSite.animate({
                     height: '5%'
@@ -245,8 +255,10 @@ var SplashScreen = {
                     //  subTable.addClass("SplashFloatLeft");
                     paddingCell.detach();
                     titleRow.hide();
-                    queryPartsRow.toggle();
-                    title.toggle();
+                    queryPartsCell.show();
+                    queryClear.show();
+                    sideCellImageTD.toggle();
+                    accountTD.show();
                     navRow.hide();
 
                     SetupManager.setupSite();
@@ -263,7 +275,10 @@ var SplashScreen = {
             });
         })(cell);
 
-
+//Clear button
+        var queryClear = QueryBucketView.getClearButton();
+        queryClear.hide();
+        row.append(queryClear);
 //advanced button
         var btn = $(SetupManager.divOpen + SetupManager.divClose);
         var label = $("<div><text> Advanced Search</text></div>");
@@ -276,7 +291,7 @@ var SplashScreen = {
             cell.click(function (event) {
                 $('<div id="blanket"></div>').appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
                 var advancedDiv = SplashScreen.setupAdvancedSearch(input, subtext, footerCell2, footerCell3, tableForSite,
-                    cellSubTable, subTable, titleRow, title, btn, paddingCell, navRow);
+                    cellSubTable, subTable, titleRow, sideCellImageTD, btn, paddingCell, navRow, sideCellTitle, accountTD, queryPartsRow);
                 advancedDiv.hide().appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID).fadeIn();
             });
         })(cell);
@@ -307,6 +322,7 @@ var SplashScreen = {
         row.append(paddingCell);
         paddingCell.attr("width", "20%");
 
+        var queryPartsRow = $(SetupManager.trOpen + SetupManager.trClose);
 
 //subtext
         var subtext = $("<div><font color='#2c4961'><text>Search over 10 million Java classes in GitHub</text></font></div>");
@@ -400,12 +416,7 @@ var SplashScreen = {
 //        var facebook = $('<a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">'+
 //        'Share on Facebook</a>');
 //        footerCell4.append(facebook);
-
-        var queryPartsRow = $(SetupManager.trOpen + SetupManager.trClose);
-        subTable.append(queryPartsRow);
-        queryPartsRow.attr("style", "display:none;");
-        queryPartsRow.append(QueryBucketView.getView);
-
+        
         var footerRow3 = $(SetupManager.trOpen + SetupManager.trClose);
         subTable.append(footerRow3);
         var footerCell3 = $(SetupManager.tdOpen + SetupManager.tdClose);
@@ -480,6 +491,7 @@ var SplashScreen = {
                 subtext.hide();
                 footerCell2.hide();
                 footerCell3.hide();
+                sideCellTitle.hide();
                 tableForSite.animate({
                     height: '5%'
 
@@ -499,9 +511,13 @@ var SplashScreen = {
                     paddingCell.hide();
                     navRow.hide();
                     titleRow.hide();
-                    title.toggle();
-                    queryPartsRow.toggle();
+                    sideCellImageTD.toggle();
+                    queryPartsCell.show();
+                    queryClear.show();
                     accountTD.show();
+                    queryPartsCell.show();
+                    queryClear.show();
+
                     btn.height("50%");
                     SetupManager.setupSite();
                     SplashScreen.showing = false;
@@ -537,7 +553,8 @@ var SplashScreen = {
 
     },
 
-    setupAdvancedSearch: function (input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, titleRow, sideCellTitle, btn, paddingCell, navRow) {
+    setupAdvancedSearch: function (input, subtext, footerCell2, footerCell3, tableForSite, cellSubTable, subTable, 
+                                   titleRow, sideCellImageTD, btn, paddingCell, navRow, sideCellTitle, accountTD, queryPartsRow) {
         var div = $(SetupManager.divOpen + SetupManager.divClose);
 
 
@@ -1071,6 +1088,7 @@ var SplashScreen = {
             footerCell2.hide();
             footerCell3.hide();
             navRow.hide();
+            sideCellTitle.hide();
             tableForSite.animate({
                 height: '5%'
 
@@ -1088,9 +1106,10 @@ var SplashScreen = {
             if (SplashScreen.showing) {
                 subTable.addClass("SplashFloatLeft");
                 titleRow.hide();
-                sideCellTitle.toggle();
+                sideCellImageTD.toggle();
                 btn.height("50%");
                 paddingCell.hide();
+                accountTD.show();
                 queryPartsRow.toggle();
                 SetupManager.setupSite();
                 SplashScreen.showing = false;

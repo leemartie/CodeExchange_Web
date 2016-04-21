@@ -21,7 +21,6 @@ var QueryRecommenderView = {
         row.append(cell);
 
         QueryRecommenderView.view.addClass("QueryRecommenderView");
-        QueryRecommenderView.view.height("200px");
 
         QueryRecommenderView.view.addClass("QueryViewTable");
 
@@ -36,11 +35,17 @@ var QueryRecommenderView = {
 
         var colCount = 0;
         var queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
+        var recommendationTitleRow = $(SetupManager.trOpen + SetupManager.trClose);
+        var recommendationValueRow = $(SetupManager.trOpen + SetupManager.trClose);
         var oldType = null;
         var addedHeader = false;
         var divScroll;
         var table;
         var tableRow;
+
+        QueryRecommenderView.view.append(recommendationTitleRow);
+        QueryRecommenderView.view.append(recommendationValueRow);
+
         for(var i = 0; i < QueryRecommenderModel.recommendedQueries.length; i++){
 
 
@@ -52,29 +57,22 @@ var QueryRecommenderView = {
             var score = QueryRecommenderModel.recommendedQueries[i].score;
 
             if(oldType != type){
-                queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
                 var header = $(SetupManager.tdOpen+SetupManager.tdClose);
                 header.attr("colspan","2");
+                header.attr("align", "center");
                 var label = $('<text><font color="black">'+displayType+'</font></text>');
                 header.append(label);
-                queryBucketRow.append(header);
+                recommendationTitleRow.append(header);
                 oldType = type;
 
-                QueryRecommenderView.view.append(queryBucketRow);
-
-                queryBucketRow = $(SetupManager.trOpen + SetupManager.trClose);
-
-                divScroll = $('<div style="overflow-y: auto; overflow-x: hidden; height:50px; width:100%"></div>');
+                divScroll = $('<div style="overflow-y: auto; overflow-x: hidden; height:75px; width:100%"></div>');
                 table = $(SetupManager.tableOpen+SetupManager.tableClose);
-                table.css({"table-layout": "fixed"})
-                tableRow = $(SetupManager.trOpen+SetupManager.trClose);
+                table.addClass("RecommendationTable");
                 divScroll.append(table);
-                table.append(tableRow);
                 var cell = $(SetupManager.tdOpen+SetupManager.tdClose);
                 cell.append(divScroll);
                 cell.attr("colspan","2");
-                queryBucketRow.append(cell);
-                QueryRecommenderView.view.append(queryBucketRow);
+                recommendationValueRow.append(cell);
                 addedHeader = true;
             }
 

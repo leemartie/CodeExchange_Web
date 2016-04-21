@@ -2434,7 +2434,7 @@ var Controller = {
 
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth-$('.FilterSideTD').width();
+				var screenBuffer = screenWidth - 60;
 				var screenHeightBuffer = Controller.previousHeight;
 
                 console.log("[expand] screen width: "+screenWidth);
@@ -2568,9 +2568,8 @@ var Controller = {
 
         $(window).trigger('resize');
         var screenWidth = jQuery(window).width();
-        var screenWidth = jQuery(window).width();
         var screenHeight = jQuery(window).height();
-        var screenBuffer = screenWidth*(4/5)-15;
+        var screenBuffer = screenWidth - 60;
         var screenHeightBuffer = screenHeight*(3/4)-90;
         $('.Grid').width(screenBuffer+44);
         $('.Grid').height(screenHeightBuffer+160);

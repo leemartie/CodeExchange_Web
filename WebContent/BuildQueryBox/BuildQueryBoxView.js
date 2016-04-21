@@ -22,15 +22,15 @@ var BuildQueryBoxView = {
             recommendationsTable.addClass("BucketView");
 
             //title for query recommendations
-            var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
-            var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            titleRow.append(titleCell);
-            var label = $("<text>Result Index</text>");
-            label.addClass("BuildQueryTitle");
-            // titleCell.append($("<hr>"));
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-            recommendationsTable.append(titleRow);
+            // var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
+            // var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            // titleRow.append(titleCell);
+            // var label = $("<text>Result Index</text>");
+            // label.addClass("BuildQueryTitle");
+            // // titleCell.append($("<hr>"));
+            // titleCell.append(label);
+            // titleCell.attr("align", "center");
+            // recommendationsTable.append(titleRow);
 
 
             //query Recommendations
@@ -52,30 +52,30 @@ var BuildQueryBoxView = {
 
 
             //buttons
-            var viewRow = $(SetupManager.trOpen + SetupManager.trClose);
-            var viewCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            viewRow.append(viewCell);
-            viewCell.attr("height", "20%");
-            viewCell.attr("valign", "bottom");
+            // var viewRow = $(SetupManager.trOpen + SetupManager.trClose);
+            // var viewCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            // viewRow.append(viewCell);
+            // viewCell.attr("height", "20%");
+            // viewCell.attr("valign", "bottom");
 
 
-            var buttonTable = $(SetupManager.tableOpen + SetupManager.tableClose);
-            buttonTable.attr("height", "100%");
-            buttonTable.addClass("BucketView");
-            var buttonRow = $(SetupManager.trOpen + SetupManager.trClose);
-            buttonTable.append(buttonRow);
-            var buttonCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            // var buttonTable = $(SetupManager.tableOpen + SetupManager.tableClose);
+            // buttonTable.attr("height", "100%");
+            // buttonTable.addClass("BucketView");
+            // var buttonRow = $(SetupManager.trOpen + SetupManager.trClose);
+            // buttonTable.append(buttonRow);
+            // var buttonCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            //
+            // buttonRow.append(buttonCell);
+            // buttonCell.append(QueryTrailNavView.getView());
+            //
+            // buttonCell.attr("valign", "bottom");
+            // buttonCell.attr("height", "100%");
 
-            buttonRow.append(buttonCell);
-            buttonCell.append(QueryTrailNavView.getView());
-
-            buttonCell.attr("valign", "bottom");
-            buttonCell.attr("height", "100%");
-
-            viewCell.append(buttonTable);
+//            viewCell.append(buttonTable);
 
 
-            view.append(viewRow);
+            // view.append(viewRow);
 
             return view;
 

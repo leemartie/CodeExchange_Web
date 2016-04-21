@@ -18,25 +18,78 @@ var QueryBucketView = {
     queryBucket: $(SetupManager.divOpen+SetupManager.divClose),
     
     getView : function() {
-        var currentQueryContainer = $(SetupManager.tdOpen + SetupManager.tdClose);
-        var currentQueryTable = $(SetupManager.tableOpen + SetupManager.tableClose);
-        currentQueryTable.attr("style", "border-spacing:0");
-        var currentQueryTableRow = $(SetupManager.trOpen + SetupManager.trClose);
         var currentQueryTD = $(SetupManager.tdOpen + SetupManager.tdClose);
-        var currentQueryLabelTD = $(SetupManager.tdOpen + SetupManager.tdClose);
-        currentQueryLabelTD.addClass("CurrentQueryTitle");
-        currentQueryLabelTD.text("Current Query");
-        currentQueryLabelTD.attr("style", "width:15%;");
-        var bucketMaxWidth = jQuery(window).width() * 0.7;
-        currentQueryContainer.attr("colspan", "3");
-        currentQueryContainer.attr("style", "max-width: " + bucketMaxWidth +"px; padding-bottom: 1em;");
-        QueryBucketView.queryBucket.addClass("CurrentQueryBucket");
+        var bucketMaxWidth = jQuery(window).width() * 0.37;
+        QueryBucketView.queryBucket.attr("id", "CurrentQueryBucket");
+        QueryBucketView.queryBucket.attr("style", "max-width: " + bucketMaxWidth +"px;");
         currentQueryTD.append(QueryBucketView.queryBucket);
-        currentQueryTableRow.append(currentQueryLabelTD);
-        currentQueryTableRow.append(currentQueryTD);
-        currentQueryTable.append(currentQueryTableRow);
-        currentQueryContainer.append(currentQueryTable);
-        return currentQueryContainer;
+        return currentQueryTD;
+    },
+
+    getClearButton: function() {
+        var newSearchTD = $(SetupManager.tdOpen + SetupManager.tdClose);
+        newSearchTD.attr("style", "width:6%");
+        var newSearchButton = $(SetupManager.divOpen+SetupManager.divClose);
+        newSearchTD.addClass("ResetButton");
+        newSearchButton.text("Clear");
+        newSearchTD.mouseenter(function(event) {
+            newSearchTD.removeClass("ResetButton");
+            newSearchTD.addClass("ResetButtonHover");
+
+        });
+
+        newSearchTD.mouseleave(function(event) {
+            newSearchTD.removeClass("ResetButtonHover");
+            newSearchTD.addClass("ResetButton");
+
+        });
+        newSearchTD.click(function(event) {
+
+            $(SetupManager.pound+"cellStatus"+0).empty();
+            $(SetupManager.pound+"cellStatus"+1).empty();
+            $(SetupManager.pound+"cellStatus"+2).empty();
+
+            $(SetupManager.pound+"backgroundSave")
+                .append($("#"+SetupManager.expandBtnArray_ID[0]));
+            $(SetupManager.pound+"projectURL"+0).empty();
+            $(SetupManager.pound+"backgroundSave")
+                .append($("#"+SetupManager.expandBtnArray_ID[1]));
+            $(SetupManager.pound+"projectURL"+1).empty();
+            $(SetupManager.pound+"backgroundSave")
+                .append($("#"+SetupManager.expandBtnArray_ID[2]));
+            $(SetupManager.pound+"projectURL"+2).empty();
+
+
+            //no need for a new session if the current query is empty
+            if(QueryBucketModel.stackOfQueries.length != 0) {
+                QueryBucketModel.removeAll();
+                QueryBucketView.update();
+                Controller.clearAllCode();
+                Controller.setStatus("Let's find some code");
+                $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.NEW_QUERY_BUTTON_CLICKED, null);
+            }
+
+
+
+            if(Controller.gridOn){
+                Controller.showGrid();
+                var innerDiv = $("<div style='height:100%; " +
+                    "display: table-cell; align: center; vertical-align: middle; border: 0px solid black;'></div>");
+                innerDiv.append(text);
+                var gridButton =  $("<div style='display: table;'>"+
+                    SetupManager.divClose);
+                gridButton.append(innerDiv);
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
+
+            }
+
+        });
+        newSearchTD.append(newSearchButton);
+        return newSearchTD;
     },
 
     update  :   function(){

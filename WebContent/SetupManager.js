@@ -157,6 +157,8 @@ var SetupManager = {
         formOpen        :   "<form>",
         formClose       :   "</form>",
         image           :   "<img/>",
+        span            :   "<span>",
+        spanClose       :   "</span>",
 
 		//attributes
 		ID_attr				:	"id",
@@ -218,11 +220,11 @@ var SetupManager = {
             filterSideTD.append(BuildQueryBoxView.getView());
            // filterSideTD.height("70%");
 
-
-
+            var resultsRow = $(SetupManager.trOpen+SetupManager.trClose);
+            tableForSite.append(resultsRow);
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-            headerRow.append(resultTD);
+            resultsRow.append(resultTD);
 			resultTD.addClass("ResultsBack");
             resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID);
             resultTD.height("70%");
@@ -481,7 +483,7 @@ var SetupManager = {
 			$(window).resize(function() {
 				var screenWidth = jQuery(window).width();
 				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth*(4/5)-15;
+				var screenBuffer = screenWidth - 60;
 				var screenHeightBuffer = screenHeight*(3/4)-90;
 
                 if(!Controller.isExpanded)
@@ -514,9 +516,6 @@ var SetupManager = {
 
 
                 $('.QueryBucket').height(screenHeightBuffer *(1/4));
-
-				$('.FilterSideTD').width(screenWidth*(1/5));
-                $('.FilterSideTD').height(screenHeightBuffer);
 
                 $('.Grid').width(screenBuffer);
                 $('.Grid').height(screenHeightBuffer);
