@@ -93,8 +93,8 @@ var QueryBucketView = {
     },
 
     update  :   function(){
-        
-        QueryBucketView.queryBucket.empty();
+
+        $("#CurrentQueryBucket .mCSB_container").empty();
 
         for(var i = QueryBucketModel.stackOfQueries.length-1; i >= 0; i--){
 
@@ -110,15 +110,14 @@ var QueryBucketView = {
 
             var queryView = new QueryView(displayType,type,value, valueIndex, i,active, displayValue);
 
-            QueryBucketView.queryBucket.append(queryView.getView());
+            $("#CurrentQueryBucket .mCSB_container").append(queryView.getView());
+            $("#CurrentQueryBucket").mCustomScrollbar("update");
             
             if(!active){
                 queryView.setDeactive()
             }else{
                 queryView.setActive();
             }
-
-
         }
     }
 

@@ -65,7 +65,8 @@ var QueryRecommenderView = {
                 recommendationTitleRow.append(header);
                 oldType = type;
 
-                divScroll = $('<div style="overflow-y: auto; overflow-x: hidden; height:75px; width:100%"></div>');
+                divScroll = $(SetupManager.divOpen+SetupManager.divClose);
+                divScroll.addClass("RecommendationContainer");
                 table = $(SetupManager.tableOpen+SetupManager.tableClose);
                 table.addClass("RecommendationTable");
                 divScroll.append(table);

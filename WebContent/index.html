@@ -10,6 +10,7 @@
     <link href="jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="jquery-ui-1.10.3.custom/development-bundle/demos/demos.css" type="text/css">
+    <link rel="stylesheet" href="jquery.mCustomScrollbar.min.css" />
 
 
     <title>CodeExchange</title>
@@ -67,6 +68,7 @@
 <script type="text/javascript" src="RecommendationManager.js"></script>
 <script type="text/javascript" src="WheelLandscape.js"></script>
 <script type="text/javascript" src="fb_all.js"></script>
+<script type="text/javascript" src="jquery.mCustomScrollbar.concat.min.js"></script>
 
 <script>
 
@@ -751,6 +753,12 @@ td {
 
 }
 
+#CurrentQueryBucket .mCSB_container {
+
+    margin-bottom: 10px;
+
+}
+
 
 
 .QueryBucketOverflow{
@@ -982,16 +990,12 @@ td {
     border: 1px solid;
     border-radius: 5px;
     border-color: darkgray;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #FFBF00;
     height:auto;
     padding: 4px;
     word-wrap:break-word;
-    margin: 5px;
+    margin: 10px 5px 0px 5px;
 
 }
 
@@ -1003,16 +1007,12 @@ td {
     border: 1px solid;
     border-radius: 5px;
     border-color: darkgray;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #FFBF00;
     word-wrap:break-word;
     height:auto;
     padding: 4px;
-    margin: 5px;
+    margin: 10px 5px 0px 5px;
 
 }
 
@@ -1024,17 +1024,13 @@ td {
     border: 1px solid;
     border-radius: 5px;
     border-color: darkgray;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #FFBF00;
     height:auto;
     word-wrap:break-word;
     opacity:0.4;
     padding: 4px;
-    margin: 5px;
+    margin: 10px 5px 0px 5px;
 
 }
 
@@ -1046,17 +1042,13 @@ td {
 
     font-size: 12px;
     border: 1px solid;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     height:auto;
     border-color: black;
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #888888;
     padding: 4px;
-    margin: 5px;
+    margin: 10px 5px 0px 5px;
 
 }
 
@@ -2093,6 +2085,17 @@ a.btn_red {color: #FFF;}
 
 .RecommendationTable {
     table-layout: fixed;
+}
+
+.RecommendationContainer {
+    height:75px;
+    width:100%
+}
+
+.RecommendationContainer .mCSB_container {
+
+    margin-right: 10px;
+
 }
 
 

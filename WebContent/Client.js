@@ -39,6 +39,27 @@
         //needs to happen after splash screen
 		//SetupManager.setupSite();
 
+        $('#CurrentQueryBucket').mCustomScrollbar({
+                axis:"x",
+                theme:"dark-thin",
+                advanced:{
+                    updateOnContentResize: true,
+                    autoExpandHorizontalScroll: true
+                }
+            }
+        );
+
+
+        $('.RecommendationContainer').mCustomScrollbar({
+                live: "on",
+                axis:"y",
+                theme:"dark-thin",
+                advanced:{
+                    updateOnContentResize: true,
+                    autoExpandScroll: true
+                }
+            }
+        );
 	}
 
     function getClientId(){
