@@ -124,7 +124,7 @@ var SplashScreen = {
         var sideCellImageTD = $(SetupManager.tdOpen + SetupManager.tdClose);
 
         
-        var title = $("<img src='CodeWhale.png'/>");
+        var title = $("<img src='http://codeexchange.ics.uci.edu/CodeWhale.png'/>");
         sideCellImageTD.append(title);
         sideCellImageTD.addClass("CodeWhaleLogo");
         sideCellImageTD.hide();
