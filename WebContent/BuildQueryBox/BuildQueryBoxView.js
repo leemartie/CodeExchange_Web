@@ -113,6 +113,9 @@ var BuildQueryBoxView = {
             //empty so ignore...
             if(query.value == "" || query.value == ".()" || query.value == ":.()")
                 return;
+            if(Controller.isExpanded) {
+                Controller.collapseCell(Controller.expandedCell);
+            }
 
 
             if(QueryBucketModel.inStack(query) == false){

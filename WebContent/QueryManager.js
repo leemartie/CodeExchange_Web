@@ -72,11 +72,16 @@ var QueryManager = {
 	 */
 	submitQuery : function() {
 		Controller.setStatus("SEARCHING...");
-
-		QueryManager.currentStart = 0;
-
-
-
+        
+        QueryManager.currentStart = 0;
+        SetupManager.currentCell = 0;
+        SetupManager.currentRow = 0;
+        
+        $(SetupManager.pound+SetupManager.resultTable_ID).empty();
+        SetupManager.resultPreArray_ID.length = 0;
+        //make cells
+        SetupManager.makeTableCells();
+        
 
 		var url = URLQueryCreator.getQueryURL('on_data');
 
@@ -385,7 +390,7 @@ var QueryManager = {
 	nextResult : function() {
 
 		var url = URLQueryCreator.getQueryURL('on_nextData');
-
+        Controller.setStatus("LOADING...");
 		// alert(url);
 		$.getJSON(url);
 //LOG IT
@@ -614,130 +619,122 @@ function retry(data){
 function on_nextData(data) {
 	var docs = data.response.docs;
     var expandedChildren = data.expanded;
-	// lets clear all the displayed results
-	Controller.clearAllCode();
-
-    $(SetupManager.pound+"backgroundSave")
-        .append($("#"+SetupManager.expandBtnArray_ID[0]));
-    $(SetupManager.pound+"projectURL"+0).empty();
-    $(SetupManager.pound+"backgroundSave")
-        .append($("#"+SetupManager.expandBtnArray_ID[1]));
-    $(SetupManager.pound+"projectURL"+1).empty();
-    $(SetupManager.pound+"backgroundSave")
-        .append($("#"+SetupManager.expandBtnArray_ID[2]));
-    $(SetupManager.pound+"projectURL"+2).empty();
 
     var total = 'Found ' + data.response.numFound + ' results';
 	// let's populate the table with the results
+    
+    if(data.response.docs.length > 0) {
+        SetupManager.makeTableCells();
+        $(window).trigger('resize');
+        var successCount = 0;
+        $.each(docs,
+            function(i, item) {
+
+                if(successCount < SetupManager.numberOfCells){
 
 
-    var successCount = 0;
-    $.each(docs,
-        function(i, item) {
+                    var codeURL = String(item.snippet_address);
 
-            if(successCount < 3){
+                    var url = "http://codeexchange.ics.uci.edu/getPage.php?url=" + codeURL + "&callback=?&json.wrf=displayCode";
+                    $.getJSON(url).fail(function (data, textStatus, jqXHR) {
 
+                    }).success(function (data, textStatus, jqXHR) {
+                        $.each(data, function (index, element) {
+                            if (successCount < SetupManager.numberOfCells) {
+                                //we are leaking into the next page so need to increase page offset
 
-                var codeURL = String(item.snippet_address);
+                                var code = element;
 
-                var url = "http://codeexchange.ics.uci.edu/getPage.php?url=" + codeURL + "&callback=?&json.wrf=displayCode";
-                $.getJSON(url).fail(function (data, textStatus, jqXHR) {
+                                var resultLength = SetupManager.resultPreArray_ID.length;
+                                var metaLength = SetupManager.metaDivArray_ID.length;
 
-                }).success(function (data, textStatus, jqXHR) {
-                    $.each(data, function (index, element) {
-                        if (successCount < 3) {
-                            //we are leaking into the next page so need to increase page offset
-
-                            var code = element;
-
-                            var resultLength = SetupManager.resultPreArray_ID.length;
-                            var metaLength = SetupManager.metaDivArray_ID.length;
-
-                            var url = String(item.snippet_address);
+                                var url = String(item.snippet_address);
 
 
+                                var selectedCell = (SetupManager.currentCell - SetupManager.numberOfCells) + successCount;
 
+                                Controller.setCodeFromURL(selectedCell, SetupManager.resultPreArray_ID[selectedCell],
+                                    url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
+                                    expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
+                                    item.snippet_project_address, item.snippet_this_version, code);
+                                Controller.initializeExpandButtonListeners(selectedCell);
 
-                            Controller.setCodeFromURL(successCount, SetupManager.resultPreArray_ID[successCount],
-                                url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
-                                expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
-                                item.snippet_project_address, item.snippet_this_version, code);
-
-                            $("#"+SetupManager.metaDivArray_ID[successCount]).empty();
+                                $("#"+SetupManager.metaDivArray_ID[selectedCell]).empty();
 //                        var header = $("<div style='display: table-caption; caption-side:top;padding: 2px;text-align: left'>Refine by Critique</div>");
 //                        $("#"+SetupManager.metaDivArray_ID[successCount]).append(header);
 
 
-                            //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
-                            Controller.setCritics(SetupManager.metaDivArray_ID[successCount], item.snippet_size,
-                                item.snippet_path_complexity_class_sum,item.snippet_imports_count,
-                                item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
-                                item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
-                                item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner,
-                                successCount);
+                                //                   Controller.setSizeReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_size);
+                                Controller.setCritics(SetupManager.metaDivArray_ID[selectedCell], item.snippet_size,
+                                    item.snippet_path_complexity_class_sum,item.snippet_imports_count,
+                                    item.snippet_project_name, item.snippet_project_id, item.snippet_author_name,
+                                    item.snippet_imports,item.snippet_variable_names_delimited, item.snippet_author_avatar,
+                                    item.snippet_changed_code_churn, item.snippet_class_name_delimited, item.snippet_project_owner,
+                                    selectedCell);
 
 //                    Controller.setComplexityReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_path_complexity_class_sum);
 //                    Controller.setImportsReformulation(SetupManager.metaDivArray_ID[successCount], item.snippet_imports_count);
-         //                   Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
-                            if(successCount == 0){
-                                PageModel.codeResult1.complexity = item.snippet_path_complexity_class_sum;
-                                PageModel.codeResult1.size = item.snippet_size;
-                                PageModel.codeResult1.numberOfImports = item.snippet_imports_count;
-                                PageModel.codeResult1.projectName = item.snippet_project_name;
-                                PageModel.codeResult1.projectId = item.snippet_project_id;
-                                PageModel.codeResult1.author = item.snippet_author_name;
-                                PageModel.codeResult1.imports = item.snippet_imports;
-                                PageModel.codeResult1.variableNames = item.snippet_variable_names_delimited;
-                                PageModel.codeResult1.avatar = item.snippet_author_avatar;
-                                PageModel.codeResult1.churn = item.snippet_changed_code_churn;
-                                PageModel.codeResult1.name = item.snippet_class_name_delimited;
-                                PageModel.codeResult1.owner = item.snippet_project_owner;
-                            }else if(successCount == 1){
-                                PageModel.codeResult2.complexity = item.snippet_path_complexity_class_sum;
-                                PageModel.codeResult2.size = item.snippet_size;
-                                PageModel.codeResult2.numberOfImports = item.snippet_imports_count;
-                                PageModel.codeResult2.projectName = item.snippet_project_name;
-                                PageModel.codeResult2.projectId = item.snippet_project_id;
-                                PageModel.codeResult2.author = item.snippet_author_name;
-                                PageModel.codeResult2.imports = item.snippet_imports;
-                                PageModel.codeResult2.variableNames = item.snippet_variable_names_delimited;
-                                PageModel.codeResult2.avatar = item.snippet_author_avatar;
-                                PageModel.codeResult2.churn = item.snippet_changed_code_churn;
-                                PageModel.codeResult2.name = item.snippet_class_name_delimited;
-                                PageModel.codeResult2.owner = item.snippet_project_owner;
-                            }else if(successCount == 2){
-                                PageModel.codeResult3.complexity = item.snippet_path_complexity_class_sum;
-                                PageModel.codeResult3.size = item.snippet_size;
-                                PageModel.codeResult3.numberOfImports = item.snippet_imports_count;
-                                PageModel.codeResult3.projectName = item.snippet_project_name;
-                                PageModel.codeResult3.projectId = item.snippet_project_id;
-                                PageModel.codeResult3.author = item.snippet_author_name;
-                                PageModel.codeResult3.imports = item.snippet_imports;
-                                PageModel.codeResult3.variableNames = item.snippet_variable_names_delimited;
-                                PageModel.codeResult3.avatar = item.snippet_author_avatar;
-                                PageModel.codeResult3.churn = item.snippet_changed_code_churn;
-                                PageModel.codeResult3.name = item.snippet_class_name_delimited;
-                                PageModel.codeResult3.owner = item.snippet_project_owner;
+                                //                   Controller.setProjectName(SetupManager.metaDivArray_ID[successCount], item.snippet_project_name, item.snippet_project_id);
+                                if(successCount == 0){
+                                    PageModel.codeResult1.complexity = item.snippet_path_complexity_class_sum;
+                                    PageModel.codeResult1.size = item.snippet_size;
+                                    PageModel.codeResult1.numberOfImports = item.snippet_imports_count;
+                                    PageModel.codeResult1.projectName = item.snippet_project_name;
+                                    PageModel.codeResult1.projectId = item.snippet_project_id;
+                                    PageModel.codeResult1.author = item.snippet_author_name;
+                                    PageModel.codeResult1.imports = item.snippet_imports;
+                                    PageModel.codeResult1.variableNames = item.snippet_variable_names_delimited;
+                                    PageModel.codeResult1.avatar = item.snippet_author_avatar;
+                                    PageModel.codeResult1.churn = item.snippet_changed_code_churn;
+                                    PageModel.codeResult1.name = item.snippet_class_name_delimited;
+                                    PageModel.codeResult1.owner = item.snippet_project_owner;
+                                }else if(successCount == 1){
+                                    PageModel.codeResult2.complexity = item.snippet_path_complexity_class_sum;
+                                    PageModel.codeResult2.size = item.snippet_size;
+                                    PageModel.codeResult2.numberOfImports = item.snippet_imports_count;
+                                    PageModel.codeResult2.projectName = item.snippet_project_name;
+                                    PageModel.codeResult2.projectId = item.snippet_project_id;
+                                    PageModel.codeResult2.author = item.snippet_author_name;
+                                    PageModel.codeResult2.imports = item.snippet_imports;
+                                    PageModel.codeResult2.variableNames = item.snippet_variable_names_delimited;
+                                    PageModel.codeResult2.avatar = item.snippet_author_avatar;
+                                    PageModel.codeResult2.churn = item.snippet_changed_code_churn;
+                                    PageModel.codeResult2.name = item.snippet_class_name_delimited;
+                                    PageModel.codeResult2.owner = item.snippet_project_owner;
+                                }else if(successCount == 2){
+                                    PageModel.codeResult3.complexity = item.snippet_path_complexity_class_sum;
+                                    PageModel.codeResult3.size = item.snippet_size;
+                                    PageModel.codeResult3.numberOfImports = item.snippet_imports_count;
+                                    PageModel.codeResult3.projectName = item.snippet_project_name;
+                                    PageModel.codeResult3.projectId = item.snippet_project_id;
+                                    PageModel.codeResult3.author = item.snippet_author_name;
+                                    PageModel.codeResult3.imports = item.snippet_imports;
+                                    PageModel.codeResult3.variableNames = item.snippet_variable_names_delimited;
+                                    PageModel.codeResult3.avatar = item.snippet_author_avatar;
+                                    PageModel.codeResult3.churn = item.snippet_changed_code_churn;
+                                    PageModel.codeResult3.name = item.snippet_class_name_delimited;
+                                    PageModel.codeResult3.owner = item.snippet_project_owner;
+                                }
+
+                                successCount++;
                             }
 
+                        });//each
+
+                    });//success
+
+                }
+
+            }//function
+        );
+        Controller.setStatus("DONE - " + total);
+    } else {
+        Controller.setStatus("DONE");
+    }
 
 
-                            successCount++;
-                        }
-
-                    });//each
-
-                });//success
-
-            }
-
-        }//function
-    );
 
 
-
-
-	Controller.setStatus("DONE");
 	clearInterval(SetupManager.rotateStatusVar);
 
     facetCompleteCallBack(data);
@@ -826,15 +823,11 @@ return true;
 // call back function when we get json
 function on_data(data) {
 	// alert("[on_data]");
-    $(SetupManager.pound+"backgroundSave")
-        .append($("#"+SetupManager.expandBtnArray_ID[0]));
-    $(SetupManager.pound+"projectURL"+0).empty();
-    $(SetupManager.pound+"backgroundSave")
-        .append($("#"+SetupManager.expandBtnArray_ID[1]));
-    $(SetupManager.pound+"projectURL"+1).empty();
-    $(SetupManager.pound+"backgroundSave")
-        .append($("#"+SetupManager.expandBtnArray_ID[2]));
-    $(SetupManager.pound+"projectURL"+2).empty();
+    for(var i=0; i < SetupManager.numberOfCells; i++) {
+        $(SetupManager.pound+"backgroundSave")
+            .append($("#"+SetupManager.expandBtnArray_ID[i]));
+        $(SetupManager.pound+"projectURL"+i).empty();
+    }
 
     var docs = data.response.docs;
 
@@ -859,7 +852,7 @@ function on_data(data) {
     $.each(docs,
         function(i, item) {
 
-            if(successCount < 3){
+            if(successCount < SetupManager.numberOfCells){
 
 
             var codeURL = String(item.snippet_address);
@@ -871,7 +864,7 @@ function on_data(data) {
 
             }).success(function (data, textStatus, jqXHR) {
                 $.each(data, function (index, element) {
-                    if (successCount < 3) {
+                    if (successCount < SetupManager.numberOfCells) {
 
                     var code = element;
 
@@ -886,6 +879,8 @@ function on_data(data) {
                         url, item.snippet_address_upper_bound, item.snippet_address_lower_bound, item.snippet_method_invocations,
                         expandedChildren, item.id, item.snippet_extends, item.snippet_implements,
                         item.snippet_project_address, item.snippet_this_version, code);
+                     
+                    Controller.initializeExpandButtonListeners(successCount);    
 
                         $("#"+SetupManager.metaDivArray_ID[successCount]).empty();
 //                        var header = $("<div style='display: table-caption; caption-side:top;padding: 2px;text-align: left'>Refine by Critique</div>");

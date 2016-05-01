@@ -67,6 +67,7 @@ var QueryRecommenderView = {
 
                 divScroll = $(SetupManager.divOpen+SetupManager.divClose);
                 divScroll.addClass("RecommendationContainer");
+                divScroll.attr("style", "height:" + SetupManager.screenHeight * 0.12 + "px");
                 table = $(SetupManager.tableOpen+SetupManager.tableClose);
                 table.addClass("RecommendationTable");
                 divScroll.append(table);

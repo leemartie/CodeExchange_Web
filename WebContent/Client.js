@@ -60,6 +60,28 @@
                 }
             }
         );
+        
+        $('.ResultContainer').mCustomScrollbar({
+                live: "on",
+                axis:"y",
+                theme:"dark-thick",
+                advanced:{
+                    updateOnContentResize: true,
+                    autoExpandScroll: true
+                },
+                callbacks:{
+                    onTotalScroll:function(){ 
+                        if(QueryManager.currentQuery !== "") {
+                            SetupManager.currentRow;
+                            QueryManager.currentStart += SetupManager.numberOfCells;
+                            QueryManager.nextResult();
+                        }
+                    },
+                    onTotalScrollOffset:50,
+                    alwaysTriggerOffsets:false
+                }
+            }
+        );
 	}
 
     function getClientId(){

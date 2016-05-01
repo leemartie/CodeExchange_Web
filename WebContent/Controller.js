@@ -48,6 +48,7 @@ var Controller = {
         editorToPackageQuery       : new Array(),
 
         isExpanded : false,
+        expandedCell : "",
 
         currentURLs             : new Array(),
 
@@ -2417,42 +2418,30 @@ var Controller = {
 		 * FUNCTION
 		 */
 		expandCell	:	function(cell){
+            
 
-			 // $(SetupManager.pound+cell).css({position:'relative'});
-	         //turn the other cells off
-	          Controller.toggleCells(cell);
-
+            $('<div id="blanket"></div>').appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID);
+            var resultDiv = $(SetupManager.divOpen + SetupManager.divClose);
+            resultDiv.addClass("ExpandedResult");
+            resultDiv.css({
+                "position": "fixed",
+                "width": (($(document).width() * 0.75)),
+                "overflow": "hidden",
+                "height": "auto",
+                "z-index": "9002",
+                "top": "0px",
+                "left": (($(document).width() * 0.15))
+            });
             var id = cell;
-			  var number = id.charAt(id.length-1);
-			  var result = SetupManager.resultPreArray_ID[number];
-
-			Controller.previousHeight = $(SetupManager.pound+result).height();
-            Controller.previousWidth = $(SetupManager.pound+result).width();
-            Controller.previousX = $(SetupManager.pound+result).left;
-            Controller.previousY = $(SetupManager.pound+result).top;
-
-
-				var screenWidth = jQuery(window).width();
-				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth - 60;
-				var screenHeightBuffer = Controller.previousHeight;
-
-                console.log("[expand] screen width: "+screenWidth);
-                console.log("[expand] filter width: "+$('.FilterSideTD').width());
-
-	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
-
-
-		            width:  screenBuffer+6,
-		            height: screenHeightBuffer,
-		            left:	'0px',
-		            top:	'0px'
-		          }, 0 );
-
-            var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
-            editor.resize();
-
+            
+			var number = id.match(/\d/g).join("");
+			var result = SetupManager.resultPreArray_ID[number];
+            var cellResult = SetupManager.cellDivArray_ID[number];
+            resultDiv.append($(SetupManager.pound+cellResult));
+            resultDiv.hide().appendTo(SetupManager.pound + SetupManager.entireSiteDiv_ID).fadeIn();
+            $(SetupManager.pound + SetupManager.resultPreArray_ID[number]).css("width", "inherit");
             Controller.isExpanded = true;
+            Controller.expandedCell = cell;
 
 		},
 
@@ -2460,53 +2449,17 @@ var Controller = {
 		 * FUNCTION
 		 */
 		collapseCell	:	function(cell){
-			//$(SetupManager.pound+cell).css({position:'absolute'});
 
-			var currentX = $(SetupManager.pound+cell).position().left;
-			var currentY = $(SetupManager.pound+cell).position().top;
-
-	         //turn the other cells on
-	         Controller.toggleCells(cell);
-
-
-			  var id = cell;
-			  var number = id.charAt(id.length-1);
-			  var result = SetupManager.resultPreArray_ID[number];
-
-
-
-	          $( SetupManager.pound+SetupManager.resultPreArray_ID[number] ).animate({
-
-
-		            width: Controller.previousWidth,
-		            height: Controller.previousHeight,
-		            left:	Controller.previousX+'px',
-		            top:	Controller.previousY+'px'
-		          }, 0 );
-
-
-
+            var id = cell;
+            var number = id.match(/\d/g).join("");;
+            var result = SetupManager.resultPreArray_ID[number];
+            var cellResult = SetupManager.cellDivArray_ID[number];
+            var resultTD = "td" + number;
+            $(SetupManager.pound + resultTD).append($(SetupManager.pound + cellResult));
+            $("#blanket").remove();
+            $(".ExpandedResult").remove();
             Controller.isExpanded = false;
-
-            //important to get the resizing right..
-            $(window).trigger('resize');
-            var editor = ace.edit(SetupManager.resultPreArray_ID[number]);
-            editor.resize();
-
-            for(var i = 0; i <SetupManager.resultEditors.length; i++){
-                var editor = ace.edit(SetupManager.resultPreArray_ID[i]);
-                editor.resize();
-
-//                if(i> 0 && QueryManager.totalResuls == 1){
-//                    editor.session.setValue("");
-//                }else if(i > 0 && QueryManager.totalResuls == 2){
-//                    editor.session.setValue("");
-//                }
-
-            }
-
-
-
+            Controller.expandedCell = "";
 		},
 
 		/**
@@ -2574,6 +2527,63 @@ var Controller = {
         $('.Grid').width(screenBuffer+44);
         $('.Grid').height(screenHeightBuffer+160);
 
+    },
+    
+    initializeExpandButtonListeners : function(index) {
+
+        //listener for expand button
+        $(SetupManager.pound+SetupManager.expandBtnArray_ID[index]).attr("title","Expand Window");
+        $(SetupManager.pound+SetupManager.expandBtnArray_ID[index]).click(function(event) {
+            $(this).removeClass("ExpandButtonHover");
+            $(this).addClass("ExpandButton");
+
+            //use event.currentTarget.id for some resson event.target.id does not work
+            var id = event.currentTarget.id;
+            var number = id.match(/\d/g).join("");
+            var cellSelected = Controller.getExpandBtnToCell(number);
+
+            if ( !Controller.isExpanded ) {
+                //expand the cell
+                //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","10");
+
+                $(this).attr("title","Collapse Window");
+                Controller.expandCell(cellSelected);
+                $(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
+                $(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
+                append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/collapse.png" width="30"></img>')).width("30");
+
+
+//LOG IT
+                if(number == 0)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL1,null);
+                else if (number == 1)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
+                else if (number == 2)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
+
+            } else {
+                $(this).attr("title","Expand Window");
+
+                //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","0");
+
+                Controller.collapseCell(cellSelected);
+                $(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
+
+                $(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
+                append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
+                //LOG IT
+                if(number == 0)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL1,null);
+                else if (number == 1)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL2,null);
+                else if (number == 2)
+                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL3,null);
+
+
+
+            }
+
+        });
     }
 
 

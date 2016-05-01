@@ -45,21 +45,13 @@ var QueryBucketView = {
         });
         newSearchTD.click(function(event) {
 
-            $(SetupManager.pound+"cellStatus"+0).empty();
-            $(SetupManager.pound+"cellStatus"+1).empty();
-            $(SetupManager.pound+"cellStatus"+2).empty();
-
-            $(SetupManager.pound+"backgroundSave")
-                .append($("#"+SetupManager.expandBtnArray_ID[0]));
-            $(SetupManager.pound+"projectURL"+0).empty();
-            $(SetupManager.pound+"backgroundSave")
-                .append($("#"+SetupManager.expandBtnArray_ID[1]));
-            $(SetupManager.pound+"projectURL"+1).empty();
-            $(SetupManager.pound+"backgroundSave")
-                .append($("#"+SetupManager.expandBtnArray_ID[2]));
-            $(SetupManager.pound+"projectURL"+2).empty();
-
-
+            for( var i=0; i < SetupManager.currentCell; i++) {
+                $(SetupManager.pound+"cellStatus"+i).empty();
+                $(SetupManager.pound+"backgroundSave")
+                    .append($("#"+SetupManager.expandBtnArray_ID[i]));
+                $(SetupManager.pound+"projectURL" +i) .empty();
+            }
+            
             //no need for a new session if the current query is empty
             if(QueryBucketModel.stackOfQueries.length != 0) {
                 QueryBucketModel.removeAll();
@@ -70,6 +62,8 @@ var QueryBucketView = {
 //LOG IT
                 UsageLogger.addEvent(UsageLogger.NEW_QUERY_BUTTON_CLICKED, null);
             }
+            
+            QueryManager.currentQuery = "";
 
 
 
