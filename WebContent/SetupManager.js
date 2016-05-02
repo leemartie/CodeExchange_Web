@@ -157,6 +157,8 @@ var SetupManager = {
         formOpen        :   "<form>",
         formClose       :   "</form>",
         image           :   "<img/>",
+        span            :   "<span>",
+        spanClose       :   "</span>",
 
 		//attributes
 		ID_attr				:	"id",
@@ -165,8 +167,10 @@ var SetupManager = {
 		placeholder_attr	:	"placeholder",
 		columns				:	"cols",
 		rows				:	"rows",
-		numberOfCells		:	3,
-		numberOfCellsPerRow	:	3,
+		numberOfCells		:	4,
+		numberOfCellsPerRow	:	2,
+        currentCell         :   0,
+        currentRow          :   0,
 		
 		//pound for finding by id
 		pound		:	"#",
@@ -177,6 +181,8 @@ var SetupManager = {
 		sideBuffer	:	50,
 
         cellStatus : new Array(),
+        screenWidth : jQuery(window).width(),
+        screenHeight : jQuery(window).height(),
 		
 		/**
 		 * FUNCTION: create the site visual structures and listeners
@@ -218,12 +224,20 @@ var SetupManager = {
             filterSideTD.append(BuildQueryBoxView.getView());
            // filterSideTD.height("70%");
 
-
-
+            var resultsRow = $(SetupManager.trOpen+SetupManager.trClose);
+            tableForSite.append(resultsRow);
+            
+            var resultsContainer = $(SetupManager.divOpen + SetupManager.divClose);
+            resultsContainer.addClass("ResultContainer");
+            var resultContainerHeight = screenHeight * 0.65;
+            resultsContainer.attr("style", "height:" + resultContainerHeight + "px");
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
-            headerRow.append(resultTD);
+            resultsRow.append(resultTD);
+            resultTD.append(resultsContainer);
 			resultTD.addClass("ResultsBack");
+            resultTD.attr("valign","top");
+            resultTD.attr("align","center");
             resultTD.attr(SetupManager.ID_attr,SetupManager.resultsTD_ID);
             resultTD.height("70%");
 
@@ -236,9 +250,7 @@ var SetupManager = {
 			//set id
 			tableOfResults.attr(SetupManager.ID_attr,SetupManager.resultTable_ID);
 			//append to entire site
-			resultTD.append(tableOfResults);
-            resultTD.attr("valign","top");
-            resultTD.attr("align","center");
+            resultsContainer.append(tableOfResults);
 
             QueryGridView.setup();
             resultTD.append(QueryGridView.grid);
@@ -246,23 +258,20 @@ var SetupManager = {
 //
 			tableOfResults.addClass("ResultTable");
 
-			//make cells
-			SetupManager.makeTableCells();
-
-            //make page navigation
-            var tableOfPageNavigation = $(SetupManager.tableOpen+SetupManager.tableClose);
-            var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
-            //set id
-            pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
-            pageNavigation.attr("valign","top");
-            pageNavigation.attr("align","right");
-            pageNavigation.attr("width","50%");
-            pageNavigation.addClass("PageNavigation");
-            // append
-            resultTD.append(tableOfPageNavigation);
-            var pageNavigationRow = $(SetupManager.trOpen+SetupManager.trClose);
-            tableOfPageNavigation.append(pageNavigationRow);
-            pageNavigationRow.append(pageNavigation);
+            // //make page navigation
+            // var tableOfPageNavigation = $(SetupManager.tableOpen+SetupManager.tableClose);
+            // var pageNavigation = $(SetupManager.tdOpen+SetupManager.tdClose);
+            // //set id
+            // pageNavigation.attr(SetupManager.ID_attr, SetupManager.pageNavigationDiv_ID);
+            // pageNavigation.attr("valign","top");
+            // pageNavigation.attr("align","right");
+            // pageNavigation.attr("width","50%");
+            // pageNavigation.addClass("PageNavigation");
+            // // append
+            // resultTD.append(tableOfPageNavigation);
+            // var pageNavigationRow = $(SetupManager.trOpen+SetupManager.trClose);
+            // tableOfPageNavigation.append(pageNavigationRow);
+            // pageNavigationRow.append(pageNavigation);
 
             //--row for status
 //            var statusTable = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -418,84 +427,23 @@ var SetupManager = {
             //  footerCell3.attr("width","30%");
             footerCell3.attr("align","center");
 
-
-
-//listener for expand button
-			var collapsed = true;
-            $(".Expand").attr("title","Expand Window");
-			$(".Expand").click(function(event) {
-                $(".Expand").removeClass("ExpandButtonHover");
-                $(".Expand").addClass("ExpandButton");
-
-        	//use event.currentTarget.id for some resson event.target.id does not work
-			  var id = event.currentTarget.id;
-			  var number = id.charAt(id.length-1);
-	          var cellSelected = Controller.getExpandBtnToCell(number);
-
-	        if ( collapsed ) {
-		      //expand the cell
-              //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","10");
-
-                $(".Expand").attr("title","Collapse Window");
-	        	Controller.expandCell(cellSelected);
-	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
-	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
-				append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/collapse.png" width="30"></img>')).width("30");
-
-
-//LOG IT
-                if(number == 0)
-                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL1,null);
-                else if (number == 1)
-                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
-                else if (number == 2)
-                    UsageLogger.addEvent(UsageLogger.WINDOW_EXPAND_CELL2,null);
-
-	        } else {
-                $(".Expand").attr("title","Expand Window");
-
-              //  $(SetupManager.pound+SetupManager.resultTable_ID).attr("cellspacing","0");
-
-	        	Controller.collapseCell(cellSelected);
-	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).empty();
-
-	        	$(SetupManager.pound+SetupManager.expandBtnArray_ID[number]).text("").
-				append($('<img align="middle" height="30" src="http://codeexchange.ics.uci.edu/expand.png" width="30"></img>')).width("30");
-                //LOG IT
-                if(number == 0)
-                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL1,null);
-                else if (number == 1)
-                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL2,null);
-                else if (number == 2)
-                    UsageLogger.addEvent(UsageLogger.WINDOW_COLLAPSE_CELL3,null);
-
-
-
-	            }
-	        collapsed = !collapsed;
-
-	      });
-
-
 //resize function called when resize event happens
 			$(window).resize(function() {
-				var screenWidth = jQuery(window).width();
-				var screenHeight = jQuery(window).height();
-				var screenBuffer = screenWidth*(4/5)-15;
+				var screenBuffer = screenWidth - 60;
 				var screenHeightBuffer = screenHeight*(3/4)-90;
 
                 if(!Controller.isExpanded)
-				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCells));
+				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCellsPerRow));
                 else {
-                    $('.Result').width(((screenBuffer) ) );
+                 //   $('.Result').width(((screenBuffer) ) );
                 }
 
-				$('.Result').height((screenHeightBuffer));
+	    			$('.Result').height((screenHeightBuffer));
 
                 if(!Controller.isExpanded)
-				    $('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCells));
+				    $('.ResultTD').width(((screenBuffer)/SetupManager.numberOfCellsPerRow));
                 else {
-                    $('.ResultTD').width(((screenBuffer) ) );
+                   // $('.ResultTD').width(((screenBuffer) ) );
                 }
 
 
@@ -515,9 +463,6 @@ var SetupManager = {
 
                 $('.QueryBucket').height(screenHeightBuffer *(1/4));
 
-				$('.FilterSideTD').width(screenWidth*(1/5));
-                $('.FilterSideTD').height(screenHeightBuffer);
-
                 $('.Grid').width(screenBuffer);
                 $('.Grid').height(screenHeightBuffer);
 
@@ -527,78 +472,6 @@ var SetupManager = {
 
 
 			});
-			$(window).trigger('resize');
-
-
-            var editor = ace.edit('result0');
-            editor.setTheme("ace/theme/xcode");
-            editor.getSession().setMode("ace/mode/java");
-            editor.getSession().setUseWrapMode(true);
-            editor.setReadOnly(false);
-
-
-            editor.on("copy", function(text){
-
-                //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL1,null, Controller.currentURLs[0]);
-
-            });
-
-            editor.on("cut", function(text){
-
-                //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL1,null, Controller.currentURLs[0]);
-
-            });
-
-
-
-                    var editor2 = ace.edit('result1');
-            editor2.setTheme("ace/theme/xcode");
-            editor2.getSession().setMode("ace/mode/java");
-            editor2.getSession().setUseWrapMode(true);
-            editor2.setReadOnly(false);
-
-            editor2.on("copy", function(text){
-                //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL2,null, Controller.currentURLs[1]);
-            });
-
-            editor.on("cut", function(text){
-
-                //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL2,null, Controller.currentURLs[1]);
-
-            });
-
-
-            var editor3 = ace.edit('result2');
-            editor3.setTheme("ace/theme/xcode");
-            editor3.getSession().setMode("ace/mode/java");
-            editor3.getSession().setUseWrapMode(true);
-            editor3.setReadOnly(false);
-
-            editor3.on("copy", function(text){
-                //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL3,null, Controller.currentURLs[2]);
-            });
-
-            editor.on("cut", function(text){
-
-                //LOG IT
-                UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL3,null, Controller.currentURLs[2]);
-
-            });
-
-
-            SetupManager.resultEditors.push(editor);
-            SetupManager.resultEditors.push(editor2);
-            SetupManager.resultEditors.push(editor3);
-
-
-
-
-
         },
 		/**
 		 * used to call the query manager for auto complete.
@@ -616,17 +489,18 @@ var SetupManager = {
 		makeTableCells	:	function(){
 			var tempRowId;
 			var tempTdId;
+            var rowId = SetupManager.currentRow;
 			
 
 			
-			for(var i = 0; i< SetupManager.numberOfCells; i++){
+			for(var i = SetupManager.currentCell; i< SetupManager.currentCell+ SetupManager.numberOfCells; i++){
 				tempTdId = "td"+i;
 				
 				
 				//new row every even - where assumption is implemented
 				if( (i%SetupManager.numberOfCellsPerRow) == 0){
 					
-					tempRowId = "row"+i;
+					tempRowId = "row"+ rowId++;
 					//make row
 					var row = $(SetupManager.trOpen+SetupManager.trClose);
 					row.addClass("ResultTR");
@@ -717,6 +591,7 @@ var SetupManager = {
                     });
                 })(expandButton);
 
+                initializeAceEditors(i);
 
 
 
@@ -731,7 +606,7 @@ var SetupManager = {
                 $(SetupManager.pound+"projectURL"+i).addClass("URLStatus");
                 $(SetupManager.pound+"projectURL"+i).hover(function(event) {
                     var id = event.currentTarget.id;
-                    var number = id.charAt(id.length-1);
+                    var number = id.match(/\d/g).join("");
 //LOG IT
                     UsageLogger.addEvent(UsageLogger.TOOL_TIP_DOWNLOAD_PROJECT,null,null);
                 });
@@ -762,12 +637,38 @@ var SetupManager = {
 
 
 			}
-			
+            SetupManager.currentCell = i;
+            SetupManager.currentRow = rowId++;
+            $(window).trigger('resize');
 
-		}
+
+
+        },
 		
 
 		
 		
 		
 };
+
+function initializeAceEditors(index) {
+        var editor = ace.edit('result' + index);
+        editor.setTheme("ace/theme/xcode");
+        editor.getSession().setMode("ace/mode/java");
+        editor.getSession().setUseWrapMode(true);
+        editor.setReadOnly(false);
+        editor.on("copy", function(text){
+
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.WINDOW_COPY_CELL1,null, Controller.currentURLs[0]);
+
+        });
+
+        editor.on("cut", function(text){
+
+            //LOG IT
+            UsageLogger.addEvent(UsageLogger.WINDOW_CUT_CELL1,null, Controller.currentURLs[0]);
+
+        });
+        SetupManager.resultEditors.push(editor);
+    }

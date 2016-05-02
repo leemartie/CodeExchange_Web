@@ -15,44 +15,83 @@
 var QueryBucketView = {
 
     queryViews  : new Array() /*QueryView*/,
-    queryBucket :  $(SetupManager.tableOpen+SetupManager.tableClose),
+    queryBucket: $(SetupManager.divOpen+SetupManager.divClose),
+    
+    getView : function() {
+        var currentQueryTD = $(SetupManager.tdOpen + SetupManager.tdClose);
+        var bucketMaxWidth = jQuery(window).width() * 0.37;
+        QueryBucketView.queryBucket.attr("id", "CurrentQueryBucket");
+        QueryBucketView.queryBucket.attr("style", "max-width: " + bucketMaxWidth +"px;");
+        currentQueryTD.append(QueryBucketView.queryBucket);
+        return currentQueryTD;
+    },
 
-    /**
-     * returns a table
-     * @returns {*|jQuery|HTMLElement}
-     */
-    getView :   function(){
+    getClearButton: function() {
+        var newSearchTD = $(SetupManager.tdOpen + SetupManager.tdClose);
+        newSearchTD.attr("style", "width:6%");
+        var newSearchButton = $(SetupManager.divOpen+SetupManager.divClose);
+        newSearchTD.addClass("ResetButton");
+        newSearchButton.text("Clear");
+        newSearchTD.mouseenter(function(event) {
+            newSearchTD.removeClass("ResetButton");
+            newSearchTD.addClass("ResetButtonHover");
 
-        var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
-        var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-       // queryBucketCell.append($("<text>totalQuery</text>"));
-        queryBucketCell.attr("height","100%");
-        queryBucketRow.append(queryBucketCell);
-        QueryBucketView.queryBucket.append(queryBucketRow);
+        });
 
-      ///  QueryBucketView.queryBucket.addClass("QueryBucket");
+        newSearchTD.mouseleave(function(event) {
+            newSearchTD.removeClass("ResetButtonHover");
+            newSearchTD.addClass("ResetButton");
 
-        var div = $('<div class="QueryBucket">'+'</div>');
-        div.append(QueryBucketView.queryBucket);
+        });
+        newSearchTD.click(function(event) {
+
+            for( var i=0; i < SetupManager.currentCell; i++) {
+                $(SetupManager.pound+"cellStatus"+i).empty();
+                $(SetupManager.pound+"backgroundSave")
+                    .append($("#"+SetupManager.expandBtnArray_ID[i]));
+                $(SetupManager.pound+"projectURL" +i) .empty();
+            }
+            
+            //no need for a new session if the current query is empty
+            if(QueryBucketModel.stackOfQueries.length != 0) {
+                QueryBucketModel.removeAll();
+                QueryBucketView.update();
+                Controller.clearAllCode();
+                Controller.setStatus("Let's find some code");
+                $(SetupManager.pound + SetupManager.pageNavigationDiv_ID).empty();
+//LOG IT
+                UsageLogger.addEvent(UsageLogger.NEW_QUERY_BUTTON_CLICKED, null);
+            }
+            
+            QueryManager.currentQuery = "";
 
 
-        return div;
 
+            if(Controller.gridOn){
+                Controller.showGrid();
+                var innerDiv = $("<div style='height:100%; " +
+                    "display: table-cell; align: center; vertical-align: middle; border: 0px solid black;'></div>");
+                innerDiv.append(text);
+                var gridButton =  $("<div style='display: table;'>"+
+                    SetupManager.divClose);
+                gridButton.append(innerDiv);
+
+                //LOG IT
+                UsageLogger.addEvent(UsageLogger.QUERY_HISTORY_BUTTON_ON,null);
+
+            }
+
+        });
+        newSearchTD.append(newSearchButton);
+        return newSearchTD;
     },
 
     update  :   function(){
 
-        QueryBucketView.queryBucket.empty();
-
-        var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
-        var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
-        queryBucketCell.attr("height","100%");
-        queryBucketRow.append(queryBucketCell);
-
-        QueryBucketView.queryBucket.append(queryBucketRow);
+        $("#CurrentQueryBucket .mCSB_container").empty();
 
         for(var i = QueryBucketModel.stackOfQueries.length-1; i >= 0; i--){
-            var queryBucketRow = $(SetupManager.trOpen+SetupManager.trClose);
+
 
             var queryBucketCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 
@@ -65,25 +104,15 @@ var QueryBucketView = {
 
             var queryView = new QueryView(displayType,type,value, valueIndex, i,active, displayValue);
 
-            queryBucketCell.append(queryView.getView());
-
-            queryBucketRow.append(queryBucketCell);
-
-            queryBucketRow.addClass("QueryViewRow");
-            queryBucketCell.addClass("QueryViewRow");
-
-
-
+            $("#CurrentQueryBucket .mCSB_container").append(queryView.getView());
+            $("#CurrentQueryBucket").mCustomScrollbar("update");
+            
             if(!active){
                 queryView.setDeactive()
             }else{
                 queryView.setActive();
             }
-
-            QueryBucketView.queryBucket.append(queryBucketRow);
         }
-
-
     }
 
 

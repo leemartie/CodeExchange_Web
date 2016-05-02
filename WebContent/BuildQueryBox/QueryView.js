@@ -22,22 +22,10 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
     this.stackIndex = stackIndex;
     this.displayValue = displayValue;
     this.row = $(SetupManager.trOpen+SetupManager.trClose);
-    this.cell = $(SetupManager.tdOpen+SetupManager.tdClose);
+    this.cell = $(SetupManager.divOpen+SetupManager.divClose);
     this.cellEdit = $(SetupManager.tdOpen+SetupManager.tdClose);
 
    this.getView = function() {
-
-       var table = $(SetupManager.tableOpen+SetupManager.tableClose);
-
-        table.addClass("QueryViewTable");
-
-
-//       if(displayValue != null && displayValue.length > 30)
-//         displayValue = [displayValue.slice(0, 30), '\n', displayValue.slice(30)].join('');
-
-       this.row.append(this.cell);
-       //this.row.append(this.cellEdit);
-       table.append(this.row);
 
        if(displayValue instanceof Array){
            displayValue = displayValue[0].replace(/</gi,"&lt;");
@@ -79,11 +67,6 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
        this.cellEdit.append(pencilImage);
 
        this.cell.append(label);
-       this.cell.width("97%");
-       this.row.height("100%");
-
-       this.row.addClass("QueryViewRow");
-
 
 //       var buttonCell = $(SetupManager.tdOpen+SetupManager.tdClose);
 //       this.row.append(buttonCell);
@@ -105,7 +88,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
 
        var so = this;
 
-       so.cell.attr("title","click to activate or deactivate");
+       so.cell.attr("title","Click to activate or deactivate");
 
 //
        (function(){so.cell.mouseenter(function(){
@@ -179,7 +162,7 @@ function QueryView(displayType, type, value, index, stackIndex, active, displayV
     //   this.row.append(buttonCell);
 
        this.cell.addClass("QueryView");
-       return table;
+       return this.cell;
    };
 
     this.setDeactive = function(){

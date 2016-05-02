@@ -273,7 +273,7 @@ var QueryGridView = {
                 '<font color="black" size="2">'+escape(query.displayValue)+'</font></text>');
             cell.append(label);
 
-            cell.attr("title","click to add to current query");
+            cell.attr("title","Click to add to current query");
             (function(query,cell){cell.click(function(){
                 //clear old query out
                 if(QueryBucketModel.stackOfQueries.length > 0) {
@@ -417,7 +417,7 @@ var QueryGridView = {
                         '<font color="black" size="2">' + escape(query.displayValue) + '</font></text>');
 
                     cell.append(label);
-                    cell.attr("title", "click to add to current query");
+                    cell.attr("title", "Click to add to current query");
 
                     (function (query, cell) {
                         cell.click(function () {

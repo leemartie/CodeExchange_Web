@@ -16,84 +16,21 @@ var BuildQueryBoxView = {
 		getView:	function() {
             var view = $(SetupManager.tableOpen + SetupManager.tableClose);
             view.attr("height", "100%");
-
-
-            //make title
-            var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
-            var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-
-
-            titleRow.append(titleCell);
-
-            var addCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            titleRow.append(addCell);
-
-            var label = $("<div><text>Enter Query</text></div>");
-
-            label.addClass("BuildQueryTitle");
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-
-
-            //view.append(queryTypeRow);
-
-            //view.append(queryRow);
-
-
-            var currentQuery = $(SetupManager.tableOpen + SetupManager.tableClose);
-            //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
-            currentQuery.addClass("BucketView");
-
-            //title for bucket
-            var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
-
-
-            var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            titleRow.append(titleCell);
-            var label = $("<text>Current Query</text>");
-            label.addClass("BuildQueryTitle");
-            // titleCell.append($("<hr>"));
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-            currentQuery.append(titleRow);
-
-            //row for query bucket
-            var queryBucketCellInParentTable = $(SetupManager.tdOpen + SetupManager.tdClose);
-
-            queryBucketCellInParentTable.append(QueryBucketView.getView());
-            queryBucketCellInParentTable.attr("valign", "bottom");
-            var queryBucketRowInParentTable = $(SetupManager.trOpen + SetupManager.trClose);
-            queryBucketRowInParentTable.append(queryBucketCellInParentTable);
-
-            currentQuery.append(queryBucketRowInParentTable);
-
-            var row = $(SetupManager.trOpen + SetupManager.trClose);
-            var cell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            cell.attr("height", "20%");
-            row.append(cell)
-            cell.append(currentQuery);
-
-            view.append(row);
-
-        //    critize
-//            var criticRow = $(SetupManager.trOpen + SetupManager.trClose);
-//            criticRow.append(Critize.getView());
-//            view.append(criticRow);
-
+            
             var recommendationsTable = $(SetupManager.tableOpen + SetupManager.tableClose);
             //var currentQueryRow = (SetupManager.trOpen+SetupManager.trClose);
             recommendationsTable.addClass("BucketView");
 
             //title for query recommendations
-            var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
-            var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            titleRow.append(titleCell);
-            var label = $("<text>Result Index</text>");
-            label.addClass("BuildQueryTitle");
-            // titleCell.append($("<hr>"));
-            titleCell.append(label);
-            titleCell.attr("align", "center");
-            recommendationsTable.append(titleRow);
+            // var titleRow = $(SetupManager.trOpen + SetupManager.trClose);
+            // var titleCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            // titleRow.append(titleCell);
+            // var label = $("<text>Result Index</text>");
+            // label.addClass("BuildQueryTitle");
+            // // titleCell.append($("<hr>"));
+            // titleCell.append(label);
+            // titleCell.attr("align", "center");
+            // recommendationsTable.append(titleRow);
 
 
             //query Recommendations
@@ -115,30 +52,30 @@ var BuildQueryBoxView = {
 
 
             //buttons
-            var viewRow = $(SetupManager.trOpen + SetupManager.trClose);
-            var viewCell = $(SetupManager.tdOpen + SetupManager.tdClose);
-            viewRow.append(viewCell);
-            viewCell.attr("height", "20%");
-            viewCell.attr("valign", "bottom");
+            // var viewRow = $(SetupManager.trOpen + SetupManager.trClose);
+            // var viewCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            // viewRow.append(viewCell);
+            // viewCell.attr("height", "20%");
+            // viewCell.attr("valign", "bottom");
 
 
-            var buttonTable = $(SetupManager.tableOpen + SetupManager.tableClose);
-            buttonTable.attr("height", "100%");
-            buttonTable.addClass("BucketView");
-            var buttonRow = $(SetupManager.trOpen + SetupManager.trClose);
-            buttonTable.append(buttonRow);
-            var buttonCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            // var buttonTable = $(SetupManager.tableOpen + SetupManager.tableClose);
+            // buttonTable.attr("height", "100%");
+            // buttonTable.addClass("BucketView");
+            // var buttonRow = $(SetupManager.trOpen + SetupManager.trClose);
+            // buttonTable.append(buttonRow);
+            // var buttonCell = $(SetupManager.tdOpen + SetupManager.tdClose);
+            //
+            // buttonRow.append(buttonCell);
+            // buttonCell.append(QueryTrailNavView.getView());
+            //
+            // buttonCell.attr("valign", "bottom");
+            // buttonCell.attr("height", "100%");
 
-            buttonRow.append(buttonCell);
-            buttonCell.append(QueryTrailNavView.getView());
-
-            buttonCell.attr("valign", "bottom");
-            buttonCell.attr("height", "100%");
-
-            viewCell.append(buttonTable);
+//            viewCell.append(buttonTable);
 
 
-            view.append(viewRow);
+            // view.append(viewRow);
 
             return view;
 
@@ -176,6 +113,9 @@ var BuildQueryBoxView = {
             //empty so ignore...
             if(query.value == "" || query.value == ".()" || query.value == ":.()")
                 return;
+            if(Controller.isExpanded) {
+                Controller.collapseCell(Controller.expandedCell);
+            }
 
 
             if(QueryBucketModel.inStack(query) == false){

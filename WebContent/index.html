@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -11,6 +10,7 @@
     <link href="jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="jquery-ui-1.10.3.custom/development-bundle/demos/demos.css" type="text/css">
+    <link rel="stylesheet" href="jquery.mCustomScrollbar.min.css" />
 
 
     <title>CodeExchange</title>
@@ -68,6 +68,7 @@
 <script type="text/javascript" src="RecommendationManager.js"></script>
 <script type="text/javascript" src="WheelLandscape.js"></script>
 <script type="text/javascript" src="fb_all.js"></script>
+<script type="text/javascript" src="jquery.mCustomScrollbar.concat.min.js"></script>
 
 <script>
 
@@ -354,6 +355,9 @@
     background-color: lightgoldenrodyellow;
 }
 
+.CodeWhaleLogo{
+    width: 5%;
+}
 .Cell
 {
 
@@ -735,25 +739,23 @@ td {
 
 }
 
-.QueryBucket{
+#CurrentQueryBucket{
 
-    background-color: whitesmoke;
-    font-size: 14px;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
-    border-left: 1px solid;
+    background-color: white;
+    white-space: nowrap;
+    overflow-x: auto;
+    min-height: 40px;
     border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #000;
+    width: 100%
 
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+}
 
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+#CurrentQueryBucket .mCSB_container {
 
-    background-color:#ffffff;
-    overflow:scroll;
+    margin-bottom: 10px;
 
-    overflow-x:hidden;
 }
 
 
@@ -945,12 +947,25 @@ td {
     font-family: Courier;
 }
 
-.BuildQueryTitle {
-    font-size: 16pt;
+.CurrentQueryTitle {
+    font-size: 15pt;
     font-family: Courier;
     padding: 0;
     margin: 0;
-    background-color: whitesmoke;
+    color: #000000;
+    background: whitesmoke;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    padding: 5px;
+    padding-left: 20px;
+}
+
+.BuildQueryTitle {
+    font-size: 15pt;
+    font-family: Courier;
+    padding: 0;
+    margin: 0;
+    color: #000000;
 }
 
 .BuildQueryTitleFlash{
@@ -967,60 +982,72 @@ td {
 }
 
 .QueryView{
+    display: inline-block;
     background-color:lightgoldenrodyellow;
     color:#ffffff;
-    font-size: 14px;
+    font-size: 12px;
     border: 1px solid;
     border-radius: 5px;
     border-color: darkgray;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #FFBF00;
     height:auto;
-    padding: 1px;
+    padding: 4px;
     word-wrap:break-word;
+    margin: 10px 5px 0px 5px;
 
 }
 
 .QueryViewHover{
+    display: inline-block;
     background-color: #ffffff;
     color:#ffffff;
-    font-size: 14px;
+    font-size: 12px;
     border: 1px solid;
     border-radius: 5px;
     border-color: darkgray;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #FFBF00;
     word-wrap:break-word;
     height:auto;
-    padding: 1px;
+    padding: 4px;
+    margin: 10px 5px 0px 5px;
 
 }
 
 .QueryViewDeactiveHover{
+    display: inline-block;
     background-color: yellow;
     color:#ffffff;
-    font-size: 14px;
+    font-size: 12px;
     border: 1px solid;
     border-radius: 5px;
     border-color: darkgray;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
     cursor: pointer;
     box-shadow: 0px 0px 0px #FFBF00;
     height:auto;
     word-wrap:break-word;
     opacity:0.4;
-    padding: 1px;
+    padding: 4px;
+    margin: 10px 5px 0px 5px;
+
+}
+
+.QueryViewDeactive{
+    display: inline-block;
+    background-color:white;
+
+    opacity:0.7;
+
+    font-size: 12px;
+    border: 1px solid;
+    height:auto;
+    border-color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #888888;
+    padding: 4px;
+    margin: 10px 5px 0px 5px;
 
 }
 
@@ -1055,26 +1082,6 @@ td {
     padding-top: 0px;
     padding-left: 0px;
     bottom:0;
-
-}
-
-.QueryViewDeactive{
-    background-color:white;
-
-    opacity:0.7;
-
-    font-size: 14px;
-    border: 1px solid;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right:0px;
-    height:auto;
-    border-color: black;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0px 0px 0px #888888;
-    padding: 1px;
 
 }
 
@@ -1178,7 +1185,6 @@ td {
 }
 
 .QueryRecommenderView{
-    height: 200px;
     /* overflow-y: scroll;*/
 }
 
@@ -1226,7 +1232,7 @@ td {
 .SplashInput{
     width:98%;
     border: 0px;
-    font-size: 20px;
+    font-size: 18px;
     margin-left: 5px;
 
 }
@@ -1380,6 +1386,50 @@ html { height: 100%; }
     height: 100%;
 
 
+}
+
+.ResetButton{
+    color: black;
+    background-color: whitesmoke;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+
+    margin: 0px;
+
+    border-color: gray;
+
+    font-size: 15px;
+
+    text-align: center;
+    vertical-align: middle;
+
+    padding-bottom: 2px;
+    cursor: pointer;
+    padding-left:5px;
+    padding-right:5px;
+    height: 100%;
+}
+
+.ResetButtonHover {
+    color: black;
+    background-color: whitesmoke;
+    border:2px solid;
+
+    margin: 0px;
+
+    border-color: gray;
+
+    font-size: 15px;
+
+    text-align: center;
+    vertical-align: middle;
+
+    padding-bottom: 2px;
+    cursor: pointer;
+    padding-left:5px;
+    padding-right:5px;
+    height: 100%;
 }
 
 .AdvancedSearchText{
@@ -2032,6 +2082,32 @@ a.btn_red {color: #FFF;}
     visibility: visible;
 }
 
+.RecommendationTable {
+    table-layout: fixed;
+}
+
+.RecommendationContainer {
+    width: 100%;
+    overflow: hidden;
+}
+
+.RecommendationContainer .mCSB_container {
+
+    margin-right: 10px;
+
+}
+
+.ResultContainer {
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+.ResultContainer .mCSB_container {
+
+    margin-right: 5px;
+
+}
 
 
 </style>
