@@ -181,19 +181,12 @@ var SetupManager = {
 		sideBuffer	:	50,
 
         cellStatus : new Array(),
-        screenWidth : jQuery(window).width(),
-        screenHeight : jQuery(window).height(),
 		
 		/**
 		 * FUNCTION: create the site visual structures and listeners
 		 */
 		setupSite	:	function(){
-
-
-
-			screenWidth = jQuery(window).width();
-			screenHeight = jQuery(window).height();
-
+            
 // --- create elements
 
 			var tableForSite = $(SetupManager.tableOpen+SetupManager.tableClose);
@@ -229,7 +222,7 @@ var SetupManager = {
             
             var resultsContainer = $(SetupManager.divOpen + SetupManager.divClose);
             resultsContainer.addClass("ResultContainer");
-            var resultContainerHeight = screenHeight * 0.65;
+            var resultContainerHeight = jQuery(window).height() * 0.65;
             resultsContainer.attr("style", "height:" + resultContainerHeight + "px");
 			//result td
 			var resultTD = $(SetupManager.tdOpen+SetupManager.tdClose);
@@ -429,8 +422,8 @@ var SetupManager = {
 
 //resize function called when resize event happens
 			$(window).resize(function() {
-				var screenBuffer = screenWidth - 60;
-				var screenHeightBuffer = screenHeight*(3/4)-90;
+				var screenBuffer = jQuery(window).width() - 60;
+				var screenHeightBuffer = jQuery(window).height() * (3/4)-90;
 
                 if(!Controller.isExpanded)
 				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCellsPerRow));
