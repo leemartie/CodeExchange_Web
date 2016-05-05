@@ -425,6 +425,14 @@ var SetupManager = {
 				var screenBuffer = jQuery(window).width() - 60;
 				var screenHeightBuffer = jQuery(window).height() * (3/4)-90;
 
+                var bucketMaxWidth = jQuery(window).width() * 0.37;
+                $('#CurrentQueryBucket').attr("style", "max-width: " + bucketMaxWidth +"px;");
+
+                $(".RecommendationContainer").attr("style", "height:" + jQuery(window).height() * 0.12 + "px");
+
+                var resultContainerHeight = jQuery(window).height() * 0.65;
+                $(".ResultContainer").attr("style", "height:" + resultContainerHeight + "px");
+
                 if(!Controller.isExpanded)
 				    $('.Result').width(((screenBuffer)/SetupManager.numberOfCellsPerRow));
                 else {
